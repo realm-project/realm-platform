@@ -1,0 +1,68 @@
+{
+	"loc": "Person-7",
+	"value": 
+	{
+		"dob": "2014-05-03T13:43:28Z",
+		"name": "Billy X. Willy 7",
+		"empNo": 7,
+		"picture": false,
+		"locations": 
+		{
+			"loc": "Person.locations-3",
+			"value": 
+			[
+				{
+					"loc": "Person.locations.location-43",
+					"value": 
+					{
+						"latitude": 1.0,
+						"longitude": 7.0,
+						"geo": 
+						{
+							"loc": "Geo-1"
+						}
+					}
+				},
+
+				{
+					"loc": "Person.locations.location-69",
+					"value": 
+					{
+						"latitude": 0.5,
+						"longitude": 8.0,
+						"geo": 
+						{
+							"loc": "Geo-2"
+						}
+					}
+				},
+
+				{
+					"loc": "Person.locations.location-52",
+					"value": 
+					{
+						"latitude": 0.3333333333333333,
+						"longitude": 9.0,
+						"geo": 
+						{
+							"loc": "Geo-3"
+						}
+					}
+				},
+
+				{
+					"loc": "Person.locations.location-44",
+					"value": 
+					{
+						"latitude": 0.25,
+						"longitude": 10.0,
+						"geo": 
+						{
+							"loc": "Geo-1"
+						}
+					}
+				}
+			]
+		}
+	}
+}

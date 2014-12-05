@@ -1,0 +1,27 @@
+<repo id='test.objectof.org:201401/res/person' schema='test.objectof.org:201401/schemas/person' schemaVersion='0.0.1-SNAPSHOT'>
+  <Geo>
+    <description>land</description>
+  </Geo>
+  <Geo>
+    <description>water</description>
+  </Geo>
+  <Person>
+    <name>B. Pascal</name>
+    <dob>1623-06-19</dob>
+    <empNo>346455</empNo>
+    <locations>
+      <location>
+        <latitude>45.5455</latitude>
+        <longitude>-2323.334</longitude>
+        <!-- really need a uri qury again... -->
+        <geo>Geo/-1</geo>
+      </location>
+      <location>
+        <latitude>88.4</latitude>
+        <longitude>35.9</longitude>
+        <!-- really need a uri qury again... -->
+        <geo>Geo/-2</geo>
+      </location>
+    </locations>
+  </Person>
+</repo>

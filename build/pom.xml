@@ -1,0 +1,28 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>objectof</groupId>
+	<artifactId>objectof-base</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>pom</packaging>
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
+	<modules>
+	  <!-- corc -->
+		<module>../objectof.corc</module>
+		<module>../objectof.corc.jee</module>
+		<!-- objectof proper -->
+		<!-- only simple unit tests go directly in these projects -->
+		<module>../objectof.core</module>
+    	<module>../objectof.model</module>
+		<module>../objectof.util</module>
+    	<module>../objectof.repo</module>
+    	<module>../objectof.maven</module>
+    	<!-- integration testing project: -->
+    <!-- <module>../objectof.testweb</module>-->
+    <module>../objectof.derived</module>
+    <module>../objectof.web</module>
+    <module>../objectof.testweb</module>
+	</modules>
+</project>

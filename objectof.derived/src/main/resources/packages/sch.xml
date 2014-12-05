@@ -1,0 +1,29 @@
+<?xml version='1.0'?>
+<schema 
+  id='objectof.net:1401/model/schema'
+  version='0.0.1-SNAPSHOT'
+  xmlns:m='ans://objectof.net:1401/facets/model'
+>
+  <model>
+    <composed selector='Schema'>
+      <text selector='name' m:modifier='public'/>
+      <text selector='release' m:modifier='public'/>
+      <mapped selector='members' m:modifier='public'>
+        <composed selector='member'>
+          <ref selector='category' m:href='Category' m:modifier='public'/>
+          <text selector='pathname' m:modifier='public'/>
+          <int selector='index' m:modifier='public'/>
+          <mapped selector='properties' m:modifier='public'>
+            <composed selector='property'>
+              <text selector='id' m:modifier='public'/>
+              <text selector='source' m:modifier='public'/>
+            </composed>
+          </mapped>
+        </composed>
+      </mapped>
+    </composed>
+    <composed selector='Category'>
+      <text selector='name' />
+    </composed>
+  </model>
+</schema>

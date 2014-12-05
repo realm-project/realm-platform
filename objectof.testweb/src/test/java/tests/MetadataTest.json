@@ -1,0 +1,199 @@
+{
+	"release": "145a303c576",
+	"members": 
+	{
+		"Person.dob": 
+		{
+			"properties": 
+			{
+				
+			},
+
+			"index": 1,
+			"stereotype": "MOMENT",
+			"componentName": "Person.dob"
+		},
+
+		"Person.name": 
+		{
+			"properties": 
+			{
+				
+			},
+
+			"index": 2,
+			"stereotype": "TEXT",
+			"componentName": "Person.name"
+		},
+
+		"Other": 
+		{
+			"properties": 
+			{
+				
+			},
+
+			"index": 3,
+			"stereotype": "COMPOSED",
+			"componentName": "Other"
+		},
+
+		"Person.locations.location.latitude": 
+		{
+			"properties": 
+			{
+				
+			},
+
+			"index": 4,
+			"stereotype": "NUM",
+			"componentName": "Person.locations.location.latitude"
+		},
+
+		"Person.empNo": 
+		{
+			"properties": 
+			{
+				"ans://objectof.net:1401/facets/model/modifier": "public"
+			},
+
+			"index": 5,
+			"stereotype": "INT",
+			"componentName": "Person.empNo"
+		},
+
+		"Geo.description": 
+		{
+			"properties": 
+			{
+				
+			},
+
+			"index": 6,
+			"stereotype": "TEXT",
+			"componentName": "Geo.description"
+		},
+
+		"Other.objectset": 
+		{
+			"properties": 
+			{
+				
+			},
+
+			"index": 7,
+			"stereotype": "SET",
+			"componentName": "Other.objectset"
+		},
+
+		"Person.picture": 
+		{
+			"properties": 
+			{
+				
+			},
+
+			"index": 8,
+			"stereotype": "MEDIA",
+			"componentName": "Person.picture"
+		},
+
+		"Person.locations.location.longitude": 
+		{
+			"properties": 
+			{
+				
+			},
+
+			"index": 9,
+			"stereotype": "NUM",
+			"componentName": "Person.locations.location.longitude"
+		},
+
+		"Person.locations.location": 
+		{
+			"properties": 
+			{
+				
+			},
+
+			"index": 12,
+			"stereotype": "COMPOSED",
+			"componentName": "Person.locations.location"
+		},
+
+		"Geo": 
+		{
+			"properties": 
+			{
+				
+			},
+
+			"index": 13,
+			"stereotype": "COMPOSED",
+			"componentName": "Geo"
+		},
+
+		"Other.objectset.geo": 
+		{
+			"properties": 
+			{
+				"ans://objectof.net:1401/facets/model/href": "Geo"
+			},
+
+			"index": 10,
+			"stereotype": "REF",
+			"componentName": "Other.objectset.geo"
+		},
+
+		"Other.indicator": 
+		{
+			"properties": 
+			{
+				
+			},
+
+			"index": 11,
+			"stereotype": "BOOL",
+			"componentName": "Other.indicator"
+		},
+
+		"Person.locations": 
+		{
+			"properties": 
+			{
+				"ans://objectof.net:1401/facets/model/modifier": "public"
+			},
+
+			"index": 14,
+			"stereotype": "INDEXED",
+			"componentName": "Person.locations"
+		},
+
+		"Person": 
+		{
+			"properties": 
+			{
+				
+			},
+
+			"index": 15,
+			"stereotype": "COMPOSED",
+			"componentName": "Person"
+		},
+
+		"Person.locations.location.geo": 
+		{
+			"properties": 
+			{
+				"ans://objectof.net:1401/facets/model/href": "Geo"
+			},
+
+			"index": 16,
+			"stereotype": "REF",
+			"componentName": "Person.locations.location.geo"
+		}
+	},
+
+	"name": "test.objectof.org:201401/schema.person"
+}

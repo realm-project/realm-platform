@@ -1,0 +1,8 @@
+  public final static String[] SELECTORS = new String[]
+  {
+#set($delimiter = " ")
+#foreach($member in $a.Parts) 
+    ${delimiter} "${member.Selector}"
+#set($delimiter = ",")
+#end
+  };
