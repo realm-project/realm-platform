@@ -1,0 +1,32 @@
+package ${a.Package.ComponentName}.composite;
+import ${a.Package.ComponentName}.*;
+import net.objectof.model.Resource;
+
+@SuppressWarnings("all")
+@$selector("I${util.initCap($a.ComponentName)}")
+#set($Name = $util.initCap($util.selector($a.ComponentName)))
+public class I${Name}Bean
+  extends $implementation
+  implements $Name
+{
+  public I${Name}Bean($type aId)
+  {
+    super(aId);
+  }
+#foreach($member in $a.Parts)
+#set($modifier = "public")
+#if ($member.Modifier)
+#set($modifier = $member.Modifier)
+#end
+#set($target = $member.getTarget("java"))
+  public $target get${util.initCap($member.Selector)}()
+  {
+    return ($target) _("$member.Selector");
+  }
+  $modifier void set${util.initCap($member.Selector)}($target a)
+  {
+    _("$member.Selector", a);
+  }
+#end
+
+}

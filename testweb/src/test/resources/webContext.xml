@@ -1,0 +1,22 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
+	<bean id="router" class="net.objectof.impl.corc.util.IRouter">
+		<constructor-arg>
+			<map>
+				<entry key="ping">
+					<bean class="net.objectof.model.corc.IWebPing" />
+				</entry>
+				<entry key="person">
+					<bean id="repo" class="net.objectof.model.corc.IRepoHandler">
+						<constructor-arg ref="database"/>
+						<constructor-arg value="test.objectof.org:1405/test/person" />
+					</bean>
+				</entry>
+			</map>
+		</constructor-arg>
+	</bean>
+	<bean id="database" class="net.objectof.repo.impl.sql.ISqlDb">
+		<constructor-arg value="testDatabase" />
+	</bean>
+</beans>

@@ -1,0 +1,42 @@
+package ${a.Package.ComponentName}.impl;
+import ${a.Package.ComponentName}.*;
+import net.objectof.model.Resource;
+
+@SuppressWarnings("all")
+@$selector("I${util.initCap($a.ComponentName)}")
+#set($Name = $util.initCap($util.selector($a.ComponentName)))
+public class I$Name
+  extends $implementation
+  implements $Name
+{
+  public I${Name}(${ident} aIdent)
+  {
+    super(aIdent);
+  }
+
+  public I${Name}($implementationKind aType)
+  {
+    super(aType);
+  }
+#foreach($member in $a.Parts)
+#set($target = $member.getTarget("java"))
+#set($modifier = "public")
+#if ($member.Modifier)
+#set($modifier = $member.Modifier)
+#end
+  public $target get${util.initCap($member.Selector)}()
+  {
+    return ($target) value().get("$member.Selector");
+  }
+  $modifier void set${util.initCap($member.Selector)}($target a)
+  {
+    value().set("$member.Selector", a);
+  }
+#end
+
+  public Resource<?> asResource()
+  {
+    return this;
+  }
+
+}

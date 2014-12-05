@@ -1,0 +1,39 @@
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd"
+>
+  <!-- Requests -->
+  <bean id="retrieve" class="test.components.InstanceRequest">
+    <constructor-arg ref="register" />
+    <constructor-arg ref="requestChannel" />
+    <property name="timeout" value="60000" /> <!-- Provide 60 seconds for debugging. -->
+  </bean>
+  <!-- Back-end -->
+  <bean id="requestRouter" class="net.objectof.impl.corc.util.IRouter">
+    <constructor-arg>
+      <map>
+        <entry key="fast">
+          <bean class="net.objectof.impl.corc.util.IPing">
+            <constructor-arg ref="responseChannel" />
+            <property name="delay" value="10" />
+          </bean>
+        </entry>
+        <entry key="slow">
+          <bean class="net.objectof.impl.corc.util.IPing">
+            <constructor-arg ref="responseChannel" />
+            <property name="delay" value="100" />
+          </bean>
+        </entry>
+      </map>
+    </constructor-arg>
+  </bean>
+  <!-- Wiring -->
+  <bean id='register' class="net.objectof.impl.corc.util.IRegister" />
+  <!-- Channels: Alter the implementation to vary the logical messaging. -->
+  <!-- TODO: Replace with IAsyncForwarder when not actively debugging the framework -->
+  <bean id='requestChannel' class="net.objectof.impl.corc.util.IAsyncForwarder">
+    <constructor-arg ref="requestRouter" />
+  </bean>
+  <bean id='responseChannel' class="net.objectof.impl.corc.util.IAsyncForwarder">
+    <constructor-arg ref='register' />
+  </bean>
+</beans>

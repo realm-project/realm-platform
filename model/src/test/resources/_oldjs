@@ -1,0 +1,37 @@
+pkg = new Object();
+packages["net.objectof.schema"] = pkg;
+pkg.Schema = function Schema(){}
+Schema.prototype.getName = function getName() {return this.name;}
+Schema.prototype.setName = function setName(aName) {this.name = aName;}
+Schema.prototype.getRelease = function getRelease() {return this.release;}
+Schema.prototype.setRelease = function setRelease(aRelease) {this.release = aRelease;}
+Schema.prototype.getMembers = function getMembers() {return this.members;}
+Schema.prototype.setMembers = function setMembers(aMembers) {this.members = aMembers;}
+pkg.Stereotype = function Stereotype(){}
+Stereotype.prototype.getName = function getName() {return this.name;}
+Stereotype.prototype.setName = function setName(aName) {this.name = aName;}
+Stereotype.prototype.getTitle = function getTitle() {return this.title;}
+Stereotype.prototype.setTitle = function setTitle(aTitle) {this.title = aTitle;}
+pkg.Property = function Property(){}
+Property.prototype.getAttribute = function getAttribute() {return this.attribute;}
+Property.prototype.setAttribute = function setAttribute(aAttribute) {this.attribute = aAttribute;}
+Property.prototype.getVal = function getVal() {return this.val;}
+Property.prototype.setVal = function setVal(aVal) {this.val = aVal;}
+pkg.Attribute = function Attribute(){}
+Attribute.prototype.getName = function getName() {return this.name;}
+Attribute.prototype.setName = function setName(aName) {this.name = aName;}
+Attribute.prototype.getTitle = function getTitle() {return this.title;}
+Attribute.prototype.setTitle = function setTitle(aTitle) {this.title = aTitle;}
+Attribute.prototype.getDescription = function getDescription() {return this.description;}
+Attribute.prototype.setDescription = function setDescription(aDescription) {this.description = aDescription;}
+Attribute.prototype.getStereotype = function getStereotype() {return this.stereotype;}
+Attribute.prototype.setStereotype = function setStereotype(aStereotype) {this.stereotype = aStereotype;}
+pkg.Member = function Member(){}
+Member.prototype.getStereotype = function getStereotype() {return this.stereotype;}
+Member.prototype.setStereotype = function setStereotype(aStereotype) {this.stereotype = aStereotype;}
+Member.prototype.getPathname = function getPathname() {return this.pathname;}
+Member.prototype.setPathname = function setPathname(aPathname) {this.pathname = aPathname;}
+Member.prototype.getIndex = function getIndex() {return this.index;}
+Member.prototype.setIndex = function setIndex(aIndex) {this.index = aIndex;}
+Member.prototype.getProperties = function getProperties() {return this.properties;}
+Member.prototype.setProperties = function setProperties(aProperties) {this.properties = aProperties;}

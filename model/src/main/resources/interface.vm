@@ -1,0 +1,25 @@
+package $a.Package.ComponentName;
+
+import net.objectof.model.Resource;
+import net.objectof.aggr.Composite;
+
+@$selector("$util.initCap($a.ComponentName)")
+public interface $util.initCap($util.selector($a.ComponentName)) extends Resource<Composite>
+{
+#foreach($member in $a.Parts)
+#set($target = $member.getTarget("java"))
+  @$selector("$member.Selector")
+  public $target get${util.initCap($member.Selector)}();
+#*
+  Only generate the setter/modifier when visibility has NOT been specified.
+  A modify property is a constraint and is used for visibility on implementation.
+*#
+#if(!$member.Modifier)
+  @$selector("$member.Selector:")
+  public void set${util.initCap($member.Selector)}($target a);
+#else
+  //$member.Selector is $member.Modifier
+#end
+#end
+
+}

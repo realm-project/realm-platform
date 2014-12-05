@@ -1,0 +1,36 @@
+<?xml version='1.0'?>
+<schema id='test.objectof.org:201401/schema.person' version='0.0.1-SNAPSHOT'
+  xmlns='---ans://objectof.net:1401/tbd---'
+  xmlns:model='ans://objectof.net:1401/facets/model'
+  xmlns:ui='ans://objectof.net:1401/facets/ui'
+>
+  Text can appear anywhere. Currently it is ignored but can be used to attach
+  comments to things with some work.
+  This sample model doesn't really make sense from a 'business perspective'. It was
+  created to contain the more central components in a model in a small space.
+  <model ui:localize='en fr en_ca fr_ca'>
+    We define a person here:
+    <composed selector='Person'>
+      <int selector='empNo' model:modifier='public' min='0' max='99999' />
+      <text selector='name' pattern='^.{0,40}' />
+      <moment selector='dob' max='^now' />
+      <media selector='picture' mediaType='image/gif'/>
+      <indexed selector='locations' max='10' model:modifier='public'>
+        <composed selector='location'>
+          <num selector='latitude' />
+          <num selector='longitude' />
+          <ref selector='geo' model:href='Geo' />
+        </composed>
+      </indexed>
+    </composed>
+    <composed selector='Geo'>
+      <text selector='description' />
+    </composed>
+    <composed selector='Other'>
+      <bool selector='indicator'/>
+      <set selector='objectset'>
+        <ref selector='geo' model:href='Geo'/>
+      </set>
+    </composed>
+  </model>
+</schema>

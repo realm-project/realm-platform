@@ -1,0 +1,20 @@
+<?xml version='1.0'?>
+<schema 
+  id='objectof.net:1401/model/service'
+  version='0.0.1-SNAPSHOT'
+  xmlns:m='ans://objectof.net:1401/facets/model'
+>
+  <model>
+  	<composed selector='Category'>
+  		<text selector='name' m:modifier='public'/>
+  	</composed>
+    <composed selector='Step'>
+        <ref selector='category' m:href='Category' m:modifier='public'/>
+        <text selector='name' m:modifier='public'/>
+        <text selector='peer' m:modifier='public'/>
+    </composed>
+    <composed selector='JsStep' m:extends='Step' m:modifier='public'>
+    	<text selector='script'/>
+    </composed>
+  </model>
+</schema>
