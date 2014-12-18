@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
   <groupId>objectof</groupId>
   <artifactId>objectof-util</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
+  <version>0.1</version>
   <name>objectof util</name>
   <packaging>jar</packaging>
   <properties>
