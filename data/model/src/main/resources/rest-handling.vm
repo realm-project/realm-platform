@@ -1,0 +1,44 @@
+#set($rest = "ans://realmproject.net:1401/rest/model")
+
+package ${a.Package.ComponentName}.handlers;
+
+import javax.servlet.http.HttpServletRequest;
+
+import net.objectof.Selector;
+import net.objectof.rt.impl.IFn;
+
+public class I$util.initCap($a.getComponentName())Handler extends IFn {
+
+#if($a.getProperty("$rest/create").getSource().equals("true"))
+	@Selector("create")
+	public Object create(HttpServletRequest request){
+		//TODO: Auto-generated method
+		return null;
+	}
+#end
+
+#if($a.getProperty("$rest/read").getSource().equals("true"))
+	@Selector("read")
+	public Object read(HttpServletRequest request){
+		//TODO: Auto-generated method
+		return null;
+	}
+#end
+
+#if($a.getProperty("$rest/update").getSource().equals("true"))
+	@Selector("update")
+	public Object update(HttpServletRequest request){
+		//TODO: Auto-generated method
+		return null;
+	}
+#end
+
+#if($a.getProperty("$rest/delete").getSource().equals("true"))
+	@Selector("delete")
+	public Object delete(HttpServletRequest request){
+		//TODO: Auto-generated method
+		return null;
+	}
+#end
+
+}

@@ -1,0 +1,19 @@
+#set($rest = "ans://realmproject.net:1401/rest/model")
+#set($handler = "handler-$a.getComponentName().toLowerCase()")
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+           				http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+
+
+	<!-- /$a.getComponentName().toLowerCase() Router -->
+	<bean id="router-$a.getComponentName().toLowerCase()" class="net.realmproject.service.device.web.IPathInvoker">
+		<constructor-arg ref="json-format"/>
+		<constructor-arg>
+			<bean class="net.realmproject.service.data.handler.I$a.getComponentName()Handler" />
+		</constructor-arg>
+	</bean>
+
+</beans>
