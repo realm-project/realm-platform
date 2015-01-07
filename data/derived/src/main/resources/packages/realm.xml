@@ -1,180 +1,108 @@
-<?xml version='1.0'?>
-<schema id='realmproject.net:1401/model/schema' version='0.0.1-SNAPSHOT'
-	xmlns:m='ans://objectof.net:1401/facets/model' xmlns:rest='ans://realmproject.net:1401/rest/model'>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<schema xmlns:m="ans://objectof.net:1401/facets/model"
+	xmlns:rest="ans://realmproject.net:1401/rest/model" id="realmproject.net:1502/model/schema"
+	version="0.0.1-SNAPSHOT">
 	<model>
-		<composed selector='Person' rest:create="true" rest:read="true"
-			rest:update="true" rest:delete="true">
-			<text selector='name' />
-			<text selector='email' />
-			<text selector='pwdHashed' />
-			<text selector='salt' />
-			<indexed selector='sessions'>
-				<ref selector='session' m:href='Session' />
+		<composed selector="Person">
+			<text selector="name" />
+			<text selector="email" />
+			<text selector="pwdHashed" />
+			<text selector="salt" />
+			<indexed selector="sessions">
+				<ref m:href="Session" selector="session" />
 			</indexed>
-			<ref selector='role' m:href='Role' />
-			<indexed selector='enroledCourses'>
-				<ref selector='enroledCourse' m:href='Course' />
+			<ref m:href="Role" selector="role" />
+			<indexed selector="enroledCourses">
+				<ref m:href="Course" selector="enroledCourse" />
 			</indexed>
-			<indexed selector='pendingCourses'>
-				<ref selector='pendingCourse' m:href='Course' />
+			<indexed selector="pendingCourses">
+				<ref m:href="Course" selector="pendingCourse" />
 			</indexed>
 		</composed>
 
-		<composed selector='Role' rest:read="true">
-			<text selector='name' />
+		<composed selector="Role">
+			<text selector="name" />
 		</composed>
 
-		<composed selector='Course' rest:create="true"
-			rest:read="true" rest:update="true" rest:delete="true">
-			<ref selector='course' m:href='Course' />
-			<text selector='id' />
-			<text selector='name' />
-			<text selector='description' />
-			<indexed selector='teachers'>
-				<ref selector='teacher' m:href='Person' />
+		<composed selector="Course">
+			<ref m:href="Course" selector="course" />
+			<text selector="id" />
+			<text selector="name" />
+			<text selector="description" />
+			<indexed selector="teachers">
+				<ref m:href="Person" selector="teacher" />
 			</indexed>
-			<moment selector='startDate' />
-			<moment selector='endDate' />
+			<moment selector="startDate" />
+			<moment selector="endDate" />
 		</composed>
 
-		<composed selector='Assignment' rest:create="true"
-			rest:read="true" rest:update="true" rest:delete="true">
-			<ref selector='course' m:href='Course' />
-			<ref selector='assignment' m:href='Assignment' />
-			<text selector='id' />
-			<text selector='name' />
-			<text selector='description' />
-			<indexed selector='documents'>
-				<media selector='document' />
+		<composed selector="Assignment">
+			<ref m:href="Course" selector="course" />
+			<ref m:href="Assignment" selector="assignment" />
+
+			<text selector="name" />
+			<text selector="description" />
+			<indexed selector="documents">
+				<media selector="document" />
 			</indexed>
-			<moment selector='startDate' />
-			<moment selector='endDate' />
-			<indexed selector='devices'>
-				<ref selector='device' m:href='Device' />
-			</indexed>
-			<ref selector='deviceUI' m:href='DeviceUI' />
+			<moment selector="startDate" />
+			<moment selector="endDate" />
+
+			<ref m:href="DeviceUI" selector="deviceUI" />
 		</composed>
 
-		<composed selector='Session' rest:create="true" rest:read="true"
-			rest:update="true" rest:delete="true">
-			<ref selector='assignment' m:href='Assignment' />
-			<moment selector='startTime' />
-			<int selector='duration' />
-			<text selector='sessionToken' />
-			<mapped selector="devices">
-				<ref selector="device" m:href="Device" />
-			</mapped>
-			<indexed selector='commands'>
-				<ref selector="command" m:href="DeviceCommand" />
+		<composed selector="Session">
+			<ref m:href="Assignment" selector="assignment" />
+			<moment selector="startTime" />
+			<int selector="duration" />
+			<text selector="sessionToken" />
+
+			<indexed selector="commands">
+				<ref m:href="DeviceCommand" selector="command" />
 			</indexed>
-<!-- 			<ref selector="data" m:href="SessionData" /> -->
+			<!-- <ref selector="data" m:href="SessionData" /> -->
+			<ref m:href="Station" selector="station" />
 		</composed>
 
-		<composed selector='Device' rest:read="true" rest:update="true">
-			<text selector='name' />
-			<ref selector="owner" m:href="Person" />
+		<composed selector="Device">
+			<text selector="name" />
+			<ref m:href="Person" selector="owner" />
 			<indexed selector="sharers">
-				<ref selector="sharer" m:href="Person" />
+				<ref m:href="Person" selector="sharer" />
 			</indexed>
-			<indexed selector='deviceUIs'>
-				<ref selector='deviceUI' m:href='DeviceUI' />
-			</indexed>
-		</composed>
-				
-		<composed selector='DeviceUI'>
-			<text selector='name' />
-			<text selector='url' />
-		</composed>
-		
-<!-- 		<composed selector='SessionData'> -->
-<!-- 			<mapped selector='devices'> -->
-<!-- 				<ref selector='device' m:href='SessionDeviceData' /> -->
-<!-- 			</mapped> -->
-<!-- 		</composed> -->
-		
-<!-- 		<composed selector='SessionDeviceData'> -->
-<!-- 			<indexed selector='commands'> -->
-<!-- 				<ref selector="command" m:href='DeviceCommand' /> -->
-<!-- 			</indexed> -->
-<!-- 		</composed> -->
-		
-		<composed selector='DeviceCommand'>
-			<ref selector='device' m:href='Device' />
-			<ref selector='command' m:href='DeviceIO' />
-			<indexed selector='states'>
-				<ref selector='state' m:href='DeviceIO' />
+			<indexed selector="deviceUIs">
+				<ref m:href="DeviceUI" selector="deviceUI" />
 			</indexed>
 		</composed>
-		
-		<composed selector='DeviceIO'>
-			<text selector='json' />
-			<int selector='unixtime' />
+
+		<composed selector="DeviceUI">
+			<text selector="name" />
+			<text selector="url" />
+			<text selector="layout" />
+			<indexed selector="keys">
+				<text selector="key" />
+			</indexed>
 		</composed>
-		
-		
-<!-- 		<composed selector='DeviceData' > -->
-<!-- 			<ref selector='device' m:href='Device' /> -->
-			
-<!-- 			<mapped selector="sessionStates"> -->
-<!-- 				<mapped selector="time"> -->
-<!-- 					<ref selector="data" m:href="DeviceIO" /> -->
-<!-- 				</mapped> -->
-<!-- 			</mapped> -->
-			
-<!-- 			<mapped selector="sessionCommands"> -->
-<!-- 				<mapped selector="time"> -->
-<!-- 					<ref selector="data" m:href="DeviceIO" /> -->
-<!-- 				</mapped> -->
-<!-- 			</mapped> -->
 
-<!-- 		</composed> -->
-		
-<!-- 		<composed selector='Command'> -->
-<!-- 			<ref selector='inputPosition' m:href='Position' /> -->
-<!-- 			<mapped selector='outputPositions'> -->
-<!-- 				<ref selector='outputPosition' m:href="Position" /> -->
-<!-- 			</mapped> -->
-<!-- 		</composed> -->
 
-<!-- 		<composed selector='Position'> -->
-<!-- 			<num selector='endEffectorWidth' /> -->
-<!-- 			<ref selector='jointAngels' m:href='JointAngles' /> -->
-<!-- 			<ref selector='pose' m:href='Pose' /> -->
-<!-- 			<ref selector='pid' m:href='PID' /> -->
-<!-- 			<moment selector='timestamp' /> -->
-<!-- 		</composed> -->
+		<composed selector="DeviceCommand">
+			<ref m:href="Device" selector="device" />
+			<ref m:href="DeviceIO" selector="command" />
+			<indexed selector="states">
+				<ref m:href="DeviceIO" selector="state" />
+			</indexed>
+		</composed>
 
-<!-- 		<composed selector='PID'> -->
-<!-- 			<num selector='p' /> -->
-<!-- 			<num selector='i' /> -->
-<!-- 			<num selector='d' /> -->
-<!-- 		</composed> -->
+		<composed selector="DeviceIO">
+			<text selector="json" />
+			<int selector="unixtime" />
+		</composed>
 
-<!-- 		<composed selector='JointAngles'> -->
-<!-- 			<num selector='joint1' /> -->
-<!-- 			<num selector='joint2' /> -->
-<!-- 			<num selector='joint3' /> -->
-<!-- 			<num selector='joint4' /> -->
-<!-- 			<num selector='joint5' /> -->
-<!-- 			<num selector='joint6' /> -->
-<!-- 		</composed> -->
-
-<!-- 		<composed selector='Pose'> -->
-<!-- 			<ref selector='position' m:href='Point' /> -->
-<!-- 			<ref selector='orientation' m:href='Quaternion' /> -->
-<!-- 		</composed> -->
-
-<!-- 		<composed selector='Point'> -->
-<!-- 			<num selector='x' /> -->
-<!-- 			<num selector='y' /> -->
-<!-- 			<num selector='z' /> -->
-<!-- 		</composed> -->
-
-<!-- 		<composed selector='Quaternion'> -->
-<!-- 			<num selector='x' /> -->
-<!-- 			<num selector='y' /> -->
-<!-- 			<num selector='z' /> -->
-<!-- 			<num selector='w' /> -->
-<!-- 		</composed> -->
+		<composed selector="Station">
+			<text selector="name" />
+			<mapped selector="devices">
+				<ref m:href="Device" selector="device" />
+			</mapped>
+		</composed>
 	</model>
 </schema>

@@ -1,4 +1,4 @@
-package net.realmproject.model.tests;
+package net.realmproject.model.utils;
 
 
 import java.io.File;
@@ -7,7 +7,6 @@ import java.lang.reflect.Method;
 import java.util.Date;
 
 import net.objectof.aggr.Listing;
-import net.objectof.aggr.Mapping;
 import net.objectof.model.Package;
 import net.objectof.model.Transaction;
 import net.objectof.model.impl.IBaseMetamodel;
@@ -119,7 +118,6 @@ public class CreateFreshRealmRepo {
         Assignment a = (Assignment) t.create("Assignment");
         // Assignment a = (Assignment) t.retrieve("Assignment", "1");
         a.setCourse((Course) t.retrieve("Course", "1"));
-        a.setId("Lab Exercise 1");
         a.setName("Creating a Trajectory");
         // a.setDescription(null);
         // a.setStartDate(new IMoment("2014-09-01"));
@@ -130,7 +128,6 @@ public class CreateFreshRealmRepo {
         Assignment a = (Assignment) t.create("Assignment");
         // Assignment a = (Assignment) t.retrieve("Assignment", "2");
         a.setCourse((Course) t.retrieve("Course", "1"));
-        a.setId("Lab Exercise 2");
         a.setName("Forward Kinematics");
         // a.setDescription("This is the description for the forward kinematics Assignment.");
         // a.setStartDate(new IMoment("2014-09-01"));
@@ -152,7 +149,6 @@ public class CreateFreshRealmRepo {
         Assignment a = (Assignment) t.create("Assignment");
         // Assignment a = (Assignment) t.retrieve("Assignment", "1");
         a.setCourse((Course) t.retrieve("Course", "1"));
-        a.setId("Lab Exercise 4");
         a.setName("Dynamic Respose");
         // a.setDescription("This is the description for the dynamic response and control Assignment.");
         // a.setStartDate(new IMoment("2014-09-01"));
@@ -165,10 +161,6 @@ public class CreateFreshRealmRepo {
         // s.setAssignment((Assignment) t.retrieve("Assignment", "1"));
         s.setDuration(129600L); // Three months
         // s.setStartTime(new IMoment("2014-08-06T15:00:00Z"));
-        Mapping<String, Device> devices = s.getDevices();
-        devices.clear();
-        devices.put("mico", (Device) t.retrieve("Device", "3"));
-        s.setDevices(devices);
         // s.setSessionToken("jGTg-rev9-JhRM");
     }
 

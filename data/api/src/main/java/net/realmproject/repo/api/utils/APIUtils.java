@@ -18,11 +18,10 @@ import javax.servlet.http.HttpServletResponse;
 import net.objectof.corc.web.v2.HttpRequest;
 import net.objectof.model.Resource;
 import net.objectof.model.Transaction;
-import net.objectof.model.impl.aggr.IMapped;
 import net.objectof.model.query.IQuery;
 import net.realmproject.model.schema.Assignment;
-import net.realmproject.model.schema.Device;
 import net.realmproject.model.schema.Session;
+import net.realmproject.model.schema.Station;
 import net.realmproject.util.RealmCorc;
 import net.realmproject.util.model.Tokens;
 
@@ -35,7 +34,6 @@ import datatypes.CreateSession;
 public class APIUtils {
 
     static final long ONE_MINUTE_IN_MILLIS = 60000; // Milliseconds
-
 
     public static String getLabel(String kindLabel) {
 
@@ -128,14 +126,14 @@ public class APIUtils {
         }
     }
 
-    public static void createSession(Transaction tx, Assignment assignment, Date date, List<Device> devcies,
+    public static void createSession(Transaction tx, Assignment assignment, Date date, Station station,
             CreateSession request, String type) {
         try {
             if (type.equals("single")) {
 
                 Date startTime = concatDateTime(date, request.time.single.start);
 
-                createSingleSession(tx, assignment, startTime, request.time.single.duration, devcies);
+                createSingleSession(tx, assignment, startTime, request.time.single.duration, station);
             } else if (type.equals("bulk")) {
 
                 long gapBetweenSessions = 10 * ONE_MINUTE_IN_MILLIS;
@@ -150,7 +148,7 @@ public class APIUtils {
                         + ", currnetTime: " + currnetTime);
 
                 while (currnetTime + durationInMilli <= endTimeInMilli) {
-                    createSingleSession(tx, assignment, new Date(currnetTime), request.time.bulk.duration, devcies);
+                    createSingleSession(tx, assignment, new Date(currnetTime), request.time.bulk.duration, station);
                     currnetTime += durationInMilli + gapBetweenSessions;
 
                 }
@@ -171,20 +169,14 @@ public class APIUtils {
     }
 
     public static void createSingleSession(Transaction tx, Assignment assignment, Date startTime, long duration,
-            List<Device> devices) {
-
-        IMapped<Device> sessionDevices = tx.create("Session.devices");
-        for (Device device : devices) {
-            System.out.println(device.getUniqueName());
-            sessionDevices.put(device.getName(), device);
-        }
+            Station station) {
 
         Session session = tx.create("Session");
         session.setAssignment(assignment);
         session.setStartTime(startTime);
         session.setDuration(duration);
         session.setSessionToken(Tokens.create());
-        session.setDevices(sessionDevices);
+        session.setStation(station);
         session.setCommands(tx.create("Session.commands"));
     }
 
@@ -264,7 +256,7 @@ public class APIUtils {
         Session session = tx.retrieve("Session", sessionLabel);
         session.setAssignment(null);
         session.setCommands(null);
-        session.setDevices(null);
+        session.setStation(null);
         session.setDuration(null);
         session.setSessionToken(null);
         session.setStartTime(null);

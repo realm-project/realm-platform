@@ -1,4 +1,4 @@
-package net.realmproject.model.tests;
+package net.realmproject.model.utils;
 
 import net.objectof.aggr.Listing;
 import net.objectof.model.Package;

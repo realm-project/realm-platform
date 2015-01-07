@@ -1,4 +1,4 @@
-package net.realmproject.model.tests;
+package net.realmproject.model.utils;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;

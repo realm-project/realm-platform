@@ -20,6 +20,7 @@ import net.realmproject.model.schema.Course;
 import net.realmproject.model.schema.Device;
 import net.realmproject.model.schema.Person;
 import net.realmproject.model.schema.Session;
+import net.realmproject.model.schema.Station;
 import net.realmproject.repo.api.utils.APIUtils;
 import net.realmproject.util.RealmCorc;
 import net.realmproject.util.model.Assignments;
@@ -260,7 +261,6 @@ public class ITeacherAPIReceiver extends IFn {
         APIUtils.addQueryResultToResponse(students, request);
     }
 
-
     /**
      * Is called by a teacher user to get the list of sessions of an assignment.
      * The assignment should belongs to a course that is taught by the teacher
@@ -312,8 +312,8 @@ public class ITeacherAPIReceiver extends IFn {
     @Selector
     public void getSessionsForDeviceOwner(Person teacher, HttpRequest request) {
 
-    	Transaction tx = teacher.tx().getPackage().connect(teacher);
-    	
+        Transaction tx = teacher.tx().getPackage().connect(teacher);
+
         try {
 
             // The device's label is included in the request and the
@@ -367,7 +367,7 @@ public class ITeacherAPIReceiver extends IFn {
             e.printStackTrace();
         }
         finally {
-        	tx.close();
+            tx.close();
         }
     }
 
@@ -445,10 +445,10 @@ public class ITeacherAPIReceiver extends IFn {
     @Selector
     public void createSession(Person teacher, HttpRequest request) {
 
-    	Transaction tx = teacher.tx().getPackage().connect(teacher);
-    	
+        Transaction tx = teacher.tx().getPackage().connect(teacher);
+
         try {
-            
+
             String createSessionType = null;
 
             // Create a CreateSession object using the JSON body of the request
@@ -462,7 +462,7 @@ public class ITeacherAPIReceiver extends IFn {
                 return;
             }
 
-            // Retrieve label of assignment from sessionRequest
+            // Retrieve assignment
             Assignment asn = null;
             String asnLabel = APIUtils.getLabel(sessionRequest.assignment);
 
@@ -470,34 +470,21 @@ public class ITeacherAPIReceiver extends IFn {
                 request.getHttpResponse().sendError(400, "assignment's label is null!");
                 return;
             }
-
-            // Retrieve assignment using asnLabel
             asn = tx.retrieve("Assignment", asnLabel);
-
             if (asn == null) {
                 request.getHttpResponse().sendError(400, "assignment is null!");
                 return;
             }
 
-            // Retrieve devices
-            List<Device> devices = new ArrayList<Device>();
-            for (String deviceKindLabel : sessionRequest.devices) {
-                // Device device = (Device) APIUtils.getResourceByName(tx,
-                // "Device", deviceName);
-                Device device = null;
-                String deviceLabel = APIUtils.getLabel(deviceKindLabel);
-
-                if (deviceLabel != null) device = tx.retrieve("Device", deviceLabel);
-
-                if (device == null) {
-                    request.getHttpResponse().sendError(400, "devices are null!");
-                    return;
-                }
-                devices.add(device);
+            // Retrieve station
+            String stationLabel = APIUtils.getLabel(sessionRequest.station);
+            if (stationLabel == null) {
+                request.getHttpResponse().sendError(400, "assignment's label is null!");
+                return;
             }
-
-            if (devices.isEmpty()) {
-                request.getHttpResponse().sendError(400, "devices is empty!");
+            Station station = tx.retrieve("Station", stationLabel);
+            if (station == null) {
+                request.getHttpResponse().sendError(400, "station is null!");
                 return;
             }
 
@@ -512,7 +499,7 @@ public class ITeacherAPIReceiver extends IFn {
                         else // sessionRequest.time.bulk != null
                         createSessionType = "bulk";
 
-                        APIUtils.createSession(tx, asn, date, devices, sessionRequest, createSessionType);
+                        APIUtils.createSession(tx, asn, date, station, sessionRequest, createSessionType);
                     }
                 }
             } else {// sessionRequest.date.list != null
@@ -524,7 +511,7 @@ public class ITeacherAPIReceiver extends IFn {
                     else // sessionRequest.time.bulk != null
                     createSessionType = "bulk";
 
-                    APIUtils.createSession(tx, asn, date, devices, sessionRequest, createSessionType);
+                    APIUtils.createSession(tx, asn, date, station, sessionRequest, createSessionType);
                 }
             }
 
@@ -534,7 +521,7 @@ public class ITeacherAPIReceiver extends IFn {
             e.printStackTrace();
         }
         finally {
-        	tx.close();
+            tx.close();
         }
     }
 }

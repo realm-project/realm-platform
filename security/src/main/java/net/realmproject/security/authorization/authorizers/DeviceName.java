@@ -1,7 +1,5 @@
 package net.realmproject.security.authorization.authorizers;
 
-import java.util.Calendar;
-import java.util.Date;
 
 import net.objectof.corc.Action;
 import net.objectof.corc.web.v2.HttpRequest;
@@ -15,30 +13,30 @@ import net.realmproject.util.model.Sessions;
 
 
 /**
- * Reads the <b>next part</b> of the URL and compares it 
- * against the names of the devices in the active sessions 
- * for the user. If no device with a matching name is 
- * found in an active session, the user is denied access.
+ * Reads the <b>next part</b> of the URL and compares it against the names of
+ * the devices in the active sessions for the user. If no device with a matching
+ * name is found in an active session, the user is denied access.
+ * 
  * @author NAS
  *
  */
 public class DeviceName implements Authorizer {
 
-	@Override
-	public boolean authorize(Action action, HttpRequest request, Person person) {
-		
-		String deviceName = RealmCorc.getNextPathElement(action.getName(), request.getHttpRequest());
-				
-		for (Session session : Persons.getActiveSessions(person)) {
-			if (!Sessions.isLive(session)) continue;
-			
-			for (Device device : session.getDevices()) {
-    			if (device.getName().equals(deviceName)) { return true; }
-			}
-		}
-		
-		return false;
-		
-	}
+    @Override
+    public boolean authorize(Action action, HttpRequest request, Person person) {
+
+        String deviceName = RealmCorc.getNextPathElement(action.getName(), request.getHttpRequest());
+
+        for (Session session : Persons.getActiveSessions(person)) {
+            if (!Sessions.isLive(session)) continue;
+
+            for (Device device : session.getStation().getDevices()) {
+                if (device.getName().equals(deviceName)) { return true; }
+            }
+        }
+
+        return false;
+
+    }
 
 }
