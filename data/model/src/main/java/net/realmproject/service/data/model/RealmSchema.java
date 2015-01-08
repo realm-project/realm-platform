@@ -9,7 +9,7 @@ import java.io.InputStream;
 import java.io.Writer;
 import java.net.URL;
 
-import net.objectof.actof.connector.SQLiteConnector;
+import net.objectof.connector.SQLiteConnector;
 import net.objectof.model.Package;
 
 import org.apache.commons.io.IOUtils;

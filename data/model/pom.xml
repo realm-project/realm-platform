@@ -42,9 +42,9 @@
   		<version>2.4</version>
   	</dependency>
   	<dependency>
-  		<groupId>net.objectof.actof</groupId>
-  		<artifactId>actof-connector</artifactId>
-  		<version>0.0.1-SNAPSHOT</version>
+  		<groupId>objectof</groupId>
+  		<artifactId>objectof-connector</artifactId>
+  		<version>0.1</version>
   	</dependency>
   </dependencies>
 </project>
