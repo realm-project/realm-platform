@@ -1,4 +1,4 @@
-package tests;
+package net.objectof.connector.testing;
 
 
 import java.io.File;
@@ -12,7 +12,7 @@ import net.objectof.connector.SQLiteConnector;
 import net.objectof.model.Package;
 
 
-public class TestingRepo {
+public class TempSQLiteRepo {
 
     public static Package testPackage() throws URISyntaxException, IOException, ConnectorException {
         return forSchema(TEST_SCHEMA);
@@ -21,7 +21,7 @@ public class TestingRepo {
     public static String TEST_SCHEMA = "/packages/test.xml";
 
     public static Package forSchema(String relativeFilename) throws URISyntaxException, IOException, ConnectorException {
-        URL schemaURL = TestingRepo.class.getResource(relativeFilename);
+        URL schemaURL = TempSQLiteRepo.class.getResource(relativeFilename);
         File schemaFile = new File(schemaURL.toURI());
         return forSchema(schemaFile);
     }

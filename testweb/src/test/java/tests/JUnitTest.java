@@ -5,6 +5,7 @@ import static org.junit.Assert.assertTrue;
 
 import java.io.IOException;
 
+import net.objectof.connector.testing.TempSQLiteRepo;
 import net.objectof.model.Resource;
 import net.objectof.model.Transaction;
 import net.objectof.model.impl.aggr.IIndexed;
@@ -18,14 +19,14 @@ public class JUnitTest {
 
     @Test
     public void isIndexedNull() throws Exception {
-        Transaction t = TestingRepo.testPackage().connect(this);
+        Transaction t = TempSQLiteRepo.testPackage().connect(this);
         Person person = t.create("Person");
         assertTrue("Person.locations should be null.", person.getLocations() == null);
     }
 
     @Test
     public void testIndexOfIndexed() throws Exception {
-        Transaction t = TestingRepo.testPackage().connect(this);
+        Transaction t = TempSQLiteRepo.testPackage().connect(this);
         int j = 0;
         IIndexed<Location> locations = t.create("Person.locations");
         for (int i = 0; i < 10; i++) {

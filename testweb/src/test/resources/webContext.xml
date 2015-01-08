@@ -9,33 +9,16 @@
 				</entry>
 				<entry key="person">
 					<bean id="repo" class="net.objectof.model.corc.IRepoHandler">
-						<!-- <constructor-arg ref="database"/> -->
-						<!-- <constructor-arg value="test.objectof.org:1405/test/person" /> -->
-						<!-- <constructor-arg ref="db-connector" /> -->
 						<constructor-arg ref="testPackage" />
 					</bean>
 				</entry>
 			</map>
 		</constructor-arg>
 	</bean>
-	
-<!-- 	<bean id="database" class="net.objectof.repo.impl.sql.ISqlDb"> -->
-<!-- 		<constructor-arg value="testDatabase" /> -->
-<!-- 	</bean> -->
 
 	<bean id="testPackage" class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
-		<property name="targetClass" value="tests.TestingRepo" />
+		<property name="targetClass" value="net.objectof.connector.testing.TempSQLiteRepo" />
 		<property name="targetMethod" value="testPackage" />
 	</bean>
 
-
-	<!-- <bean id="db-connector" class="net.objectof.connector.SQLiteConnector"> -->
-	<!-- <constructor-arg> -->
-	<!-- <map> -->
-	<!-- <entry key="Filename" value="#{UUID.randomUUID.toString}"/> -->
-	<!-- <entry key="Version" value="1"/> -->
-	<!-- <entry key="Repository" value="TestRepository"/> -->
-	<!-- </map> -->
-	<!-- </constructor-arg> -->
-	<!-- </bean> -->
 </beans>

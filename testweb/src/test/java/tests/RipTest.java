@@ -12,6 +12,7 @@ import java.util.List;
 import junit.framework.Assert;
 import net.objectof.aggr.Aggregate;
 import net.objectof.aggr.Composite;
+import net.objectof.connector.testing.TempSQLiteRepo;
 import net.objectof.model.Package;
 import net.objectof.model.Resource;
 import net.objectof.model.Transaction;
@@ -239,6 +240,6 @@ public class RipTest {
     }
 
     protected Package repo() throws Exception {
-        return TestingRepo.testPackage();
+        return TempSQLiteRepo.testPackage();
     }
 }

@@ -10,6 +10,7 @@ import java.util.List;
 
 import net.objectof.aggr.Aggregate;
 import net.objectof.aggr.Composite;
+import net.objectof.connector.testing.TempSQLiteRepo;
 import net.objectof.model.Package;
 import net.objectof.model.Resource;
 import net.objectof.model.Transaction;
@@ -188,6 +189,6 @@ public class NestingTest {
     }
 
     protected Package repo() throws Exception {
-        return TestingRepo.testPackage();
+        return TempSQLiteRepo.testPackage();
     }
 }
