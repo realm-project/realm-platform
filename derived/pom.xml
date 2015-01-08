@@ -29,12 +29,12 @@
 					<dependency>
 						<groupId>objectof</groupId>
 						<artifactId>objectof-model</artifactId>
-						<version>0.0.1-SNAPSHOT</version>
+						<version>0.1</version>
 					</dependency>
 				</dependencies>
 				<groupId>objectof</groupId>
 				<artifactId>objectof-maven-plugin</artifactId>
-				<version>0.0.1-SNAPSHOT</version>
+				<version>0.1</version>
 				<configuration>
 					<file>GenerationContext.xml</file>
 				</configuration>
@@ -63,12 +63,12 @@
 		<dependency>
 			<groupId>objectof</groupId>
 			<artifactId>objectof-model</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
+			<version>0.1</version>
 		</dependency>
 		<dependency>
 			<groupId>objectof</groupId>
 			<artifactId>objectof-maven-plugin</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
+			<version>0.1</version>
 			<type>maven-plugin</type>
 		</dependency>
 	</dependencies>
