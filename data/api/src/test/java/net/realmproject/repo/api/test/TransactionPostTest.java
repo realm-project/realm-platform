@@ -4,18 +4,13 @@ package net.realmproject.repo.api.test;
 import net.objectof.aggr.Listing;
 import net.objectof.model.Package;
 import net.objectof.model.Transaction;
-import net.objectof.repo.impl.sql.ISqlDb;
 import net.realmproject.model.schema.Person;
 import net.realmproject.model.schema.Session;
+import net.realmproject.service.data.model.RealmSchema;
 import net.realmproject.util.model.Sessions;
 
 
 public class TransactionPostTest {
-
-    public static Package repo() {
-        ISqlDb db = new ISqlDb("realmDatabase");
-        return db.getPackage("realmproject.net:1438/dev");
-    }
 
     public static void joinSession(Person person, String token) {
 
@@ -68,8 +63,8 @@ public class TransactionPostTest {
         person.tx().post();
     }
 
-    private static void createPersons() {
-        Package repo = repo();
+    private static void createPersons() throws Exception {
+        Package repo = RealmSchema.getTestPackage();
         Transaction t = repo.connect("Azade");
 
         for (int i = 11; i < 21; i++) {
@@ -85,9 +80,9 @@ public class TransactionPostTest {
             System.out.println(s.getUniqueName());
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
 
-        Package repo = repo();
+        Package repo = RealmSchema.getTestPackage();
 
         // createPersons();
 
@@ -125,7 +120,6 @@ public class TransactionPostTest {
         // System.out.println("With second tx: sessions is not null!");
         // printSessions(person.getSessions());
         // }
-
 
         // // Test add a session to a person
         // System.out.println(person.getUniqueName());

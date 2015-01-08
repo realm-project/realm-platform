@@ -1,4 +1,4 @@
-package net.realmproject.model.utils;
+package net.realmproject.model.tests;
 
 import java.io.IOException;
 import java.io.OutputStreamWriter;

@@ -6,7 +6,6 @@ import net.objectof.model.Transaction;
 import net.objectof.model.impl.aggr.IMapped;
 import net.realmproject.model.schema.Device;
 import net.realmproject.model.schema.Station;
-import net.realmproject.model.utils.PrintObject;
 import net.realmproject.service.data.model.RealmSchema;
 
 import org.junit.Test;
