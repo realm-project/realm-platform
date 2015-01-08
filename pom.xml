@@ -33,5 +33,6 @@
     <module>testweb</module>
     <module>util</module>
     <module>web</module>
+    <module>connector</module>
   </modules>
 </project>

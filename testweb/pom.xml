@@ -95,5 +95,10 @@
 			<artifactId>objectof-web</artifactId>
 			<version>0.1</version>
 		</dependency>
+		<dependency>
+			<groupId>objectof</groupId>
+			<artifactId>objectof-connector</artifactId>
+			<version>0.1</version>
+		</dependency>
 	</dependencies>
 </project>
