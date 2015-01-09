@@ -1,0 +1,53 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
+
+
+	<!-- Repository -->
+	<!-- TODO: Custom security on this? -->
+	<bean id="platform-authn-repository" class="net.realmproject.security.authentication.ISessionValidator">
+		<constructor-arg ref="platform-authz-repository" />
+		<constructor-arg ref="application-database" />
+	</bean>
+
+	<bean id="platform-authz-repository" class="net.realmproject.security.authorization.IAuthorizationHandler">
+		<constructor-arg ref="platform-repository" />
+		<constructor-arg ref="application-database" />
+		<constructor-arg ref="platform-repository-authorizer" />
+	</bean>
+
+	<bean id="platform-repository" class="net.objectof.model.corc.IRepoHandler">
+		<constructor-arg ref="application-database" />
+	</bean>
+	
+	<bean id="platform-repository-authorizer" class="net.realmproject.security.authorization.authorizers.BooleanOr">
+		<constructor-arg><list>
+			
+			<!-- Students -->
+			<bean class="net.realmproject.security.authorization.authorizers.BooleanAnd">
+				<constructor-arg><list>
+					<ref bean="authorizer-role-student" />
+					<bean class="net.realmproject.security.authorization.authorizers.StudentRecord">
+						<constructor-arg ref="dbrepo" />
+					</bean>
+				</list></constructor-arg>
+			</bean>
+			
+			<!-- Teachers -->
+			<bean class="net.realmproject.security.authorization.authorizers.BooleanAnd">
+				<constructor-arg><list>
+					<ref bean="authorizer-role-teacher" />
+					<bean class="net.realmproject.security.authorization.authorizers.TeacherRecord">
+						<constructor-arg ref="dbrepo" />
+					</bean>
+				</list></constructor-arg>
+			</bean>
+			
+			<!-- Admins -->
+			<ref bean="authorizer-role-admin" />
+			
+		</list></constructor-arg>
+	</bean>
+	
+
+</beans>
