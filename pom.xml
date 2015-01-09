@@ -7,7 +7,9 @@
   <version>0.0.1-SNAPSHOT</version>
   <packaging>pom</packaging>
   <modules>
-    <module>data</module>
+    <module>api</module>
+    <module>model</module>
+    <module>derived</module>
     <module>util</module>
     <module>corc</module>
     <module>security</module>
