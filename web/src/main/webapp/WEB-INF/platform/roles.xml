@@ -3,15 +3,15 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
 
 
-	<bean id="platform-role-teacher" class="net.realmproject.security.authorization.authorizers.Role">
+	<bean id="platform-role-teacher" class="net.realmproject.platform.security.authorization.authorizers.Role">
 		<constructor-arg value="teacher" />
 	</bean>
 	
-	<bean id="platform-role-student" class="net.realmproject.security.authorization.authorizers.Role">
+	<bean id="platform-role-student" class="net.realmproject.platform.security.authorization.authorizers.Role">
 		<constructor-arg value="student" />
 	</bean>
 	
-	<bean id="platform-role-admin" class="net.realmproject.security.authorization.authorizers.Role">
+	<bean id="platform-role-admin" class="net.realmproject.platform.security.authorization.authorizers.Role">
 		<constructor-arg value="admin" />
 	</bean>
 	

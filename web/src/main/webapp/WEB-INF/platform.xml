@@ -11,7 +11,7 @@
 		<constructor-arg ref="realm-router" />
 	</bean>
 
-	<bean id="platform-router" class="net.realmproject.corc.IPathRouter">
+	<bean id="platform-router" class="net.realmproject.platform.corc.IPathRouter">
 		<constructor-arg value="1" />
 		<constructor-arg>
 			<map>

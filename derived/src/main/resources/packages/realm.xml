@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <schema xmlns:m="ans://objectof.net:1401/facets/model"
-	xmlns:rest="ans://realmproject.net:1401/rest/model" id="realmproject.net:1502/model/schema"
+	xmlns:rest="ans://realmproject.net:1401/rest/model" id="realmproject.net:1502/platform/schema"
 	version="0.0.1-SNAPSHOT">
 	<model>
 		<composed selector="Person">

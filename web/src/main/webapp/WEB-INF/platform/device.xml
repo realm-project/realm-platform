@@ -4,16 +4,16 @@
 
 
 	<!-- Devices -->
-	<bean id="platform-authn-device" class="net.realmproject.security.authentication.ISessionValidator">
+	<bean id="platform-authn-device" class="net.realmproject.platform.security.authentication.ISessionValidator">
 		<constructor-arg ref="platform-authz-devices" />
 		<constructor-arg ref="application-database" />
 	</bean>
 	
-	<bean id="platform-authz-device" class="net.realmproject.security.authorization.IAuthorizationHandler">
+	<bean id="platform-authz-device" class="net.realmproject.platform.security.authorization.IAuthorizationHandler">
 		<constructor-arg ref="application-devices"/>
 		<constructor-arg ref="application-database"/>
 		<constructor-arg>
-			<bean class="net.realmproject.security.authorization.authorizers.DeviceName" />
+			<bean class="net.realmproject.platform.security.authorization.authorizers.DeviceName" />
 		</constructor-arg>
 	</bean>
 

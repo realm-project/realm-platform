@@ -3,13 +3,13 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
 
 	<!-- API -->
-	<bean id="platform-authn-api" class="net.realmproject.security.authentication.ISessionValidator">
+	<bean id="platform-authn-api" class="net.realmproject.platform.security.authentication.ISessionValidator">
 		<constructor-arg ref="platform-authz-api" />
 		<constructor-arg ref="application-database" />
 	</bean>
 
 
-	<bean id="platform-api" class="net.realmproject.corc.IPathRouter">
+	<bean id="platform-api" class="net.realmproject.platform.corc.IPathRouter">
 		<constructor-arg>
 			<map>
 				<entry key="common"  value-ref="platform-api-common"/>
@@ -23,30 +23,30 @@
 	
 	
 	<!-- Common API -->
-	<bean id="platform-api-common" class="net.realmproject.repo.api.IReceiverHandler">
+	<bean id="platform-api-common" class="net.realmproject.platform.api.IReceiverHandler">
 		<constructor-arg ref="application-database" />
 		<constructor-arg>
-			<bean class="net.realmproject.repo.api.ICommonAPIReceiver" />
+			<bean class="net.realmproject.platform.api.ICommonAPIReceiver" />
 		</constructor-arg>
 	</bean>
 
 	
 	<!-- Student API -->
-	<bean id="platform-api-student" class="net.realmproject.repo.api.IReceiverHandler">
+	<bean id="platform-api-student" class="net.realmproject.platform.api.IReceiverHandler">
 		<constructor-arg ref="application-database" />
 		<constructor-arg>
-			<bean class="net.realmproject.repo.api.IStudentAPIReceiver" />
+			<bean class="net.realmproject.platform.api.IStudentAPIReceiver" />
 		</constructor-arg>
 	</bean>
 
 
 	<!-- Teacher API -->
-	<bean id="platform-api-teacher" class="net.realmproject.security.authorization.IAuthorizationHandler">
+	<bean id="platform-api-teacher" class="net.realmproject.platform.security.authorization.IAuthorizationHandler">
 		<constructor-arg>
-			<bean class="net.realmproject.repo.api.IReceiverHandler">
+			<bean class="net.realmproject.platform.api.IReceiverHandler">
 				<constructor-arg ref="application-database" />
 				<constructor-arg>
-					<bean class="net.realmproject.repo.api.ITeacherAPIReceiver" />
+					<bean class="net.realmproject.platform.api.ITeacherAPIReceiver" />
 				</constructor-arg>
 			</bean>
 		</constructor-arg>
@@ -56,12 +56,12 @@
 	
 
 	<!-- Admin API -->
-	<bean id="platform-api-admin" class="net.realmproject.security.authorization.IAuthorizationHandler">
+	<bean id="platform-api-admin" class="net.realmproject.platform.security.authorization.IAuthorizationHandler">
 		<constructor-arg>
-			<bean class="net.realmproject.repo.api.IReceiverHandler">
+			<bean class="net.realmproject.platform.api.IReceiverHandler">
 				<constructor-arg ref="application-database" />
 				<constructor-arg>
-					<bean class="net.realmproject.repo.api.IAdminAPIReceiver" />
+					<bean class="net.realmproject.platform.api.IAdminAPIReceiver" />
 				</constructor-arg>
 			</bean>
 		</constructor-arg>
