@@ -4,9 +4,9 @@ package net.realmproject.platform.api.test;
 import net.objectof.aggr.Listing;
 import net.objectof.model.Package;
 import net.objectof.model.Transaction;
-import net.realmproject.model.schema.Person;
-import net.realmproject.model.schema.Session;
 import net.realmproject.platform.model.RealmSchema;
+import net.realmproject.platform.schema.Person;
+import net.realmproject.platform.schema.Session;
 import net.realmproject.platform.util.model.Sessions;
 
 

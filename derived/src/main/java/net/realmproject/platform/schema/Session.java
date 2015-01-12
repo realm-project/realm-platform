@@ -1,4 +1,4 @@
-package net.realmproject.model.schema;
+package net.realmproject.platform.schema;
 
 import net.objectof.model.Resource;
 import net.objectof.aggr.Composite;

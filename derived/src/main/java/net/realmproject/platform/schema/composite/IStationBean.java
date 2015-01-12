@@ -1,5 +1,5 @@
-package net.realmproject.model.schema.composite;
-import net.realmproject.model.schema.*;
+package net.realmproject.platform.schema.composite;
+import net.realmproject.platform.schema.*;
 import net.objectof.model.Resource;
 
 @SuppressWarnings("all")

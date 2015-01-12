@@ -3,9 +3,9 @@ package net.realmproject.platform.security.authorization.authorizers;
 
 import net.objectof.corc.Action;
 import net.objectof.corc.web.v2.HttpRequest;
-import net.realmproject.model.schema.Device;
-import net.realmproject.model.schema.Person;
-import net.realmproject.model.schema.Session;
+import net.realmproject.platform.schema.Device;
+import net.realmproject.platform.schema.Person;
+import net.realmproject.platform.schema.Session;
 import net.realmproject.platform.security.authorization.Authorizer;
 import net.realmproject.platform.util.RealmCorc;
 import net.realmproject.platform.util.model.Persons;

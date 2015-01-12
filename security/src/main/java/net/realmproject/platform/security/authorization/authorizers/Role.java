@@ -5,7 +5,7 @@ import java.util.List;
 
 import net.objectof.corc.Action;
 import net.objectof.corc.web.v2.HttpRequest;
-import net.realmproject.model.schema.Person;
+import net.realmproject.platform.schema.Person;
 import net.realmproject.platform.security.authorization.Authorizer;
 
 public class Role implements Authorizer {

@@ -1,14 +1,14 @@
-package net.realmproject.model.schema.composite;
-import net.realmproject.model.schema.*;
+package net.realmproject.platform.schema.composite;
+import net.realmproject.platform.schema.*;
 import net.objectof.model.Resource;
 
 @SuppressWarnings("all")
-@net.objectof.Selector("ICourse")
-public class ICourseBean
+@net.objectof.Selector("IAssignment")
+public class IAssignmentBean
   extends net.objectof.model.impl.aggr.IComposite
-  implements Course
+  implements Assignment
 {
-  public ICourseBean(net.objectof.model.impl.IId aId)
+  public IAssignmentBean(net.objectof.model.impl.IId aId)
   {
     super(aId);
   }
@@ -20,13 +20,13 @@ public class ICourseBean
   {
     _("course", a);
   }
-  public String getId()
+  public Assignment getAssignment()
   {
-    return (String) _("id");
+    return (Assignment) _("assignment");
   }
-  public void setId(String a)
+  public void setAssignment(Assignment a)
   {
-    _("id", a);
+    _("assignment", a);
   }
   public String getName()
   {
@@ -44,13 +44,13 @@ public class ICourseBean
   {
     _("description", a);
   }
-  public net.objectof.aggr.Listing<Person> getTeachers()
+  public net.objectof.aggr.Listing<Void> getDocuments()
   {
-    return (net.objectof.aggr.Listing<Person>) _("teachers");
+    return (net.objectof.aggr.Listing<Void>) _("documents");
   }
-  public void setTeachers(net.objectof.aggr.Listing<Person> a)
+  public void setDocuments(net.objectof.aggr.Listing<Void> a)
   {
-    _("teachers", a);
+    _("documents", a);
   }
   public java.util.Date getStartDate()
   {
@@ -67,6 +67,14 @@ public class ICourseBean
   public void setEndDate(java.util.Date a)
   {
     _("endDate", a);
+  }
+  public DeviceUI getDeviceUI()
+  {
+    return (DeviceUI) _("deviceUI");
+  }
+  public void setDeviceUI(DeviceUI a)
+  {
+    _("deviceUI", a);
   }
 
 }

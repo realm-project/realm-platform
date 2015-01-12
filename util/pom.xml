@@ -4,7 +4,7 @@
 	<groupId>net.realmproject</groupId>
 	<artifactId>realm-platform-util</artifactId>
 	<name>realm-platform-util</name>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.1</version>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
@@ -54,8 +54,8 @@
 		</dependency>
 		<dependency>
 			<groupId>net.realmproject</groupId>
-			<artifactId>realm-platform-data-derived</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
+			<artifactId>realm-platform-derived</artifactId>
+			<version>0.1</version>
 		</dependency>
 		<dependency>
 			<groupId>objectof</groupId>

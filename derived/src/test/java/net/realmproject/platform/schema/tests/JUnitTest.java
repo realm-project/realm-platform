@@ -4,9 +4,9 @@ package net.realmproject.platform.schema.tests;
 import static org.junit.Assert.assertTrue;
 import net.objectof.model.Transaction;
 import net.objectof.model.impl.aggr.IMapped;
-import net.realmproject.model.schema.Device;
-import net.realmproject.model.schema.Station;
 import net.realmproject.platform.model.RealmSchema;
+import net.realmproject.platform.schema.Device;
+import net.realmproject.platform.schema.Station;
 
 import org.junit.Test;
 

@@ -6,11 +6,11 @@ import java.io.IOException;
 import net.objectof.Selector;
 import net.objectof.corc.web.v2.HttpRequest;
 import net.objectof.rt.impl.IFn;
-import net.realmproject.model.schema.Assignment;
-import net.realmproject.model.schema.Course;
-import net.realmproject.model.schema.Person;
-import net.realmproject.model.schema.Session;
 import net.realmproject.platform.api.utils.APIUtils;
+import net.realmproject.platform.schema.Assignment;
+import net.realmproject.platform.schema.Course;
+import net.realmproject.platform.schema.Person;
+import net.realmproject.platform.schema.Session;
 import net.realmproject.platform.util.model.Courses;
 import net.realmproject.platform.util.model.Sessions;
 

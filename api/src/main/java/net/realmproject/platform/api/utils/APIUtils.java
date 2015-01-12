@@ -19,10 +19,10 @@ import net.objectof.corc.web.v2.HttpRequest;
 import net.objectof.model.Resource;
 import net.objectof.model.Transaction;
 import net.objectof.model.query.IQuery;
-import net.realmproject.model.schema.Assignment;
-import net.realmproject.model.schema.Session;
-import net.realmproject.model.schema.Station;
 import net.realmproject.platform.api.datatypes.CreateSession;
+import net.realmproject.platform.schema.Assignment;
+import net.realmproject.platform.schema.Session;
+import net.realmproject.platform.schema.Station;
 import net.realmproject.platform.util.RealmCorc;
 import net.realmproject.platform.util.model.Tokens;
 

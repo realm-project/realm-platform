@@ -5,8 +5,8 @@ import net.objectof.InvalidNameException;
 import net.objectof.Receiver;
 import net.objectof.corc.Action;
 import net.objectof.corc.web.v2.HttpRequest;
-import net.realmproject.model.schema.Person;
 import net.realmproject.platform.corc.DatabaseRepository;
+import net.realmproject.platform.schema.Person;
 import net.realmproject.platform.security.ISessionHandler;
 import net.realmproject.platform.util.RealmCorc;
 import net.realmproject.platform.util.RealmLog;
@@ -44,7 +44,6 @@ public class IReceiverHandler extends ISessionHandler {
         catch (InvalidNameException e) {
             request.getHttpResponse().sendError(400);
         }
-
 
     }
 
