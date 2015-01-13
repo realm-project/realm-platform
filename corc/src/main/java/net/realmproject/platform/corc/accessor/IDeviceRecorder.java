@@ -3,13 +3,13 @@ package net.realmproject.platform.corc.accessor;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
+import net.objectof.aggr.Composite;
 import net.objectof.connector.Connector;
 import net.objectof.connector.ConnectorException;
+import net.objectof.model.Id;
 import net.objectof.model.Package;
 import net.objectof.model.Transaction;
 import net.objectof.model.impl.aggr.IIndexed;
@@ -32,21 +32,35 @@ import org.apache.commons.logging.Log;
 
 public class IDeviceRecorder implements DeviceRecorder {
 
-    final long STATE_INTERVAL = 100;
+    final static int DEFAULT_COMMIT_INTERVAL = 1;
 
+    int interval = DEFAULT_COMMIT_INTERVAL;
+    String idString;
+    Id<Composite> id;
     Package repo;
     private Transaction recordStateTx;
-    Map<String, Long> recordTimestamps;
-
     private boolean modified = false;
 
     private Log log = RealmLog.getLog();
 
-    public IDeviceRecorder(Connector connector) throws ConnectorException {
+    public IDeviceRecorder(Connector connector, String idString) throws ConnectorException {
+        this(connector, idString, DEFAULT_COMMIT_INTERVAL);
+    }
+
+    public IDeviceRecorder(Connector connector, String idString, int interval) throws ConnectorException {
+        this.idString = idString;
+        this.interval = interval;
         repo = connector.getPackage();
-        recordTimestamps = new HashMap<>();
-        recordStateTx = repo.connect(getClass().getName());
-        RealmThread.getThreadPool().scheduleAtFixedRate(this::commitStateTx, 10, 10, TimeUnit.SECONDS);
+        recordStateTx = createStateTx();
+
+        Device device = RealmRepo.queryHead(recordStateTx, "Device", new IQuery("name", idString));
+        id = device.id();
+
+        RealmThread.getThreadPool().scheduleAtFixedRate(this::commitStateTx, interval, interval, TimeUnit.SECONDS);
+    }
+
+    private Transaction createStateTx() {
+        return repo.connect(getClass().getName() + " - " + id.getUniqueName());
     }
 
     private synchronized void commitStateTx() {
@@ -58,13 +72,13 @@ public class IDeviceRecorder implements DeviceRecorder {
         log.debug("DeviceRecorder: Commit required, posting...");
         recordStateTx.post();
         recordStateTx.close();
-        recordStateTx = repo.connect(getClass().getName());
+        recordStateTx = createStateTx();
         modified = false;
         log.debug("DeviceRecorder: Commit completed");
     }
 
     @Override
-    public synchronized String recordState(String deviceId, Serializable state) {
+    public synchronized String recordState(Serializable state) {
 
         // only record output from the arm if the state is "busy"
         DeviceState realmstate = RealmSerialize.convertMessage(state, DeviceState.class);
@@ -75,13 +89,8 @@ public class IDeviceRecorder implements DeviceRecorder {
 
         Transaction tx = recordStateTx;
 
-        // make sure we aren't recording data too frequently
-        if (!goodInterval(deviceId)) { return null; }
-
-        String json = RealmSerialize.serialize(state);
-
         // retrieve the device using the deviceId argument
-        Device device = RealmRepo.queryHead(tx, "Device", new IQuery("name", deviceId));
+        Device device = tx.retrieve(id);
         if (device == null) { return null; }
 
         // retrieve the active session for this device
@@ -114,6 +123,8 @@ public class IDeviceRecorder implements DeviceRecorder {
         IIndexed<DeviceIO> states = (IIndexed<DeviceIO>) lastCommand.getStates();
         if (states == null) { return null; }
 
+        String json = RealmSerialize.serialize(state);
+
         // don't add if it's the same as before
         if (states.size() > 0) {
             DeviceIO lastState = states.get(states.size() - 1);
@@ -138,32 +149,8 @@ public class IDeviceRecorder implements DeviceRecorder {
         return dio.id().label().toString();
     }
 
-    private boolean goodInterval(String deviceId) {
-
-        // make sure we aren't recording data too frequently
-        long currentTime = new Date().getTime();
-
-        // if we don't have a timestamp for this device yet, make one, and allow
-        // access
-        if (!recordTimestamps.containsKey(deviceId)) {
-            recordTimestamps.put(deviceId, currentTime);
-            return true;
-        }
-
-        // if it's been long enough since last access, allow access
-        long lastTime = recordTimestamps.get(deviceId);
-        if (currentTime - lastTime > STATE_INTERVAL) {
-            recordTimestamps.put(deviceId, currentTime);
-            return true;
-        }
-
-        // deny access
-        return false;
-
-    }
-
     @Override
-    public synchronized String recordCommand(String deviceId, Command command) {
+    public synchronized String recordCommand(Command command) {
 
         Transaction tx = repo.connect(getClass().getName());
 
@@ -171,7 +158,7 @@ public class IDeviceRecorder implements DeviceRecorder {
         String json = RealmSerialize.serialize(command);
 
         // Retrieve the device with deviceId mentioned in method arguments
-        Device device = RealmRepo.queryHead(tx, "Device", new IQuery("name", deviceId));
+        Device device = tx.retrieve(id);
         if (device == null) {
             log.info("Unable to record command -- device was null");
             return null;
