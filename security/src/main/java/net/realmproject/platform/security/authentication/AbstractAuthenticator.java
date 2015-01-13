@@ -1,10 +1,11 @@
 package net.realmproject.platform.security.authentication;
 
 
+import net.objectof.connector.Connector;
+import net.objectof.connector.ConnectorException;
 import net.objectof.corc.Action;
 import net.objectof.corc.Handler;
 import net.objectof.corc.web.v2.HttpRequest;
-import net.realmproject.platform.corc.DatabaseRepository;
 import net.realmproject.platform.corc.IRepoAwareHandler;
 import net.realmproject.platform.schema.Person;
 import net.realmproject.platform.util.RealmAuthentication;
@@ -22,13 +23,14 @@ public abstract class AbstractAuthenticator<T extends LoginInfo> extends IRepoAw
 
     private Class<T> inputClass;
 
-    public AbstractAuthenticator(DatabaseRepository dbrepo, Class<T> inputClass) {
-        super(dbrepo);
+    public AbstractAuthenticator(Connector connector, Class<T> inputClass) throws ConnectorException {
+        super(connector);
         this.inputClass = inputClass;
     }
 
-    public AbstractAuthenticator(Handler<?> aDefault, DatabaseRepository dbrepo, Class<T> inputClass) {
-        super(aDefault, dbrepo);
+    public AbstractAuthenticator(Handler<?> aDefault, Connector connector, Class<T> inputClass)
+            throws ConnectorException {
+        super(aDefault, connector);
         this.inputClass = inputClass;
     }
 

@@ -6,11 +6,12 @@ import java.io.Reader;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
+import net.objectof.connector.Connector;
+import net.objectof.connector.ConnectorException;
 import net.objectof.corc.Action;
 import net.objectof.corc.web.v2.HttpRequest;
 import net.objectof.model.Package;
 import net.objectof.model.Transaction;
-import net.realmproject.platform.corc.DatabaseRepository;
 import net.realmproject.platform.schema.Person;
 
 
@@ -58,8 +59,8 @@ public abstract class RecordAuthorizer implements Authorizer {
         public Object object;
     }
 
-    public RecordAuthorizer(DatabaseRepository dbrepo) {
-        repo = dbrepo.get();
+    public RecordAuthorizer(Connector connector) throws ConnectorException {
+        repo = connector.getPackage();
     }
 
     protected Package repo() {

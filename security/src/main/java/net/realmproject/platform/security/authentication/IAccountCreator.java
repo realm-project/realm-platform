@@ -1,11 +1,12 @@
 package net.realmproject.platform.security.authentication;
 
 
+import net.objectof.connector.Connector;
+import net.objectof.connector.ConnectorException;
 import net.objectof.corc.Action;
 import net.objectof.corc.web.v2.HttpRequest;
 import net.objectof.model.Transaction;
 import net.objectof.model.query.IQuery;
-import net.realmproject.platform.corc.DatabaseRepository;
 import net.realmproject.platform.corc.IRepoAwareHandler;
 import net.realmproject.platform.schema.Person;
 import net.realmproject.platform.schema.Role;
@@ -17,8 +18,8 @@ import net.realmproject.platform.util.RealmSerialize;
 
 public class IAccountCreator extends IRepoAwareHandler {
 
-    public IAccountCreator(DatabaseRepository dbrepo) {
-        super(dbrepo);
+    public IAccountCreator(Connector connector) throws ConnectorException {
+        super(connector);
         System.out.println("IAccountCreator");
     }
 

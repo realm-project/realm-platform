@@ -8,6 +8,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
+import net.objectof.connector.Connector;
+import net.objectof.connector.ConnectorException;
 import net.objectof.model.Package;
 import net.objectof.model.Transaction;
 import net.objectof.model.impl.aggr.IIndexed;
@@ -15,7 +17,6 @@ import net.objectof.model.query.IQuery;
 import net.realmproject.dcm.accessor.DeviceRecorder;
 import net.realmproject.dcm.command.Command;
 import net.realmproject.dcm.command.DeviceState;
-import net.realmproject.platform.corc.DatabaseRepository;
 import net.realmproject.platform.schema.Device;
 import net.realmproject.platform.schema.DeviceCommand;
 import net.realmproject.platform.schema.DeviceIO;
@@ -41,8 +42,8 @@ public class IDeviceRecorder implements DeviceRecorder {
 
     private Log log = RealmLog.getLog();
 
-    public IDeviceRecorder(DatabaseRepository dbrepo) {
-        repo = dbrepo.get();
+    public IDeviceRecorder(Connector connector) throws ConnectorException {
+        repo = connector.getPackage();
         recordTimestamps = new HashMap<>();
         recordStateTx = repo.connect(getClass().getName());
         RealmThread.getThreadPool().scheduleAtFixedRate(this::commitStateTx, 10, 10, TimeUnit.SECONDS);

@@ -1,10 +1,11 @@
 package net.realmproject.platform.security.authentication;
 
 
+import net.objectof.connector.Connector;
+import net.objectof.connector.ConnectorException;
 import net.objectof.corc.Action;
 import net.objectof.corc.Handler;
 import net.objectof.corc.web.v2.HttpRequest;
-import net.realmproject.platform.corc.DatabaseRepository;
 import net.realmproject.platform.schema.Person;
 import net.realmproject.platform.security.ISessionHandler;
 
@@ -12,13 +13,13 @@ import net.realmproject.platform.security.ISessionHandler;
 /**
  * Validates a current session, to make sure that the user has logged in.
  * 
- * @author nathaniel
+ * @author NAS
  *
  */
 public class ISessionValidator extends ISessionHandler {
 
-    public ISessionValidator(Handler<?> aDefault, DatabaseRepository dbrepo) {
-        super(aDefault, dbrepo);
+    public ISessionValidator(Handler<?> aDefault, Connector connector) throws ConnectorException {
+        super(aDefault, connector);
     }
 
     @Override

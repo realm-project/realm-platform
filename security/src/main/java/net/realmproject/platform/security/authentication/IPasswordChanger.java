@@ -1,9 +1,10 @@
 package net.realmproject.platform.security.authentication;
 
 
+import net.objectof.connector.Connector;
+import net.objectof.connector.ConnectorException;
 import net.objectof.corc.Action;
 import net.objectof.corc.web.v2.HttpRequest;
-import net.realmproject.platform.corc.DatabaseRepository;
 import net.realmproject.platform.schema.Person;
 import net.realmproject.platform.util.RealmAuthentication;
 
@@ -12,14 +13,14 @@ import net.realmproject.platform.util.RealmAuthentication;
  * Handles changing a user's password. Requires them to re-authenticate with
  * information described in the PasswordChange class
  * 
- * @author nathaniel
+ * @author NAS
  *
  */
 
 public class IPasswordChanger extends AbstractAuthenticator<PasswordChange> {
 
-    public IPasswordChanger(DatabaseRepository dbrepo) {
-        super(dbrepo, PasswordChange.class);
+    public IPasswordChanger(Connector connector) throws ConnectorException {
+        super(connector, PasswordChange.class);
     }
 
     @Override

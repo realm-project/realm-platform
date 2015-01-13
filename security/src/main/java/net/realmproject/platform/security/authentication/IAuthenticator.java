@@ -7,9 +7,10 @@ import java.io.Writer;
 
 import javax.servlet.http.HttpSession;
 
+import net.objectof.connector.Connector;
+import net.objectof.connector.ConnectorException;
 import net.objectof.corc.Action;
 import net.objectof.corc.web.v2.HttpRequest;
-import net.realmproject.platform.corc.DatabaseRepository;
 import net.realmproject.platform.schema.Person;
 
 
@@ -17,14 +18,14 @@ import net.realmproject.platform.schema.Person;
  * Handles authentication of a user when logging in. Expects a JSON Payload
  * described by the LoginInfo class
  * 
- * @author nathaniel
+ * @author NAS
  *
  */
 
 public class IAuthenticator extends AbstractAuthenticator<LoginInfo> {
 
-    public IAuthenticator(DatabaseRepository dbrepo) {
-        super(dbrepo, LoginInfo.class);
+    public IAuthenticator(Connector connector) throws ConnectorException {
+        super(connector, LoginInfo.class);
     }
 
     @Override

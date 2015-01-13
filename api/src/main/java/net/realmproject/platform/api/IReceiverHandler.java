@@ -3,9 +3,10 @@ package net.realmproject.platform.api;
 
 import net.objectof.InvalidNameException;
 import net.objectof.Receiver;
+import net.objectof.connector.Connector;
+import net.objectof.connector.ConnectorException;
 import net.objectof.corc.Action;
 import net.objectof.corc.web.v2.HttpRequest;
-import net.realmproject.platform.corc.DatabaseRepository;
 import net.realmproject.platform.schema.Person;
 import net.realmproject.platform.security.ISessionHandler;
 import net.realmproject.platform.util.RealmCorc;
@@ -19,8 +20,8 @@ public class IReceiverHandler extends ISessionHandler {
     private Log log = RealmLog.getLog();
     private Receiver receiver;
 
-    public IReceiverHandler(DatabaseRepository dbrepo, Receiver target) {
-        super(dbrepo);
+    public IReceiverHandler(Connector connector, Receiver target) throws ConnectorException {
+        super(connector);
         this.receiver = target;
     }
 
