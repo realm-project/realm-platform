@@ -47,7 +47,7 @@
     	<version>0.1</version>
     </dependency>
     <dependency>
-    	<groupId>net.realmproject</groupId>
+    	<groupId>net.realmproject.dcm</groupId>
     	<artifactId>realm-dcm-accessor</artifactId>
     	<version>1.0</version>
     </dependency>
