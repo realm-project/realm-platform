@@ -26,9 +26,9 @@
 			<!-- Students -->
 			<bean class="net.realmproject.platform.security.authorization.authorizers.BooleanAnd">
 				<constructor-arg><list>
-					<ref bean="authorizer-role-student" />
+					<ref bean="platform-role-student" />
 					<bean class="net.realmproject.platform.security.authorization.authorizers.StudentRecord">
-						<constructor-arg ref="dbrepo" />
+						<constructor-arg ref="application-database" />
 					</bean>
 				</list></constructor-arg>
 			</bean>
@@ -36,15 +36,15 @@
 			<!-- Teachers -->
 			<bean class="net.realmproject.platform.security.authorization.authorizers.BooleanAnd">
 				<constructor-arg><list>
-					<ref bean="authorizer-role-teacher" />
+					<ref bean="platform-role-teacher" />
 					<bean class="net.realmproject.platform.security.authorization.authorizers.TeacherRecord">
-						<constructor-arg ref="dbrepo" />
+						<constructor-arg ref="application-database" />
 					</bean>
 				</list></constructor-arg>
 			</bean>
 			
 			<!-- Admins -->
-			<ref bean="authorizer-role-admin" />
+			<ref bean="platform-role-admin" />
 			
 		</list></constructor-arg>
 	</bean>

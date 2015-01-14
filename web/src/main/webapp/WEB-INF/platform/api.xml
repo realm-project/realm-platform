@@ -4,7 +4,7 @@
 
 	<!-- API -->
 	<bean id="platform-authn-api" class="net.realmproject.platform.security.authentication.ISessionValidator">
-		<constructor-arg ref="platform-authz-api" />
+		<constructor-arg ref="platform-api" />
 		<constructor-arg ref="application-database" />
 	</bean>
 

@@ -5,7 +5,7 @@
 
 	<!-- Devices -->
 	<bean id="platform-authn-device" class="net.realmproject.platform.security.authentication.ISessionValidator">
-		<constructor-arg ref="platform-authz-devices" />
+		<constructor-arg ref="platform-authz-device" />
 		<constructor-arg ref="application-database" />
 	</bean>
 	
