@@ -44,5 +44,10 @@
 			<version>3.0.1</version>
 			<scope>provided</scope>
 		</dependency>
+		<dependency>
+			<groupId>objectof</groupId>
+			<artifactId>objectof-connector</artifactId>
+			<version>0.1</version>
+		</dependency>
 	</dependencies>
 </project>
