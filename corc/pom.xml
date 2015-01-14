@@ -3,7 +3,7 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <modelVersion>4.0.0</modelVersion>
   <parent>
-    <groupId>net.realmproject</groupId>
+    <groupId>net.realmproject.platform</groupId>
     <artifactId>realm-platform</artifactId>
     <version>0.1</version>
   </parent>
@@ -42,7 +42,7 @@
     	<version>0.1</version>
     </dependency>
     <dependency>
-    	<groupId>net.realmproject</groupId>
+    	<groupId>net.realmproject.platform</groupId>
     	<artifactId>realm-platform-util</artifactId>
     	<version>0.1</version>
     </dependency>
@@ -65,4 +65,6 @@
       </plugin>
     </plugins>
   </build>
+  <groupId>net.realmproject.platform</groupId>
+  <version>0.1</version>
 </project>

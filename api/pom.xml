@@ -1,6 +1,6 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <groupId>net.realmproject</groupId>
+  <groupId>net.realmproject.platform</groupId>
   <artifactId>realm-platform-api</artifactId>
   <version>0.1</version>
   <name>realm-platform-api</name>
@@ -37,7 +37,7 @@
  			<version>0.1</version>
 		</dependency>
 		<dependency>
-			<groupId>net.realmproject</groupId>
+			<groupId>net.realmproject.platform</groupId>
 			<artifactId>realm-platform-model</artifactId>
 			<version>0.1</version>
 		</dependency>
@@ -65,7 +65,7 @@
 			<type>maven-plugin</type>
 		</dependency>
 		<dependency>
-			<groupId>net.realmproject</groupId>
+			<groupId>net.realmproject.platform</groupId>
 			<artifactId>realm-platform-security</artifactId>
 			<version>0.1</version>
 		</dependency>
@@ -75,4 +75,9 @@
    			<version>20090211</version>
 		</dependency>
 	</dependencies>
+  	<parent>
+  		<groupId>net.realmproject.platform</groupId>
+  		<artifactId>realm-platform</artifactId>
+  		<version>0.1</version>
+  	</parent>
 </project>
