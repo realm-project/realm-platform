@@ -57,7 +57,7 @@ public class SQLiteConnector extends AbstractConnector {
 
     @Override
     public String getPackageName() {
-        return value("Filename") + ":" + value("Version") + "/" + value("Repository");
+        return value("Version") + "/" + value("Repository");
     }
 
     @Override
