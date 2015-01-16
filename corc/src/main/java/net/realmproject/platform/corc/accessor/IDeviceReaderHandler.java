@@ -31,6 +31,10 @@ public class IDeviceReaderHandler extends IHandler<HttpRequest> {
 
     @Override
     protected void onExecute(Action action, HttpRequest http) throws IOException, ServletException {
+        if (!"GET".equals(http.getHttpRequest().getMethod())) {
+            http.getHttpResponse().sendError(405); // Method Not Allowed
+            return;
+        }
         http.getWriter().write(RealmSerialize.serialize(reader.getState()));
     }
 

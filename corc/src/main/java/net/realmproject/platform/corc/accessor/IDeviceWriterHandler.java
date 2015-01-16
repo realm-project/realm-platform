@@ -37,6 +37,10 @@ public class IDeviceWriterHandler extends IHandler<HttpRequest> {
 
     @Override
     protected void onExecute(Action action, HttpRequest http) throws IOException, ServletException {
+        if (!"POST".equals(http.getHttpRequest().getMethod())) {
+            http.getHttpResponse().sendError(405); // Method Not Allowed
+            return;
+        }
         String json = RealmCorc.getJson(http.getReader());
         Command command = RealmSerialize.deserialize(json, Command.class);
         String label = writer.write(command);
