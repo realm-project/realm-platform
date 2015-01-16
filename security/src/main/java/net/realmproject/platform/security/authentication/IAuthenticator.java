@@ -32,25 +32,34 @@ public class IAuthenticator extends AbstractAuthenticator<LoginInfo> {
     protected void onAuthenticate(Action action, HttpRequest request, Person person, LoginInfo info, boolean success)
             throws IOException {
 
-        if (success) {
+        try {
 
-            log.debug("Successfully logged in " + info.username);
-            Writer writer = new StringWriter();
-            person.send("application/json", writer);
-            log.debug(writer.toString());
+            if (success) {
 
-            // get a session, or create a new one, and store the Person record
-            // in it.
-            HttpSession session = request.getHttpRequest().getSession(true);
-            session.setAttribute("person", person.getEmail());
+                log.debug("Successfully logged in " + info.username);
+                Writer writer = new StringWriter();
+                person.send("application/json", writer);
+                log.debug(writer.toString());
 
-            // write back the person record
-            person.send("application/json", request.getWriter());
+                // get a session, or create a new one, and store the Person
+                // record
+                // in it.
+                HttpSession session = request.getHttpRequest().getSession(true);
+                session.setAttribute("person", person.getEmail());
 
-        } else {
-            // 401 Unauthorized:
-            // "specifically for use when authentication is required and has failed or has not yet been provided"
-            request.getHttpResponse().sendError(401);
+                // write back the person record
+                person.send("application/json", request.getWriter());
+
+            } else {
+
+                // 401 Unauthorized:
+                // "specifically for use when authentication is required and has failed or has not yet been provided"
+                request.getHttpResponse().sendError(401);
+            }
+
+        }
+        catch (Exception e) {
+            e.printStackTrace();
         }
 
     }

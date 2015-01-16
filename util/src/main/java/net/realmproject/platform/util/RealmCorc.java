@@ -72,7 +72,8 @@ public class RealmCorc {
     public static String getJson(Reader jsonReader) throws IOException, ServletException {
 
         if (jsonReader.markSupported()) {
-            jsonReader.mark(Integer.MAX_VALUE);
+            // jsonReader.mark(Integer.MAX_VALUE);
+            jsonReader.mark(32 * 1024 * 1024);
         }
 
         StringBuilder sb = new StringBuilder();
