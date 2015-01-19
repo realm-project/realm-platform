@@ -19,11 +19,11 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.concurrent.Executor;
 
-class SingleConnectionDecorator implements Connection {
+class ISingleConnectionDecorator implements Connection {
 
 	Connection backer;
 	
-	public SingleConnectionDecorator(Connection backer) throws SQLException {
+	public ISingleConnectionDecorator(Connection backer) throws SQLException {
 		this.backer = backer;
 		backer.setAutoCommit(false);
 	}

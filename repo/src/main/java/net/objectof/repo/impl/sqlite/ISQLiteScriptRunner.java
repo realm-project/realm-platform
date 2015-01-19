@@ -15,7 +15,7 @@ import java.util.List;
 import org.apache.commons.lang.StringUtils;
 
 //Modified from http://www.codeproject.com/Articles/802383/Run-SQL-Script-sql-containing-DDL-DML-SELECT-state
-class SQLiteScriptRunner {
+class ISQLiteScriptRunner {
 
     public static final String DEFAULT_DELIMITER = ";";
     public static final String PL_SQL_BLOCK_SPLIT_DELIMITER = "+";
@@ -23,11 +23,11 @@ class SQLiteScriptRunner {
 
     private final boolean stopOnError;
     private final Connection connection;
-    private String delimiter = SQLiteScriptRunner.DEFAULT_DELIMITER;
+    private String delimiter = ISQLiteScriptRunner.DEFAULT_DELIMITER;
     private final PrintWriter out, err;
 
 
-    public SQLiteScriptRunner(final Connection connection, final boolean stopOnError) {
+    public ISQLiteScriptRunner(final Connection connection, final boolean stopOnError) {
         if (connection == null) {
             throw new RuntimeException("ScriptRunner requires an SQL Connection");
         }

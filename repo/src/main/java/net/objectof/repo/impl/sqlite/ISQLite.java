@@ -30,7 +30,7 @@ public class ISQLite extends IRip {
 		 * What we really need is a global database object.
 		 */
 		Transaction tx = super.connect(aActor);
-		tx = new SingleConnectionTxDecorator(tx, ISQLite.class);
+		tx = new ISingleConnectionTxDecorator(tx, ISQLite.class);
 		return tx;
 	}
 	
@@ -38,7 +38,7 @@ public class ISQLite extends IRip {
 		String filename = dbFile.getAbsolutePath();
 		DataSource ds;
 		if (!datasources.containsKey(filename)) {
-			SQLiteConnectionFactory factory = new SQLiteConnectionFactory(dbFile);
+			ISQLiteConnectionFactory factory = new ISQLiteConnectionFactory(dbFile);
 			ds = ISql.createPool(factory, Connection.TRANSACTION_SERIALIZABLE);
 			datasources.put(filename, ds);
 		}

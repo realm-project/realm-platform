@@ -1,9 +1,9 @@
 package net.objectof.connector.parameter;
 
 
-class PasswordParameter extends TextParameter {
+class IPasswordParameter extends ITextParameter {
 
-    public PasswordParameter(String title) {
+    public IPasswordParameter(String title) {
         super(title);
     }
 

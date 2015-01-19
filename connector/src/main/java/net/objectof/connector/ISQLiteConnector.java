@@ -19,14 +19,14 @@ import net.objectof.repo.impl.sqlite.ISQLite;
 import org.w3c.dom.Document;
 
 
-public class SQLiteConnector extends AbstractConnector {
+public class ISQLiteConnector extends AbstractConnector {
 
-    public SQLiteConnector(Map<String, String> values) {
+    public ISQLiteConnector(Map<String, String> values) {
         this();
         setParameters(values);
     }
 
-    public SQLiteConnector() {
+    public ISQLiteConnector() {
         super();
         addParameter(Type.FILE, "Filename");
         addParameter(Type.STRING, "Repository");

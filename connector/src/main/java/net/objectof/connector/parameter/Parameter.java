@@ -10,40 +10,40 @@ public interface Parameter {
 
             @Override
             public Parameter create(String title) {
-                return new IntegerParameter(title);
+                return new IIntegerParameter(title);
             }
         },
         REAL {
 
             @Override
             public Parameter create(String title) {
-                return new FloatParameter(title);
+                return new IFloatParameter(title);
             }
         },
         STRING {
 
             @Override
             public Parameter create(String title) {
-                return new TextParameter(title);
+                return new ITextParameter(title);
             }
         },
         FILE {
 
             @Override
             public Parameter create(String title) {
-                return new FileParameter(title);
+                return new IFileParameter(title);
             }
         },
         PASSWORD {
 
             @Override
             public Parameter create(String title) {
-                return new PasswordParameter(title);
+                return new IPasswordParameter(title);
             }
         };
 
         public Parameter create(String title) {
-            return new TextParameter(title);
+            return new ITextParameter(title);
         }
 
     }

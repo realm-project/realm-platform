@@ -10,8 +10,8 @@ public class Connectors {
     public static List<Connector> getConnectors() {
         List<Connector> connectors = new ArrayList<>();
 
-        connectors.add(new SQLiteConnector());
-        connectors.add(new PostgresConnector());
+        connectors.add(new ISQLiteConnector());
+        connectors.add(new IPostgresConnector());
 
         return connectors;
     }

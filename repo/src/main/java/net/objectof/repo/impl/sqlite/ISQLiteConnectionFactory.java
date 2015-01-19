@@ -11,11 +11,11 @@ import java.sql.SQLException;
 
 import org.apache.commons.dbcp2.ConnectionFactory;
 
-class SQLiteConnectionFactory implements ConnectionFactory {
+class ISQLiteConnectionFactory implements ConnectionFactory {
 
 	private Connection conn;
 
-	public SQLiteConnectionFactory(File db) throws IOException, SQLException {
+	public ISQLiteConnectionFactory(File db) throws IOException, SQLException {
 		try {
 			Class.forName("org.sqlite.JDBC");
 		} catch (ClassNotFoundException e) {
@@ -27,7 +27,7 @@ class SQLiteConnectionFactory implements ConnectionFactory {
 
 		conn = DriverManager.getConnection("jdbc:sqlite:" + db.getAbsolutePath());
 		conn.setAutoCommit(false);
-		conn = new SingleConnectionDecorator(conn);
+		conn = new ISingleConnectionDecorator(conn);
 
 		if (newdb) {
 			populate();
@@ -40,16 +40,16 @@ class SQLiteConnectionFactory implements ConnectionFactory {
 	}
 
 	private void populate() throws SQLException, IOException {
-		SQLiteScriptRunner script;
+		ISQLiteScriptRunner script;
 		InputStream sqlStream;
 		Reader reader;
 
-		script = new SQLiteScriptRunner(conn, true);
+		script = new ISQLiteScriptRunner(conn, true);
 		sqlStream = ISQLite.class.getResourceAsStream("/net/objectof/repo/res/sqlite/repo.sql");
 		reader = new InputStreamReader(sqlStream);
 		script.runScript(reader);
 
-		script = new SQLiteScriptRunner(conn, true);
+		script = new ISQLiteScriptRunner(conn, true);
 		sqlStream = ISQLite.class.getResourceAsStream("/net/objectof/repo/res/sqlite/rip.sql");
 		reader = new InputStreamReader(sqlStream);
 		script.runScript(reader);

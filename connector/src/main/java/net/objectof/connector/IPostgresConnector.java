@@ -15,9 +15,9 @@ import net.objectof.repo.impl.sql.ISqlDb;
 import org.w3c.dom.Document;
 
 
-public class PostgresConnector extends AbstractConnector {
+public class IPostgresConnector extends AbstractConnector {
 
-    public PostgresConnector() {
+    public IPostgresConnector() {
 
         super();
 

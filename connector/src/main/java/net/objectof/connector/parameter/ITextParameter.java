@@ -1,11 +1,11 @@
 package net.objectof.connector.parameter;
 
 
-class TextParameter extends AbstractParameter {
+class ITextParameter extends AbstractParameter {
 
     String value = "";
 
-    public TextParameter(String title) {
+    public ITextParameter(String title) {
         super(title);
     }
 

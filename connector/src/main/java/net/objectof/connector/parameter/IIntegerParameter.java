@@ -1,17 +1,17 @@
 package net.objectof.connector.parameter;
 
 
-class FloatParameter extends AbstractParameter {
+class IIntegerParameter extends AbstractParameter {
 
-    Double value;
+    Integer value;
 
-    public FloatParameter(String title) {
+    public IIntegerParameter(String title) {
         super(title);
     }
 
     @Override
     public Type getType() {
-        return Type.REAL;
+        return Type.INT;
     }
 
     @Override
@@ -23,12 +23,13 @@ class FloatParameter extends AbstractParameter {
     @Override
     public boolean setValue(String value) {
         try {
-            this.value = Double.parseDouble(value);
+            this.value = Integer.parseInt(value);
             return true;
         }
         catch (NumberFormatException e) {
             return false;
         }
     }
+
 
 }

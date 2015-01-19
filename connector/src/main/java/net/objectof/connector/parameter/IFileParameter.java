@@ -4,11 +4,11 @@ package net.objectof.connector.parameter;
 import java.io.File;
 
 
-class FileParameter extends AbstractParameter {
+class IFileParameter extends AbstractParameter {
 
     File file;
 
-    public FileParameter(String title) {
+    public IFileParameter(String title) {
         super(title);
     }
 

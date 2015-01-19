@@ -8,7 +8,7 @@ import java.net.URISyntaxException;
 import java.net.URL;
 
 import net.objectof.connector.ConnectorException;
-import net.objectof.connector.SQLiteConnector;
+import net.objectof.connector.ISQLiteConnector;
 import net.objectof.model.Package;
 
 
@@ -29,7 +29,7 @@ public class TempSQLiteRepo {
     public static Package forSchema(File schemaFile) throws IOException, ConnectorException {
         File dbFile = File.createTempFile("testdb", "");
         dbFile.delete();
-        SQLiteConnector conn = new SQLiteConnector();
+        ISQLiteConnector conn = new ISQLiteConnector();
         conn.getParameter("Filename").setValue(dbFile.toString());
         conn.getParameter("Version").setValue("1");
         conn.getParameter("Repository").setValue("testrepo");
