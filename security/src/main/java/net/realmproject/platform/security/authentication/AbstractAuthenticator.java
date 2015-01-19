@@ -10,16 +10,16 @@ import net.realmproject.platform.corc.IRepoAwareHandler;
 import net.realmproject.platform.schema.Person;
 import net.realmproject.platform.util.RealmAuthentication;
 import net.realmproject.platform.util.RealmCorc;
-import net.realmproject.platform.util.RealmLog;
 import net.realmproject.platform.util.RealmSerialize;
 import net.realmproject.platform.util.model.Persons;
 
 import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 
 public abstract class AbstractAuthenticator<T extends LoginInfo> extends IRepoAwareHandler {
 
-    protected Log log = RealmLog.getLog();
+    protected Log log = LogFactory.getLog(AbstractAuthenticator.class);
 
     private Class<T> inputClass;
 

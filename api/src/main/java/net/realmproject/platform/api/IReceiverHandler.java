@@ -10,14 +10,14 @@ import net.objectof.corc.web.v2.HttpRequest;
 import net.realmproject.platform.schema.Person;
 import net.realmproject.platform.security.ISessionHandler;
 import net.realmproject.platform.util.RealmCorc;
-import net.realmproject.platform.util.RealmLog;
 
 import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 
 public class IReceiverHandler extends ISessionHandler {
 
-    private Log log = RealmLog.getLog();
+    private Log log = LogFactory.getLog(getClass());
     private Receiver receiver;
 
     public IReceiverHandler(Connector connector, Receiver target) throws ConnectorException {
