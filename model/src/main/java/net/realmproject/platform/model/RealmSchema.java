@@ -9,7 +9,7 @@ import java.io.InputStream;
 import java.io.Writer;
 import java.net.URL;
 
-import net.objectof.connector.SQLiteConnector;
+import net.objectof.connector.ISQLiteConnector;
 import net.objectof.model.Package;
 
 import org.apache.commons.io.IOUtils;
@@ -46,7 +46,7 @@ public class RealmSchema {
         File dbFile = File.createTempFile("realmtestdb", "");
         dbFile.delete();
 
-        SQLiteConnector conn = new SQLiteConnector();
+        ISQLiteConnector conn = new ISQLiteConnector();
         conn.getParameter("Filename").setValue(dbFile.toString());
         conn.getParameter("Version").setValue("1502");
         conn.getParameter("Repository").setValue("testrepo");

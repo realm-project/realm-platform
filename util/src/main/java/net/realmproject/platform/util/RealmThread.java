@@ -6,11 +6,12 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 
 public class RealmThread {
 
-    static private Log log = RealmLog.getLog();
+    static private Log log = LogFactory.getLog(RealmThread.class);
     static ScheduledExecutorService pool = Executors.newScheduledThreadPool(5);
 
     public static ScheduledExecutorService getThreadPool() {

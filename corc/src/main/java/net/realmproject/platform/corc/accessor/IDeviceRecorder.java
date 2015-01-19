@@ -21,13 +21,13 @@ import net.realmproject.platform.schema.Device;
 import net.realmproject.platform.schema.DeviceCommand;
 import net.realmproject.platform.schema.DeviceIO;
 import net.realmproject.platform.schema.Session;
-import net.realmproject.platform.util.RealmLog;
 import net.realmproject.platform.util.RealmRepo;
 import net.realmproject.platform.util.RealmSerialize;
 import net.realmproject.platform.util.RealmThread;
 import net.realmproject.platform.util.model.Devices;
 
 import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 
 public class IDeviceRecorder implements DeviceRecorder {
@@ -41,7 +41,7 @@ public class IDeviceRecorder implements DeviceRecorder {
     private Transaction recordStateTx;
     private boolean modified = false;
 
-    private Log log = RealmLog.getLog();
+    private Log log = LogFactory.getLog(getClass());
 
     public IDeviceRecorder(Connector connector, String idString) throws ConnectorException {
         this(connector, idString, DEFAULT_COMMIT_INTERVAL);
