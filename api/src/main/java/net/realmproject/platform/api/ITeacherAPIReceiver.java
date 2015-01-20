@@ -43,7 +43,7 @@ public class ITeacherAPIReceiver extends IFn {
      * Is called by a teacher user to get the list of courses that are taught by
      * the teacher
      * 
-     * @param person
+     * @param teacher
      *            The Person object containing the teacher info
      * @param request
      *            The http request
@@ -63,7 +63,7 @@ public class ITeacherAPIReceiver extends IFn {
      * Is called by a teacher user to get the list of all students enrolled in
      * all courses that are taught by the teacher
      * 
-     * @param person
+     * @param teacher
      *            The Person object containing the teacher info
      * @param request
      *            The http request
@@ -84,7 +84,7 @@ public class ITeacherAPIReceiver extends IFn {
      * Is called by a teacher user to get the list of students enrolled in a
      * course that is taught by the teacher
      * 
-     * @param person
+     * @param teacher
      *            The Person object containing the teacher info
      * @param request
      *            The http request
@@ -121,7 +121,7 @@ public class ITeacherAPIReceiver extends IFn {
      * Is called by a teacher user to get the list of pending students in all
      * courses that are taught by the teacher
      * 
-     * @param person
+     * @param teacher
      *            The Person object containing the teacher info
      * @param request
      *            The http request
@@ -142,7 +142,7 @@ public class ITeacherAPIReceiver extends IFn {
      * Is called by a teacher user to get the list of pending students in a
      * course that is taught by the teacher
      * 
-     * @param person
+     * @param teacher
      *            The Person object containing the teacher info
      * @param request
      *            The http request containing the course info
@@ -179,7 +179,7 @@ public class ITeacherAPIReceiver extends IFn {
      * Is called by a teacher user to get the list of assignments of a course
      * that is taught by the teacher
      * 
-     * @param person
+     * @param teacher
      *            The Person object containing the teacher info
      * @param request
      *            The http request containing the course info
@@ -228,7 +228,7 @@ public class ITeacherAPIReceiver extends IFn {
      * Is called by a teacher user to get the list of members of a session. The
      * session should belongs to a course that is taught by the teacher
      * 
-     * @param person
+     * @param teacher
      *            The Person object containing the teacher info
      * @param request
      *            The http request containing the session info
@@ -265,7 +265,7 @@ public class ITeacherAPIReceiver extends IFn {
      * Is called by a teacher user to get the list of sessions of an assignment.
      * The assignment should belongs to a course that is taught by the teacher
      * 
-     * @param person
+     * @param teacher
      *            The Person object containing the teacher info
      * @param request
      *            The http request containing the session info
@@ -303,7 +303,7 @@ public class ITeacherAPIReceiver extends IFn {
      * teacher should be the owner of the device. If the deivce is null, the
      * method finds the sessions for all devices owned by the teacher
      * 
-     * @param person
+     * @param teacher
      *            The Person object containing the teacher info
      * @param request
      *            The http request containing the device info
@@ -374,7 +374,7 @@ public class ITeacherAPIReceiver extends IFn {
     /**
      * Is called by a teacher user to get the list devices she/he owns.
      * 
-     * @param person
+     * @param teacher
      *            The Person object containing the teacher info
      * @param request
      *            The http request
@@ -393,7 +393,7 @@ public class ITeacherAPIReceiver extends IFn {
     /**
      * Is called by a teacher user to remove a session
      * 
-     * @param person
+     * @param teacher
      *            The Person object containing the teacher info
      * @param request
      *            The http request containing the session info
@@ -435,7 +435,7 @@ public class ITeacherAPIReceiver extends IFn {
     /**
      * Is called by a teacher user to create sessions
      * 
-     * @param person
+     * @param teacher
      *            The Person object containing the teacher info
      * @param request
      *            The http request containing the information about time and
