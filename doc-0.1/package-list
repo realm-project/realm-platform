@@ -1,13 +1,11 @@
-net.realmproject.model.schema
-net.realmproject.model.schema.composite
 net.realmproject.platform.api
 net.realmproject.platform.api.datatypes
-net.realmproject.platform.api.test
 net.realmproject.platform.api.utils
 net.realmproject.platform.corc
 net.realmproject.platform.corc.accessor
 net.realmproject.platform.model
-net.realmproject.platform.schema.tests
+net.realmproject.platform.schema
+net.realmproject.platform.schema.composite
 net.realmproject.platform.security
 net.realmproject.platform.security.authentication
 net.realmproject.platform.security.authorization
