@@ -17,13 +17,13 @@ import net.objectof.model.query.IQuery;
 import net.realmproject.dcm.accessor.DeviceRecorder;
 import net.realmproject.dcm.command.Command;
 import net.realmproject.dcm.command.DeviceState;
+import net.realmproject.dcm.util.DCMThreadPool;
 import net.realmproject.platform.schema.Device;
 import net.realmproject.platform.schema.DeviceCommand;
 import net.realmproject.platform.schema.DeviceIO;
 import net.realmproject.platform.schema.Session;
 import net.realmproject.platform.util.RealmRepo;
 import net.realmproject.platform.util.RealmSerialize;
-import net.realmproject.platform.util.RealmThread;
 import net.realmproject.platform.util.model.Devices;
 
 import org.apache.commons.logging.Log;
@@ -56,7 +56,7 @@ public class IDeviceRecorder implements DeviceRecorder {
         Device device = RealmRepo.queryHead(recordStateTx, "Device", new IQuery("name", idString));
         id = device.id();
 
-        RealmThread.getThreadPool().scheduleAtFixedRate(this::commitStateTx, interval, interval, TimeUnit.SECONDS);
+        DCMThreadPool.getPool().scheduleAtFixedRate(this::commitStateTx, interval, interval, TimeUnit.SECONDS);
     }
 
     private Transaction createStateTx() {
