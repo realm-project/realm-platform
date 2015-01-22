@@ -29,6 +29,7 @@ public class ISQLiteConnector extends AbstractConnector {
     public ISQLiteConnector() {
         super();
         addParameter(Type.FILE, "Filename");
+        addParameter(Type.STRING, "Domain");
         addParameter(Type.STRING, "Repository");
         addParameter(Type.INT, "Version");
     }
@@ -57,7 +58,7 @@ public class ISQLiteConnector extends AbstractConnector {
 
     @Override
     public String getPackageName() {
-        return value("Version") + "/" + value("Repository");
+        return value("Domain") + ":" + value("Version") + "/" + value("Repository");
     }
 
     @Override
