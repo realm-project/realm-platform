@@ -34,5 +34,6 @@
     <module>util</module>
     <module>web</module>
     <module>connector</module>
+    <module>standalone</module>
   </modules>
 </project>
