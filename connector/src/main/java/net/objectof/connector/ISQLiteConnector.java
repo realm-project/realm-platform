@@ -29,9 +29,6 @@ public class ISQLiteConnector extends AbstractConnector {
     public ISQLiteConnector() {
         super();
         addParameter(Type.FILE, "Filename");
-        addParameter(Type.STRING, "Domain");
-        addParameter(Type.STRING, "Repository");
-        addParameter(Type.INT, "Version");
     }
 
     @Override

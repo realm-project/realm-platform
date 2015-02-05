@@ -11,6 +11,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
 import net.objectof.connector.parameter.Parameter;
+import net.objectof.connector.parameter.Parameter.Type;
 import net.objectof.model.Package;
 
 import org.xml.sax.SAXException;
@@ -20,6 +21,12 @@ public abstract class AbstractConnector implements Connector {
 
     private String name = "";
     private List<Parameter> parameters = new ArrayList<>();
+
+    public AbstractConnector() {
+        addParameter(Type.STRING, "Domain");
+        addParameter(Type.STRING, "Repository");
+        addParameter(Type.INT, "Version");
+    }
 
     protected void addParameter(Parameter param) {
         parameters.add(param);

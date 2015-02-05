@@ -18,17 +18,11 @@ import org.w3c.dom.Document;
 public class IPostgresConnector extends AbstractConnector {
 
     public IPostgresConnector() {
-
         super();
-
-        addParameter(Type.STRING, "Domain");
         addParameter(Type.STRING, "Server");
         addParameter(Type.STRING, "Database");
-        addParameter(Type.STRING, "Repository");
-        addParameter(Type.INT, "Version");
         addParameter(Type.STRING, "Username");
         addParameter(Type.PASSWORD, "Password");
-
     }
 
     @Override
@@ -59,5 +53,4 @@ public class IPostgresConnector extends AbstractConnector {
     public String getType() {
         return "Postgres";
     }
-
 }
