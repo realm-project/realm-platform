@@ -1,0 +1,298 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="174.62982"
+   height="174.62982"
+   id="svg2"
+   version="1.1"
+   inkscape:version="0.48.4 r9939"
+   sodipodi:docname="favicon.svg"
+   inkscape:export-filename="favicon.png"
+   inkscape:export-xdpi="24.74"
+   inkscape:export-ydpi="24.74">
+  <defs
+     id="defs4">
+    <filter
+       inkscape:collect="always"
+       id="filter3842"
+       color-interpolation-filters="sRGB">
+      <feGaussianBlur
+         inkscape:collect="always"
+         stdDeviation="3.5207627"
+         id="feGaussianBlur3844" />
+    </filter>
+    <clipPath
+       clipPathUnits="userSpaceOnUse"
+       id="clipPath3904">
+      <path
+         style="color:#000000;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:2;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+         d="m 11.977438,687.30593 c -2.740513,0 -4.9375,2.19699 -4.9375,4.9375 l 0,180.6875 c 0,2.74051 2.196987,4.9375 4.9375,4.9375 l 263.750002,0 c 2.74051,0 4.96875,-2.19699 4.96875,-4.9375 l 0,-180.6875 c 0,-2.74051 -2.22824,-4.9375 -4.96875,-4.9375 l -263.750002,0 z m 171.875002,30.5625 c 20.50395,1.4e-4 37.01286,7.03354 49.53125,21.0625 12.29548,13.54613 18.63898,29.80224 19.0625,48.78125 l -25.375,0 c -0.0462,-0.71709 -0.0892,-1.4183 -0.15625,-2.15625 -0.21596,-2.58991 -0.53721,-5.09452 -0.96875,-7.46875 -2.15845,-12.08651 -7.00849,-23.07162 -14.5625,-33 -7.3384,-10.14399 -17.58433,-15.21862 -30.75,-15.21875 -13.81333,1.3e-4 -24.41176,5.26809 -31.75,15.84375 -7.33834,10.57588 -11.09671,22.13807 -11.3125,34.65625 -4e-5,0.21591 -4e-5,0.44049 0,0.65625 -4e-5,8e-5 -4e-5,0.0967 0,0.3125 -3e-5,2.01776 0.06,4.16483 0.15625,6.375 l -26.0625,0 c 0.10303,-19.87764 7.23386,-36.46581 21.375,-49.75 14.24488,-13.38146 31.17171,-20.09361 50.8125,-20.09375 z"
+         id="path3906"
+         inkscape:connector-curvature="0" />
+    </clipPath>
+    <filter
+       inkscape:collect="always"
+       id="filter3978"
+       color-interpolation-filters="sRGB">
+      <feGaussianBlur
+         inkscape:collect="always"
+         stdDeviation="3.5207627"
+         id="feGaussianBlur3980" />
+    </filter>
+    <clipPath
+       clipPathUnits="userSpaceOnUse"
+       id="clipPath4148">
+      <path
+         style="font-size:323.74829102px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#515151;fill-opacity:1;stroke:none;display:inline;font-family:Garamond;-inkscape-font-specification:Garamond"
+         clip-path="none"
+         d="m 39.149198,767.25918 c 2.607859,13.22678 8.575834,24.67111 17.90625,34.3125 12.949887,13.3816 29.68338,20.0625 50.187502,20.0625 13.50252,0 25.71705,-3.27555 36.65625,-9.78125 -3.80964,-2.33513 -7.35034,-5.07792 -10.6875,-8.25 -6.27123,4.46462 -14.1828,6.68751 -23.71875,6.6875 -13.165837,10e-6 -23.187182,-4.85004 -30.093752,-14.5625 -6.194086,-8.71034 -10.576441,-18.19601 -13.125,-28.46875 l -27.125,0 z m 113.125002,0 c -0.98554,6.17766 -2.76984,12.10079 -5.3125,17.78125 1.88055,3.6924 4.04833,7.23987 6.5,10.6875 1.39038,1.95524 2.91846,3.71963 4.5625,5.28125 9.97719,-9.53542 16.29938,-20.78145 18.96875,-33.75 l -24.71875,0 z"
+         id="path4150"
+         inkscape:connector-curvature="0" />
+    </clipPath>
+    <clipPath
+       clipPathUnits="userSpaceOnUse"
+       id="clipPath4189">
+      <path
+         style="color:#000000;fill:#1791e5;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:2;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+         d="m -6.350802,628.32168 0,221.3125 217.437502,0 0,-142.0625 c -7.31425,-9.84213 -17.438,-14.78112 -30.40625,-14.78125 -13.81333,1.3e-4 -24.41176,5.26809 -31.75,15.84375 -7.1854,10.35547 -10.92461,21.65734 -11.28125,33.875 l -25.46875,0 c 1.77421,-16.31218 8.7384,-30.19452 20.90625,-41.625 14.24488,-13.38146 31.17171,-20.09361 50.8125,-20.09375 10.02219,7e-5 19.07376,1.70608 27.1875,5.0625 l 0,-57.53125 -217.437502,0 z"
+         id="path4191"
+         inkscape:connector-curvature="0" />
+    </clipPath>
+    <clipPath
+       clipPathUnits="userSpaceOnUse"
+       id="clipPath4314">
+      <path
+         style="font-size:323.74829102px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#515151;fill-opacity:1;stroke:none;display:inline;font-family:Garamond;-inkscape-font-specification:Garamond"
+         clip-path="none"
+         d="m 109.8367,680.79043 c -19.640796,1.4e-4 -36.598875,6.71229 -50.843752,20.09375 -10.826723,10.17062 -17.524916,22.27518 -20.125,36.3125 l 25.0625,0 c 1.16155,-10.19713 4.805438,-19.72508 10.9375,-28.5625 7.338238,-10.57566 17.905422,-15.84362 31.718752,-15.84375 10.21828,10e-5 18.66695,3.07696 25.375,9.1875 0.37461,-0.36663 0.73995,-0.73203 1.125,-1.09375 4.21833,-3.96265 8.68546,-7.33316 13.375,-10.125 -10.32203,-6.6309 -22.52853,-9.96866 -36.625,-9.96875 z m 47.59375,19 c -3.19387,2.35467 -6.03823,5.29592 -8.5,8.84375 -2.03716,2.93592 -3.79447,5.94441 -5.28125,9.03125 3.4047,6.15727 5.91046,12.6531 7.5,19.53125 l 25.90625,0 c -2.51139,-13.32826 -8.39952,-25.11103 -17.6875,-35.34375 -0.62985,-0.70586 -1.28743,-1.39216 -1.9375,-2.0625 z"
+         id="path4316"
+         inkscape:connector-curvature="0" />
+    </clipPath>
+    <filter
+       inkscape:collect="always"
+       id="filter4322"
+       color-interpolation-filters="sRGB">
+      <feGaussianBlur
+         inkscape:collect="always"
+         stdDeviation="3.5207627"
+         id="feGaussianBlur4324" />
+    </filter>
+    <clipPath
+       clipPathUnits="userSpaceOnUse"
+       id="clipPath4342">
+      <path
+         style="color:#000000;fill:#1791e5;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:2;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+         d="m -10.944552,650.94668 0,230.875 221.687502,0 0,-174.71875 c -7.28624,-9.53165 -17.30049,-14.31238 -30.0625,-14.3125 -13.81333,1.3e-4 -24.41176,5.26809 -31.75,15.84375 -7.33834,10.57588 -11.09671,22.13807 -11.3125,34.65625 -4e-5,0.21591 -4e-5,0.44049 0,0.65625 -4e-5,8e-5 -4e-5,0.0967 0,0.3125 0,0.23162 -0.001,0.48459 0,0.71875 l -25.65625,0 c 1.315,-17.38916 8.3459,-32.08907 21.125,-44.09375 14.24488,-13.38146 31.17171,-20.09361 50.8125,-20.09375 9.87857,7e-5 18.81933,1.64527 26.84375,4.90625 l 0,-34.75 -221.687502,0 z"
+         id="path4344"
+         inkscape:connector-curvature="0" />
+    </clipPath>
+    <filter
+       inkscape:collect="always"
+       id="filter3797"
+       x="-0.12"
+       width="1.24"
+       y="-0.12"
+       height="1.24"
+       color-interpolation-filters="sRGB">
+      <feGaussianBlur
+         inkscape:collect="always"
+         stdDeviation="7.0415253"
+         id="feGaussianBlur3799" />
+    </filter>
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="2.8284271"
+     inkscape:cx="-4.8398246"
+     inkscape:cy="86.447893"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer4"
+     showgrid="false"
+     inkscape:window-width="1920"
+     inkscape:window-height="1016"
+     inkscape:window-x="0"
+     inkscape:window-y="27"
+     inkscape:window-maximized="1"
+     units="px"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0" />
+  <metadata
+     id="metadata7">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:groupmode="layer"
+     id="layer4"
+     inkscape:label="Yellow Shadow"
+     style="display:inline"
+     transform="translate(-67.223073,-30.178319)">
+    <text
+       transform="translate(-27.586698,-633.72793)"
+       sodipodi:linespacing="125%"
+       id="text3832"
+       y="819.37018"
+       x="105.65477"
+       style="font-size:323.74829102px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;display:inline;filter:url(#filter3842);font-family:Garamond;-inkscape-font-specification:Garamond"
+       xml:space="preserve"
+       inkscape:export-filename="/home/nathaniel/Desktop/github-logo.png"
+       inkscape:export-xdpi="327.20001"
+       inkscape:export-ydpi="327.20001"><tspan
+         style="font-size:323.74829102px;font-style:normal;font-variant:normal;font-weight:100;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:-1.24620318px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;font-family:Garamond-Normal;-inkscape-font-specification:Garamond-Normal Thin"
+         y="819.37018"
+         x="105.65477"
+         id="tspan3834"
+         sodipodi:role="line"><tspan
+           id="tspan3836"
+           style="font-style:normal;font-variant:normal;font-weight:100;font-stretch:normal;letter-spacing:-1.24620318px;fill:#000000;fill-opacity:1;font-family:Garamond-Normal;-inkscape-font-specification:Garamond-Normal Thin"
+           dx="-5.9240246">o</tspan></tspan></text>
+    <text
+       inkscape:export-ydpi="327.20001"
+       inkscape:export-xdpi="327.20001"
+       inkscape:export-filename="/home/nathaniel/Desktop/github-logo.png"
+       xml:space="preserve"
+       style="font-size:323.74829102px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;display:inline;filter:url(#filter3797);font-family:Garamond;-inkscape-font-specification:Garamond"
+       x="105.65477"
+       y="819.37018"
+       id="text3791"
+       sodipodi:linespacing="125%"
+       transform="translate(-27.586698,-633.72793)"><tspan
+         sodipodi:role="line"
+         id="tspan3793"
+         x="105.65477"
+         y="819.37018"
+         style="font-size:323.74829102px;font-style:normal;font-variant:normal;font-weight:100;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:-1.24620318px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;font-family:Garamond-Normal;-inkscape-font-specification:Garamond-Normal Thin"><tspan
+           dx="-5.9240246"
+           style="font-style:normal;font-variant:normal;font-weight:100;font-stretch:normal;letter-spacing:-1.24620318px;fill:#000000;fill-opacity:1;font-family:Garamond-Normal;-inkscape-font-specification:Garamond-Normal Thin"
+           id="tspan3795">o</tspan></tspan></text>
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="layer1"
+     inkscape:label="Yellow"
+     style="display:inline"
+     transform="translate(-67.223073,-30.178319)">
+    <text
+       transform="translate(-27.586698,-633.72793)"
+       inkscape:export-ydpi="327.20001"
+       inkscape:export-xdpi="327.20001"
+       inkscape:export-filename="/home/nathaniel/Desktop/github-logo.png"
+       xml:space="preserve"
+       style="font-size:323.74829102px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#e5b717;fill-opacity:1;stroke:none;display:inline;font-family:Garamond;-inkscape-font-specification:Garamond"
+       x="105.65477"
+       y="819.37018"
+       id="text3033"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan3035"
+         x="105.65477"
+         y="819.37018"
+         style="font-size:323.74829102px;font-style:normal;font-variant:normal;font-weight:100;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:-1.24620318px;writing-mode:lr-tb;text-anchor:start;fill:#e5b717;fill-opacity:1;font-family:Garamond-Normal;-inkscape-font-specification:Garamond-Normal Thin"><tspan
+           dx="-5.9240246"
+           style="font-style:normal;font-variant:normal;font-weight:100;font-stretch:normal;letter-spacing:-1.24620318px;fill:#e5b717;fill-opacity:1;font-family:Garamond-Normal;-inkscape-font-specification:Garamond-Normal Thin"
+           id="tspan3039">o</tspan></tspan></text>
+  </g>
+  <g
+     style="display:none"
+     inkscape:label="Grey Shadow"
+     id="g4018"
+     inkscape:groupmode="layer"
+     transform="translate(-67.223073,-30.178319)">
+    <text
+       transform="translate(-27.586698,-633.72793)"
+       sodipodi:linespacing="125%"
+       id="text4020"
+       y="819.37018"
+       x="25.654772"
+       style="font-size:323.74829102px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;display:inline;filter:url(#filter3978);font-family:Garamond;-inkscape-font-specification:Garamond"
+       xml:space="preserve"
+       inkscape:export-filename="/home/nathaniel/Desktop/github-logo.png"
+       inkscape:export-xdpi="327.20001"
+       inkscape:export-ydpi="327.20001"
+       clip-path="url(#clipPath4342)"><tspan
+         style="font-size:323.74829102px;font-style:normal;font-variant:normal;font-weight:100;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:-1.24620318px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;font-family:Garamond-Normal;-inkscape-font-specification:Garamond-Normal Thin"
+         y="819.37018"
+         x="25.654772"
+         id="tspan4022"
+         sodipodi:role="line"><tspan
+           id="tspan4024"
+           style="font-style:normal;font-variant:normal;font-weight:100;font-stretch:normal;letter-spacing:-1.24620318px;fill:#000000;fill-opacity:1;font-family:Garamond-Normal;-inkscape-font-specification:Garamond-Normal Thin"
+           dx="0">o</tspan></tspan></text>
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="layer2"
+     inkscape:label="Grey"
+     style="display:none"
+     transform="translate(-67.223073,-30.178319)">
+    <text
+       transform="translate(-27.586698,-633.72793)"
+       sodipodi:linespacing="125%"
+       id="text3011"
+       y="819.37018"
+       x="25.654772"
+       style="font-size:323.74829102px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#515151;fill-opacity:1;stroke:none;display:inline;font-family:Garamond;-inkscape-font-specification:Garamond"
+       xml:space="preserve"
+       inkscape:export-filename="/home/nathaniel/Desktop/github-logo.png"
+       inkscape:export-xdpi="327.20001"
+       inkscape:export-ydpi="327.20001"
+       clip-path="url(#clipPath4189)"><tspan
+         style="font-size:323.74829102px;font-style:normal;font-variant:normal;font-weight:100;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:-1.24620318px;writing-mode:lr-tb;text-anchor:start;fill:#515151;fill-opacity:1;font-family:Garamond-Normal;-inkscape-font-specification:Garamond-Normal Thin"
+         y="819.37018"
+         x="25.654772"
+         id="tspan3013"
+         sodipodi:role="line"><tspan
+           id="tspan3015"
+           style="font-style:normal;font-variant:normal;font-weight:100;font-stretch:normal;letter-spacing:-1.24620318px;fill:#515151;fill-opacity:1;font-family:Garamond-Normal;-inkscape-font-specification:Garamond-Normal Thin"
+           dx="0">o</tspan></tspan></text>
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="layer8"
+     inkscape:label="Mask"
+     style="display:none"
+     transform="translate(-67.223073,-30.178319)">
+    <text
+       inkscape:export-ydpi="327.20001"
+       inkscape:export-xdpi="327.20001"
+       inkscape:export-filename="/home/nathaniel/Desktop/github-logo.png"
+       xml:space="preserve"
+       style="font-size:323.74829102px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;display:inline;filter:url(#filter4322);font-family:Garamond;-inkscape-font-specification:Garamond"
+       x="105.65477"
+       y="819.37018"
+       id="text4248"
+       sodipodi:linespacing="125%"
+       transform="translate(-27.586698,-633.72793)"
+       clip-path="url(#clipPath4314)"><tspan
+         sodipodi:role="line"
+         id="tspan4250"
+         x="105.65477"
+         y="819.37018"
+         style="font-size:323.74829102px;font-style:normal;font-variant:normal;font-weight:100;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:-1.24620318px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;font-family:Garamond-Normal;-inkscape-font-specification:Garamond-Normal Thin"><tspan
+           dx="-5.9240246"
+           style="font-style:normal;font-variant:normal;font-weight:100;font-stretch:normal;letter-spacing:-1.24620318px;fill:#000000;fill-opacity:1;font-family:Garamond-Normal;-inkscape-font-specification:Garamond-Normal Thin"
+           id="tspan4252">o</tspan></tspan></text>
+  </g>
+</svg>
