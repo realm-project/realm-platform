@@ -1,6 +1,4 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!-- Created with Inkscape (http://www.inkscape.org/) -->
-
 <svg
    xmlns:dc="http://purl.org/dc/elements/1.1/"
    xmlns:cc="http://creativecommons.org/ns#"
@@ -11,101 +9,13 @@
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    width="24"
    height="24"
-   id="svg6030"
+   viewBox="0 0 24 24"
+   id="svg2"
    version="1.1"
    inkscape:version="0.48.4 r9939"
-   sodipodi:docname="transform.svg"
-   inkscape:export-filename="/home/nathaniel/Desktop/icons/transform.png"
-   inkscape:export-xdpi="240"
-   inkscape:export-ydpi="240">
-  <sodipodi:namedview
-     id="base"
-     pagecolor="#ffffff"
-     bordercolor="#666666"
-     borderopacity="1.0"
-     inkscape:pageopacity="0.0"
-     inkscape:pageshadow="2"
-     inkscape:zoom="90.509672"
-     inkscape:cx="2.3247452"
-     inkscape:cy="7.0500687"
-     inkscape:document-units="px"
-     inkscape:current-layer="layer1"
-     showgrid="false"
-     inkscape:window-width="1920"
-     inkscape:window-height="1016"
-     inkscape:window-x="0"
-     inkscape:window-y="27"
-     inkscape:window-maximized="1" />
-  <defs
-     id="defs6032">
-    <marker
-       inkscape:stockid="Arrow2Send"
-       orient="auto"
-       refY="0.0"
-       refX="0.0"
-       id="Arrow2Send"
-       style="overflow:visible;">
-      <path
-         id="path6595"
-         style="fill-rule:evenodd;stroke-width:0.62500000;stroke-linejoin:round;"
-         d="M 8.7185878,4.0337352 L -2.2072895,0.016013256 L 8.7185884,-4.0017078 C 6.9730900,-1.6296469 6.9831476,1.6157441 8.7185878,4.0337352 z "
-         transform="scale(0.3) rotate(180) translate(-2.3,0)" />
-    </marker>
-    <marker
-       inkscape:stockid="Arrow2SendE"
-       orient="auto"
-       refY="0.0"
-       refX="0.0"
-       id="Arrow2SendE"
-       style="overflow:visible;">
-      <path
-         id="path7373"
-         style="stroke-linejoin:round;stroke:#606060;stroke-width:0.62500000;fill:#606060;fill-rule:evenodd"
-         d="M 8.7185878,4.0337352 L -2.2072895,0.016013256 L 8.7185884,-4.0017078 C 6.9730900,-1.6296469 6.9831476,1.6157441 8.7185878,4.0337352 z "
-         transform="scale(0.3) rotate(180) translate(-2.3,0)" />
-    </marker>
-    <marker
-       inkscape:stockid="Arrow2SendEG"
-       orient="auto"
-       refY="0.0"
-       refX="0.0"
-       id="Arrow2SendEG"
-       style="overflow:visible;">
-      <path
-         id="path7418"
-         style="stroke-linejoin:round;fill-rule:evenodd;stroke:#484848;stroke-width:0.62500000;fill:#484848"
-         d="M 8.7185878,4.0337352 L -2.2072895,0.016013256 L 8.7185884,-4.0017078 C 6.9730900,-1.6296469 6.9831476,1.6157441 8.7185878,4.0337352 z "
-         transform="scale(0.3) rotate(180) translate(-2.3,0)" />
-    </marker>
-    <marker
-       inkscape:stockid="Arrow2SendEG2"
-       orient="auto"
-       refY="0.0"
-       refX="0.0"
-       id="Arrow2SendEG2"
-       style="overflow:visible;">
-      <path
-         id="path7447"
-         style="stroke-linejoin:round;stroke:#202020;stroke-width:0.62500000;fill:#202020;fill-rule:evenodd"
-         d="M 8.7185878,4.0337352 L -2.2072895,0.016013256 L 8.7185884,-4.0017078 C 6.9730900,-1.6296469 6.9831476,1.6157441 8.7185878,4.0337352 z "
-         transform="scale(0.3) rotate(180) translate(-2.3,0)" />
-    </marker>
-    <marker
-       inkscape:stockid="Arrow2SendEG2f"
-       orient="auto"
-       refY="0.0"
-       refX="0.0"
-       id="Arrow2SendEG2f"
-       style="overflow:visible;">
-      <path
-         id="path3797"
-         style="stroke-linejoin:round;fill-rule:evenodd;stroke:#282828;stroke-width:0.62500000;fill:#282828"
-         d="M 8.7185878,4.0337352 L -2.2072895,0.016013256 L 8.7185884,-4.0017078 C 6.9730900,-1.6296469 6.9831476,1.6157441 8.7185878,4.0337352 z "
-         transform="scale(0.3) rotate(180) translate(-2.3,0)" />
-    </marker>
-  </defs>
+   sodipodi:docname="transform.svg.2015_02_09_13_41_32.0.svg">
   <metadata
-     id="metadata6035">
+     id="metadata10">
     <rdf:RDF>
       <cc:Work
          rdf:about="">
@@ -116,34 +26,53 @@
       </cc:Work>
     </rdf:RDF>
   </metadata>
-  <g
-     inkscape:label="Layer 1"
-     inkscape:groupmode="layer"
-     id="layer1"
-     transform="translate(0,-1028.3622)">
-    <rect
-       style="color:#000000;fill:#606060;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:2;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
-       id="rect6038"
-       width="12"
-       height="12"
-       x="0"
-       y="1028.3622" />
-    <path
-       sodipodi:type="arc"
-       style="color:#000000;fill:#282828;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:2;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
-       id="path6548"
-       sodipodi:cx="13.873814"
-       sodipodi:cy="10.899584"
-       sodipodi:rx="1.7204161"
-       sodipodi:ry="1.767767"
-       d="m 15.59423,10.899584 c 0,0.976311 -0.770257,1.767767 -1.720416,1.767767 -0.95016,0 -1.720416,-0.791456 -1.720416,-1.767767 0,-0.9763109 0.770256,-1.7677671 1.720416,-1.7677671 0.950159,0 1.720416,0.7914562 1.720416,1.7677671 z"
-       transform="matrix(3.4875285,0,0,3.3941125,-30.385321,1009.3678)" />
-    <path
-       style="stroke-linejoin:miter;marker-end:url(#Arrow2SendEG2f);stroke-opacity:1;stroke-dashoffset:0;stroke:#282828;stroke-linecap:butt;stroke-miterlimit:4;stroke-dasharray:none;stroke-width:2;fill:none"
-       d="M 3,12.738281 C 3,13.813306 3,14.404575 3,17 c 0,1.0277 0.028821,1 1,1 1.1313784,0 3.4974115,0 5,0"
-       id="path7184"
-       inkscape:connector-curvature="0"
-       transform="translate(0,1028.3622)"
-       sodipodi:nodetypes="cssc" />
-  </g>
+  <defs
+     id="defs8" />
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1920"
+     inkscape:window-height="1016"
+     id="namedview6"
+     showgrid="true"
+     inkscape:zoom="39.333333"
+     inkscape:cx="10.373636"
+     inkscape:cy="9.0603466"
+     inkscape:window-x="0"
+     inkscape:window-y="27"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg2">
+    <inkscape:grid
+       empspacing="5"
+       visible="true"
+       enabled="true"
+       snapvisiblegridlinesonly="true"
+       type="xygrid"
+       id="grid2994" />
+  </sodipodi:namedview>
+  <path
+     style="fill:#000000;fill-opacity:1;stroke:none"
+     d="m 17,24 5,-5 -10,0 z"
+     id="path4375"
+     inkscape:connector-curvature="0" />
+  <path
+     style="font-size:medium;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-indent:0;text-align:start;text-decoration:none;line-height:normal;letter-spacing:normal;word-spacing:normal;text-transform:none;direction:ltr;block-progression:tb;writing-mode:lr-tb;text-anchor:start;baseline-shift:baseline;color:#000000;fill:#000000;fill-opacity:1;stroke:none;stroke-width:2;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate;font-family:Sans;-inkscape-font-specification:Sans"
+     d="M 2 7 L 2 9 L 8 9 L 8 7 L 2 7 z M 10 7 L 10 9 L 16 9 L 16 13 L 18 13 L 18 8 A 1.0001 1.0001 0 0 0 17 7 L 10 7 z M 16 15 L 16 22 L 18 22 L 18 15 L 16 15 z "
+     id="path8" />
+  <path
+     style="font-size:medium;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-indent:0;text-align:start;text-decoration:none;line-height:normal;letter-spacing:normal;word-spacing:normal;text-transform:none;direction:ltr;block-progression:tb;writing-mode:lr-tb;text-anchor:start;baseline-shift:baseline;color:#000000;fill:#000000;fill-opacity:1;stroke:none;stroke-width:2;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate;font-family:Sans;-inkscape-font-specification:Sans"
+     d="m 6,2 0,14 a 1.0001,1.0001 0 0 0 1,1 L 22,17 22,15 8,15 8,2 6,2 z"
+     inkscape:connector-curvature="0"
+     id="path10" />
+  <path
+     inkscape:connector-curvature="0"
+     id="path3813"
+     d="M 7,2.0000001e-8 11.999999,5 2,5 z"
+     style="fill:#000000;fill-opacity:1;stroke:none" />
 </svg>

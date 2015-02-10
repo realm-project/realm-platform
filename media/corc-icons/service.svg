@@ -27,17 +27,25 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="11.313708"
-     inkscape:cx="-13.676577"
-     inkscape:cy="14.086341"
+     inkscape:zoom="31.999999"
+     inkscape:cx="6.5814637"
+     inkscape:cy="12.765837"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
-     showgrid="false"
+     showgrid="true"
      inkscape:window-width="1920"
      inkscape:window-height="1016"
      inkscape:window-x="0"
      inkscape:window-y="27"
-     inkscape:window-maximized="1" />
+     inkscape:window-maximized="1">
+    <inkscape:grid
+       type="xygrid"
+       id="grid2983"
+       empspacing="4"
+       visible="true"
+       enabled="true"
+       snapvisiblegridlinesonly="true" />
+  </sodipodi:namedview>
   <metadata
      id="metadata4668">
     <rdf:RDF>
@@ -46,7 +54,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -56,10 +64,9 @@
      id="layer1"
      transform="translate(0,-1028.3622)">
     <path
-       d="m 18.255098,1028.3622 -11.9224135,10.4815 5.1031935,3.6432 -5.6909764,9.8753 11.9321094,-10.4788 -5.103193,-3.6433 5.68128,-9.8779 z"
-       class="st14"
-       id="path295"
-       inkscape:connector-curvature="0"
-       style="fill:#282828;stroke:none;fill-opacity:1" />
+       style="fill:#000000;fill-opacity:1;stroke:none"
+       d="m 18,1028.3622 -12,10 5,4 -5,10 12,-10 -5,-4 5,-10"
+       id="path3772"
+       inkscape:connector-curvature="0" />
   </g>
 </svg>
