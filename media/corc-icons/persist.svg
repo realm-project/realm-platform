@@ -55,46 +55,16 @@
        enabled="true"
        snapvisiblegridlinesonly="true" />
   </sodipodi:namedview>
-  <rect
+  <path
      style="color:#000000;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:2;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
-     id="rect2985"
-     width="20"
-     height="6"
-     x="2"
-     y="1"
-     rx="2"
-     ry="2" />
-  <rect
-     ry="2"
-     rx="2"
-     y="9"
-     x="2"
-     height="6"
-     width="20"
-     id="rect3755"
-     style="color:#000000;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:2;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate" />
-  <rect
+     d="M 4 1 C 2.892 1 2 1.892 2 3 L 2 5 C 2 6.108 2.892 7 4 7 L 20 7 C 21.108 7 22 6.108 22 5 L 22 3 C 22 1.892 21.108 1 20 1 L 4 1 z M 4 3 L 20 3 L 20 5 L 4 5 L 4 3 z "
+     id="rect2985" />
+  <path
      style="color:#000000;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:2;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
-     id="rect3757"
-     width="20"
-     height="6"
-     x="2"
-     y="16.963835"
-     rx="2"
-     ry="2" />
+     d="M 4 9 C 2.892 9 2 9.892 2 11 L 2 13 C 2 14.108 2.892 15 4 15 L 20 15 C 21.108 15 22 14.108 22 13 L 22 11 C 22 9.892 21.108 9 20 9 L 4 9 z M 4 11 L 20 11 L 20 13 L 4 13 L 4 11 z "
+     id="rect3755" />
   <path
-     style="font-size:medium;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-indent:0;text-align:start;text-decoration:none;line-height:normal;letter-spacing:normal;word-spacing:normal;text-transform:none;direction:ltr;block-progression:tb;writing-mode:lr-tb;text-anchor:start;baseline-shift:baseline;color:#000000;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:2;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate;font-family:Sans;-inkscape-font-specification:Sans"
-     d="M 4,3 4,5 20,5 20,3 4,3 z"
-     id="path2985"
-     inkscape:connector-curvature="0" />
-  <path
-     inkscape:connector-curvature="0"
-     id="path3761"
-     d="m 4,11 0,2 16,0 0,-2 -16,0 z"
-     style="font-size:medium;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-indent:0;text-align:start;text-decoration:none;line-height:normal;letter-spacing:normal;word-spacing:normal;text-transform:none;direction:ltr;block-progression:tb;writing-mode:lr-tb;text-anchor:start;baseline-shift:baseline;color:#000000;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:2;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate;font-family:Sans;-inkscape-font-specification:Sans" />
-  <path
-     style="font-size:medium;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-indent:0;text-align:start;text-decoration:none;line-height:normal;letter-spacing:normal;word-spacing:normal;text-transform:none;direction:ltr;block-progression:tb;writing-mode:lr-tb;text-anchor:start;baseline-shift:baseline;color:#000000;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:2;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate;font-family:Sans;-inkscape-font-specification:Sans"
-     d="m 4,19 0,2 16,0 0,-2 -16,0 z"
-     id="path3763"
-     inkscape:connector-curvature="0" />
+     style="color:#000000;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:2;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+     d="M 4 16.96875 C 2.892 16.96875 2 17.86075 2 18.96875 L 2 20.96875 C 2 22.07675 2.892 22.96875 4 22.96875 L 20 22.96875 C 21.108 22.96875 22 22.07675 22 20.96875 L 22 18.96875 C 22 17.86075 21.108 16.96875 20 16.96875 L 4 16.96875 z M 4 19 L 20 19 L 20 21 L 4 21 L 4 19 z "
+     id="rect3757" />
 </svg>
