@@ -24,6 +24,7 @@ operator: AND | OR;
 id: theKind=LETTERS DASH theLabel=integer;
 integer : DASH? digits;
 real : DASH? digits DOT digits?;
-string : QUOTE theString=NONGREEDY QUOTE;
+
+string :  QUOTE (.)? QUOTE;
 
 digits : DIGIT+ ;
