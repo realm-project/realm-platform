@@ -1,0 +1,35 @@
+{
+  "name": "treeview",
+  "version": "0.1.7",
+  "homepage": "https://github.com/SiftLogic/angular.treeview",
+  "authors": [
+    "Jacob Friesen <jacob@jacobfriesen.com>"
+  ],
+  "description": "Siftlogic fork of angular.treeview",
+  "main": "angular.treeview.js",
+  "keywords": [
+    "siftlogic",
+    "angular",
+    "tree",
+    "treeview"
+  ],
+  "license": "MIT",
+  "private": false,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "_release": "0.1.7",
+  "_resolution": {
+    "type": "version",
+    "tag": "0.1.7",
+    "commit": "23b6ceddb13a7f1fdb1c3e827a6202216d9387b1"
+  },
+  "_source": "git://github.com/SiftLogic/angular.treeview.git",
+  "_target": "~0.1.7",
+  "_originalSource": "git://github.com/SiftLogic/angular.treeview.git",
+  "_direct": true
+}

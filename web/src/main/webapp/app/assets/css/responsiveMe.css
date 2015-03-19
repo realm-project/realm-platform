@@ -1,0 +1,23 @@
+.ui-section
+{
+    width:47%;
+    float:left;
+
+}
+ui-section:last-child
+{
+    clear: both;
+    float:left;
+    margin-top: 5px;
+}
+.ui-experiment__content
+{
+    white-space: normal;
+
+}
+.angle-input-container {
+    width: 27%;
+}
+.pose-input-container {
+    width: 27%;
+}

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="styles/teacherSessions.css">
+</head>
+<body>
+
+
+<div class="date-range date-range-review">
+    <div class="date-range__start-date row tab-content__top-row review-start">
+        <label>Start Date: </label>
+            <div class="calendar-container calender-container-review">
+                <datepicker ng-model="UIStartDate" show-weeks="true"
+                            class="well well-sm"></datepicker>
+            </div>
+    </div>
+    <div class="date-range__end-date row review-end">
+        <label>End Date: </label>
+            <div class="calendar-container calender-container-review">
+                <datepicker ng-model="UIEndDate" min-date="UIStartDate" show-weeks="true" class="well well-sm"></datepicker>
+            </div>
+    </div>
+</div>
+<div class="gridStyle" ng-grid="gridOptions"></div>
+<div class="gridStyle" ng-grid="gridOptionsAll"></div>
+</body>
+</html>

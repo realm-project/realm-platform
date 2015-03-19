@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <base href=""/>
+    <title>REALM</title>
+    <title>REALM</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="viewport" content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimal-ui"/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="yes"/>
+    <link rel="shortcut icon" href="assets/img/favicon.png">
+
+    <!--STYLESHEETS-->
+    <!--TODC BOOTSTRAP THEME-->
+    <!--<link rel="stylesheet" href="assets/css/todc-css/bootstrap.css"/>-->
+    <!--<link rel="stylesheet" href="assets/css/todc-css/bootstrap-theme.css"/>
+    <link rel="stylesheet" href="assets/css/todc-css/todc-bootstrap.css"/>-->
+    <!--<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">-->
+    <link rel="stylesheet" href="assets/bower_components/ng-grid/ng-grid.css"/>
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css" rel="stylesheet">
+    <link href="assets/css/modal.css" rel="stylesheet">
+    <!--MOBILE ANGULAR UI-->
+    <link rel="stylesheet" href="assets/css/mobile-angular-ui-base.css"/>
+    <link rel="stylesheet" href="assets/css/mobile-angular-ui-desktop.css"/>
+    <!--SLIDEBOX-->
+    <!--USING ISCROLL INSTEAD
+    <link href="assets/bower_components/slidebox/css/slidebox.css" rel="stylesheet" type="text/css"/> -->
+    <!--JQuery-->
+    <link rel="stylesheet" href="assets/css/jquery/jquery-ui.css">
+    <link rel="stylesheet" href="assets/css/jquery/jquery-ui.min.css">
+    <link rel="stylesheet" href="assets/css/jquery/theme.css">
+    <!--ANIMATIONS-->
+    <link rel="stylesheet" href="assets/css/animate.css"/>
+    <!--FONTS-->
+    <link href='https://fonts.googleapis.com/css?family=Roboto:100,300' rel='stylesheet' type='text/css'>
+    <!--REALM-->
+    <link href="assets/css/main.css" rel="stylesheet" type="text/css"/>
+    <link href="assets/css/responsiveLg.css" rel="stylesheet" type="text/css" media="screen and (min-width:1600px)"/>
+    <link href="assets/css/responsiveMe.css" rel="stylesheet" type="text/css"
+          media="screen and (min-width:900px) and (max-width:1600px)"/>
+    <link href="assets/css/responsiveSm.css" rel="stylesheet" type="text/css" media="screen and (max-width:900px)"/>
+
+
+</head>
+<body ng-app="REALM" ng-controller="MainController">
+
+<!--LEFT SIDEBAR-->
+<div class="sidebar sidebar-left" toggleable="inactive" parent-active-class="sidebar-left-in" default="inactive"
+     id="mainSidebar">
+    <div class="scrollable sidebar-scrollable sidebar-scrollable-content">
+        <div class="scrollable-content ">
+            <div ng-click="toggle('mainSidebar')" class="app-name">
+                <img src="assets/img/REALMBanner.png"></img>
+            </div>
+            <div class="list-group" toggle="off" bubble target="mainSidebar">
+                <!--div class="common-menu--before-login" yield-to="common-menu--before-login">
+                  <a class="list-group-item" ui-sref="login">Log In<i class="fa fa-chevron-right pull-right"></i></a>
+                  <a class="list-group-item" ui-sref="signup">Sign Up <i class="fa fa-chevron-right pull-right"></i></a>
+                </div>
+                <div class="common-menu--after-login" >
+                  <a class="list-group-item" ui-sref="studentHome"><i class="left-sidebar-icon fa fa-home"></i>Home<i class="fa fa-chevron-right pull-right"></i></a>
+                  <a class="list-group-item" ui-sref="login"><i class="left-sidebar-icon fa fa-sign-out"></i>Log Out<i class="fa fa-chevron-right pull-right"></i></a>
+                </div-->
+                <div yield-to="common-menu">
+                    <a class="list-group-item" ui-sref="studentHome"><i class="left-sidebar-icon fa fa-home"></i>Home<i
+                            class="fa fa-chevron-right pull-right"></i></a>
+                    <a class="list-group-item" ui-sref="login"><i class="left-sidebar-icon fa fa-sign-out"></i>Log Out<i
+                            class="fa fa-chevron-right pull-right"></i></a>
+                </div>
+
+                <div class="viewSpecific-" yield-to="viewSpecificMenu">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--RIGHT SIDEBAR-->
+<!--And this is where I'd put a right sidebar....IF I HAD ONE-->
+
+<div class="app">
+
+    <!--TOP NAVBAR-->
+    <div class="navbar navbar-app navbar-absolute-top" yield-to="top-navbar">
+        <div class="navbar-brand navbar-brand-right" yield-to="title">
+            <span>REALM</span>
+        </div>
+        <div class="btn-group pull-left">
+            <div ng-click="toggle('mainSidebar','on')" class="btn btn-navbar sidebar-toggle">
+                <i class="fa fa-bars"></i> <!-- here is where I can write MENU beside the menu icon-->
+            </div>
+
+        </div>
+        <div class="navbar-brand navbar-brand-left" yield-to="top-navbar__left">
+        </div>
+
+    </div>
+
+    <!--BOTTOM NAVBAR-->
+    <div class="navbar navbar-app navbar-absolute-bottom" yield-to="bottom-navbar">
+
+    </div>
+
+    <!--APP BODY-->
+    <div class="app-body" ng-class="{loading: loading}">
+        <div ng-show="loading" class="app-content-loading">
+            <i class="fa fa-spinner fa-spin loading-spinner"></i>
+        </div>
+
+        <div ui-view class="app-content" ng-hide="loading"></ng-view>
+        </div>
+
+    </div>
+</div>
+    <!--JAVASCRIPT LIBRARIES-->
+    <!--ANGULARJS-->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.15/angular.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.15/angular-touch.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.2.16/angular-cookies.min.js"></script>
+    <!--ANGULAR UI-->
+    <script src="assets/bower_components/angular-ui/angular-ui-router.js"></script>
+    <script src="assets/bower_components/angular-ui/ui-utils.min.js"></script>
+    <!--JQUERY-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js" type="text/javascript"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.9.1/jquery-ui.min.js" type="text/javascript"></script>
+    <!--MOBILE ANGULAR UI-->
+    <script src="assets/bower_components/mobile-angular-ui/mobile-angular-ui.js"></script>
+    <!--HOT KEYS-->
+    <script src="assets/bower_components/angular-hotkeys/build/hotkeys.min.js"></script>
+    <!--DATE-->
+    <script src="assets/bower_components/angular-ui-date/src/date.js"></script>
+    <script src="assets/bower_components/moment/moment.js"></script>
+    <!--ANGULAR BOOTSTRAP-->
+    <script src="assets/bower_components/angular-bootstrap/ui-bootstrap.min.js"></script>
+    <script src="assets/bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
+    <!--NG GRID-->
+    <script src="assets/bower_components/ng-grid/ng-grid-2.0.14.min.js"></script>
+    <!--D3-->
+    <script src="assets/bower_components/d3/d3.min.js"></script>
+    <script src="assets/bower_components/d3/d3.js"></script>
+    <!--ANIMATION-->
+    <script src="https://anijs.github.io/lib/anijs/anijs.js"></script>
+    <!--VIRTUAL JOYSTICK-->
+    <script src="assets/bower_components/virtualjoystick.js/virtualjoystick.js"></script>
+
+    <!--MODALS-->
+    <script src="mico/views/partials/robotModal.js"></script>
+    <script src="shared/views/partials/joystickModal.js"></script>
+
+    <!--REALM-->
+    <script src="shared/app.module.js"></script>
+    <script src="shared/app.routes.js"></script>
+
+    <!--CONTROLLERS-->
+    <script src="shared/views/main.js"></script>
+    <script src="shared/views/login/login.js"></script>
+    <script src="shared/views/login/signup.js"></script>
+    <script src="shared/views/account/studentHome.js"></script>
+    <script src="shared/views/account/studentCourses.js"></script>
+    <script src="shared/views/account/studentProfile.js"></script>
+    <script src="shared/views/session/studentSessions.js"></script>
+    <script src="shared/views/session/teacherSessions.js"></script>
+    <script src="shared/views/session/reviewSessions.js"></script>
+    <script src="shared/views/experiment/experimentTemplate.js"></script>
+
+    <script src="shared/views/experiment/experiment.js"></script>
+
+    <!--views required for the old code
+    <script src="scripts/controllers/teacherHome.js"></script>
+    <script src="scripts/controllers/teacherCourses.js"></script>
+    <script src="scripts/controllers/teacherProfile.js"></script>
+    <script src="mico/views/experiments/forwardkinematics.js"></script>
+    <script src="mico/views/experiments/inversekinematics.js"></script>
+    <script src="mico/views/experiments/teachpoints.js"></script>
+    <script src="mico/views/experiments/dynamicresponse.js"></script>
+    <script src="mico/views/experiments/teachpointsanddynamicresponse.js"></script>
+    -->
+
+
+    <!--SERVICES-->
+    <script src="shared/services/CameraFeedService.js"></script>
+    <script src="shared/services/AuthService.js"></script>
+    <script src="shared/services/StorageService.js"></script>
+    <script src="shared/services/RepoService.js"></script>
+    <script src="mico/services/RobotService.js"></script>
+
+    <!--DIRECTIVES-->
+    <script src="shared/components/uiExperiment.js"></script>
+    <script src="shared/components/uiSection.js"></script>
+    <script src="shared/components/uiComponent.js"></script>
+
+    <script src="mico/components/cameraFeedComponent.js"></script>
+    <script src="mico/components/angleInputComponent.js"></script>
+    <script src="mico/components/poseInputComponent.js"></script>
+    <script src="mico/components/poseStateComponent.js"></script>
+    <script src="mico/components/angleStateComponent.js"></script>
+    <script src="mico/components/simulationComponent.js"></script>
+    <script src="mico/components/joystickInputComponent.js"></script>
+    <script src="mico/components/trajectorySaveComponent.js"></script>
+    <script src="mico/components/trajectorySaveReplayComponent.js"></script>
+    <script src="mico/components/playBackComponent.js"></script>
+    <script src="mico/components/poseVisualizationComponent.js"></script>
+
+    <!--HELPERS-->
+    <script src="mico/components/helpers/equals.js"></script>
+    <script src="mico/components/helpers/numericInput.js"></script>
+    <script src="mico/components/helpers/joystick.js"></script>
+    <script src="mico/components/helpers/poseChart.js"></script>
+
+</body>
+</html>

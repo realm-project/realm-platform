@@ -1,0 +1,93 @@
+{
+    "options": null,
+            
+    "sections":
+    [ 
+        {
+            "sectionOptions": 
+            {
+                "title":"Video Feeds"
+            },
+                    
+            "components": 
+            [
+                {
+                    "componentOptions":
+                    {
+                        "title": "Video Feed",
+                        
+                        "type": "cameraFeed",
+                        "url" : "rest/device/camera",
+                        
+                        "cameraFeedOptions": 
+                        {
+                            
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "sectionOptions":
+            {
+                "title":"Input"
+            },
+
+            "components":
+                [
+                    {
+                        "componentOptions":
+                        {
+                            "title": "Joystick Input",
+
+                            "type": "joystickInput",
+                            "url": "rest/device/mico",
+                            
+                            "angleInputOptions":
+                            {
+                                "numberOfItems": 6
+                            }
+                        }
+                    },
+                    {
+                        "componentOptions":
+                        {
+                            "title": "Current Pose",
+
+                            "type": "poseState",
+                            "url": "rest/device/mico",
+                            "poseStateOptions":
+                            {
+
+                            }
+                        }
+                    }
+
+
+                ]
+        },
+        {
+            "sectionOptions":
+            {
+                "title":"Trajectory Save"
+            },
+
+            "components":
+                [
+                    {
+                        "componentOptions":
+                        {
+                            "title": "Trajectory Save",
+                            "type": "trajectorySaveComponent",
+                            "url": "rest/device/mico",
+                            "angleInputOptions":
+                            {
+
+                            }
+                        }
+                    }
+                ]
+        }
+
+    ]                                                    
+}

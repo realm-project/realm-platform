@@ -1,0 +1,89 @@
+{
+    "options": null,
+            
+    "sections":
+    [ 
+        {
+            "sectionOptions": 
+            {
+                "title":"Video Feeds"
+            },
+                    
+            "components": 
+            [
+                {
+                    "componentOptions":
+                    {
+                        "title": "Video Feed",
+                        "stationElement":"camera",
+                        "type": "cameraFeed",
+                        "url" : "rest/device/camera",
+                        "cameraFeedOptions": 
+                        {
+                            
+                        }
+                    }
+                }
+            ]
+        },
+
+        {
+            "sectionOptions": {
+                "title": "End Effector Pose"
+            },
+            "components": [
+                {
+                    "componentOptions": {
+                        "title": "Pose Input",
+                        "type": "poseInput",
+                        "stationElement":"Robot",
+                        "url": "rest/device/mico",
+                        "infoInputOptions": {
+                            
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "sectionOptions": 
+            {
+                "title":"Robot State"
+            },
+            
+            "components": 
+            [
+                {
+                    "componentOptions":
+                    {
+                        "title": "Current Joint Angles",
+                        
+                        "type": "angleState",
+                        "stationElement":"Robot",
+                        "url": "rest/device/mico",
+                        "angleStateOptions":
+                        {
+                            
+                            "numberOfItems": 6
+                        }
+                    }
+                },
+                {
+                    "componentOptions":
+                    {
+                        "title": "Current Pose",
+
+                        "type": "poseState",
+                        "url": "rest/device/mico",
+                        "stationElement":"Robot",
+                        "poseStateOptions":
+                        {
+                            
+                        }
+                    }
+                }
+
+            ]
+        }
+    ]
+}

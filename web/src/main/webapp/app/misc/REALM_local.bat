@@ -1,0 +1,1 @@
+"C:\Users\SADAF\AppData\Local\Google\Chrome\Application\Chrome.exe" --disable-web-security

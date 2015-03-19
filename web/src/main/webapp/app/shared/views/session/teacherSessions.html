@@ -1,0 +1,165 @@
+<link rel="stylesheet" type="text/css" href="assets/css/teacherSessions.css">
+
+<div class="scrollable">
+	<div class="scrollable-content section noselect">
+		<form name="sessionCreationForm">
+			<div class="assignment-selection row">
+				<label class="col-xs-12 col-sm-4">Choose Assignment: </label>
+				<div class="assignment-selection__dropdown dropdown noselect col-sm-6" on-toggle="assignment-changed(assignment)" style="position: relative;">
+					<button class="dropdown-toggle btn btn-primary " ng-disabled="disabled" > {{vm.chosenAssignmentType}}
+					    <span class="caret caret--up"></span>
+					    <span class="caret caret--down" style=""></span>
+					</button>
+					<ul class="dropdown-menu">
+						<li ng-repeat="assignment in vm.assignmentTypes">
+							<a href ng-click="assignmentChanged(assignment)">{{assignment}}</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+			
+			<div class="device-selection row">
+				<label class="col-xs-12 col-sm-4">Choose Device: </label>
+				<div class="device-selection__radio dropdown noselect col-sm-6" on-toggle="assignment-changed(assignment)" style="position: relative;">
+					<div class="btn-group days-btn-group">
+						<label ng-repeat="deviceType in vm.deviceTypesRadioModel" class="btn btn-primary" ng-model="deviceType.checked" btn-checkbox>{{deviceType.name}}</label>
+					</div>
+				</div>
+			</div>
+
+			<div class="time-selection row">
+				<label class="col-xs-12 col-sm-4">Session Times: </label>
+				<div class="tabs col-sm-6">
+					<tabset>
+						<tab heading="Single" select="singleSessionTabSelected()">
+							<div class="single-session">
+								<div class="single-session__start-time row tab-content__top-row">
+									<label class="timepicker-label col-xs-6">Start Time: </label>
+									<div class="col-xs-6">
+									<timepicker class="" ng-model="vm.sessionStartTime" ng-change="startTimeChanged()" hour-step="1" minute-step="1" show-meridian="false"></timepicker>
+									</div>
+								</div>
+								<div class="single-session__duration row">
+									<label class=" col-xs-6">Duration (Min): </label>
+									<div class="col-xs-4">
+									<input type="number" min="0" ng-required="true" ng-model="vm.duration"></input>
+									</div>
+								</div>
+							</div>
+						</tab>
+						<tab heading="Bulk" select="bulkSessionTabSelected()">
+							<div class="bulk-session">
+								<div class="bulk-session__start-time row tab-content__top-row">
+									<label class="timepicker-label col-xs-6">Start Time: </label>
+									<div class="col-xs-6">
+									<timepicker class="" ng-model="vm.sessionStartTime" ng-change="startTimeChanged()" hour-step="1" minute-step="1" show-meridian="false"></timepicker>
+									</div>
+								</div>
+								<div class="bulk-session__start-time row">
+									<label class="timepicker-label col-xs-6">End Time: </label>
+									<div class="col-xs-6">
+									<timepicker class="" ng-model="vm.sessionEndTime" ng-change="startTimeChanged()" hour-step="1" minute-step="1" show-meridian="false"></timepicker>
+									</div>
+								</div>
+								<div class="single-session__duration row">
+									<label class=" col-xs-6">Duration (Min): </label>
+									<div class="col-xs-4">
+									<input type="number" ng-model="vm.duration"></input>
+									</div>
+								</div>
+							</div>
+						</tab>
+					</tabset>
+				</div>
+			</div>
+
+			<div class="date-selection row">
+				<label class="col-xs-12 col-sm-4">Session Dates: </label>
+				<div class="tabs col-sm-6">
+					<tabset>
+						<tab heading="Range" select="dateRangeTabSelected()">
+							<div class="date-range">	
+								<div class="date-range__start-date row tab-content__top-row">
+									<label class="col-xs-12">Start Date: </label>
+									<div class="col-xs-12">
+										<div class="calendar-container">
+											<datepicker ng-model="vm.sessionStartDate" min-date="vm.now" show-weeks="true" class="well well-sm"></datepicker>
+										</div>
+									</div>
+								</div>
+								
+								<div class="date-range__end-date row">
+									<label class="col-xs-12">End Date: </label>
+									<div class="col-xs-12">
+										<div class="calendar-container">
+											<datepicker ng-model="vm.sessionEndDate" min-date="vm.sessionStartDate" show-weeks="true" class="well well-sm"></datepicker>
+										</div>
+									</div>
+								</div>
+								
+								<div class="date-range__days row">
+									<label class="col-xs-12">Days: </label>
+									<div class="col-xs-12">
+										<div class="btn-group days-btn-group">
+											<label class="btn btn-primary" ng-model="vm.days.Monday" btn-checkbox>M</label>
+											<label class="btn btn-primary" ng-model="vm.days.Tuesday" btn-checkbox>T</label>
+											<label class="btn btn-primary" ng-model="vm.days.Wednesday" btn-checkbox>W</label>
+											<label class="btn btn-primary" ng-model="vm.days.Thursday" btn-checkbox>Th</label>
+											<label class="btn btn-primary" ng-model="vm.days.Friday" btn-checkbox>F</label>
+										</div>
+									</div>
+								</div>
+							</div>
+						</tab>
+						<tab heading="List" select="dateListTabSelected()">
+							<div class="date-list">
+								<div class="row">
+									<div class="col-xs-12">
+										<div class="calendar-container">
+											<datepicker ng-model="vm.dateToAdd" min-date="vm.now" show-weeks="true" class="well well-sm">
+												
+											</datepicker>
+											<button class="add-date-button" ng-click="appendDateList()"><span class="fa fa-plus"></span></button>
+										</div>
+									</div>
+								</div>
+								<div class="row">
+								</div>
+								<div class="row">
+									<div class="col-xs-4">
+										<label class="add-date-label">List of Dates:
+
+										</label>
+										
+									</div>
+									<div class="date-list__list col-xs-7">
+										<ul>
+											<li ng-repeat="date in vm.dateList track by date">{{date | date:'mediumDate'}}</li>
+										</ul>
+									</div>
+								</div>
+							</div>
+						</tab>
+					</tabset>
+				</div>
+			</div>
+		</form>
+	</div>
+</div>
+
+<!--INJECTED HTML-->  
+
+	<!--TITLE-->
+	<div content-for="title">
+		<span style="font-size:22px">Session Creation</span>
+	</div>
+
+
+	<!--BOTTOM NAVBAR-->
+	<div content-for="bottom-navbar">
+		<div class="btn-group justified">
+			<!--<a class="btn btn-navbar" ng-class="{disabled: loginForm.$invalid}"><i class="fa fa-sort"></i> Sort By</a>-->
+			<a class="btn btn-navbar" ng-disabled="!sessionCreationForm.$valid" ng-click="createSessions()"><i class="fa fa-plus"></i>   Create Session(s)</a>
+            <!--<a class="btn btn-navbar" ng-controller="sessionTokenCtrl" ng-click="open('sm')"><i class="fa fa-plus"></i> New Session 2</a>-->
+		</div>
+	</div>

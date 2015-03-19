@@ -1,0 +1,41 @@
+.login-form {
+	background-color: #ffffff;
+	box-shadow: 0 0 4px rgba(0, 0, 0, 0.4);
+    max-width: 800px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    color:#4e2583;
+    margin-top: 10px;
+}
+
+.login-form__label {
+/*is in the main.css*/
+}
+
+.login-form__button {
+	display:block;
+	width:100px;
+	margin-left:auto;
+	margin-right:auto;
+}
+
+.switch {
+	float:left;
+	margin-left:15px;
+}
+
+.switch .switch-handle:before {
+	content:'N';
+	
+	position:relative;
+	top:7.5px;
+	left:12px;
+}
+
+.switch.active .switch-handle:before {
+	content:'Y';
+}
+
+
+

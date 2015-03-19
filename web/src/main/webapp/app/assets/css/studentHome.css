@@ -1,0 +1,101 @@
+.homepage-item {
+	cursor:pointer;
+	height:70px;
+	width:calc(100% - 50px);
+    max-width: 1000px;
+	margin-left:auto;
+	margin-right:auto;
+	margin-top:25px;
+	margin-bottom:25px;
+	padding:15px;
+	/*background-image: linear-gradient(to bottom, #dddddd 0%, rgba(247, 247, 247, 0.8) 25%), linear-gradient(to top, #dddddd 0%, rgba(247, 247, 247, 0.8) 23.75px), linear-gradient(to left, #dddddd 0%,rgba(247, 247, 247, 0.8) 23.75px), linear-gradient(to right, #dddddd 0%,rgba(247, 247, 247, 0.8) 23.75px);
+	background-size:cover,cover,cover,cover;*/
+	/*background-image: linear-gradient(to bottom, #dddddd 0%, rgba(247, 247, 247, 0.8) 25%),linear-gradient(to top, #dddddd 100%, rgba(247, 247, 247, 0.8) 75%);
+	background-size:cover,contain;*/
+	/*background-image: linear-gradient(to top, #dddddd 0%, rgba(247,247,247,0.8) 25%, rgba(247,247,247,0.8) 75%, #dddddd 100%);*/
+	background-color: #ffffff;
+	border: 1px solid #dddddd;
+	box-shadow: 0 0 4px rgba(0, 0, 0, 0.4);
+    /*max-width: 1200px;*/
+}
+
+.homepage-item:hover {
+	box-shadow: 0 0 8px rgba(0, 0, 0, 0.4);
+}
+
+.homepage-item:first-child {
+	margin-top:15px;
+}
+
+.homepage-item:last-child {
+	padding-bottom:15px;
+}
+
+.homepage-item__icon {
+	height:40px;
+	width:40px;
+	float:left;
+    color: #ffffff;
+}
+
+.homepage-item__label {
+	height:90%;
+	width:calc(100% - 90px);
+	margin-left:15px;
+	float:left;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    color: #4e2583;
+}
+
+.sessions .homepage-item__icon{
+	background: url('../img/sessionsIcon.svg');
+	background-size:cover;
+}
+
+.sessions .homepage-item__label {
+	background: url('../img/sessionsLabel.png');
+	background-size:contain;
+	background-repeat: no-repeat;
+	background-position-y:center;
+
+}
+
+.profile .homepage-item__icon{
+	background: url('../img/profileIcon.svg');
+	background-size:cover;
+}
+
+.profile .homepage-item__label {
+	background: url('../img/profileLabel.png');
+	background-size:contain;
+	background-repeat: no-repeat;
+	background-position-y:center;
+}
+.courses .homepage-item__icon{
+	background: url('../img/coursesIcon.svg');
+	background-size:cover;
+}
+
+.courses .homepage-item__label {
+	background: url('../img/coursesLabel.png');
+	background-size:contain;
+	background-repeat: no-repeat;
+	background-position-y:center;
+}
+
+.notifications .homepage-item__icon{
+	background: url('../img/notificationsIcon.svg');
+	background-size:contain;
+}
+
+.notifications .homepage-item__label {
+	background: url('../img/notificationsLabel.png');
+	background-size:contain;
+	background-repeat: no-repeat;
+	background-position-y:center;
+}

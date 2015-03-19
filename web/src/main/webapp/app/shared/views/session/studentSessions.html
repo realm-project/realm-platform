@@ -1,0 +1,84 @@
+<link rel="stylesheet" type="text/css" href="assets/css/studentSessions.css">
+
+<div class="scrollable" data-anijs="if:click, do: bounce, to: .homepage-item__icon">
+	<div class="scrollable-content section">
+        <div ng-show="!dynamicSessions.length">No session</div>
+		<div ng-repeat="session in dynamicSessions track by $index" class="student-session-overview clearfix">
+			
+			<div class="student-session-overview__toolbar clearfix">
+				<a class="student-session-overview__toggle-secondary-view" ng-click="session.toggleView = !session.toggleView">
+					<i class="fa" ng-class="{'fa-expand': !session.toggleView, 'fa-compress': session.toggleView}"></i>
+				</a>
+			</div>
+
+			<div class="student-session-overview__primary-view clearfix">
+				<div class="student-session-overview__primary-view__labels-container">
+					<h3 class="student-session-overview__assignment-label">{{session.assignment}}</h3>
+					<h6 class="student-session-overview__from-now-label">{{session.fromNow}}</h6>
+				</div>
+				
+				<a ng-click="goToExperiment(session.experimentType,session.layout,session.station)" class="student-session-overview__take-control-button btn btn-primary" ng-show="session.isActive"><i class="fa fa-arrow-right"></i></a>
+				
+			</div>
+			
+
+			<div class="student-session-overview__secondary-view" ng-show="session.toggleView">
+				<div class="student-session-overview__course clearfix">
+					<div class="student-session-overview__course__icon"></div>
+					<div class="student-session-overview__course__label">{{session.course}}</div>
+				</div>
+				
+				<div class="student-session-overview__date clearfix">
+					<div class="student-session-overview__date__icon">
+						<i class="fa fa-calendar"></i>
+					</div>
+					<div class="student-session-overview__date__start-date-label">{{session.startDateTime}} ---</div>
+					
+					<div class="student-session-overview__date__end-date-label">{{session.endDateTime}}</div>
+				</div> 
+			</div>
+		</div>
+	</div>
+
+	<!--INJECTED HTML-->  
+
+	<!--TITLE-->
+	<div content-for="title">
+		<span>{{name}}'s Sessions</span>
+	</div>
+
+	<!--LEFT SIDEBAR-->
+	
+
+	<!--BOTTOM NAVBAR-->
+	<div content-for="bottom-navbar">
+		<div class="btn-group justified">
+			<!--<a class="btn btn-navbar" ng-class="{disabled: loginForm.$invalid}"><i class="fa fa-sort"></i> Sort By</a>-->
+			<a class="btn btn-navbar" ng-click="openAddSessionOverlay()"><i class="fa fa-plus"></i> New Session</a>
+            <!--<a class="btn btn-navbar" ng-controller="sessionTokenCtrl" ng-click="open('sm')"><i class="fa fa-plus"></i> New Session 2</a>-->
+		</div>
+	</div>
+
+	<!--ADD SESSION OVERLAY-->
+	<div overlay="addSessionOverlay">
+		<h4 class="overlay-title">Add Session</h4>    
+		<p>
+			Please input session token.
+		</p>
+		<p toggle="off" bubble target="accessDeniedOverlay">
+			<input class="overlay__input" ng-model="sessionTokenString"></input>
+			<span class="btn btn-primary" ng-click="addUserToSession()">Ok</span>
+		</p>  
+	</div>
+
+	<!--ADD SESSION FAILED OVERLAY-->
+	<div overlay="addSessionFailedOverlay">
+		<h4 class="overlay-title">Failed to add Session</h4>    
+		<p>
+		
+		</p>
+		<p toggle="off" bubble target="accessDeniedOverlay">
+			<span class="btn btn-primary">Ok</span>
+		</p>  
+	</div>	
+</div>

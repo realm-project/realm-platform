@@ -1,0 +1,15 @@
+{
+  "name": "wijmo",
+  "homepage": "https://github.com/wijmo/Wijmo-Open",
+  "version": "1.0.0",
+  "_release": "1.0.0",
+  "_resolution": {
+    "type": "version",
+    "tag": "v1.0.0",
+    "commit": "903fdf49fa3523be7c8f0016a5f698d44bc1704c"
+  },
+  "_source": "git://github.com/wijmo/Wijmo-Open.git",
+  "_target": "~1.0.0",
+  "_originalSource": "wijmo",
+  "_direct": true
+}

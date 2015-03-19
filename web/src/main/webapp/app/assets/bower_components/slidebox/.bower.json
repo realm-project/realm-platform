@@ -1,0 +1,14 @@
+{
+  "name": "slidebox",
+  "homepage": "https://github.com/keithjgrant/slidebox",
+  "_release": "93ebcea74b",
+  "_resolution": {
+    "type": "branch",
+    "branch": "master",
+    "commit": "93ebcea74b62c33e9f829b5947ca536e8a5d3a19"
+  },
+  "_source": "https://github.com/keithjgrant/slidebox.git",
+  "_target": "*",
+  "_originalSource": "https://github.com/keithjgrant/slidebox.git",
+  "_direct": true
+}

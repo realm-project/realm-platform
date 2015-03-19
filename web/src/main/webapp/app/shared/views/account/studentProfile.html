@@ -1,0 +1,36 @@
+<div class="student-profile__content">
+    <div class="student-profile__item">
+        <span class="student-profile__label">Name:</span>
+        <span class="student-profile__value">{{user.name}}</span>
+    </div>
+
+    <div class="student-profile__item">
+        <span class="student-profile__label">E-mail Address:</span>
+        <span class="student-profile__value">{{user.email}}</span>
+    </div>
+
+    <div class="student-profile__item">
+        <span class="student-profile__label">Enrolled Courses:</span>
+        <span ng-hide="user.enrolledCourses"  class="student-profile__noData">No Enrolled Courses</span>
+        <ul  class="student-profile__list" ng-show="user.enrolledCourses">
+            <li ng-repeat="course in user.enrolledCourses">---</li>
+        </ul>
+    </div>
+
+    <div class="student-profile__item">
+        <span class="student-profile__label">Pending Courses:</span>
+        <span ng-hide="user.pendingCourses" class="student-profile__noData">No Pending Courses</span>
+        <ul  class="student-profile__list" ng-show="user.pendingCourses">
+            <li ng-repeat="course in user.pendingCourses">---</li>
+        </ul>
+    </div>
+
+    <div class="student-profile__item">
+        <span class="student-profile__label">Sessions:</span>
+        <span ng-hide="user.sessions" class="student-profile__noData">No Sessions</span>
+        <ul class="student-profile__list" ng-show="user.sessions">
+            <li ng-repeat="session in user.sessions.value">{{session.loc}}</li>
+        </ul>
+    </div>
+
+</div>

@@ -1,0 +1,120 @@
+<link href="assets/css/login.css" rel="stylesheet" type="text/css"/>
+
+<div class="scrollable">
+	<div class="scrollable-content section">
+		<form name="loginForm" class="login-form">
+			
+
+			<!--EMAIL INPUT-->
+			<div class="form-group row">
+				<label for="credentials_email_input" class="control-label login-form__label col-xs-12 col-sm-3 col-lg-3">Email</label>
+				<div class="form-control-wrapper col-xs-12 col-sm-6 col-lg-6">
+						<input required type="email" name="email" placeholder="Email" ng-model="credentials.email" class="form-control">
+				</div>
+			</div>
+			
+			<!--PASSWORD INPUT-->
+			<div class="form-group row">
+				<label for="credentials_password_input" class="control-label login-form__label col-xs-12 col-sm-3 col-lg-3">Password</label>
+				<div class="form-control-wrapper col-xs-12 col-sm-6 col-lg-6">
+					<div ng-class="{'input-group': loginForm.email.$valid}">
+						<input required ng-enter="login(credentials)" type="password" name="password" placeholder="Password" ng-model="credentials.password" class="form-control">
+						<span ng-show="loginForm.email.$valid" ng-click="toggle('forgotPasswordOverlay','on')"class="input-group-addon btn btn-default"><a><i class="fa fa-question"></i></a></span>
+					</div>
+				</div>
+			</div>
+
+			<!--REMEMBER ME OPTION-->
+			<div class="form-group row">
+				<label for="rememberMe_option" class="control-label login-form__label col-xs-12 col-sm-3 col-lg-3">Remember Me</label>
+				<switch ng-model="userSettings.rememberMe"></switch>
+			</div>
+
+			<!--LOGIN BUTTON-->
+			<div class="form-group row">
+				<button ng-click="login(credentials)" class="login-form__button btn btn-primary">Login</button>
+			</div>
+
+		</form>
+	</div>
+
+	<!--INJECTED HTML-->
+
+		<!--TOP NAVBAR-->
+		<!--div content-for="top-navbar">
+			<div class="navbar-brand navbar-brand-center" yield-to="title">
+				<i class="fa fa-sign-in"></i>
+	          	<span>Login</span>
+	        </div>
+	        <div class="btn-group pull-left">
+	          <div ng-click="toggle('mainSidebar')" class="btn btn-navbar sidebar-toggle">
+	            <i class="fa fa-bars"></i>
+	          </div>
+	        </div>
+		</div-->
+
+		<!--TITLE-->
+		<div content-for="title">
+			<i class="fa fa-sign-in"></i>	
+			<span>Login</span>
+		</div>
+
+		<!--LEFT SIDEBAR-->
+		<div content-for="common-menu">
+            <a class="list-group-item" ui-sref="login">Login<i class="fa fa-chevron-right pull-right"></i></a>
+            <a class="list-group-item" ui-sref="signup">Sign Up <i class="fa fa-chevron-right pull-right"></i></a>
+        </div>
+
+		<!--BOTTOM NAVBAR-->
+		<div content-for="bottom-navbar">
+			<!--div class="btn-group btn-group--login justified">
+				<a ng-click="login(credentials)" class="btn btn-navbar" ng-class="{disabled: loginForm.$invalid}"><i class="fa fa-sign-in fa-navbar"></i> Log In</a>
+				<a ui-sref="signup" class="btn btn-navbar"><i class="fa fa-clipboard fa-navbar"></i> Sign Up</a>
+			</div-->
+		</div>
+		
+		<!--LOGIN SUCCESS OVERLAY-->
+		<!--div overlay="loginSuccessOverlay">
+			<h4 class="overlay-title">Welcome {{firstName}}</h4>    
+			<p>
+				
+			</p>
+			<p toggle="off" bubble target="loginSuccessOverlay">
+				<a ui-sref="studentHome" ><span class="btn btn-success btn-lg">Enter REALM</span></a>
+			</p>  
+		</div-->
+		
+		<!--ACCESS DENIED OVERLAY-->
+		<div overlay="accessDeniedOverlay">
+			<h4 class="overlay-title">Access Denied</h4>    
+			<p>
+				Invalid email/password combination. Please try again.
+			</p>
+			<p toggle="off" bubble target="accessDeniedOverlay">
+				<span class="btn btn-primary">Ok</span>
+			</p>  
+		</div>
+
+		<!--RESOURCE NOT FOUND OVERLAY-->
+		<div overlay="resourceNotFoundOverlay">
+			<h4 class="overlay-title">It's not you, it's us!</h4>    
+			<p>
+				Something went wrong. Sorry for the inconvenience.
+			</p>
+			<p toggle="off" bubble target="resourceNotFoundOverlay">
+				<a><span class="btn btn-success btn-lg">Enter REALM</span></a>
+			</p>  
+		</div>
+
+
+		<!--FORGOT PASSWORD OVERLAY-->
+		<div overlay="forgotPasswordOverlay">
+			<h4 class="overlay-title">Forgot Your Password?</h4>    
+			<p>Press OK to send login instructions to {{credentials.email}} (note: this feature hasn't been implemented yet)</p>
+			<p toggle="off" bubble target="forgotPasswordOverlay">
+				<span class="btn btn-primary">Ok</span>
+			</p>  
+		</div>
+
+
+</div>

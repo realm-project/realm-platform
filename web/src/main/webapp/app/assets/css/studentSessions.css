@@ -1,0 +1,122 @@
+.student-session-overview {
+	/*cursor:pointer;
+
+	height:95px;*/
+
+	position:relative;
+
+	width:calc(100% - 50px);
+	
+	margin-left:auto;
+	margin-right:auto;
+	margin-top:25px;
+	margin-bottom:25px;
+    max-width: 1000px;
+
+	padding:15px;
+
+	background-color: #ffffff;
+	border: 1px solid #dddddd;
+    /*max-width: 1200px;*/
+	box-shadow: 0 0 4px rgba(0, 0, 0, 0.4);
+}
+
+.student-session-overview:first-child {
+	margin-top:15px;
+}
+
+.student-session-overview:last-child {
+	padding-bottom:15px;
+}
+
+
+.student-session-overview__toolbar {
+	margin-left: -15px;
+	margin-right: -15px;
+	margin-top: -15px;
+	padding: 8px;
+	background-color: gainsboro;
+	border-bottom: 1px solid rgb(175, 175, 175);
+
+}
+
+.student-session-overview__toggle-secondary-view {
+	float:right;
+}
+
+.student-session-overview__toggle-secondary-view i {
+	font-size:25px;
+	color:black;
+}
+
+.student-session-overview__toggle-secondary-view i:hover {
+	color:#007aff;
+	cursor:pointer;
+}
+
+
+
+.student-session-overview__primary-view {
+	margin-top:15px;
+	width:100%;
+}
+
+.student-session-overview__primary-view__labels-container
+{
+	float:left;
+
+}
+
+.student-session-overview__take-control-button
+{
+	float:right;
+	margin-left:10px;
+}
+.student-session-overview__take-control-button i
+{
+	font-size:45px;
+}
+
+.student-session-overview__secondary-view {
+
+	margin-top:10px;
+}
+
+
+.student-session-overview__course, .student-session-overview__date {
+	height:50px;
+	padding-top:10px;
+	padding-bottom:10px;
+}
+
+
+.student-session-overview__course__icon, .student-session-overview__date__icon {
+	height:30px;
+	width:30px;
+	float:left;
+}
+
+.student-session-overview__course__label, .student-session-overview__date__start-date-label, .student-session-overview__date__end-date-label {
+	float:left;
+	height:30px;
+	padding:5px;
+	padding-left:10px;
+
+
+}
+
+.student-session-overview__course__icon {
+	background: url('../img/coursesIcon.svg');
+}
+
+.student-session-overview__date__icon i{
+	font-size:30px;
+}
+
+.student-session-overview__date__end-date-label {
+	padding-left:none;
+}
+
+
+
+

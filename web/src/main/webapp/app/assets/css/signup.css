@@ -1,0 +1,21 @@
+.signup-form {
+	background-color: #ffffff;
+	box-shadow: 0 0 4px rgba(0, 0, 0, 0.4);
+    max-width: 800px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 10px;
+}
+
+.signup-form__button
+{
+	display:block;
+	width:100px;
+	margin-left:auto;
+	margin-right:auto;
+}
+.control-label
+{
+    color: #4e2583;
+}

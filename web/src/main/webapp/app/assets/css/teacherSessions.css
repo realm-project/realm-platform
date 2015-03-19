@@ -1,0 +1,218 @@
+.scrollable-content {
+	padding-top:30px;
+	padding-bottom:30px;
+
+	overflow-x:none;
+}
+
+.row {
+	margin-top:10px;
+	margin-bottom:10px;
+}
+
+	.row.tab-content__top-row {
+		padding-top:10px;
+	}
+
+	.date-list .row {
+		padding-top: 10px;
+	}
+
+
+
+.nav-tabs > li > a {
+	cursor:pointer;
+}
+
+.nav-tabs > li.active > a, .nav-tabs > li.active > a:hover{
+	background:#f8f8f8;
+}
+	.tab-content {
+		border:solid 1px #dddddd;
+		border-top:none;
+		border-bottom-left-radius: 5px;
+		border-bottom-right-radius: 5px;
+
+		margin-top:-10px;
+
+		padding-bottom:10px;
+		padding-left:5px;
+		padding-right:5px;
+
+		background:#f8f8f8;
+	}
+
+
+
+label {
+	padding-top:2px;
+	font-size:18px;
+	text-align: right;
+}
+	
+	label.center {
+		text-align: center;
+	}
+
+	label.left {
+		text-align: left;
+	}
+
+	.tab-content label:not(.btn) {
+		font-size: 16px;
+	}
+
+	.timepicker-label {
+		-webkit-transform:translateY(200%);
+	}
+
+	.single-session label, .bulk-session label {
+		text-align: right;
+	}
+
+	.date-range label {
+		text-align: center;
+	}
+
+
+input {
+
+}
+
+	.single-session__duration input {
+		text-align: center
+	}
+
+
+.dropdown-menu {
+	top:30px;
+	left:15px;
+
+	width:calc(100% - 30px);
+}
+
+.dropdown-toggle {
+	position:relative;
+	width:100%;
+}
+
+.caret {
+	position: absolute; 
+	right: 10px;
+	color:white;
+}
+.caret--up {
+	top: 30%; 
+	-webkit-transform:rotate(180deg)
+}
+
+.caret--down {
+	top: 60%; 
+}
+
+
+.days-btn-group {
+	display:block;
+	width:183px;
+	margin-right: auto;
+	margin-left: auto;
+}
+	.days-btn-group label {
+		display: block;
+	}
+
+.calendar-container {
+	display:block;
+	width:306px;
+	margin-top:20px;
+	margin-left:auto;
+	margin-right:auto;
+	position:relative;
+}
+
+
+	.calendar-container div {
+		margin:0;
+	}
+
+.add-date-label {
+	display:block;
+}
+.add-date-button {
+	display:block;
+	width:30px;
+	height:30px;
+
+	border-radius:15px;
+	margin-left:auto;
+	margin-right:auto;
+
+	position:absolute;
+	top:-15px;
+	right:-15px;
+
+	z-index:100000;
+}
+
+.date-list__list {
+	background-color:white;
+	border:solid 1px #dddddd;
+	border-radius:5px;
+	padding-top: 5px;
+	padding-bottom:5px;
+}
+
+@media(max-width:768px) {
+	label{
+		text-align: left;
+	}
+
+		.tab-content label {
+			text-align: right;
+		}
+
+		.date-range label {
+			text-align: center;
+		}
+
+	.dropdown-menu {
+		top:64px;
+	}
+}
+
+@media(max-width: 328px) {
+	.calendar-container {
+		position:relative;
+		left:-32px;
+	}
+	.calendar-container div {
+		width:288px;
+		padding:0;
+	}
+}
+
+@media(min-width: 329px) and (max-width: 420px) {
+	.calendar-container {
+		position:relative;
+		left:calc((100vw - 390px) / 2);
+	}
+	.calendar-container div {
+		width:288px;
+		padding:0;
+	}
+}
+/***********************************/
+.date-range-review
+{
+    width: 320px;
+    margin: 10px;
+    float: left;
+}
+.review-start
+{
+    float: left;
+}
+.review-end
+{
+    float: left;
+}
