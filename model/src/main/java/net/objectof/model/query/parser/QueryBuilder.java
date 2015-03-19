@@ -11,6 +11,7 @@ import net.objectof.model.query.Query;
 import net.objectof.model.query.Relation;
 
 import org.antlr.v4.runtime.ANTLRInputStream;
+import org.antlr.v4.runtime.BailErrorStrategy;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.Token;
@@ -23,14 +24,14 @@ public class QueryBuilder extends QueryParserBaseVisitor<Object> {
     public static Query build(String queryText, Transaction loaderTx) {
         ANTLRInputStream input = new ANTLRInputStream(queryText);
         QueryLexer lexer = new QueryLexer(input);
-        // lexer.removeErrorListeners();
+        lexer.removeErrorListeners();
         CommonTokenStream tokens = new CommonTokenStream(lexer);
         for (Token token : tokens.getTokens()) {
             System.out.println(token.getText());
         }
         QueryParser parser = new QueryParser(tokens);
-        // parser.setErrorHandler(new BailErrorStrategy());
-        // parser.removeErrorListeners();
+        parser.setErrorHandler(new BailErrorStrategy());
+        parser.removeErrorListeners();
         ParserRuleContext tree;
         try {
             tree = parser.query();
