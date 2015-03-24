@@ -27,7 +27,7 @@
 		<constructor-arg ref="platform-frontend-bus"/>
 		<constructor-arg ref="platform-backend-bus"/>
 		<constructor-arg>
-			<bean class="net.realmproject.dcm.event.filter.BackendFilter"/>
+			<bean class="net.realmproject.dcm.event.filter.deviceeventtype.BackendFilter"/>
 		</constructor-arg>
 	</bean>
 	
@@ -37,7 +37,7 @@
 		<constructor-arg ref="platform-backend-bus"/>
 		<constructor-arg ref="platform-frontend-bus"/>
 		<constructor-arg>
-			<bean class="net.realmproject.dcm.event.filter.FrontendFilter"/>
+			<bean class="net.realmproject.dcm.event.filter.deviceeventtype.FrontendFilter"/>
 		</constructor-arg>
 	</bean>
 	
