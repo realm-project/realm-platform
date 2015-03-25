@@ -19,7 +19,8 @@ create table chars
 );
 
 create index chars_hash_ix
-  on chars using btree
+  on chars 
+  using btree
   (hash);
 
 create table datatypes
@@ -66,13 +67,16 @@ create table types
 );
 
 create index types_stereotype_ix
-  on types using btree
+  on types 
+  using btree
   (stereotype);
 
 create index types_repository_ix
-  on types using btree
+  on types 
+  using btree
   (repository);
 
 create index types_path_ix
-  on types using btree
+  on types 
+  using btree
   (path);

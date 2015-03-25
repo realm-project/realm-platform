@@ -7,6 +7,10 @@ create table elements
   constraint elements_pk primary key (aid, k)
 );
 
+create index elements_v_ix
+  on elements
+  /*using btree --SQLite doesn't seem to support this syntax*/
+  (v);
 
 create view parts as 
 select 
@@ -60,7 +64,15 @@ create table versions
   constraint tx_pk primary key (id)
 );
 
+create index versions_time_ix
+  on versions
+  /*using btree --SQLite doesn't seem to support this syntax*/
+  (time_stamp);
 
+create index versions_user_ix
+  on versions
+  /*using btree --SQLite doesn't seem to support this syntax*/
+  (user_txt);
 
 
 create table version_elements

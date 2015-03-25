@@ -7,6 +7,11 @@ create table chars
   constraint chars_pk primary key (id)
 );
 
+create index chars_hash_ix
+  on chars 
+  /*using btree --SQLite doesn't seem to support this syntax*/
+  (hash);
+
 create table datatypes
 (
   stereotype text not null,
@@ -14,6 +19,10 @@ create table datatypes
   constraint datatypes_pk primary key (stereotype)
 );
 
+create index datatypes_category_ix
+  on datatypes 
+  /*using btree --SQLite doesn't seem to support this syntax*/
+  (category);
 
 insert into datatypes values ('COMPOSED', 'INSTANCE');
 insert into datatypes values ('INDEXED', 'INSTANCE');
@@ -47,3 +56,17 @@ create table types
   constraint types_pk primary key (id)
 );
 
+create index types_stereotype_ix
+  on types 
+  /*using btree --SQLite doesn't seem to support this syntax*/
+  (stereotype);
+
+create index types_repository_ix
+  on types 
+  /*using btree --SQLite doesn't seem to support this syntax*/
+  (repository);
+
+create index types_path_ix
+  on types 
+  /*using btree --SQLite doesn't seem to support this syntax*/
+  (path);
