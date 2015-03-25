@@ -31,7 +31,8 @@ create table datatypes
 );
 
 create index datatypes_category_ix
-  on datatypes using btree
+  on datatypes 
+  using btree
   (category);
 
 insert into datatypes values ('COMPOSED', 'INSTANCE');
