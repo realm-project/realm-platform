@@ -1,8 +1,9 @@
-package net.objectof.connector;
+package net.objectof.connector.impl;
 
 
 import javax.sql.DataSource;
 
+import net.objectof.connector.AbstractConnector;
 import net.objectof.connector.parameter.Parameter.Type;
 import net.objectof.model.Package;
 import net.objectof.model.impl.IBaseMetamodel;
@@ -17,12 +18,17 @@ import org.w3c.dom.Document;
 
 public class IPostgresConnector extends AbstractConnector {
 
+    private static final String KEY_SERVER = "Server";
+    private static final String KEY_DATABASE = "Database";
+    private static final String KEY_USERNAME = "Username";
+    private static final String KEY_PASSWORD = "Password";
+
     public IPostgresConnector() {
         super();
-        addParameter(Type.STRING, "Server");
-        addParameter(Type.STRING, "Database");
-        addParameter(Type.STRING, "Username");
-        addParameter(Type.PASSWORD, "Password");
+        addParameter(Type.STRING, KEY_SERVER);
+        addParameter(Type.STRING, KEY_DATABASE);
+        addParameter(Type.STRING, KEY_USERNAME);
+        addParameter(Type.PASSWORD, KEY_PASSWORD);
     }
 
     @Override
@@ -39,14 +45,10 @@ public class IPostgresConnector extends AbstractConnector {
     }
 
     private ISqlDb getDb() {
-        String serverString = "jdbc:postgresql://" + value("Server") + "/" + value("Database");
-        DataSource ds = ISql.createPool(serverString, value("Username"), value("Password"), "org.postgresql.Driver");
+        String serverString = "jdbc:postgresql://" + value(KEY_SERVER) + "/" + value(KEY_DATABASE);
+        DataSource ds = ISql
+                .createPool(serverString, value(KEY_USERNAME), value(KEY_PASSWORD), "org.postgresql.Driver");
         return new ISqlDb("net/objectof/repo/res/postgres/statements", ds);
-    }
-
-    @Override
-    public String getPackageName() {
-        return value("Domain") + ":" + value("Version") + "/" + value("Repository");
     }
 
     @Override

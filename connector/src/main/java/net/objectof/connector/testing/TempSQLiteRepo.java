@@ -8,7 +8,7 @@ import java.net.URISyntaxException;
 import java.net.URL;
 
 import net.objectof.connector.ConnectorException;
-import net.objectof.connector.ISQLiteConnector;
+import net.objectof.connector.impl.ISQLiteConnector;
 import net.objectof.model.Package;
 
 

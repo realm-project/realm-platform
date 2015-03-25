@@ -19,13 +19,21 @@ import org.xml.sax.SAXException;
 
 public abstract class AbstractConnector implements Connector {
 
+    protected static final String KEY_DOMAIN = "Domain";
+    protected static final String KEY_REPOSITORY = "Repository";
+    protected static final String KEY_VERSION = "Version";
     private String name = "";
     private List<Parameter> parameters = new ArrayList<>();
 
     public AbstractConnector() {
-        addParameter(Type.STRING, "Domain");
-        addParameter(Type.STRING, "Repository");
-        addParameter(Type.INT, "Version");
+        addParameter(Type.STRING, KEY_DOMAIN);
+        addParameter(Type.STRING, KEY_REPOSITORY);
+        addParameter(Type.INT, KEY_VERSION);
+    }
+
+    @Override
+    public String getPackageName() {
+        return value(KEY_DOMAIN) + ":" + value(KEY_VERSION) + "/" + value(KEY_REPOSITORY);
     }
 
     protected void addParameter(Parameter param) {

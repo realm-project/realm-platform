@@ -1,4 +1,4 @@
-package net.objectof.connector;
+package net.objectof.connector.impl;
 
 
 import java.io.File;
@@ -8,6 +8,8 @@ import java.util.Map;
 
 import javax.sql.DataSource;
 
+import net.objectof.connector.AbstractConnector;
+import net.objectof.connector.ConnectorException;
 import net.objectof.connector.parameter.Parameter.Type;
 import net.objectof.model.Package;
 import net.objectof.model.impl.IBaseMetamodel;
@@ -21,6 +23,8 @@ import org.w3c.dom.Document;
 
 public class ISQLiteConnector extends AbstractConnector {
 
+    private static final String KEY_FILENAME = "Filename";
+
     public ISQLiteConnector(Map<String, String> values) {
         this();
         setParameters(values);
@@ -28,7 +32,7 @@ public class ISQLiteConnector extends AbstractConnector {
 
     public ISQLiteConnector() {
         super();
-        addParameter(Type.FILE, "Filename");
+        addParameter(Type.FILE, KEY_FILENAME);
     }
 
     @Override
@@ -44,18 +48,13 @@ public class ISQLiteConnector extends AbstractConnector {
 
     private ISqlDb getDb() throws ConnectorException {
         try {
-            DataSource ds = ISQLite.createPool(new File(value("Filename")));
+            DataSource ds = ISQLite.createPool(new File(value(KEY_FILENAME)));
             ISqlDb db = new ISqlDb("net/objectof/repo/res/postgres/statements", ds);
             return db;
         }
         catch (SQLException | IOException e) {
             throw new ConnectorException(e);
         }
-    }
-
-    @Override
-    public String getPackageName() {
-        return value("Domain") + ":" + value("Version") + "/" + value("Repository");
     }
 
     @Override
