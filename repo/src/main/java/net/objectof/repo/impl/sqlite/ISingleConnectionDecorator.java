@@ -1,5 +1,6 @@
 package net.objectof.repo.impl.sqlite;
 
+
 import java.sql.Array;
 import java.sql.Blob;
 import java.sql.CallableStatement;
@@ -19,252 +20,236 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.concurrent.Executor;
 
+
 class ISingleConnectionDecorator implements Connection {
 
-	Connection backer;
-	
-	public ISingleConnectionDecorator(Connection backer) throws SQLException {
-		this.backer = backer;
-		backer.setAutoCommit(false);
-	}
+    Connection backer;
 
-	public void abort(Executor executor) throws SQLException {
-		backer.abort(executor);
-	}
+    public ISingleConnectionDecorator(Connection backer) throws SQLException {
+        this.backer = backer;
+        backer.setAutoCommit(false);
+    }
 
-	public void clearWarnings() throws SQLException {
-		backer.clearWarnings();
-	}
+    public void abort(Executor executor) throws SQLException {
+        backer.abort(executor);
+    }
 
-	public void close() throws SQLException {
-		//backer.close();
-	}
+    public void clearWarnings() throws SQLException {
+        backer.clearWarnings();
+    }
 
-	public void commit() throws SQLException {
-		backer.commit();
-	}
+    public void close() throws SQLException {
+        // backer.close();
+    }
 
-	public Array createArrayOf(String typeName, Object[] elements)
-			throws SQLException {
-		return backer.createArrayOf(typeName, elements);
-	}
+    public void commit() throws SQLException {
+        backer.commit();
+    }
 
-	public Blob createBlob() throws SQLException {
-		return backer.createBlob();
-	}
+    public Array createArrayOf(String typeName, Object[] elements) throws SQLException {
+        return backer.createArrayOf(typeName, elements);
+    }
 
-	public Clob createClob() throws SQLException {
-		return backer.createClob();
-	}
+    public Blob createBlob() throws SQLException {
+        return backer.createBlob();
+    }
 
-	public NClob createNClob() throws SQLException {
-		return backer.createNClob();
-	}
+    public Clob createClob() throws SQLException {
+        return backer.createClob();
+    }
 
-	public SQLXML createSQLXML() throws SQLException {
-		return backer.createSQLXML();
-	}
+    public NClob createNClob() throws SQLException {
+        return backer.createNClob();
+    }
 
-	public Statement createStatement() throws SQLException {
-		return backer.createStatement();
-	}
+    public SQLXML createSQLXML() throws SQLException {
+        return backer.createSQLXML();
+    }
 
-	public Statement createStatement(int resultSetType,
-			int resultSetConcurrency, int resultSetHoldability)
-			throws SQLException {
-		return backer.createStatement(resultSetType, resultSetConcurrency,
-				resultSetHoldability);
-	}
+    public Statement createStatement() throws SQLException {
+        return backer.createStatement();
+    }
 
-	public Statement createStatement(int resultSetType, int resultSetConcurrency)
-			throws SQLException {
-		return backer.createStatement(resultSetType, resultSetConcurrency);
-	}
+    public Statement createStatement(int resultSetType, int resultSetConcurrency, int resultSetHoldability)
+            throws SQLException {
+        return backer.createStatement(resultSetType, resultSetConcurrency, resultSetHoldability);
+    }
 
-	public Struct createStruct(String typeName, Object[] attributes)
-			throws SQLException {
-		return backer.createStruct(typeName, attributes);
-	}
+    public Statement createStatement(int resultSetType, int resultSetConcurrency) throws SQLException {
+        return backer.createStatement(resultSetType, resultSetConcurrency);
+    }
 
-	public boolean getAutoCommit() throws SQLException {
-		return backer.getAutoCommit();
-	}
+    public Struct createStruct(String typeName, Object[] attributes) throws SQLException {
+        return backer.createStruct(typeName, attributes);
+    }
 
-	public String getCatalog() throws SQLException {
-		return backer.getCatalog();
-	}
+    public boolean getAutoCommit() throws SQLException {
+        return backer.getAutoCommit();
+    }
 
-	public Properties getClientInfo() throws SQLException {
-		return backer.getClientInfo();
-	}
+    public String getCatalog() throws SQLException {
+        return backer.getCatalog();
+    }
 
-	public String getClientInfo(String name) throws SQLException {
-		return backer.getClientInfo(name);
-	}
+    public Properties getClientInfo() throws SQLException {
+        return backer.getClientInfo();
+    }
 
-	public int getHoldability() throws SQLException {
-		return backer.getHoldability();
-	}
+    public String getClientInfo(String name) throws SQLException {
+        return backer.getClientInfo(name);
+    }
 
-	public DatabaseMetaData getMetaData() throws SQLException {
-		return backer.getMetaData();
-	}
+    public int getHoldability() throws SQLException {
+        return backer.getHoldability();
+    }
 
-	public int getNetworkTimeout() throws SQLException {
-		return backer.getNetworkTimeout();
-	}
+    public DatabaseMetaData getMetaData() throws SQLException {
+        return backer.getMetaData();
+    }
 
-	public String getSchema() throws SQLException {
-		return backer.getSchema();
-	}
+    public int getNetworkTimeout() throws SQLException {
+        return backer.getNetworkTimeout();
+    }
 
-	public int getTransactionIsolation() throws SQLException {
-		return backer.getTransactionIsolation();
-	}
+    public String getSchema() throws SQLException {
+        return backer.getSchema();
+    }
 
-	public Map<String, Class<?>> getTypeMap() throws SQLException {
-		return backer.getTypeMap();
-	}
+    public int getTransactionIsolation() throws SQLException {
+        return backer.getTransactionIsolation();
+    }
 
-	public SQLWarning getWarnings() throws SQLException {
-		return backer.getWarnings();
-	}
+    public Map<String, Class<?>> getTypeMap() throws SQLException {
+        return backer.getTypeMap();
+    }
 
-	public boolean isClosed() throws SQLException {
-		return backer.isClosed();
-	}
+    public SQLWarning getWarnings() throws SQLException {
+        return backer.getWarnings();
+    }
 
-	public boolean isReadOnly() throws SQLException {
-		return backer.isReadOnly();
-	}
+    public boolean isClosed() throws SQLException {
+        return backer.isClosed();
+    }
 
-	public boolean isValid(int timeout) throws SQLException {
-		return backer.isValid(timeout);
-	}
+    public boolean isReadOnly() throws SQLException {
+        return backer.isReadOnly();
+    }
 
-	public boolean isWrapperFor(Class<?> iface) throws SQLException {
-		return backer.isWrapperFor(iface);
-	}
+    public boolean isValid(int timeout) throws SQLException {
+        return backer.isValid(timeout);
+    }
 
-	public String nativeSQL(String sql) throws SQLException {
-		return backer.nativeSQL(sql);
-	}
+    public boolean isWrapperFor(Class<?> iface) throws SQLException {
+        return backer.isWrapperFor(iface);
+    }
 
-	public CallableStatement prepareCall(String sql, int resultSetType,
-			int resultSetConcurrency, int resultSetHoldability)
-			throws SQLException {
-		return backer.prepareCall(sql, resultSetType, resultSetConcurrency,
-				resultSetHoldability);
-	}
+    public String nativeSQL(String sql) throws SQLException {
+        return backer.nativeSQL(sql);
+    }
 
-	public CallableStatement prepareCall(String sql, int resultSetType,
-			int resultSetConcurrency) throws SQLException {
-		return backer.prepareCall(sql, resultSetType, resultSetConcurrency);
-	}
+    public CallableStatement prepareCall(String sql, int resultSetType, int resultSetConcurrency,
+            int resultSetHoldability) throws SQLException {
+        return backer.prepareCall(sql, resultSetType, resultSetConcurrency, resultSetHoldability);
+    }
 
-	public CallableStatement prepareCall(String sql) throws SQLException {
-		return backer.prepareCall(sql);
-	}
+    public CallableStatement prepareCall(String sql, int resultSetType, int resultSetConcurrency) throws SQLException {
+        return backer.prepareCall(sql, resultSetType, resultSetConcurrency);
+    }
 
-	public PreparedStatement prepareStatement(String sql, int resultSetType,
-			int resultSetConcurrency, int resultSetHoldability)
-			throws SQLException {
-		return backer.prepareStatement(sql, resultSetType,
-				resultSetConcurrency, resultSetHoldability);
-	}
+    public CallableStatement prepareCall(String sql) throws SQLException {
+        return backer.prepareCall(sql);
+    }
 
-	public PreparedStatement prepareStatement(String sql, int resultSetType,
-			int resultSetConcurrency) throws SQLException {
-		return backer
-				.prepareStatement(sql, resultSetType, resultSetConcurrency);
-	}
+    public PreparedStatement prepareStatement(String sql, int resultSetType, int resultSetConcurrency,
+            int resultSetHoldability) throws SQLException {
+        return backer.prepareStatement(sql, resultSetType, resultSetConcurrency, resultSetHoldability);
+    }
 
-	public PreparedStatement prepareStatement(String sql, int autoGeneratedKeys)
-			throws SQLException {
-		return backer.prepareStatement(sql, autoGeneratedKeys);
-	}
+    public PreparedStatement prepareStatement(String sql, int resultSetType, int resultSetConcurrency)
+            throws SQLException {
+        return backer.prepareStatement(sql, resultSetType, resultSetConcurrency);
+    }
 
-	public PreparedStatement prepareStatement(String sql, int[] columnIndexes)
-			throws SQLException {
-		return backer.prepareStatement(sql, columnIndexes);
-	}
+    public PreparedStatement prepareStatement(String sql, int autoGeneratedKeys) throws SQLException {
+        return backer.prepareStatement(sql, autoGeneratedKeys);
+    }
 
-	public PreparedStatement prepareStatement(String sql, String[] columnNames)
-			throws SQLException {
-		return backer.prepareStatement(sql, columnNames);
-	}
+    public PreparedStatement prepareStatement(String sql, int[] columnIndexes) throws SQLException {
+        return backer.prepareStatement(sql, columnIndexes);
+    }
 
-	public PreparedStatement prepareStatement(String sql) throws SQLException {
-		return backer.prepareStatement(sql);
-	}
+    public PreparedStatement prepareStatement(String sql, String[] columnNames) throws SQLException {
+        return backer.prepareStatement(sql, columnNames);
+    }
 
-	public void releaseSavepoint(Savepoint savepoint) throws SQLException {
-		backer.releaseSavepoint(savepoint);
-	}
+    public PreparedStatement prepareStatement(String sql) throws SQLException {
+        return backer.prepareStatement(sql);
+    }
 
-	public void rollback() throws SQLException {
-		backer.rollback();
-	}
+    public void releaseSavepoint(Savepoint savepoint) throws SQLException {
+        backer.releaseSavepoint(savepoint);
+    }
 
-	public void rollback(Savepoint savepoint) throws SQLException {
-		backer.rollback(savepoint);
-	}
+    public void rollback() throws SQLException {
+        backer.rollback();
+    }
 
-	public void setAutoCommit(boolean autoCommit) throws SQLException {
-		//backer.setAutoCommit(autoCommit);
-	}
+    public void rollback(Savepoint savepoint) throws SQLException {
+        backer.rollback(savepoint);
+    }
 
-	public void setCatalog(String catalog) throws SQLException {
-		backer.setCatalog(catalog);
-	}
+    public void setAutoCommit(boolean autoCommit) throws SQLException {
+        // backer.setAutoCommit(autoCommit);
+    }
 
-	public void setClientInfo(Properties properties)
-			throws SQLClientInfoException {
-		backer.setClientInfo(properties);
-	}
+    public void setCatalog(String catalog) throws SQLException {
+        backer.setCatalog(catalog);
+    }
 
-	public void setClientInfo(String name, String value)
-			throws SQLClientInfoException {
-		backer.setClientInfo(name, value);
-	}
+    public void setClientInfo(Properties properties) throws SQLClientInfoException {
+        backer.setClientInfo(properties);
+    }
 
-	public void setHoldability(int holdability) throws SQLException {
-		backer.setHoldability(holdability);
-	}
+    public void setClientInfo(String name, String value) throws SQLClientInfoException {
+        backer.setClientInfo(name, value);
+    }
 
-	public void setNetworkTimeout(Executor executor, int milliseconds)
-			throws SQLException {
-		backer.setNetworkTimeout(executor, milliseconds);
-	}
+    public void setHoldability(int holdability) throws SQLException {
+        backer.setHoldability(holdability);
+    }
 
-	public void setReadOnly(boolean readOnly) throws SQLException {
-		backer.setReadOnly(readOnly);
-	}
+    public void setNetworkTimeout(Executor executor, int milliseconds) throws SQLException {
+        backer.setNetworkTimeout(executor, milliseconds);
+    }
 
-	public Savepoint setSavepoint() throws SQLException {
-		return backer.setSavepoint();
-	}
+    public void setReadOnly(boolean readOnly) throws SQLException {
+        // TODO: Disabled to update from SQLite 3.7.2 to 3.8.7, as it does not
+        // seem to support changing the read-only state after making a
+        // connection
+        // backer.setReadOnly(readOnly);
+    }
 
-	public Savepoint setSavepoint(String name) throws SQLException {
-		return backer.setSavepoint(name);
-	}
+    public Savepoint setSavepoint() throws SQLException {
+        return backer.setSavepoint();
+    }
 
-	public void setSchema(String schema) throws SQLException {
-		backer.setSchema(schema);
-	}
+    public Savepoint setSavepoint(String name) throws SQLException {
+        return backer.setSavepoint(name);
+    }
 
-	public void setTransactionIsolation(int level) throws SQLException {
-		backer.setTransactionIsolation(level);
-	}
+    public void setSchema(String schema) throws SQLException {
+        backer.setSchema(schema);
+    }
 
-	public void setTypeMap(Map<String, Class<?>> map) throws SQLException {
-		backer.setTypeMap(map);
-	}
+    public void setTransactionIsolation(int level) throws SQLException {
+        backer.setTransactionIsolation(level);
+    }
 
-	public <T> T unwrap(Class<T> iface) throws SQLException {
-		return backer.unwrap(iface);
-	}
-	
-	
-	
+    public void setTypeMap(Map<String, Class<?>> map) throws SQLException {
+        backer.setTypeMap(map);
+    }
+
+    public <T> T unwrap(Class<T> iface) throws SQLException {
+        return backer.unwrap(iface);
+    }
 }

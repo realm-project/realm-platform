@@ -18,7 +18,7 @@ select
  types.id as kid,
  types.path,
  types.stereotype,
- elements.aid & 281474976710655 as num,
+ elements.aid & 0xFFFFFFFFFFFF as num,
  elements.k,
  elements.v
 from
