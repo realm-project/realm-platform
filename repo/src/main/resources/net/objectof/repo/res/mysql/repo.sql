@@ -7,6 +7,10 @@ create table chars
   constraint chars_pk primary key (id)
 );
 
+create index chars_hash_ix
+  on chars (hash)
+  using btree;
+
 create table datatypes
 (
   stereotype varchar(255) not null, /*mysql requires varchar for indexing, rather than text*/ 
