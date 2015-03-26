@@ -10,6 +10,7 @@ import javax.sql.DataSource;
 
 import net.objectof.connector.AbstractConnector;
 import net.objectof.connector.ConnectorException;
+import net.objectof.connector.Connector.Initialize;
 import net.objectof.connector.parameter.Parameter.Type;
 import net.objectof.model.Package;
 import net.objectof.model.impl.IBaseMetamodel;
@@ -35,30 +36,34 @@ public class ISQLiteConnector extends AbstractConnector {
         addParameter(Type.FILE, KEY_FILENAME);
     }
 
-    @Override
-    public Package getPackage() throws ConnectorException {
-        return getDb().forName(getPackageName());
-    }
 
     @Override
-    public Package createPackage(Document schema) throws ConnectorException {
+    public Package createPackage(Document schema, Initialize initialize) throws ConnectorException {
         IPackage schemaPackage = new ISourcePackage(IBaseMetamodel.INSTANCE, schema);
-        return getDb().createPackage(getPackageName(), ISQLite.class.getName(), schemaPackage);
+        if (initialize == Initialize.WHEN_EMPTY && isDatabaseEmpty()) {
+        	initializeDatabase();
+        }
+        return getISqlDb().createPackage(getPackageName(), ISQLite.class.getName(), schemaPackage);
     }
 
-    private ISqlDb getDb() throws ConnectorException {
-        try {
-            DataSource ds = ISQLite.createPool(new File(value(KEY_FILENAME)));
-            ISqlDb db = new ISqlDb("net/objectof/repo/res/postgres/statements", ds);
-            return db;
-        }
-        catch (SQLException | IOException e) {
-            throw new ConnectorException(e);
-        }
-    }
+
+	@Override
+	protected DataSource getDataSource() throws ConnectorException {
+    	File file = new File(value(KEY_FILENAME));
+        DataSource ds;
+		try {
+			ds = ISQLite.createPool(file);
+		} catch (IOException | SQLException e) {
+			throw new ConnectorException(e);
+		}
+        return ds;
+	}
+    
 
     @Override
     public String getType() {
         return "SQLite";
     }
+
+
 }

@@ -8,6 +8,7 @@ import java.net.URISyntaxException;
 import java.net.URL;
 
 import net.objectof.connector.ConnectorException;
+import net.objectof.connector.Connector.Initialize;
 import net.objectof.connector.impl.ISQLiteConnector;
 import net.objectof.model.Package;
 
@@ -34,6 +35,6 @@ public class TempSQLiteRepo {
         conn.getParameter("Version").setValue("1");
         conn.getParameter("Repository").setValue("testrepo");
         dbFile.deleteOnExit();
-        return conn.createPackage(new FileInputStream(schemaFile));
+        return conn.createPackage(new FileInputStream(schemaFile), Initialize.WHEN_EMPTY);
     }
 }

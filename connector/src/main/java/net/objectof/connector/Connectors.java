@@ -1,10 +1,13 @@
-package net.objectof.connector.impl;
+package net.objectof.connector;
 
 
 import java.util.ArrayList;
 import java.util.List;
 
-import net.objectof.connector.Connector;
+import net.objectof.connector.impl.IJDBCConnector;
+import net.objectof.connector.impl.IMySQLConnector;
+import net.objectof.connector.impl.IPostgresConnector;
+import net.objectof.connector.impl.ISQLiteConnector;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;

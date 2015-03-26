@@ -13,6 +13,10 @@ import org.w3c.dom.Document;
 
 public interface Connector {
 
+	public enum Initialize {
+		NEVER, WHEN_EMPTY;
+	}
+	
     /**
      * Returns a {@link Package} based on the {@link Parameter} values of this
      * Connector
@@ -29,7 +33,7 @@ public interface Connector {
      *            a {@link Document} representing a Package schema
      * @throws Exception
      */
-    Package createPackage(Document schema) throws ConnectorException;
+    Package createPackage(Document schema, Initialize initialize) throws ConnectorException;
 
     /**
      * Returns a {@link Package} based on the {@link Parameter} values of this
@@ -38,15 +42,33 @@ public interface Connector {
      * @param schema
      *            an InputStram of a {@link Document} representing a Package
      *            schema
+     * @param initialize
+     *            Indicates if this database (not repository) should be 
+     *            initialized if it is empty as determinted by 
+     *            {@link Connector#isDatabaseEmpty()}
      * @throws Exception
      */
-    Package createPackage(InputStream schema) throws ConnectorException;
+    Package createPackage(InputStream schema, Initialize initialize) throws ConnectorException;
 
     /**
      * Returns the qualified name of this {@link Package}
      */
     String getPackageName();
 
+    /**
+     * Checks to see if the database (not repository) contains <i>any</i> 
+     * tables, views, etc... (not just ones used by objectof).
+     * @return true if the database is empty, false otherwise.
+     * @throws ConnectorException
+     */
+    boolean isDatabaseEmpty() throws ConnectorException;
+    
+    /**
+     * When creating a new database (not repository), this can be used to 
+     * populate it with the required tables and views.
+     */
+    void initializeDatabase() throws ConnectorException;
+    
     /**
      * Returns a {@link List} of all {@link Parameter}s for this Connector
      */

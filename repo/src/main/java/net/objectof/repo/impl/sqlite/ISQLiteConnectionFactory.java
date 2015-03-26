@@ -15,6 +15,16 @@ class ISQLiteConnectionFactory implements ConnectionFactory {
 
 	private Connection conn;
 
+	/**
+	 * Manages connections to a SQLite database. This is required because 
+	 * SQLite does not share access when using 
+	 * {@link Connection#TRANSACTION_SERIALIZABLE} as we do. In reality, 
+	 * this connection factory returns the same connection for each request
+	 * @param db The location of an initialized SQLite objectof repository 
+	 *        database
+	 * @throws IOException
+	 * @throws SQLException
+	 */
 	public ISQLiteConnectionFactory(File db) throws IOException, SQLException {
 		try {
 			Class.forName("org.sqlite.JDBC");
@@ -23,37 +33,14 @@ class ISQLiteConnectionFactory implements ConnectionFactory {
 					"Driver 'org.sqlite.JDBC' not installed.");
 		}
 
-		boolean newdb = !db.exists();
-
 		conn = DriverManager.getConnection("jdbc:sqlite:" + db.getAbsolutePath());
 		conn.setAutoCommit(false);
 		conn = new ISingleConnectionDecorator(conn);
-
-		if (newdb) {
-			populate();
-		}
 
 	}
 
 	public Connection createConnection() throws SQLException {
 		return conn;
-	}
-
-	private void populate() throws SQLException, IOException {
-		ISQLiteScriptRunner script;
-		InputStream sqlStream;
-		Reader reader;
-
-		script = new ISQLiteScriptRunner(conn, true);
-		sqlStream = ISQLite.class.getResourceAsStream("/net/objectof/repo/res/sqlite/repo.sql");
-		reader = new InputStreamReader(sqlStream);
-		script.runScript(reader);
-
-		script = new ISQLiteScriptRunner(conn, true);
-		sqlStream = ISQLite.class.getResourceAsStream("/net/objectof/repo/res/sqlite/rip.sql");
-		reader = new InputStreamReader(sqlStream);
-		script.runScript(reader);
-
 	}
 
 }
