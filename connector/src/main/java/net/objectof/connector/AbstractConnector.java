@@ -53,7 +53,8 @@ public abstract class AbstractConnector implements Connector {
     public boolean isDatabaseEmpty() throws ConnectorException {
     	
     	try {
-			ResultSet res = getDataSource().getConnection().getMetaData().getTables(null, null, null, null);
+    		Connection conn = getDataSource().getConnection();
+			ResultSet res = conn.getMetaData().getTables(null, null, null, null);
             while (res.next()) {
             	String type = res.getString("TABLE_TYPE");
             	System.out.println(type.equals("SYSTEM TABLE"));
@@ -61,10 +62,12 @@ public abstract class AbstractConnector implements Connector {
             	System.out.println(res.getString("TABLE_TYPE"));
             	if (!type.equals("SYSTEM TABLE")) { 
             		res.close();
+            		conn.close();
             		return false;
                 }
 			}
             res.close();
+            conn.close();
 			return true;
 			
 		} catch (SQLException e) {
@@ -94,31 +97,30 @@ public abstract class AbstractConnector implements Connector {
 		SQLScriptRunner script;
 		InputStream sqlStream;
 		Reader reader;
-		Connection conn;
+		Connection conn = null;
 		try {
 			conn = getDataSource().getConnection();
-		} catch (SQLException e1) {
-			throw new ConnectorException(e1);
-		}
-		
-		String type = getType().toLowerCase().replace(" ",  "-");
-		
-		script = new SQLScriptRunner(conn, true);
-		sqlStream = ISQLite.class.getResourceAsStream("/net/objectof/repo/res/" + type + "/repo.sql");
-		reader = new InputStreamReader(sqlStream);
-		try {
-			script.runScript(reader);
-		} catch (SQLException | IOException e) {
-			throw new ConnectorException(e);
-		}
+			
+			String type = getType().toLowerCase().replace(" ",  "-");
+			
+			script = new SQLScriptRunner(conn, true);
+			sqlStream = ISQLite.class.getResourceAsStream("/net/objectof/repo/res/" + type + "/repo.sql");
+			reader = new InputStreamReader(sqlStream);
 
-		script = new SQLScriptRunner(conn, true);
-		sqlStream = ISQLite.class.getResourceAsStream("/net/objectof/repo/res/" + type + "/rip.sql");
-		reader = new InputStreamReader(sqlStream);
-		try {
+			script.runScript(reader);
+	
+			script = new SQLScriptRunner(conn, true);
+			sqlStream = ISQLite.class.getResourceAsStream("/net/objectof/repo/res/" + type + "/rip.sql");
+			reader = new InputStreamReader(sqlStream);
+
 			script.runScript(reader);
 		} catch (SQLException | IOException e) {
 			throw new ConnectorException(e);
+		} finally {
+			if (conn != null) { try {
+				conn.close();
+			} catch (SQLException e) {
+			}}
 		}
 	}
     
