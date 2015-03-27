@@ -8,6 +8,7 @@ import java.io.Reader;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -32,21 +33,17 @@ import org.xml.sax.SAXException;
 
 public abstract class AbstractConnector implements Connector {
 
-    protected static final String KEY_DOMAIN = "Domain";
-    protected static final String KEY_REPOSITORY = "Repository";
-    protected static final String KEY_VERSION = "Version";
+    public static final String KEY_REPOSITORY = "Repository";
     private String name = "";
     private List<Parameter> parameters = new ArrayList<>();
 
     public AbstractConnector() {
-        addParameter(Type.STRING, KEY_DOMAIN);
         addParameter(Type.STRING, KEY_REPOSITORY);
-        addParameter(Type.INT, KEY_VERSION);
     }
 
     @Override
     public String getPackageName() {
-        return value(KEY_DOMAIN) + ":" + value(KEY_VERSION) + "/" + value(KEY_REPOSITORY);
+        return value(KEY_REPOSITORY);
     }
 
     public boolean isDatabaseEmpty() throws ConnectorException {
@@ -67,6 +64,36 @@ public abstract class AbstractConnector implements Connector {
         }
         catch (SQLException e) {
             throw new ConnectorException(e);
+        }
+    }
+
+    public List<String> getSchemaNames() throws ConnectorException {
+        Connection conn = null;
+        List<String> names = new ArrayList<>();
+        try {
+            conn = getDataSource().getConnection();
+            Statement stmt = conn.createStatement();
+            stmt.execute("select chars.chars from repositories, chars where chars.id = repositories.uniform_name_txt");
+            ResultSet rs = stmt.getResultSet();
+            while (rs.next()) {
+                names.add(rs.getString("chars"));
+            }
+            rs.close();
+            return names;
+        }
+        catch (SQLException | ConnectorException e) {
+            throw new ConnectorException(e);
+        }
+        finally {
+            if (conn != null) {
+                try {
+                    conn.close();
+                }
+                catch (SQLException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+            }
         }
     }
 

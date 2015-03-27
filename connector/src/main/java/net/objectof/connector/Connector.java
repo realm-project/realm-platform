@@ -13,10 +13,15 @@ import org.w3c.dom.Document;
 
 public interface Connector {
 
-	public enum Initialize {
-		NEVER, WHEN_EMPTY;
-	}
-	
+    /**
+     * Enumeration indicating when the Connector should initialize an empty
+     * database.
+     *
+     */
+    public enum Initialize {
+        NEVER, WHEN_EMPTY;
+    }
+
     /**
      * Returns a {@link Package} based on the {@link Parameter} values of this
      * Connector
@@ -43,8 +48,8 @@ public interface Connector {
      *            an InputStram of a {@link Document} representing a Package
      *            schema
      * @param initialize
-     *            Indicates if this database (not repository) should be 
-     *            initialized if it is empty as determinted by 
+     *            Indicates if this database (not repository) should be
+     *            initialized if it is empty as determined by
      *            {@link Connector#isDatabaseEmpty()}
      * @throws Exception
      */
@@ -56,19 +61,30 @@ public interface Connector {
     String getPackageName();
 
     /**
-     * Checks to see if the database (not repository) contains <i>any</i> 
+     * Checks to see if the database (not repository) contains <i>any</i>
      * tables, views, etc... (not just ones used by objectof).
+     * 
      * @return true if the database is empty, false otherwise.
      * @throws ConnectorException
      */
     boolean isDatabaseEmpty() throws ConnectorException;
-    
+
     /**
-     * When creating a new database (not repository), this can be used to 
+     * When creating a new database (not repository), this can be used to
      * populate it with the required tables and views.
      */
     void initializeDatabase() throws ConnectorException;
-    
+
+    /**
+     * Attempts to connect to the configured database and read a list of all
+     * repository names.
+     * 
+     * @return A list of all repository names in the configured database, if
+     *         provided.
+     * @throws ConnectorException
+     */
+    List<String> getSchemaNames() throws ConnectorException;
+
     /**
      * Returns a {@link List} of all {@link Parameter}s for this Connector
      */
