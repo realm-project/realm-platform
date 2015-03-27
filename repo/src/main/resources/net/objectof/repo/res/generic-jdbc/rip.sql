@@ -6,12 +6,6 @@ create table elements
   constraint elements_pk primary key (aid, k)
 );
 
-/* - No indexes in minimal
-create index elements_v_ix
-  on elements (v)
-  using btree;
-*/
-
 create view parts as 
 select 
  aid,
@@ -64,15 +58,6 @@ create table versions
   constraint tx_pk primary key (id)
 );
 
-/* -- No indexes in minimal
-create index versions_time_ix
-  on versions (time_stamp)
-  using btree;
-
-create index versions_user_ix
-  on versions (user_txt)
-  using btree;
-*/
 
 create table version_elements
 (

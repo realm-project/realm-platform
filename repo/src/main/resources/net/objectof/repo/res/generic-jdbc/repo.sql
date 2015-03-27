@@ -9,16 +9,10 @@ create table chars
 
 create table datatypes
 (
-  stereotype varchar(255) not null, /*mysql requires varchar for indexing, rather than text*/ 
+  stereotype varchar(255) not null,
   category text not null,
   constraint datatypes_pk primary key (stereotype)
 );
-
-/* -- No indexes in minimal
-create index datatypes_category_ix
-  on datatypes (category)
-  using btree;
-*/
 
 insert into datatypes values ('COMPOSED', 'INSTANCE');
 insert into datatypes values ('INDEXED', 'INSTANCE');
@@ -48,20 +42,6 @@ create table types
   id smallint not null,
   repository bigint not null,
   path text not null,
-  stereotype varchar(255) not null, /*stereotype is varchar for datatypes table, as mysql requires varchar for indexing, rather than text*/
+  stereotype varchar(255) not null,
   constraint types_pk primary key (id)
 );
-
-/* -- No indexes in minimal
-create index types_stereotype_ix
-  on types (stereotype)
-  using btree;
-
-create index types_repository_ix
-  on types (repository)
-  using btree;
-
-create index types_path_ix
-  on types (path)
-  using btree;
-*/

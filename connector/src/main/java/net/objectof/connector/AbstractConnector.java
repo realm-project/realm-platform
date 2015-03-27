@@ -16,7 +16,6 @@ import javax.sql.DataSource;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
-import net.objectof.connector.Connector.Initialize;
 import net.objectof.connector.parameter.Parameter;
 import net.objectof.connector.parameter.Parameter.Type;
 import net.objectof.model.Package;
@@ -51,85 +50,79 @@ public abstract class AbstractConnector implements Connector {
     }
 
     public boolean isDatabaseEmpty() throws ConnectorException {
-    	
-    	try {
-    		Connection conn = getDataSource().getConnection();
-			ResultSet res = conn.getMetaData().getTables(null, null, null, null);
+        try {
+            Connection conn = getDataSource().getConnection();
+            ResultSet res = conn.getMetaData().getTables(null, null, null, null);
             while (res.next()) {
-            	String type = res.getString("TABLE_TYPE");
-            	System.out.println(type.equals("SYSTEM TABLE"));
-            	System.out.println(res.getString("TABLE_NAME"));
-            	System.out.println(res.getString("TABLE_TYPE"));
-            	if (!type.equals("SYSTEM TABLE")) { 
-            		res.close();
-            		conn.close();
-            		return false;
+                String type = res.getString("TABLE_TYPE");
+                if (!type.equals("SYSTEM TABLE")) {
+                    res.close();
+                    conn.close();
+                    return false;
                 }
-			}
+            }
             res.close();
             conn.close();
-			return true;
-			
-		} catch (SQLException e) {
-			throw new ConnectorException(e);
-		}
+            return true;
+        }
+        catch (SQLException e) {
+            throw new ConnectorException(e);
+        }
     }
-    
+
     @Override
     public Package getPackage() throws ConnectorException {
-    	isDatabaseEmpty();
-    	return getISqlDb().forName(getPackageName());
+        isDatabaseEmpty();
+        return getISqlDb().forName(getPackageName());
     }
 
     @Override
     public Package createPackage(Document schema, Initialize initialize) throws ConnectorException {
         IPackage schemaPackage = new ISourcePackage(IBaseMetamodel.INSTANCE, schema);
-        System.out.println(initialize);
-        System.out.println("Is Database Empty? " + isDatabaseEmpty());
         if (initialize == Initialize.WHEN_EMPTY && isDatabaseEmpty()) {
-        	initializeDatabase();
+            initializeDatabase();
         }
         return getISqlDb().createPackage(getPackageName(), IRip.class.getName(), schemaPackage);
     }
-    
-	@Override
-	public void initializeDatabase() throws ConnectorException {
-		SQLScriptRunner script;
-		InputStream sqlStream;
-		Reader reader;
-		Connection conn = null;
-		try {
-			conn = getDataSource().getConnection();
-			
-			String type = getType().toLowerCase().replace(" ",  "-");
-			
-			script = new SQLScriptRunner(conn, true);
-			sqlStream = ISQLite.class.getResourceAsStream("/net/objectof/repo/res/" + type + "/repo.sql");
-			reader = new InputStreamReader(sqlStream);
 
-			script.runScript(reader);
-	
-			script = new SQLScriptRunner(conn, true);
-			sqlStream = ISQLite.class.getResourceAsStream("/net/objectof/repo/res/" + type + "/rip.sql");
-			reader = new InputStreamReader(sqlStream);
+    @Override
+    public void initializeDatabase() throws ConnectorException {
+        SQLScriptRunner script;
+        InputStream sqlStream;
+        Reader reader;
+        Connection conn = null;
+        try {
+            conn = getDataSource().getConnection();
+            conn.setReadOnly(false);
+            String type = getType().toLowerCase().replace(" ", "-");
+            script = new SQLScriptRunner(conn, true);
+            sqlStream = ISQLite.class.getResourceAsStream("/net/objectof/repo/res/" + type + "/repo.sql");
+            reader = new InputStreamReader(sqlStream);
+            script.runScript(reader);
+            script = new SQLScriptRunner(conn, true);
+            sqlStream = ISQLite.class.getResourceAsStream("/net/objectof/repo/res/" + type + "/rip.sql");
+            reader = new InputStreamReader(sqlStream);
+            script.runScript(reader);
+        }
+        catch (SQLException | IOException e) {
+            throw new ConnectorException(e);
+        }
+        finally {
+            if (conn != null) {
+                try {
+                    conn.close();
+                }
+                catch (SQLException e) {}
+            }
+        }
+    }
 
-			script.runScript(reader);
-		} catch (SQLException | IOException e) {
-			throw new ConnectorException(e);
-		} finally {
-			if (conn != null) { try {
-				conn.close();
-			} catch (SQLException e) {
-			}}
-		}
-	}
-    
-	protected abstract DataSource getDataSource() throws ConnectorException;
-	
+    protected abstract DataSource getDataSource() throws ConnectorException;
+
     protected ISqlDb getISqlDb() throws ConnectorException {
         return new ISqlDb("net/objectof/repo/res/postgres/statements", getDataSource());
     }
-	
+
     protected void addParameter(Parameter param) {
         parameters.add(param);
     }
