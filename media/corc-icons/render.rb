@@ -1,8 +1,14 @@
 #!/usr/bin/ruby
 
 def render(svgs, size)
-	`mkdir ./#{size}`
-	svgs.each{|svg| `rsvg -h #{size} -w #{size} #{svg} ./#{size}/#{svg[0..-5]}-#{size}.png`}
+	`mkdir ./#{size}-black`
+	`mkdir ./#{size}-white`
+	svgs.each{|svg| 
+		basename = "#{svg[0..-5]}.png"
+		`rsvg -h #{size} -w #{size} #{svg} ./#{size}-black/#{basename}`
+		`convert -negate ./#{size}-black/#{basename} ./#{size}-white/#{basename}`
+	}
+	
 end
 
 svgs = `ls *.svg`.strip.split("\n")
