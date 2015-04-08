@@ -9,7 +9,8 @@ import java.io.InputStream;
 import java.io.Writer;
 import java.net.URL;
 
-import net.objectof.connector.ISQLiteConnector;
+import net.objectof.connector.Connector.Initialize;
+import net.objectof.connector.impl.ISQLiteConnector;
 import net.objectof.model.Package;
 
 import org.apache.commons.io.IOUtils;
@@ -53,7 +54,7 @@ public class RealmSchema {
 
         dbFile.deleteOnExit();
 
-        return conn.createPackage(new FileInputStream(schemaFile));
+        return conn.createPackage(new FileInputStream(schemaFile), Initialize.WHEN_EMPTY);
 
     }
 
