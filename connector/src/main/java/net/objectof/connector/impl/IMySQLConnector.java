@@ -8,6 +8,7 @@ import net.objectof.connector.ConnectorException;
 import net.objectof.connector.parameter.Parameter.Type;
 import net.objectof.repo.impl.sql.ISql;
 
+
 public class IMySQLConnector extends AbstractConnector {
 
     private static final String KEY_SERVER = "Server";
@@ -28,9 +29,13 @@ public class IMySQLConnector extends AbstractConnector {
         return "MySQL";
     }
 
-	@Override
-	protected DataSource getDataSource() throws ConnectorException {
+    @Override
+    protected DataSource getDataSource() throws ConnectorException {
         String serverString = "jdbc:mysql://" + value(KEY_SERVER) + "/" + value(KEY_DATABASE);
         return ISql.createPool(serverString, value(KEY_USERNAME), value(KEY_PASSWORD), "com.mysql.jdbc.Driver");
-	}
+    }
+
+    protected boolean isDatabaseCreatable() {
+        return false;
+    }
 }

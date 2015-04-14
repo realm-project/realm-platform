@@ -4,6 +4,7 @@ package net.objectof.connector;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.objectof.connector.impl.IH2Connector;
 import net.objectof.connector.impl.IJDBCConnector;
 import net.objectof.connector.impl.IMySQLConnector;
 import net.objectof.connector.impl.IPostgresConnector;
@@ -39,6 +40,13 @@ public class Connectors {
         }
         catch (Exception e) {
             log.warn("Failed to load Postgres Connector", e);
+        }
+        // Generic JDBC
+        try {
+            connectors.add(new IH2Connector());
+        }
+        catch (Exception e) {
+            log.warn("Failed to load H2 Connector", e);
         }
         // Generic JDBC
         try {

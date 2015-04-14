@@ -47,6 +47,7 @@ public abstract class AbstractConnector implements Connector {
     }
 
     public boolean isDatabaseEmpty() throws ConnectorException {
+        if (isDatabaseCreatable()) { return true; }
         try {
             Connection conn = getDataSource().getConnection();
             ResultSet res = conn.getMetaData().getTables(null, null, null, null);
@@ -70,6 +71,7 @@ public abstract class AbstractConnector implements Connector {
     public List<String> getSchemaNames() throws ConnectorException {
         Connection conn = null;
         List<String> names = new ArrayList<>();
+        if (isDatabaseCreatable()) { return names; }
         try {
             conn = getDataSource().getConnection();
             Statement stmt = conn.createStatement();
@@ -145,6 +147,16 @@ public abstract class AbstractConnector implements Connector {
     }
 
     protected abstract DataSource getDataSource() throws ConnectorException;
+
+    /**
+     * Checks to see if the configured database is yet to be created. This only
+     * applies to lightweight databases like SQLite which can create new
+     * databases on the fly.
+     * 
+     * @return true if the database can, but has yet to be, created, false
+     *         otherwise
+     */
+    protected abstract boolean isDatabaseCreatable();
 
     protected ISqlDb getISqlDb() throws ConnectorException {
         return new ISqlDb("net/objectof/repo/res/postgres/statements", getDataSource());

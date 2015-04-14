@@ -34,6 +34,13 @@ public interface Parameter {
                 return new IFileParameter(title);
             }
         },
+        DIRECTORY {
+
+            @Override
+            public Parameter create(String title) {
+                return new IDirectoryParameter(title);
+            }
+        },
         PASSWORD {
 
             @Override
@@ -45,7 +52,6 @@ public interface Parameter {
         public Parameter create(String title) {
             return new ITextParameter(title);
         }
-
     }
 
     Type getType();
@@ -55,7 +61,4 @@ public interface Parameter {
     boolean setValue(String value);
 
     String getTitle();
-
-
-
 }
