@@ -19,7 +19,7 @@ from
  elements,
  types
 where
- aid * power(2, 48) = types.id;
+ aid / power(2, 48) = types.id;
 
  
  
