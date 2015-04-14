@@ -14,7 +14,6 @@ import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.BailErrorStrategy;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.ParserRuleContext;
-import org.antlr.v4.runtime.Token;
 import org.antlr.v4.runtime.misc.NotNull;
 import org.antlr.v4.runtime.tree.ParseTree;
 
@@ -26,9 +25,6 @@ public class QueryBuilder extends QueryParserBaseVisitor<Object> {
         QueryLexer lexer = new QueryLexer(input);
         lexer.removeErrorListeners();
         CommonTokenStream tokens = new CommonTokenStream(lexer);
-        for (Token token : tokens.getTokens()) {
-            System.out.println(token.getText());
-        }
         QueryParser parser = new QueryParser(tokens);
         parser.setErrorHandler(new BailErrorStrategy());
         parser.removeErrorListeners();
