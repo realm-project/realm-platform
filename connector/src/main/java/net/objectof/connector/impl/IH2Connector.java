@@ -28,7 +28,7 @@ public class IH2Connector extends AbstractConnector {
     @Override
     protected DataSource getDataSource() throws ConnectorException {
         String prefixPath = value(KEY_DIRECTORY) + "/" + "Database";
-        String serverString = "jdbc:h2:" + prefixPath;
+        String serverString = "jdbc:h2:" + prefixPath + ";AUTO_SERVER=TRUE";
         return ISql.createPool(serverString, null, null, "org.h2.Driver");
     }
 
