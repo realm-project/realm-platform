@@ -26,10 +26,9 @@ class IDirectoryParameter extends AbstractParameter {
     @Override
     public boolean setValue(String value) {
         File newFile = new File(value);
-        if (newFile.isDirectory()) {
-            file = newFile;
-            return true;
-        }
-        return false;
+        // don't let users set value to existing file (not dir)
+        if (newFile.exists() && !newFile.isDirectory()) { return false; }
+        file = newFile;
+        return true;
     }
 }

@@ -13,7 +13,7 @@ import net.objectof.repo.impl.sql.ISql;
 
 public class IH2Connector extends AbstractConnector {
 
-    private static final String KEY_DIRECTORY = "Directory";
+    public static final String KEY_DIRECTORY = "Directory";
 
     public IH2Connector() {
         super();
