@@ -7,7 +7,7 @@ import net.objectof.model.query.fallback.Evaluator;
 public class Equal implements Evaluator {
 
 	@Override
-	public BiPredicate<Object, Object> method(Stereotype stereotype) {
+	public BiPredicate<Object, Object> forStereotype(Stereotype stereotype) {
 		return new BiPredicate<Object, Object>() {
 
 			@Override

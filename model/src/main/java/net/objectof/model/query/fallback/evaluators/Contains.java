@@ -9,7 +9,7 @@ import net.objectof.model.query.fallback.Evaluator;
 public class Contains implements Evaluator {
 
 	@Override
-	public BiPredicate<Object, Object> method(final Stereotype stereotype) {
+	public BiPredicate<Object, Object> forStereotype(final Stereotype stereotype) {
 		return new BiPredicate<Object, Object>() {
 
 			@Override

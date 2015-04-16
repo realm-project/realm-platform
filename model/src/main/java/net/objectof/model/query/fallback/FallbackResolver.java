@@ -52,11 +52,10 @@ public class FallbackResolver implements QueryResolver {
 			throw new IllegalArgumentException();
 		}
 		
-		//get the native relation procedure for this stereotype
-		BiPredicate<Object, Object> proc = Fallback.forRelation(relation).method(keyKind.getStereotype());
+		//get the native/fallback relation test for this stereotype
+		BiPredicate<Object, Object> proc = Fallback.forRelation(relation).forStereotype(keyKind.getStereotype());
 		
-		
-		//go over every item in the enumeration and do the comparison
+		//go over every item in the enumeration and apply the test
 		int count = 0;
 		for (IComposite comp : iter) {
 			Object o = comp.get(key);

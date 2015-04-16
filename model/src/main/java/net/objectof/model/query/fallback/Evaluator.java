@@ -4,6 +4,6 @@ import net.objectof.model.Stereotype;
 
 public interface Evaluator {
 
-	BiPredicate<Object, Object> method(Stereotype stereotype);
+	BiPredicate<Object, Object> forStereotype(Stereotype stereotype);
 	
 }

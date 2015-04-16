@@ -8,11 +8,11 @@ import net.objectof.model.query.fallback.Fallback;
 public class LTE implements Evaluator {
 
 	@Override
-	public BiPredicate<Object, Object> method(final Stereotype stereotype) {
+	public BiPredicate<Object, Object> forStereotype(final Stereotype stereotype) {
 		BiPredicate<Object, Object> lt, eq;
 		
-		lt = Fallback.LT.method(stereotype);
-		eq = Fallback.EQUAL.method(stereotype);
+		lt = Fallback.LT.forStereotype(stereotype);
+		eq = Fallback.EQUAL.forStereotype(stereotype);
 		
 		return lt.or(eq);
 	}

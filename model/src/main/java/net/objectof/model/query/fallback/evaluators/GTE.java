@@ -8,11 +8,11 @@ import net.objectof.model.query.fallback.Fallback;
 public class GTE implements Evaluator {
 
 	@Override
-	public BiPredicate<Object, Object> method(final Stereotype stereotype) {
+	public BiPredicate<Object, Object> forStereotype(final Stereotype stereotype) {
 		BiPredicate<Object, Object> gt, eq;
 		
-		gt = Fallback.GT.method(stereotype);
-		eq = Fallback.EQUAL.method(stereotype);
+		gt = Fallback.GT.forStereotype(stereotype);
+		eq = Fallback.EQUAL.forStereotype(stereotype);
 		
 		return gt.or(eq);
 	}
