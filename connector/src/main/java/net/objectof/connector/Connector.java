@@ -5,7 +5,6 @@ import java.io.InputStream;
 import java.util.List;
 import java.util.Map;
 
-import net.objectof.connector.parameter.Parameter;
 import net.objectof.model.Package;
 
 import org.w3c.dom.Document;

@@ -10,7 +10,7 @@ import javax.sql.DataSource;
 
 import net.objectof.connector.AbstractConnector;
 import net.objectof.connector.ConnectorException;
-import net.objectof.connector.parameter.Parameter.Type;
+import net.objectof.connector.Parameter.Hint;
 import net.objectof.model.Package;
 import net.objectof.model.impl.IBaseMetamodel;
 import net.objectof.model.impl.IPackage;
@@ -31,7 +31,7 @@ public class ISQLiteConnector extends AbstractConnector {
 
     public ISQLiteConnector() {
         super();
-        addParameter(Type.FILE, KEY_FILENAME);
+        addParameter(KEY_FILENAME, Hint.FILE);
     }
 
     @Override

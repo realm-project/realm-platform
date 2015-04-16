@@ -7,7 +7,7 @@ import javax.sql.DataSource;
 
 import net.objectof.connector.AbstractConnector;
 import net.objectof.connector.ConnectorException;
-import net.objectof.connector.parameter.Parameter.Type;
+import net.objectof.connector.Parameter.Hint;
 import net.objectof.repo.impl.sql.ISql;
 
 
@@ -17,7 +17,7 @@ public class IH2Connector extends AbstractConnector {
 
     public IH2Connector() {
         super();
-        addParameter(Type.DIRECTORY, KEY_DIRECTORY);
+        addParameter(KEY_DIRECTORY, Hint.DIRECTORY);
     }
 
     @Override

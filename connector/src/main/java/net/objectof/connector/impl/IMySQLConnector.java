@@ -5,7 +5,7 @@ import javax.sql.DataSource;
 
 import net.objectof.connector.AbstractConnector;
 import net.objectof.connector.ConnectorException;
-import net.objectof.connector.parameter.Parameter.Type;
+import net.objectof.connector.Parameter.Hint;
 import net.objectof.repo.impl.sql.ISql;
 
 
@@ -18,10 +18,10 @@ public class IMySQLConnector extends AbstractConnector {
 
     public IMySQLConnector() {
         super();
-        addParameter(Type.STRING, KEY_SERVER);
-        addParameter(Type.STRING, KEY_DATABASE);
-        addParameter(Type.STRING, KEY_USERNAME);
-        addParameter(Type.PASSWORD, KEY_PASSWORD);
+        addParameter(KEY_SERVER);
+        addParameter(KEY_DATABASE);
+        addParameter(KEY_USERNAME);
+        addParameter(KEY_PASSWORD, Hint.PASSWORD);
     }
 
     @Override

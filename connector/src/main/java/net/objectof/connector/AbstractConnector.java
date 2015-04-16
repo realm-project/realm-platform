@@ -17,8 +17,7 @@ import javax.sql.DataSource;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
-import net.objectof.connector.parameter.Parameter;
-import net.objectof.connector.parameter.Parameter.Type;
+import net.objectof.connector.Parameter.Hint;
 import net.objectof.model.Package;
 import net.objectof.model.impl.IBaseMetamodel;
 import net.objectof.model.impl.IPackage;
@@ -38,7 +37,7 @@ public abstract class AbstractConnector implements Connector {
     private List<Parameter> parameters = new ArrayList<>();
 
     public AbstractConnector() {
-        addParameter(Type.STRING, KEY_REPOSITORY);
+        addParameter(KEY_REPOSITORY);
     }
 
     @Override
@@ -166,8 +165,12 @@ public abstract class AbstractConnector implements Connector {
         parameters.add(param);
     }
 
-    protected void addParameter(Parameter.Type type, String title) {
-        addParameter(type.create(title));
+    protected void addParameter(String title) {
+        addParameter(new Parameter(title));
+    }
+
+    protected void addParameter(String title, Hint hint) {
+        addParameter(new Parameter(title, hint));
     }
 
     protected String value(String key) {
