@@ -11,7 +11,7 @@
 		<constructor-arg ref="platform-router" />
 	</bean>
 
-	<bean id="platform-router" class="net.realmproject.platform.corc.IPathRouter">
+	<bean id="platform-router" class="net.realmproject.platform.corc.ITopPathRouter">
 		<constructor-arg value="1" />
 		<constructor-arg>
 			<map>
@@ -23,6 +23,7 @@
 				<entry key="api" value-ref="platform-authn-api" />
 			</map>
 		</constructor-arg>
+		<constructor-arg ref="application-paths" />
 	</bean>
 
 
