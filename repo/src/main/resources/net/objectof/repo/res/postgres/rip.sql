@@ -1,4 +1,3 @@
-﻿--drop table elements;
 create table elements
 (
   aid bigint not null,
@@ -27,20 +26,7 @@ from
 where
  aid::bigint >> 48 = types.id;
 
-/* 
-create view members as
-select 
- aid,
- types.path as member,
- v
-from
- parts,
- types
-where 
- parts.stereotype = 'COMPOSED' and k = types.id;
-*/
- 
- DROP VIEW members;
+ DROP VIEW IF EXISTS members;
  
  CREATE OR REPLACE VIEW members AS 
  SELECT parts.aid,
@@ -68,8 +54,6 @@ where
  where
   parts.stereotype = 'COMPOSED';
  
---drop table versions;
-
 create table versions
 (
   id integer not null,
@@ -87,8 +71,6 @@ create index versions_user_ix
   on versions
   using btree
   (user_txt);
-
---drop table version_elements;
 
 create table version_elements
 (

@@ -1,12 +1,3 @@
-﻿/*
-drop database "objectof.repo";
-
-create database "objectof.repo"
-  with owner = postgres
-       encoding = 'UTF8'
-       tablespace = pg_default
-       connection limit  = -1;
-*/
 drop schema public cascade;
 create schema public authorization postgres;
 

@@ -10,6 +10,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -47,16 +48,22 @@ public abstract class AbstractConnector implements Connector {
 
     public boolean isDatabaseEmpty() throws ConnectorException {
         if (isDatabaseCreatable()) { return true; }
+        List<String> allowedTypes = new ArrayList<>(Arrays.asList("SYSTEM TABLE", "SYSTEM INDEX", "SYSTEM TOAST INDEX",
+                "SYSTEM VIEW"));
         try {
             Connection conn = getDataSource().getConnection();
             ResultSet res = conn.getMetaData().getTables(null, null, null, null);
             while (res.next()) {
                 String type = res.getString("TABLE_TYPE");
-                if (!type.equals("SYSTEM TABLE")) {
-                    res.close();
-                    conn.close();
-                    return false;
+                if (allowedTypes.contains(type)) {
+                    continue;
                 }
+                if (type == null) {
+                    continue; // TODO: Why is this happening in postgres?
+                }
+                res.close();
+                conn.close();
+                return false;
             }
             res.close();
             conn.close();
