@@ -1,6 +1,8 @@
 package net.objectof.connector.impl;
 
 
+import java.util.Map;
+
 import javax.sql.DataSource;
 
 import net.objectof.connector.AbstractConnector;
@@ -15,6 +17,11 @@ public class IMySQLConnector extends AbstractConnector {
     private static final String KEY_DATABASE = "Database";
     private static final String KEY_USERNAME = "Username";
     private static final String KEY_PASSWORD = "Password";
+
+    public IMySQLConnector(Map<String, String> values) {
+        this();
+        setParameters(values);
+    }
 
     public IMySQLConnector() {
         super();

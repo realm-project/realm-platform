@@ -2,6 +2,7 @@ package net.objectof.connector.impl;
 
 
 import java.io.File;
+import java.util.Map;
 
 import javax.sql.DataSource;
 
@@ -14,6 +15,11 @@ import net.objectof.repo.impl.sql.ISql;
 public class IH2Connector extends AbstractConnector {
 
     public static final String KEY_DIRECTORY = "Directory";
+
+    public IH2Connector(Map<String, String> values) {
+        this();
+        setParameters(values);
+    }
 
     public IH2Connector() {
         super();

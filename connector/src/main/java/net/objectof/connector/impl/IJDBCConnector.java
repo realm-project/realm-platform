@@ -1,6 +1,8 @@
 package net.objectof.connector.impl;
 
 
+import java.util.Map;
+
 import javax.sql.DataSource;
 
 import net.objectof.connector.AbstractConnector;
@@ -15,6 +17,11 @@ public class IJDBCConnector extends AbstractConnector {
     private static final String KEY_URL = "URL";
     private static final String KEY_USERNAME = "Username";
     private static final String KEY_PASSWORD = "Password";
+
+    public IJDBCConnector(Map<String, String> values) {
+        this();
+        setParameters(values);
+    }
 
     public IJDBCConnector() {
         super();
