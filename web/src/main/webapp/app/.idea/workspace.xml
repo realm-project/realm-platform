@@ -36,7 +36,7 @@
       <file leaf-file-name="index.html" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="37.576923" vertical-offset="2269" max-vertical-offset="3723">
+            <state vertical-scroll-proportion="0.0" vertical-offset="1292" max-vertical-offset="3723">
               <caret line="76" column="14" selection-start-line="76" selection-start-column="14" selection-end-line="76" selection-end-column="14" />
               <folding />
             </state>
@@ -46,7 +46,7 @@
       <file leaf-file-name="studentSessions.html" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/shared/views/session/studentSessions.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-54.26923" vertical-offset="0" max-vertical-offset="1513">
+            <state vertical-scroll-proportion="0.0" vertical-offset="1411" max-vertical-offset="1513">
               <caret line="83" column="6" selection-start-line="83" selection-start-column="6" selection-end-line="83" selection-end-column="6" />
               <folding />
             </state>
@@ -58,16 +58,6 @@
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0" vertical-offset="124694" max-vertical-offset="125154">
               <caret line="7351" column="10" selection-start-line="7351" selection-start-column="2" selection-end-line="7351" selection-end-column="10" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="joystickModal.html" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/shared/views/partials/joystickModal.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="425">
-              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -86,28 +76,38 @@
       <file leaf-file-name="studentSessions.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/shared/views/session/studentSessions.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="3535" max-vertical-offset="4097">
+            <state vertical-scroll-proportion="0.0" vertical-offset="3740" max-vertical-offset="4097">
               <caret line="220" column="61" selection-start-line="220" selection-start-column="61" selection-end-line="220" selection-end-column="61" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="inversekinematicsupdate.json" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="inversekinematicsupdate.json" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/misc/layouts/inversekinematicsupdate.json">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.22818792" vertical-offset="187" max-vertical-offset="1037">
-              <caret line="17" column="27" selection-start-line="0" selection-start-column="0" selection-end-line="55" selection-end-column="1" />
+            <state vertical-scroll-proportion="-9.807693" vertical-offset="85" max-vertical-offset="1037">
+              <caret line="20" column="17" selection-start-line="20" selection-start-column="17" selection-end-line="20" selection-end-column="17" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="app.routes.js" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="app.routes.js" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/shared/app.routes.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="696" max-vertical-offset="1887">
-              <caret line="46" column="33" selection-start-line="46" selection-start-column="33" selection-end-line="46" selection-end-column="33" />
+            <state vertical-scroll-proportion="0.70434785" vertical-offset="1427" max-vertical-offset="1904">
+              <caret line="103" column="37" selection-start-line="103" selection-start-column="37" selection-end-line="103" selection-end-column="37" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="app.module.js" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/shared/app.module.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="323">
+              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -179,11 +179,11 @@
         <option value="$PROJECT_DIR$/shared/views/login/login.html" />
         <option value="$PROJECT_DIR$/shared/views/partials/joystickModal.js" />
         <option value="$PROJECT_DIR$/shared/views/experiment/experimentTemplate.js" />
-        <option value="$PROJECT_DIR$/shared/app.routes.js" />
         <option value="$PROJECT_DIR$/assets/css/main.css" />
         <option value="$PROJECT_DIR$/shared/views/session/studentSessions.html" />
         <option value="$PROJECT_DIR$/misc/layouts/inversekinematicsupdate.json" />
         <option value="$PROJECT_DIR$/shared/views/session/studentSessions.js" />
+        <option value="$PROJECT_DIR$/shared/app.routes.js" />
       </list>
     </option>
   </component>
@@ -449,6 +449,7 @@
     <property name="LayoutCode.rearrangeEntriesJavaScript" value="false" />
     <property name="DefaultHtmlFileTemplate" value="Html5" />
     <property name="LayoutCode.rearrangeEntriesHTML" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -753,13 +754,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/shared/app.module.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="323">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/shared/services/AuthService.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="187" max-vertical-offset="2499">
@@ -855,7 +849,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1309">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -897,14 +890,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/shared/app.routes.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="696" max-vertical-offset="1887">
-          <caret line="46" column="33" selection-start-line="46" selection-start-column="33" selection-end-line="46" selection-end-column="33" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/shared/views/experiment/experimentTemplate.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="255">
@@ -923,7 +908,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="37.576923" vertical-offset="2269" max-vertical-offset="3723">
+        <state vertical-scroll-proportion="0.0" vertical-offset="1292" max-vertical-offset="3723">
           <caret line="76" column="14" selection-start-line="76" selection-start-column="14" selection-end-line="76" selection-end-column="14" />
           <folding />
         </state>
@@ -931,7 +916,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/shared/views/session/studentSessions.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-54.26923" vertical-offset="0" max-vertical-offset="1513">
+        <state vertical-scroll-proportion="0.0" vertical-offset="1411" max-vertical-offset="1513">
           <caret line="83" column="6" selection-start-line="83" selection-start-column="6" selection-end-line="83" selection-end-column="6" />
           <folding />
         </state>
@@ -947,8 +932,24 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/misc/layouts/inversekinematicsupdate.json">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.22818792" vertical-offset="187" max-vertical-offset="1037">
-          <caret line="17" column="27" selection-start-line="0" selection-start-column="0" selection-end-line="55" selection-end-column="1" />
+        <state vertical-scroll-proportion="-9.807693" vertical-offset="85" max-vertical-offset="1037">
+          <caret line="20" column="17" selection-start-line="20" selection-start-column="17" selection-end-line="20" selection-end-column="17" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/shared/app.module.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="323">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/shared/app.routes.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.70434785" vertical-offset="1427" max-vertical-offset="1904">
+          <caret line="103" column="37" selection-start-line="103" selection-start-column="37" selection-end-line="103" selection-end-column="37" />
           <folding />
         </state>
       </provider>
