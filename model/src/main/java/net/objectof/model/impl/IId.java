@@ -60,6 +60,7 @@ public abstract class IId<T> extends IFn implements Id<T>
 
   private final boolean equalsId(Id<?> aId)
   {
-    return kind().equals(aId.kind()) && label().equals(aId.label());
+      return getUniqueName().equals(aId.getUniqueName());
+    //return kind().equals(aId.kind()) && label().equals(aId.label());
   }
 }
