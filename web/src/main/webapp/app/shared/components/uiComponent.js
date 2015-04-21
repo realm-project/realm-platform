@@ -14,7 +14,8 @@ angular.module('REALM').directive('uiComponent', function($compile)
         "trajectorySaveComponent": "<trajectory-save-component></trajectory-save-component>",
         "trajectorySaveReplayComponent": "<trajectory-save-replay-component></trajectory-save-replay-component>",
         "playBack": "<play-back-component></play-back-component>",
-        "poseVisualization":"<pose-visualization-component></pose-visualization-component>"
+        "poseVisualization":"<pose-visualization-component></pose-visualization-component>",
+        "fingerControl":"<finger-control-component></finger-control-component>"
 
         
     }    

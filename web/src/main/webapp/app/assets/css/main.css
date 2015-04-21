@@ -1231,3 +1231,34 @@ hr
     border-color: #d6e9c6;
     color:#3c763d;
 }
+/*************Finger Control Component**********************/
+.finger-control-component__container
+{
+    padding: 10px;
+    padding-top: 20px;
+    width: 100%;
+}
+.fingerRadioBtn
+{
+    width: 20px;
+    padding-left: 10px;
+}
+.fingerControlForm
+{
+    text-align: center;
+}
+.fingerControlSubmit
+{
+    padding-top: 20px;
+    text-align: center;
+}
+.radioLabel
+{
+    font-size: 18px;
+    font-weight: normal;
+
+}
+.radioLabel:not(:last-child)
+{
+    padding-right: 15px;
+}

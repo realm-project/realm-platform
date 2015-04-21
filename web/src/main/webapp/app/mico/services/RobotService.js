@@ -193,6 +193,19 @@ angular.module('REALM')
                     console.log('Failed to send robot to home position, error: ' + response.status);
                 });
             }
+//--------------------------------------------------------------------------------------------------------------
+        this.grip = function(devicePath, fingers){
+            var postData = {
+                "action": "grip"
+            };
+            postData.arguments=fingers;
+            $http.post(localStorage.basePath + devicePath,postData).then(function(response){
+                console.log('Gripper activated using the following:');
+                console.log(postData);
+            },function(response){
+                console.log('Failed to activate the gripper, error: ' + response.status);
+            });
+        }
 //---------------------------------------------------------------------------------------------------------------
             //JOYSTICK
             this.move = function(devicePath,x,y,z) {
