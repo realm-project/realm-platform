@@ -82,7 +82,7 @@ public interface Connector {
      *         provided.
      * @throws ConnectorException
      */
-    List<String> getSchemaNames() throws ConnectorException;
+    List<String> getRepositoryNames() throws ConnectorException;
 
     /**
      * Returns a {@link List} of all {@link Parameter}s for this Connector
@@ -134,4 +134,15 @@ public interface Connector {
      * This should be unique across all Connector implementations.
      */
     String getType();
+
+    /**
+     * Checks to see if the configured database contains a repository with the
+     * given name
+     * 
+     * @param name
+     *            the name of the repository to check for
+     * @return true if the repository exists, false otherwise
+     * @throws ConnectorException
+     */
+    boolean hasRepository(String name) throws ConnectorException;
 }

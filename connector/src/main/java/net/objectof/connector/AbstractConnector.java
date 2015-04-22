@@ -74,7 +74,13 @@ public abstract class AbstractConnector implements Connector {
         }
     }
 
-    public List<String> getSchemaNames() throws ConnectorException {
+    @Override
+    public boolean hasRepository(String name) throws ConnectorException {
+        return getRepositoryNames().contains(name);
+    }
+
+    @Override
+    public List<String> getRepositoryNames() throws ConnectorException {
         Connection conn = null;
         List<String> names = new ArrayList<>();
         if (isDatabaseCreatable()) { return names; }
@@ -107,7 +113,6 @@ public abstract class AbstractConnector implements Connector {
 
     @Override
     public Package getPackage() throws ConnectorException {
-        isDatabaseEmpty();
         return getISqlDb().forName(getPackageName());
     }
 
@@ -152,6 +157,14 @@ public abstract class AbstractConnector implements Connector {
         }
     }
 
+    /**
+     * Returns a DataSource for this type of Connector. If this database is
+     * creatable (Connector{@link #isDatabaseCreatable()} is true, getDataSource
+     * should attempt to create it
+     * 
+     * @return a DataSource for this Connector
+     * @throws ConnectorException
+     */
     protected abstract DataSource getDataSource() throws ConnectorException;
 
     /**
