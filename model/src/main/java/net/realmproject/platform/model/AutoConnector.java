@@ -48,7 +48,7 @@ public class AutoConnector implements Connector {
 
         // populate it
         InputStream contentsStream = getClass().getClassLoader().getResourceAsStream(contentsFile);
-        Transaction loaderTx = getPackage().connect(RealmConnector.class.getName());
+        Transaction loaderTx = getPackage().connect(AutoConnector.class.getName());
         @SuppressWarnings("resource")
         Scanner scanner = new Scanner(contentsStream);
         scanner = scanner.useDelimiter("\n");
