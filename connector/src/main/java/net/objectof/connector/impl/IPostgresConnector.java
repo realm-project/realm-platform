@@ -13,10 +13,10 @@ import net.objectof.repo.impl.sql.ISql;
 
 public class IPostgresConnector extends AbstractConnector {
 
-    private static final String KEY_SERVER = "Server";
-    private static final String KEY_DATABASE = "Database";
-    private static final String KEY_USERNAME = "Username";
-    private static final String KEY_PASSWORD = "Password";
+    public static final String KEY_SERVER = "Server";
+    public static final String KEY_DATABASE = "Database";
+    public static final String KEY_USERNAME = "Username";
+    public static final String KEY_PASSWORD = "Password";
 
     public IPostgresConnector(Map<String, String> values) {
         this();

@@ -22,7 +22,7 @@ import org.w3c.dom.Document;
 
 public class ISQLiteConnector extends AbstractConnector {
 
-    private static final String KEY_FILENAME = "Filename";
+    public static final String KEY_FILENAME = "Filename";
 
     public ISQLiteConnector(Map<String, String> values) {
         this();

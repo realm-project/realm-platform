@@ -13,10 +13,10 @@ import net.objectof.repo.impl.sql.ISql;
 
 public class IJDBCConnector extends AbstractConnector {
 
-    private static final String KEY_DRIVER = "Driver";
-    private static final String KEY_URL = "URL";
-    private static final String KEY_USERNAME = "Username";
-    private static final String KEY_PASSWORD = "Password";
+    public static final String KEY_DRIVER = "Driver";
+    public static final String KEY_URL = "URL";
+    public static final String KEY_USERNAME = "Username";
+    public static final String KEY_PASSWORD = "Password";
 
     public IJDBCConnector(Map<String, String> values) {
         this();
