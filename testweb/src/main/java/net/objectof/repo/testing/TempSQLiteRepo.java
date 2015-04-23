@@ -1,4 +1,4 @@
-package net.objectof.connector.testing;
+package net.objectof.repo.testing;
 
 
 import java.io.File;
@@ -7,9 +7,9 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;
 
-import net.objectof.connector.ConnectorException;
 import net.objectof.connector.Connector.Initialize;
-import net.objectof.connector.impl.ISQLiteConnector;
+import net.objectof.connector.ConnectorException;
+import net.objectof.connector.sql.ISQLiteConnector;
 import net.objectof.model.Package;
 
 
@@ -32,8 +32,7 @@ public class TempSQLiteRepo {
         dbFile.delete();
         ISQLiteConnector conn = new ISQLiteConnector();
         conn.getParameter("Filename").setValue(dbFile.toString());
-        conn.getParameter("Version").setValue("1");
-        conn.getParameter("Repository").setValue("testrepo");
+        conn.getParameter("Repository").setValue("testrepo:1400/repo");
         dbFile.deleteOnExit();
         return conn.createPackage(new FileInputStream(schemaFile), Initialize.WHEN_EMPTY);
     }

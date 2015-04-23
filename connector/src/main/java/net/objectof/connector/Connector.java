@@ -49,7 +49,7 @@ public interface Connector {
      * @param initialize
      *            Indicates if this database (not repository) should be
      *            initialized if it is empty as determined by
-     *            {@link Connector#isDatabaseEmpty()}
+     *            {@link Connector#isContainerEmpty()}
      * @throws Exception
      */
     Package createPackage(InputStream schema, Initialize initialize) throws ConnectorException;
@@ -60,19 +60,19 @@ public interface Connector {
     String getPackageName();
 
     /**
-     * Checks to see if the database (not repository) contains <i>any</i>
-     * tables, views, etc... (not just ones used by objectof).
+     * Checks to see if the container (eg database, not repository) contains
+     * <i>any</i> tables, views, etc... (not just ones used by objectof).
      * 
      * @return true if the database is empty, false otherwise.
      * @throws ConnectorException
      */
-    boolean isDatabaseEmpty() throws ConnectorException;
+    boolean isContainerEmpty() throws ConnectorException;
 
     /**
-     * When creating a new database (not repository), this can be used to
-     * populate it with the required tables and views.
+     * When creating a new container (eg database, not repository), this can be
+     * used to populate it with the required tables and views.
      */
-    void initializeDatabase() throws ConnectorException;
+    void initializeContainer() throws ConnectorException;
 
     /**
      * Attempts to connect to the configured database and read a list of all
@@ -82,7 +82,7 @@ public interface Connector {
      *         provided.
      * @throws ConnectorException
      */
-    List<String> getRepositoryNames() throws ConnectorException;
+    List<String> getPackageNames() throws ConnectorException;
 
     /**
      * Returns a {@link List} of all {@link Parameter}s for this Connector
@@ -144,5 +144,5 @@ public interface Connector {
      * @return true if the repository exists, false otherwise
      * @throws ConnectorException
      */
-    boolean hasRepository(String name) throws ConnectorException;
+    boolean hasPackage(String name) throws ConnectorException;
 }

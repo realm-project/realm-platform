@@ -1,4 +1,4 @@
-package net.objectof.connector.impl;
+package net.objectof.connector.sql;
 
 
 import java.io.File;
@@ -6,13 +6,12 @@ import java.util.Map;
 
 import javax.sql.DataSource;
 
-import net.objectof.connector.AbstractConnector;
 import net.objectof.connector.ConnectorException;
 import net.objectof.connector.Parameter.Hint;
 import net.objectof.repo.impl.sql.ISql;
 
 
-public class IH2Connector extends AbstractConnector {
+public class IH2Connector extends AbstractSQLConnector {
 
     public static final String KEY_DIRECTORY = "Directory";
 

@@ -17,7 +17,7 @@
 	</bean>
 
 	<bean id="testPackage" class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
-		<property name="targetClass" value="net.objectof.connector.testing.TempSQLiteRepo" />
+		<property name="targetClass" value="net.objectof.repo.testing.TempSQLiteRepo" />
 		<property name="targetMethod" value="testPackage" />
 	</bean>
 

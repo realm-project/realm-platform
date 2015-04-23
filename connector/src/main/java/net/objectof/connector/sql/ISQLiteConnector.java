@@ -1,4 +1,4 @@
-package net.objectof.connector.impl;
+package net.objectof.connector.sql;
 
 
 import java.io.File;
@@ -8,7 +8,6 @@ import java.util.Map;
 
 import javax.sql.DataSource;
 
-import net.objectof.connector.AbstractConnector;
 import net.objectof.connector.ConnectorException;
 import net.objectof.connector.Parameter.Hint;
 import net.objectof.model.Package;
@@ -20,7 +19,7 @@ import net.objectof.repo.impl.sqlite.ISQLite;
 import org.w3c.dom.Document;
 
 
-public class ISQLiteConnector extends AbstractConnector {
+public class ISQLiteConnector extends AbstractSQLConnector {
 
     public static final String KEY_FILENAME = "Filename";
 
@@ -37,8 +36,8 @@ public class ISQLiteConnector extends AbstractConnector {
     @Override
     public Package createPackage(Document schema, Initialize initialize) throws ConnectorException {
         IPackage schemaPackage = new ISourcePackage(IBaseMetamodel.INSTANCE, schema);
-        if (initialize == Initialize.WHEN_EMPTY && isDatabaseEmpty()) {
-            initializeDatabase();
+        if (initialize == Initialize.WHEN_EMPTY && isContainerEmpty()) {
+            initializeContainer();
         }
         return getISqlDb().createPackage(getPackageName(), ISQLite.class.getName(), schemaPackage);
     }

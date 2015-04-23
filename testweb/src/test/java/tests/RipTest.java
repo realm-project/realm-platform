@@ -12,7 +12,6 @@ import java.util.List;
 import junit.framework.Assert;
 import net.objectof.aggr.Aggregate;
 import net.objectof.aggr.Composite;
-import net.objectof.connector.testing.TempSQLiteRepo;
 import net.objectof.model.Package;
 import net.objectof.model.Resource;
 import net.objectof.model.Transaction;
@@ -21,6 +20,7 @@ import net.objectof.model.impl.IMoment;
 import net.objectof.model.impl.IPackage;
 import net.objectof.model.impl.aggr.IIndexed;
 import net.objectof.repo.impl.rip.IRip;
+import net.objectof.repo.testing.TempSQLiteRepo;
 
 import org.junit.Test;
 import org.objectof.test.schema.person.Geo;

@@ -1,17 +1,16 @@
-package net.objectof.connector.impl;
+package net.objectof.connector.sql;
 
 
 import java.util.Map;
 
 import javax.sql.DataSource;
 
-import net.objectof.connector.AbstractConnector;
 import net.objectof.connector.ConnectorException;
 import net.objectof.connector.Parameter.Hint;
 import net.objectof.repo.impl.sql.ISql;
 
 
-public class IMySQLConnector extends AbstractConnector {
+public class IMySQLConnector extends AbstractSQLConnector {
 
     public static final String KEY_SERVER = "Server";
     public static final String KEY_DATABASE = "Database";
