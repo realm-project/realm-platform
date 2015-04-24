@@ -4,12 +4,10 @@ package net.realmproject.platform.util.tests;
 import java.util.stream.Collectors;
 
 import junit.framework.Assert;
-import net.objectof.aggr.impl.IListing;
+import net.objectof.connector.TempSQLiteRepo;
+import net.objectof.model.Package;
 import net.objectof.model.Transaction;
-import net.objectof.model.impl.IBaseMetamodel;
-import net.objectof.model.impl.IPackage;
 import net.objectof.model.query.IQuery;
-import net.objectof.model.testing.ITestingPackage;
 import net.realmproject.platform.model.RealmSchema;
 import net.realmproject.platform.schema.Device;
 import net.realmproject.platform.schema.Person;
@@ -23,16 +21,25 @@ import org.junit.Test;
 
 public class PersonsTest {
 
-    public final IPackage schema = new ITestingPackage(IBaseMetamodel.INSTANCE, RealmSchema.get());
+    public Package schema;
 
     {
+        try {
+            schema = TempSQLiteRepo.forSchema(RealmSchema.get());
+        }
+        catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
         Transaction tx;
         Person p;
 
         tx = schema.connect("testing");
         p = tx.create("Person");
         p.setName("personA");
-        p.setSessions(new IListing<Session>(Session.class));
+        p.setSessions(tx.create("Person.sessions"));
+        // p.setSessions(new IListing<Session>(Session.class));
 
         Device dev = tx.create("Device");
         dev.setOwner(p);
@@ -75,8 +82,8 @@ public class PersonsTest {
         Boolean expected, actual;
 
         expected = true;
-        p = tx.retrieve("Person", "-1");
-        person = tx.retrieve("Person", "-1");
+        p = tx.retrieve("Person", "1");
+        person = tx.retrieve("Person", "1");
         s = person.getSessions().stream().filter(Sessions::isLive).collect(Collectors.toList());
 
         if (Persons.getActiveSessions(p).equals(s)) {
@@ -94,7 +101,7 @@ public class PersonsTest {
         Person owner;
         Iterable<Device> devQuery;
 
-        owner = tx.retrieve("Person", "-1");
+        owner = tx.retrieve("Person", "1");
         devQuery = tx.query("Device", new IQuery("owner", owner));
 
         Device d1, d2;

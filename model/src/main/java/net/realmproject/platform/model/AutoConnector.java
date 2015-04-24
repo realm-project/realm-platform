@@ -8,11 +8,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 
-import net.objectof.connector.AbstractConnector;
 import net.objectof.connector.Connector;
 import net.objectof.connector.ConnectorException;
 import net.objectof.connector.Parameter;
-import net.objectof.connector.impl.ISQLiteConnector;
+import net.objectof.connector.sql.AbstractSQLConnector;
+import net.objectof.connector.sql.ISQLiteConnector;
 import net.objectof.model.Package;
 import net.objectof.model.Transaction;
 
@@ -63,9 +63,9 @@ public class AutoConnector implements Connector {
     }
 
     public Package getPackage() throws ConnectorException {
-        String name = getParameter(AbstractConnector.KEY_REPOSITORY).getValue();
+        String name = getParameter(AbstractSQLConnector.KEY_REPOSITORY).getValue();
 
-        if (!hasRepository(name)) {
+        if (!hasPackage(name)) {
             init();
         }
 
@@ -101,16 +101,16 @@ public class AutoConnector implements Connector {
         return backer.getPackageName();
     }
 
-    public boolean isDatabaseEmpty() throws ConnectorException {
-        return backer.isDatabaseEmpty();
+    public boolean isContainerEmpty() throws ConnectorException {
+        return backer.isContainerEmpty();
     }
 
-    public void initializeDatabase() throws ConnectorException {
-        backer.initializeDatabase();
+    public void initializeContainer() throws ConnectorException {
+        backer.initializeContainer();
     }
 
-    public List<String> getRepositoryNames() throws ConnectorException {
-        return backer.getRepositoryNames();
+    public List<String> getPackageNames() throws ConnectorException {
+        return backer.getPackageNames();
     }
 
     public List<Parameter> getParameters() {
@@ -141,8 +141,8 @@ public class AutoConnector implements Connector {
         return backer.getType();
     }
 
-    public boolean hasRepository(String name) throws ConnectorException {
-        return backer.hasRepository(name);
+    public boolean hasPackage(String name) throws ConnectorException {
+        return backer.hasPackage(name);
     }
 
 }

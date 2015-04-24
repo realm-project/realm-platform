@@ -5,10 +5,9 @@ import java.util.Calendar;
 import java.util.Date;
 
 import junit.framework.Assert;
+import net.objectof.connector.TempSQLiteRepo;
+import net.objectof.model.Package;
 import net.objectof.model.Transaction;
-import net.objectof.model.impl.IBaseMetamodel;
-import net.objectof.model.impl.IPackage;
-import net.objectof.model.testing.ITestingPackage;
 import net.realmproject.platform.model.RealmSchema;
 import net.realmproject.platform.schema.Person;
 import net.realmproject.platform.schema.Session;
@@ -19,9 +18,17 @@ import org.junit.Test;
 
 public class SessionsTest {
 
-    public final IPackage schema = new ITestingPackage(IBaseMetamodel.INSTANCE, RealmSchema.get());
+    public Package schema;
 
     {
+        try {
+            schema = TempSQLiteRepo.forSchema(RealmSchema.get());
+        }
+        catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
         Transaction tx;
         Person p;
         Session s;
@@ -64,19 +71,19 @@ public class SessionsTest {
         Session s;
 
         Boolean expected = true;
-        s = tx.retrieve("Session", "-1");
+        s = tx.retrieve("Session", "1");
         Boolean actual = Sessions.isLive(s);
 
         Assert.assertEquals(expected, actual);
 
         expected = false;
-        s = tx.retrieve("Session", "-2");
+        s = tx.retrieve("Session", "2");
         actual = Sessions.isLive(s);
 
         Assert.assertEquals(expected, actual);
 
         expected = false;
-        s = tx.retrieve("Session", "-3");
+        s = tx.retrieve("Session", "3");
         actual = Sessions.isLive(s);
 
         Assert.assertEquals(expected, actual);
