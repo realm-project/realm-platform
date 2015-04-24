@@ -5,10 +5,10 @@ import static org.junit.Assert.assertTrue;
 
 import java.io.IOException;
 
+import net.objectof.connector.TempSQLiteRepo;
 import net.objectof.model.Resource;
 import net.objectof.model.Transaction;
 import net.objectof.model.impl.aggr.IIndexed;
-import net.objectof.repo.testing.TempSQLiteRepo;
 
 import org.junit.Test;
 import org.objectof.test.schema.person.Location;

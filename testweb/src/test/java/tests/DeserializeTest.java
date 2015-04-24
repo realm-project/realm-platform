@@ -4,9 +4,9 @@ package tests;
 import java.io.FileReader;
 import java.io.Reader;
 
+import net.objectof.connector.TempSQLiteRepo;
 import net.objectof.model.Resource;
 import net.objectof.model.Transaction;
-import net.objectof.repo.testing.TempSQLiteRepo;
 
 import org.junit.Test;
 import org.objectof.test.schema.person.Person;

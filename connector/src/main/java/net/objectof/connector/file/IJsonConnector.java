@@ -214,6 +214,12 @@ class IJsonTransaction extends ITransaction {
         return new QueryIterable<T>(this, kind, labels);
     }
 
+    @Override
+    public void load(Object aValue) {
+        // Do nothing, since everything should already be loaded into the
+        // transaction
+    }
+
     private boolean isEmpty(Resource<?> res) {
         if (!(res instanceof Composite)) { return false; }
         Composite comp = (Composite) res;

@@ -1,4 +1,4 @@
-package net.objectof.repo.testing;
+package net.objectof.connector;
 
 
 import java.io.File;
@@ -8,7 +8,6 @@ import java.net.URISyntaxException;
 import java.net.URL;
 
 import net.objectof.connector.Connector.Initialize;
-import net.objectof.connector.ConnectorException;
 import net.objectof.connector.sql.ISQLiteConnector;
 import net.objectof.model.Package;
 

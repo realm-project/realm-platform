@@ -10,6 +10,7 @@ import java.util.List;
 
 import net.objectof.aggr.Aggregate;
 import net.objectof.aggr.Composite;
+import net.objectof.connector.TempSQLiteRepo;
 import net.objectof.model.Package;
 import net.objectof.model.Resource;
 import net.objectof.model.Transaction;
@@ -17,7 +18,6 @@ import net.objectof.model.impl.IKind;
 import net.objectof.model.impl.IMoment;
 import net.objectof.model.impl.IPackage;
 import net.objectof.model.impl.aggr.IIndexed;
-import net.objectof.repo.testing.TempSQLiteRepo;
 
 import org.junit.Test;
 import org.objectof.test.schema.person.Geo;
