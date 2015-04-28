@@ -43,5 +43,7 @@ create table types
   repository bigint not null,
   path text not null,
   stereotype varchar(255) not null,
-  constraint types_pk primary key (id)
+  target smallint,
+  constraint types_pk 
+  primary key (id)
 );

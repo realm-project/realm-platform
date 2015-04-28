@@ -62,7 +62,10 @@ create table types
   repository bigint not null,
   path text not null,
   stereotype text not null,
-  constraint types_pk primary key (id)
+  target smallint,
+  constraint types_pk 
+  primary key (id)
+  foreign key (target) references types(id)
 );
 
 create index types_stereotype_ix
