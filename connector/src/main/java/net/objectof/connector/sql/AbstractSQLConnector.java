@@ -14,8 +14,6 @@ import java.util.Arrays;
 import java.util.List;
 
 import javax.sql.DataSource;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
 
 import net.objectof.connector.AbstractConnector;
 import net.objectof.connector.Connector;
@@ -31,7 +29,6 @@ import net.objectof.repo.impl.sql.ISqlDb;
 import net.objectof.repo.impl.sqlite.ISQLite;
 
 import org.w3c.dom.Document;
-import org.xml.sax.SAXException;
 
 
 public abstract class AbstractSQLConnector extends AbstractConnector implements Connector {
@@ -184,12 +181,8 @@ public abstract class AbstractSQLConnector extends AbstractConnector implements 
 
     @Override
     public Package createPackage(InputStream schema, Initialize initialize) throws ConnectorException {
-        try {
-            return createPackage(DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(schema), initialize);
-        }
-        catch (SAXException | IOException | ParserConfigurationException e) {
-            throw new ConnectorException(e);
-        }
+        Document newdoc = ISourcePackage.parseStream(schema);
+        return createPackage(newdoc, initialize);
     }
 
     @Override
