@@ -48,7 +48,7 @@ public abstract class ISqlRepo extends IRepo {
             result.next();
             String packageName = result.getString("schema_impl");
             String metamodel = result.getString("schema_metadata");
-            initialize(packageName, createMetamodel(metamodel), theDb.getText());
+            initialize(packageName, createMetamodel(metamodel), theDb.getText(), theDb.getBlobs());
         }
         catch (SQLException e) {
             throw new RepositoryException(getUniqueName(), e);
@@ -76,7 +76,8 @@ public abstract class ISqlRepo extends IRepo {
             stmt = ISql.prepare(conn, bundle, "loadTypes");
             stmt.setLong(1, repoId);
             result = stmt.executeQuery();
-            //keep track of the IDs of loaded types and the target IDs of references 
+            // keep track of the IDs of loaded types and the target IDs of
+            // references
             Map<IRepoType<?>, Integer> typeReferences = new HashMap<>();
             Map<Integer, IRepoType<?>> loadedTypes = new HashMap<>();
             while (result.next()) {
@@ -92,7 +93,8 @@ public abstract class ISqlRepo extends IRepo {
                     typeReferences.put(type, targetId);
                 }
             }
-            //now that all types have been loaded, wire up the reference targets
+            // now that all types have been loaded, wire up the reference
+            // targets
             for (IRepoType<?> sourceType : typeReferences.keySet()) {
                 System.out.println(sourceType);
                 int targetId = typeReferences.get(sourceType);

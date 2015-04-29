@@ -7,6 +7,14 @@ create table chars
   constraint chars_pk primary key (id)
 );
 
+create table blobs
+(
+	id bigint not null,
+	hash integer not null,
+	bytes blob not null,
+	constraint blobs_pk primary key (id)
+);
+
 create table datatypes
 (
   stereotype varchar(255) not null,

@@ -14,6 +14,14 @@ create index chars_hash_ix
   using btree
   (hash);
 
+create table blobs
+(
+	id bigint not null,
+	hash integer not null,
+	bytes blob not null,
+	constraint blobs_pk primary key (id)
+);
+  
 create table datatypes
 (
   stereotype text not null,

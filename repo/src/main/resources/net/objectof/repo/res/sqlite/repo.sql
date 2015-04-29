@@ -17,7 +17,6 @@ create table blobs
 	id bigint not null,
 	hash integer not null,
 	bytes blob not null,
-	mediatype text not null,
 	constraint blobs_pk primary key (id)
 );
   

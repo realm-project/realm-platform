@@ -22,6 +22,7 @@ import net.objectof.model.Stereotype;
 import net.objectof.model.impl.IBaseMetamodel;
 import net.objectof.model.impl.IPackage;
 import net.objectof.model.impl.facets.ISourcePackage;
+import net.objectof.repo.impl.IRepoBlobs;
 import net.objectof.repo.impl.IRepoText;
 import net.objectof.rt.impl.IFn;
 
@@ -31,6 +32,7 @@ public class ISqlDb extends IFn implements Context<Package> {
     private final String theName;
     private final DataSource theConnector;
     private final IRepoText theText;
+    private final IRepoBlobs theBlobs;
     private final Map<String, Package> thePackages;
     private int theLastTypeId;
 
@@ -39,6 +41,7 @@ public class ISqlDb extends IFn implements Context<Package> {
         thePackages = new HashMap<>();
         theConnector = dataSource;
         theText = createText();
+        theBlobs = createBlobs();
         theLastTypeId = getLastTypeId();
     }
 
@@ -47,6 +50,7 @@ public class ISqlDb extends IFn implements Context<Package> {
         thePackages = new HashMap<>();
         theConnector = ISql.createPool(theName);
         theText = createText();
+        theBlobs = createBlobs();
         theLastTypeId = getLastTypeId();
     }
 
@@ -92,6 +96,10 @@ public class ISqlDb extends IFn implements Context<Package> {
 
     public IRepoText getText() {
         return theText;
+    }
+
+    public IRepoBlobs getBlobs() {
+        return theBlobs;
     }
 
     @Override
@@ -161,6 +169,10 @@ public class ISqlDb extends IFn implements Context<Package> {
 
     protected IRepoText createText() {
         return new ISqlText(this, getBundle("textStatements"));
+    }
+
+    protected IRepoBlobs createBlobs() {
+        return new ISqlBlobs(this, getBundle("blobStatements"));
     }
 
     protected void createTypes(long aRepo, IPackage aSchema) {
