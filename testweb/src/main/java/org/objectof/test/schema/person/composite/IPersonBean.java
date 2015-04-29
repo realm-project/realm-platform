@@ -36,11 +36,11 @@ public class IPersonBean
   {
     _("dob", a);
   }
-  public Void getPicture()
+  public byte[] getPicture()
   {
-    return (Void) _("picture");
+    return (byte[]) _("picture");
   }
-  public void setPicture(Void a)
+  public void setPicture(byte[] a)
   {
     _("picture", a);
   }

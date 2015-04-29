@@ -21,10 +21,10 @@ public interface Person extends Resource<Composite>
   @net.objectof.Selector("dob:")
   public void setDob(java.util.Date a);
   @net.objectof.Selector("picture")
-  public Void getPicture();
+  public byte[] getPicture();
 
   @net.objectof.Selector("picture:")
-  public void setPicture(Void a);
+  public void setPicture(byte[] a);
   @net.objectof.Selector("locations")
   public net.objectof.aggr.Listing<org.objectof.test.schema.person.Location> getLocations();
 

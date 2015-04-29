@@ -10,6 +10,7 @@ import javax.json.JsonValue;
 import net.objectof.model.Locator;
 import net.objectof.model.Stereotype;
 import net.objectof.model.impl.IDatatype;
+import net.objectof.model.impl.IKind;
 import net.objectof.model.impl.IMetamodel;
 import net.objectof.model.impl.ITransaction;
 
@@ -49,5 +50,15 @@ public class IMediaDataType extends IDatatype<byte[]> {
     @Override
     public Class<?> peer() {
         return byte[].class;
+    }
+
+    @Override
+    protected String javaTarget(IKind<byte[]> aKind) {
+        Class<?> cls = peer().getComponentType();
+        if (cls.getPackage() == Package.getPackage("java.lang")) {
+            return cls.getSimpleName() + "[]";
+        } else {
+            return cls.getName() + "[]";
+        }
     }
 }
