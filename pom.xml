@@ -5,7 +5,7 @@
   <groupId>objectof</groupId>
   <artifactId>objectof</artifactId>
   <name>objectof</name>
-  <version>0.1</version>
+  <version>0.2-SNAPSHOT</version>
   <packaging>pom</packaging>
   <url>http://maven.apache.org</url>
   

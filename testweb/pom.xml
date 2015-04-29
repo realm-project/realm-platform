@@ -4,7 +4,7 @@
 	<groupId>objectof</groupId>
 	<artifactId>objectof-testweb</artifactId>
 	<packaging>war</packaging>
-	<version>0.1</version>
+	<version>0.2-SNAPSHOT</version>
 	<name>objectof testweb</name>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -30,7 +30,7 @@
 			<plugin>
 				<groupId>objectof</groupId>
 				<artifactId>objectof-maven-plugin</artifactId>
-				<version>0.1</version>
+				<version>0.2-SNAPSHOT</version>
 				<configuration>
 					<file>GenerationContext.xml</file>
 				</configuration>
@@ -50,7 +50,7 @@
           <dependency>
             <groupId>objectof</groupId>
             <artifactId>objectof-model</artifactId>
-            <version>0.1</version>
+            <version>0.2-SNAPSHOT</version>
           </dependency>
         </dependencies>
 			</plugin>
@@ -60,12 +60,12 @@
 		<dependency>
 			<groupId>objectof</groupId>
 			<artifactId>objectof-repo</artifactId>
-			<version>0.1</version>
+			<version>0.2-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>objectof</groupId>
 			<artifactId>objectof-corc.jee</artifactId>
-			<version>0.1</version>
+			<version>0.2-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>javax.servlet</groupId>
@@ -82,7 +82,7 @@
 		<dependency>
 			<groupId>objectof</groupId>
 			<artifactId>objectof-derived</artifactId>
-			<version>0.1</version>
+			<version>0.2-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>postgresql</groupId>
@@ -93,12 +93,12 @@
 		<dependency>
 			<groupId>objectof</groupId>
 			<artifactId>objectof-web</artifactId>
-			<version>0.1</version>
+			<version>0.2-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>objectof</groupId>
 			<artifactId>objectof-connector</artifactId>
-			<version>0.1</version>
+			<version>0.2-SNAPSHOT</version>
 		</dependency>
 	</dependencies>
 </project>
