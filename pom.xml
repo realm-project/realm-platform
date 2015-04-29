@@ -28,4 +28,19 @@
       </plugin>
     </plugins>
   </build>
+  
+	<repositories>
+		<repository>
+			<releases>
+				<enabled>true</enabled>
+				<updatePolicy>always</updatePolicy>
+				<checksumPolicy>fail</checksumPolicy>
+			</releases>
+			<id>objectof</id>
+			<name>objectof</name>
+			<url>http://objectof.org/maven2</url>
+			<layout>default</layout>
+		</repository>
+	</repositories>
+  
 </project>
