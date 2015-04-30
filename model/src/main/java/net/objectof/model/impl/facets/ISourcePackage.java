@@ -69,6 +69,8 @@ public class ISourcePackage extends IPackage {
                 continue;
             }
             Property href = kind.getProperty("ans://objectof.net:1401/facets/model/href");
+            if (href == null) { throw new NullPointerException("Cannot find Reference target for "
+                    + kind.getComponentName()); }
             IKind<?> target = (IKind<?>) forName(href.getSource());
             ((IKind<?>) kind).getParts().add(target);
         }
