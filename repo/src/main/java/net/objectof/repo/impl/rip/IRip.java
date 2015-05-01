@@ -42,14 +42,11 @@ public class IRip extends ISqlRepo {
         return t;
     }
 
-
     protected <T> String kindFromClass(Class<T> cls) {
         Selector s = cls.getAnnotation(Selector.class);
         if (s == null) throw new IllegalArgumentException("Specified class does not specify a Selector");
         return s.value();
     }
-
-
 
     protected Object authorize(Object aActor) {
         return aActor;
@@ -91,7 +88,6 @@ public class IRip extends ISqlRepo {
         }
     }
 
-
     final synchronized int nextTx() {
         return firstTx() + 1;
     }
@@ -123,10 +119,7 @@ public class IRip extends ISqlRepo {
         return getDb().getBundle(aKey);
     }
 
-
-
     Set<String> doQuery(int aLimit, String kind, String key, Object oValue, Relation relation) {
-
         Connection conn = null;
         PreparedStatement stmt = null;
         ResultSet result = null;
@@ -134,20 +127,16 @@ public class IRip extends ISqlRepo {
         String fullKindName = kind + "." + key;
         IRipType<?> theKind = forName(fullKindName);
         if (theKind == null) { throw new IllegalArgumentException("Unknown kind: " + fullKindName); }
-
         Stereotype stereotype = theKind.getStereotype();
         String procName = procedureName(relation, stereotype);
-        long value = theKind.valueToBits(oValue);
-
         try {
             conn = getConnection();
             stmt = ISql.prepare(conn, getDb().getBundle("ripStatements"), procName);
             stmt.setString(1, kind);
             stmt.setString(2, kind + "." + key);
-            stmt.setLong(3, value);
+            setQueryValue(stmt, theKind, relation, oValue);
             stmt.setLong(4, getDb().getText().get(getUniqueName()));
             stmt.setInt(5, aLimit);
-
             result = stmt.executeQuery();
             while (result.next()) {
                 long label = result.getLong(1);
@@ -163,25 +152,29 @@ public class IRip extends ISqlRepo {
             ISql.close(stmt);
             ISql.close(conn);
         }
-
     }
 
+    private void setQueryValue(PreparedStatement stmt, IRipType<?> theKind, Relation relation, Object oValue)
+            throws SQLException {
+        if (relation == Relation.CONTAINS && theKind.getStereotype() == Stereotype.TEXT) {
+            stmt.setString(3, "%" + oValue.toString() + "%");
+        } else {
+            long value = theKind.valueToBits(oValue);
+            stmt.setLong(3, value);
+        }
+    }
 
     Set<String> doEnumeration(String kind, int limit) {
-
         Connection conn = null;
         PreparedStatement stmt = null;
         ResultSet result = null;
         Set<String> labels = new HashSet<>();
-
         try {
-
             conn = getConnection();
             stmt = ISql.prepare(conn, getDb().getBundle("ripStatements"), "enumerate");
             stmt.setString(1, kind);
             stmt.setLong(2, getDb().getText().get(getUniqueName()));
             stmt.setInt(3, limit);
-
             result = stmt.executeQuery();
             while (result.next()) {
                 long label = result.getLong(1);
@@ -197,16 +190,12 @@ public class IRip extends ISqlRepo {
             ISql.close(stmt);
             ISql.close(conn);
         }
-
     }
 
-
     protected Stereotype getStereotype(String kind, String key) {
-
         Connection conn = null;
         PreparedStatement stmt = null;
         ResultSet result = null;
-
         try {
             conn = getConnection();
             stmt = ISql.prepare(conn, getDb().getBundle("ripStatements"), "queryStereotype");
@@ -229,9 +218,7 @@ public class IRip extends ISqlRepo {
     }
 
     private String procedureName(Relation relation, Stereotype stereotype) {
-
         switch (relation) {
-
             case EQUAL:
                 return "queryEquals";
             case UNEQUAL:
@@ -242,15 +229,13 @@ public class IRip extends ISqlRepo {
                         return "queryContainsIndexed";
                     case MAPPED:
                         return "queryContainsMapped";
+                    case TEXT:
+                        return "queryContainsText";
                     default:
                         throw new UnsupportedOperationException();
                 }
-
-
             default:
                 throw new UnsupportedOperationException();
         }
-
     }
-
 }
