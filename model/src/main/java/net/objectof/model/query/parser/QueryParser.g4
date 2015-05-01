@@ -21,10 +21,12 @@ relation: GT EQUAL | LT EQUAL | EQUAL | BANG EQUAL | CONTAINS | GT | LT ;
 operator: AND | OR;
 
 
-id: theKind=LETTERS DASH theLabel=integer;
+id: theKind=LETTERS DASH theLabel=integer
+  | theKind=LETTERS POUND theLabel=integer
+  ;
 integer : DASH? digits;
 real : DASH? digits DOT digits?;
 
-string :  QUOTE (.)? QUOTE;
+string :  theValue=STRING;
 
 digits : DIGIT+ ;

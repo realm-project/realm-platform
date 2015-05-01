@@ -133,6 +133,7 @@ public class QueryBuilder extends QueryParserBaseVisitor<Object> {
 
     @Override
     public String visitString(@NotNull QueryParser.StringContext ctx) {
-        return ctx.children.get(1).getText();
+        String text = ctx.theValue.getText();
+        return text.substring(1, text.length() - 1);
     }
 }

@@ -1,7 +1,6 @@
 lexer grammar QueryLexer;
 
 //Order MATTERS!
-QUOTE : '"';
 EQUAL : '=';
 BANG : '!';
 DASH : '-';
@@ -14,9 +13,10 @@ CLOSEBRACKET : ')';
 GT : '>';
 LT : '<';
 DOT : '.';
-ESCAPE : '\\';
+POUND: '#';
 
 
+STRING : '"' (~[\\"] | '\\' [\\"])* '"';
 LETTER : [a-zA-Z];
 LETTERS : LETTER+;
 WS : [ \t\r\n]+ -> skip;
