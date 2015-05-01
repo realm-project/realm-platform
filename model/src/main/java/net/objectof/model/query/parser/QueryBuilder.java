@@ -132,6 +132,11 @@ public class QueryBuilder extends QueryParserBaseVisitor<Object> {
     }
 
     @Override
+    public Boolean visitBool(@NotNull QueryParser.BoolContext ctx) {
+        return Boolean.parseBoolean(ctx.getText());
+    }
+
+    @Override
     public String visitString(@NotNull QueryParser.StringContext ctx) {
         String text = ctx.theValue.getText();
         return text.substring(1, text.length() - 1);

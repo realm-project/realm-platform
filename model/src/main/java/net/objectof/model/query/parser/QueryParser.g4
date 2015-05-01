@@ -15,6 +15,7 @@ value: string
      | real
      | integer
      | id
+     | bool
      ;
 relation: GT EQUAL | LT EQUAL | EQUAL | BANG EQUAL | CONTAINS | GT | LT ;
 
@@ -27,6 +28,9 @@ id: theKind=LETTERS DASH theLabel=integer
 integer : DASH? digits;
 real : DASH? digits DOT digits?;
 
+bool: theValue=TRUE
+    | theValue=FALSE;
+       
 string :  theValue=STRING;
 
 digits : DIGIT+ ;

@@ -15,6 +15,9 @@ LT : '<';
 DOT : '.';
 POUND: '#';
 
+TRUE: 'true' | 'True' | 'TRUE';
+FALSE: 'false' | 'False' | 'FALSE';
+
 
 STRING : '"' (~[\\"] | '\\' [\\"])* '"';
 LETTER : [a-zA-Z];

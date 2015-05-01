@@ -30,6 +30,19 @@ public class QueryParserBaseListener implements QueryParserListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterBool(@NotNull QueryParser.BoolContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitBool(@NotNull QueryParser.BoolContext ctx) { }
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterString(@NotNull QueryParser.StringContext ctx) { }
 	/**
 	 * {@inheritDoc}

@@ -22,6 +22,17 @@ public interface QueryParserListener extends ParseTreeListener {
 	void exitBracketedQuery(@NotNull QueryParser.BracketedQueryContext ctx);
 
 	/**
+	 * Enter a parse tree produced by {@link QueryParser#bool}.
+	 * @param ctx the parse tree
+	 */
+	void enterBool(@NotNull QueryParser.BoolContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link QueryParser#bool}.
+	 * @param ctx the parse tree
+	 */
+	void exitBool(@NotNull QueryParser.BoolContext ctx);
+
+	/**
 	 * Enter a parse tree produced by {@link QueryParser#string}.
 	 * @param ctx the parse tree
 	 */

@@ -20,6 +20,13 @@ public interface QueryParserVisitor<T> extends ParseTreeVisitor<T> {
 	T visitBracketedQuery(@NotNull QueryParser.BracketedQueryContext ctx);
 
 	/**
+	 * Visit a parse tree produced by {@link QueryParser#bool}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitBool(@NotNull QueryParser.BoolContext ctx);
+
+	/**
 	 * Visit a parse tree produced by {@link QueryParser#string}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
