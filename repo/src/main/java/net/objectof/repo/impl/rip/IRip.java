@@ -14,6 +14,7 @@ import net.objectof.model.RepositoryException;
 import net.objectof.model.Stereotype;
 import net.objectof.model.Transaction;
 import net.objectof.model.impl.ITransaction;
+import net.objectof.model.impl.aggr.IComposite;
 import net.objectof.model.query.Relation;
 import net.objectof.repo.impl.IRepoType;
 import net.objectof.repo.impl.sql.ISql;
@@ -128,7 +129,7 @@ public class IRip extends ISqlRepo {
         IRipType<?> theKind = forName(fullKindName);
         if (theKind == null) { throw new IllegalArgumentException("Unknown kind: " + fullKindName); }
         Stereotype stereotype = theKind.getStereotype();
-        String procName = procedureName(relation, stereotype);
+        String procName = findQueryProcedure(relation, stereotype, oValue);
         try {
             conn = getConnection();
             stmt = ISql.prepare(conn, getDb().getBundle("ripStatements"), procName);
@@ -217,7 +218,15 @@ public class IRip extends ISqlRepo {
         }
     }
 
-    private String procedureName(Relation relation, Stereotype stereotype) {
+    private String findQueryProcedure(Relation relation, Stereotype stereotype, Object oValue) {
+        
+        //check to make sure the query isn't looking for a reference to a transient entity, since they don't appear in the database
+        if (stereotype == Stereotype.REF) {
+            IComposite composite = (IComposite) oValue;
+            int label = Integer.parseInt(composite.id().label().toString());
+            if (label < 0) { throw new UnsupportedOperationException(); }
+        }
+        
         switch (relation) {
             case EQUAL:
                 return "queryEquals";
