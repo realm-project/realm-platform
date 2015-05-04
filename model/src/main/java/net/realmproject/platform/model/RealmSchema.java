@@ -8,12 +8,11 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.Writer;
 import java.net.URL;
+import java.util.Scanner;
 
 import net.objectof.connector.Connector.Initialize;
 import net.objectof.connector.sql.ISQLiteConnector;
 import net.objectof.model.Package;
-
-import org.apache.commons.io.IOUtils;
 
 
 public class RealmSchema {
@@ -25,9 +24,13 @@ public class RealmSchema {
 
             if (schemafile == null) {
                 InputStream stream = RealmSchema.class.getResourceAsStream("/packages/realm.xml");
+                @SuppressWarnings("resource")
+				Scanner s = new Scanner(stream).useDelimiter("\\A");
                 schemafile = File.createTempFile("realm-schema-", ".xml");
                 Writer writer = new FileWriter(schemafile);
-                writer.write(IOUtils.toString(stream));
+                writer.write(s.next());
+                s.close();
+                stream.close();
                 writer.close();
             }
 
