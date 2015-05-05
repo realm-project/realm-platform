@@ -1,39 +1,89 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
 
-  <groupId>objectof</groupId>
-  <artifactId>objectof</artifactId>
-  <name>objectof</name>
-  <version>0.2-SNAPSHOT</version>
-  <packaging>pom</packaging>
-  <url>http://maven.apache.org</url>
-  
-  <properties>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-  </properties>
+	<groupId>objectof</groupId>
+	<artifactId>objectof</artifactId>
+	<name>objectof</name>
+	<version>0.2-SNAPSHOT</version>
+	<packaging>pom</packaging>
+	<url>http://maven.apache.org</url>
 
-  <dependencies>
-    <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>3.8.1</version>
-      <scope>test</scope>
-    </dependency>
-  </dependencies>
-  
-  <modules>
-    <module>corc</module>
-    <module>corc-jee</module>
-    <module>core</module>
-    <module>derived</module>
-    <module>maven</module>
-    <module>model</module>
-    <module>repo</module>
-    <module>testweb</module>
-    <module>util</module>
-    <module>web</module>
-    <module>connector</module>
-    <module>standalone</module>
-  </modules>
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-deploy-plugin</artifactId>
+				<version>2.4</version>
+				<configuration>
+					<updateReleaseInfo>true</updateReleaseInfo>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+	<dependencies>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>3.8.1</version>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+
+	<modules>
+		<module>corc</module>
+		<module>corc-jee</module>
+		<module>core</module>
+		<module>derived</module>
+		<module>maven</module>
+		<module>model</module>
+		<module>repo</module>
+		<module>testweb</module>
+		<module>util</module>
+		<module>web</module>
+		<module>connector</module>
+		<module>standalone</module>
+	</modules>
+
+	<distributionManagement>
+		<repository>
+			<id>objectof</id>
+			<name>objectof Maven Remote Repository</name>
+			<url>http://realmproject.net:8888/repository/objectof/</url>
+		</repository>
+	</distributionManagement>
+
+	<repositories>
+		<repository>
+			<id>objectof</id>
+			<name>objectof Maven Remote Repository</name>
+			<url>http://realmproject.net:8888/repository/objectof/</url>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+		</repository>
+	</repositories>
+	<pluginRepositories>
+		<pluginRepository>
+			<id>objectof</id>
+			<name>objectof Maven Remote Repository</name>
+			<url>http://realmproject.net:8888/repository/objectof/</url>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+		</pluginRepository>
+	</pluginRepositories>
+
 </project>
