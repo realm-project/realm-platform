@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<schema xmlns:m="ans://objectof.net:1401/facets/model" id="realmproject.net:1519/platform/settings" version="0.0.1-SNAPSHOT">
+	<model>
+
+	
+    <composed selector="Setting">
+            <text selector="key"/>
+            <text selector="value"/>
+        </composed>
+    </model>
+</schema>

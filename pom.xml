@@ -13,6 +13,7 @@
     <module>util</module>
     <module>corc</module>
     <module>security</module>
+    <module>settings</module>
     <module>web</module>
   </modules>
   <build>

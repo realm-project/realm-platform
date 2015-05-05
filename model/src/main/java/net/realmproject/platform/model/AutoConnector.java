@@ -24,6 +24,7 @@ public class AutoConnector implements Connector {
     private Connector backer;
     private String schemaFile = "platform-schema.xml";
     private String contentsFile = "platform-db.json";
+    private String dbName = null;
 
     public AutoConnector(String appname) {
         backer = new ISQLiteConnector();
@@ -47,6 +48,7 @@ public class AutoConnector implements Connector {
         createPackage(schemaStream, Initialize.WHEN_EMPTY);
 
         // populate it
+        if (contentsFile == null) { return; }
         InputStream contentsStream = getClass().getClassLoader().getResourceAsStream(contentsFile);
         Transaction loaderTx = getPackage().connect(AutoConnector.class.getName());
         @SuppressWarnings("resource")
