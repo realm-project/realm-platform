@@ -6,9 +6,16 @@
 	<packaging>maven-plugin</packaging>
 	<name>objectof maven</name>
 	<version>0.2-SNAPSHOT</version>
-  <properties>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-  </properties>
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
+
+	<parent>
+		<groupId>objectof</groupId>
+		<artifactId>objectof</artifactId>
+		<version>0.1</version>
+	</parent>
+
 	<build>
 		<plugins>
 			<plugin>
