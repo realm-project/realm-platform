@@ -55,7 +55,7 @@
 		<repository>
 			<id>objectof</id>
 			<name>objectof Maven Remote Repository</name>
-			<url>http://realmproject.net:8888/repository/objectof/</url>
+			<url>http://objectof.org:8888/repository/objectof/</url>
 		</repository>
 	</distributionManagement>
 
@@ -63,7 +63,7 @@
 		<repository>
 			<id>objectof</id>
 			<name>objectof Maven Remote Repository</name>
-			<url>http://realmproject.net:8888/repository/objectof/</url>
+			<url>http://objectof.org:8888/repository/objectof/</url>
 			<releases>
 				<enabled>true</enabled>
 			</releases>
@@ -76,7 +76,7 @@
 		<pluginRepository>
 			<id>objectof</id>
 			<name>objectof Maven Remote Repository</name>
-			<url>http://realmproject.net:8888/repository/objectof/</url>
+			<url>http://objectof.org:8888/repository/objectof/</url>
 			<releases>
 				<enabled>true</enabled>
 			</releases>
