@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>net.realmproject.platform</groupId>
   <artifactId>realm-platform-api</artifactId>
-  <version>0.1</version>
+  <version>0.2-SNAPSHOT</version>
   <name>realm-platform-api</name>
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -39,7 +39,7 @@
 		<dependency>
 			<groupId>net.realmproject.platform</groupId>
 			<artifactId>realm-platform-model</artifactId>
-			<version>0.1</version>
+			<version>0.2-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>javax.servlet</groupId>
@@ -67,7 +67,7 @@
 		<dependency>
 			<groupId>net.realmproject.platform</groupId>
 			<artifactId>realm-platform-security</artifactId>
-			<version>0.1</version>
+			<version>0.2-SNAPSHOT</version>
 		</dependency>
 		<dependency>
    			<groupId>org.json</groupId>
@@ -78,6 +78,6 @@
   	<parent>
   		<groupId>net.realmproject.platform</groupId>
   		<artifactId>realm-platform</artifactId>
-  		<version>0.1</version>
+  		<version>0.2-SNAPSHOT</version>
   	</parent>
 </project>

@@ -3,7 +3,7 @@
   <groupId>net.realmproject.platform</groupId>
   <artifactId>realm-platform-model</artifactId>
   <name>realm-platform-model</name>
-  <version>0.1</version>
+  <version>0.2-SNAPSHOT</version>
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
@@ -44,7 +44,7 @@
   </dependencies>
   <parent>
   	<groupId>net.realmproject.platform</groupId>
-  	<version>0.1</version>
+  	<version>0.2-SNAPSHOT</version>
   	<artifactId>realm-platform</artifactId>
   </parent>
 </project>

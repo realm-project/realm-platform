@@ -4,7 +4,7 @@
 	<groupId>net.realmproject.platform</groupId>
 	<artifactId>realm-platform-security</artifactId>
 	<name>realm-platform-security</name>
-	<version>0.1</version>
+	<version>0.2-SNAPSHOT</version>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
@@ -40,24 +40,24 @@
 		<dependency>
 			<groupId>net.realmproject.platform</groupId>
 			<artifactId>realm-platform-util</artifactId>
-			<version>0.1</version>
+			<version>0.2-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>net.realmproject.platform</groupId>
 			<artifactId>realm-platform-derived</artifactId>
-			<version>0.1</version>
+			<version>0.2-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>net.realmproject.platform</groupId>
 			<artifactId>realm-platform-corc</artifactId>
-			<version>0.1</version>
+			<version>0.2-SNAPSHOT</version>
 		</dependency>
 	</dependencies>
 
 
 	<parent>
 		<groupId>net.realmproject.platform</groupId>
-		<version>0.1</version>
+		<version>0.2-SNAPSHOT</version>
 		<artifactId>realm-platform</artifactId>
 	</parent>
 </project>
