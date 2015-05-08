@@ -9,7 +9,6 @@ import net.objectof.model.Transaction;
 import net.objectof.model.impl.IBaseMetamodel;
 import net.objectof.model.impl.IPackage;
 import net.objectof.model.query.IQuery;
-import net.objectof.model.testing.ITestingPackage;
 import net.realmproject.platform.model.RealmSchema;
 import net.realmproject.platform.schema.Device;
 import net.realmproject.platform.schema.Person;
@@ -17,6 +16,7 @@ import net.realmproject.platform.schema.Session;
 import net.realmproject.platform.util.RealmRepo;
 import net.realmproject.platform.util.model.Persons;
 import net.realmproject.platform.util.model.Sessions;
+import net.realmproject.platform.util.testing.ITestingPackage;
 
 import org.junit.Test;
 
