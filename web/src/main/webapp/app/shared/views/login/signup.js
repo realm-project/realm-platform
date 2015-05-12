@@ -30,7 +30,7 @@ angular.module('REALM')
         $http.post(localStorage.basePath + 'rest/signup',postData).then(function(response){
             console.log(response);
             $rootScope.toggle('signupSuccessOverlay','on');
-        },function(){
+        },function(response){
             console.log(response);
             $rootScope.toggle('signupFailureOverlay','on');
         });

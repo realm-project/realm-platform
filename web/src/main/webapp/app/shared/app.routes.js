@@ -101,6 +101,9 @@ localStorage.basePath = currentURL.slice(0,indexOfSpecificPath);
 if(document.location.hostname==="localhost")
 {
    // localStorage.basePath="http://localhost:8080/realm/";
-    localStorage.basePath=currentURL;
+    //localStorage.basePath=currentURL;
+    var indexOfSpecificPath = currentURL.indexOf('app');
+    localStorage.basePath = currentURL.slice(0,indexOfSpecificPath);
+
 }
 console.log("basePath is: "+localStorage.basePath);
