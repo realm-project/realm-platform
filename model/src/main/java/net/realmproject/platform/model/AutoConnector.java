@@ -22,8 +22,8 @@ import org.w3c.dom.Document;
 public class AutoConnector implements Connector {
 
     private Connector backer;
-    private String schemaFile = "platform-schema.xml";
-    private String contentsFile = "platform-db.json";
+    private String schemaFile = "/platform-schema.xml";
+    private String contentsFile = "/platform-db.json";
     private String dbName = null;
 
     public AutoConnector(String appname) {
