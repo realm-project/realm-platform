@@ -15,16 +15,16 @@ import net.realmproject.platform.util.RealmCorc;
 import net.realmproject.platform.util.RealmSerialize;
 
 
-public class IDeviceAccessorHandler extends IHandler<HttpRequest> {
+public class IDeviceCommanderHandler extends IHandler<HttpRequest> {
 
     DeviceCommander<State> accessor;
 
-    public IDeviceAccessorHandler(String id, DeviceEventBus bus) {
+    public IDeviceCommanderHandler(String id, DeviceEventBus bus) {
         super();
         accessor = new DeviceCommander<>(id, bus);
     }
 
-    public IDeviceAccessorHandler(String id, DeviceEventBus bus, DeviceRecorder recorder) {
+    public IDeviceCommanderHandler(String id, DeviceEventBus bus, DeviceRecorder recorder) {
         super();
         accessor = new DeviceCommander<>(id, bus);
     }
