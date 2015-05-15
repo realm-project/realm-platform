@@ -44,11 +44,11 @@ public class IAssignmentBean
   {
     _("description", a);
   }
-  public net.objectof.aggr.Listing<Void> getDocuments()
+  public net.objectof.aggr.Listing<byte[]> getDocuments()
   {
-    return (net.objectof.aggr.Listing<Void>) _("documents");
+    return (net.objectof.aggr.Listing<byte[]>) _("documents");
   }
-  public void setDocuments(net.objectof.aggr.Listing<Void> a)
+  public void setDocuments(net.objectof.aggr.Listing<byte[]> a)
   {
     _("documents", a);
   }
