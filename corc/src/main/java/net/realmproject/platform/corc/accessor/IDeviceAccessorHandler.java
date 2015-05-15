@@ -8,9 +8,8 @@ import javax.servlet.ServletException;
 import net.objectof.corc.Action;
 import net.objectof.corc.web.v2.HttpRequest;
 import net.objectof.impl.corc.IHandler;
-import net.realmproject.dcm.accessor.commands.DeviceRecorder;
-import net.realmproject.dcm.accessor.commands.impl.IDeviceCommander;
 import net.realmproject.dcm.event.bus.DeviceEventBus;
+import net.realmproject.dcm.features.Statefulness.State;
 import net.realmproject.dcm.features.command.Command;
 import net.realmproject.platform.util.RealmCorc;
 import net.realmproject.platform.util.RealmSerialize;
@@ -18,16 +17,16 @@ import net.realmproject.platform.util.RealmSerialize;
 
 public class IDeviceAccessorHandler extends IHandler<HttpRequest> {
 
-    IDeviceCommander accessor;
+    DeviceCommander<State> accessor;
 
     public IDeviceAccessorHandler(String id, DeviceEventBus bus) {
         super();
-        accessor = new IDeviceCommander(id, bus);
+        accessor = new DeviceCommander<>(id, bus);
     }
 
     public IDeviceAccessorHandler(String id, DeviceEventBus bus, DeviceRecorder recorder) {
         super();
-        accessor = new IDeviceCommander(id, bus, recorder);
+        accessor = new DeviceCommander<>(id, bus);
     }
 
     @Override
@@ -42,7 +41,7 @@ public class IDeviceAccessorHandler extends IHandler<HttpRequest> {
             case "POST":
                 String json = RealmCorc.getJson(http.getReader());
                 Command command = RealmSerialize.deserialize(json, Command.class);
-                String label = accessor.write(command);
+                String label = accessor.sendCommand(command);
                 http.getWriter().write("{\"label\": \"" + label + "\"}");
                 return;
 
