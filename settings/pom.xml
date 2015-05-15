@@ -28,12 +28,12 @@
 					<dependency>
 						<groupId>net.realmproject.platform</groupId>
   						<artifactId>realm-platform-model</artifactId>
-  						<version>0.1</version>
+  						<version>0.2-SNAPSHOT</version>
 					</dependency>
 				</dependencies>
 				<groupId>objectof</groupId>
 				<artifactId>objectof-maven-plugin</artifactId>
-				<version>0.1</version>
+				<version>0.1.1</version>
 				<configuration>
 					<file>RealmGenerationContext.xml</file>
 				</configuration>
