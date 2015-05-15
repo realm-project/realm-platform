@@ -16,29 +16,5 @@
 			<bean class="net.realmproject.platform.security.authorization.authorizers.DeviceName" />
 		</constructor-arg>
 	</bean>
-
-
-	<!-- Device Event Busses -->
-	<bean id="platform-frontend-bus" class="net.realmproject.dcm.event.bus.IDeviceEventBus" />
-	<bean id="platform-backend-bus" class="net.realmproject.dcm.event.bus.IDeviceEventBus" />
-
-	<!-- Send GET/SET events from frontend-bus to backend-bus -->
-	<bean class="net.realmproject.dcm.event.bus.IDeviceEventBusForwarder">
-		<constructor-arg ref="platform-frontend-bus"/>
-		<constructor-arg ref="platform-backend-bus"/>
-		<constructor-arg>
-			<bean class="net.realmproject.dcm.event.filter.deviceeventtype.BackendFilter"/>
-		</constructor-arg>
-	</bean>
-	
-	
-	<!-- Send status change events from frontend-bus to backend-bus -->
-	<bean class="net.realmproject.dcm.event.bus.IDeviceEventBusForwarder">
-		<constructor-arg ref="platform-backend-bus"/>
-		<constructor-arg ref="platform-frontend-bus"/>
-		<constructor-arg>
-			<bean class="net.realmproject.dcm.event.filter.deviceeventtype.FrontendFilter"/>
-		</constructor-arg>
-	</bean>
 	
 </beans>
