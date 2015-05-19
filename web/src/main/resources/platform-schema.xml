@@ -12,8 +12,8 @@
 				<ref m:href="Session" selector="session" />
 			</indexed>
 			<ref m:href="Role" selector="role" />
-			<indexed selector="enroledCourses">
-				<ref m:href="Course" selector="enroledCourse" />
+			<indexed selector="enrolledCourses">
+				<ref m:href="Course" selector="enrolledCourse" />
 			</indexed>
 			<indexed selector="pendingCourses">
 				<ref m:href="Course" selector="pendingCourse" />
