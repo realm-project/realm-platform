@@ -139,6 +139,27 @@ public class QueryBuilder extends QueryParserBaseVisitor<Object> {
     @Override
     public String visitString(@NotNull QueryParser.StringContext ctx) {
         String text = ctx.theValue.getText();
-        return text.substring(1, text.length() - 1);
+        // get rid of quotes
+        text = text.substring(1, text.length() - 1);
+        // place escape-processed characters in here
+        StringBuilder sb = new StringBuilder();
+        boolean escaped = false;
+        // process escaped characters
+        for (int i = 0; i < text.length(); i++) {
+            String ch = text.substring(i, i + 1);
+            // if we're already escaped from the last character
+            if (escaped) {
+                sb.append(ch); // works for \ and "
+                escaped = false;
+                continue;
+            }
+            // check to see if this is the escape character
+            escaped = ("\\".equals(ch));
+            // only append this char if it isn't the escape character
+            if (!escaped) {
+                sb.append(ch);
+            }
+        }
+        return sb.toString();
     }
 }
