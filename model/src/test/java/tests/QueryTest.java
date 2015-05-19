@@ -1,8 +1,10 @@
 package tests;
 
 
+import net.objectof.model.query.Query;
 import net.objectof.model.query.parser.QueryBuilder;
 
+import org.junit.Assert;
 import org.junit.Test;
 
 
@@ -31,5 +33,14 @@ public class QueryTest {
     @Test
     public void composedTest() {
         QueryBuilder.build("bool = False and int = 7 or char = \"7\"", null);
+    }
+
+    // string a"a\a
+    @Test
+    public void escapeTest() {
+        Query query = QueryBuilder.build("key = \"a\\\"a\\\\a\"", null);
+        String string = query.toString();
+        // make sure it didn't mangle it
+        Assert.assertEquals("key = \"a\\\"a\\\\a\"", string);
     }
 }
