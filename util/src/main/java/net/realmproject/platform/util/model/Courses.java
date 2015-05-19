@@ -16,7 +16,7 @@ public class Courses {
     }
 
     public static Iterable<Person> getStudents(Transaction tx, Course course) {
-        return tx.query("Person", new IQuery("enroledCourses", Relation.CONTAINS, course));
+        return tx.query("Person", new IQuery("enrolledCourses", Relation.CONTAINS, course));
     }
 
     public static Iterable<Person> getPendingStudents(Transaction tx, Course course) {

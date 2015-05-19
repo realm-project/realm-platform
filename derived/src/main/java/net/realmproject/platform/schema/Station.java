@@ -16,5 +16,10 @@ public interface Station extends Resource<Composite>
 
   @net.objectof.Selector("devices:")
   public void setDevices(net.objectof.aggr.Mapping<String,Device> a);
+  @net.objectof.Selector("owner")
+  public Person getOwner();
+
+  @net.objectof.Selector("owner:")
+  public void setOwner(Person a);
 
 }

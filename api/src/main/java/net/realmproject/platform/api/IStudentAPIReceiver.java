@@ -47,7 +47,7 @@ public class IStudentAPIReceiver extends IFn {
         }
 
         // Ensure that student is enrolled in the course
-        if (student.getEnroledCourses().contains(c)) {
+        if (student.getEnrolledCourses().contains(c)) {
             // Find assignments for this course
             Iterable<Assignment> assignments = Courses.getAssignments(student.tx(), c);
 

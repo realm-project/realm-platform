@@ -17,7 +17,7 @@ public class Teachers {
     }
 
     public static Iterable<Person> getStudents(Transaction tx, Person teacher) {
-        return getStudents(tx, teacher, "enroledCourses");
+        return getStudents(tx, teacher, "enrolledCourses");
     }
 
     public static Iterable<Person> getPendingStudents(Transaction tx, Person teacher) {

@@ -9,6 +9,7 @@ import net.objectof.corc.Action;
 import net.objectof.corc.web.v2.HttpRequest;
 import net.realmproject.platform.schema.Person;
 import net.realmproject.platform.schema.Session;
+import net.realmproject.platform.schema.Station;
 import net.realmproject.platform.security.authorization.RecordAuthorizer;
 
 
@@ -42,4 +43,18 @@ public class TeacherRecord extends RecordAuthorizer {
 
         return false;
     }
+
+    public boolean station(Action action, HttpRequest request, Person person, RecordData data) {
+
+        // only allow updates if this is the owner
+        if (data.mode != RecordAuthorizer.Mode.UPDATE) {
+            Station theStation = (Station) data.object;
+            if (theStation.getOwner().equals(person)) { return true; }
+        }
+
+        if (readonly(data)) { return true; }
+
+        return false;
+    }
+
 }

@@ -32,6 +32,10 @@ public class StudentRecord extends RecordAuthorizer {
         return readonly(data);
     }
 
+    public boolean station(Action action, HttpRequest request, Person person, RecordData data) {
+        return readonly(data);
+    }
+
     // People are only allowed to see their own Person record, not others...
     // TODO: How to let users get other user's names?
     public boolean person(Action action, HttpRequest request, Person person, RecordData data) {
@@ -103,7 +107,7 @@ public class StudentRecord extends RecordAuthorizer {
 
         // is the assignment referenced by one of their courses?
         Transaction tx = repo().connect(action);
-        for (Course course : person.getEnroledCourses()) {
+        for (Course course : person.getEnrolledCourses()) {
             for (Assignment assignment : tx.<Assignment> enumerate("Assignment")) {
                 if (assignment.getCourse().equals(course)) return true;
             }

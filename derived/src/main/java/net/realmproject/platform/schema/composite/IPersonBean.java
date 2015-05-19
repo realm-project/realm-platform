@@ -60,13 +60,13 @@ public class IPersonBean
   {
     _("role", a);
   }
-  public net.objectof.aggr.Listing<Course> getEnroledCourses()
+  public net.objectof.aggr.Listing<Course> getEnrolledCourses()
   {
-    return (net.objectof.aggr.Listing<Course>) _("enroledCourses");
+    return (net.objectof.aggr.Listing<Course>) _("enrolledCourses");
   }
-  public void setEnroledCourses(net.objectof.aggr.Listing<Course> a)
+  public void setEnrolledCourses(net.objectof.aggr.Listing<Course> a)
   {
-    _("enroledCourses", a);
+    _("enrolledCourses", a);
   }
   public net.objectof.aggr.Listing<Course> getPendingCourses()
   {

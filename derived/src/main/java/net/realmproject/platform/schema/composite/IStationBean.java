@@ -28,5 +28,13 @@ public class IStationBean
   {
     _("devices", a);
   }
+  public Person getOwner()
+  {
+    return (Person) _("owner");
+  }
+  public void setOwner(Person a)
+  {
+    _("owner", a);
+  }
 
 }
