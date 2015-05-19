@@ -1,108 +1,107 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<schema xmlns:m="ans://objectof.net:1401/facets/model"
-	xmlns:rest="ans://realmproject.net:1401/rest/model" id="realmproject.net:1502/platform/schema"
-	version="0.0.1-SNAPSHOT">
+<schema xmlns:m="ans://objectof.net:1401/facets/model" xmlns:rest="ans://realmproject.net:1401/rest/model" id="realmproject.net:1502/platform/schema" version="0.0.1-SNAPSHOT">
 	<model>
 		<composed selector="Person">
-			<text selector="name" />
-			<text selector="email" />
-			<text selector="pwdHashed" />
-			<text selector="salt" />
+			<text selector="name"/>
+			<text selector="email"/>
+			<text selector="pwdHashed"/>
+			<text selector="salt"/>
 			<indexed selector="sessions">
-				<ref m:href="Session" selector="session" />
+				<ref m:href="Session" selector="session"/>
 			</indexed>
-			<ref m:href="Role" selector="role" />
+			<ref m:href="Role" selector="role"/>
 			<indexed selector="enrolledCourses">
-				<ref m:href="Course" selector="enrolledCourse" />
+				<ref m:href="Course" selector="enrolledCourse"/>
 			</indexed>
 			<indexed selector="pendingCourses">
-				<ref m:href="Course" selector="pendingCourse" />
+				<ref m:href="Course" selector="pendingCourse"/>
 			</indexed>
 		</composed>
 
 		<composed selector="Role">
-			<text selector="name" />
+			<text selector="name"/>
 		</composed>
 
 		<composed selector="Course">
-			<ref m:href="Course" selector="course" />
-			<text selector="id" />
-			<text selector="name" />
-			<text selector="description" />
+			<ref m:href="Course" selector="course"/>
+			<text selector="id"/>
+			<text selector="name"/>
+			<text selector="description"/>
 			<indexed selector="teachers">
-				<ref m:href="Person" selector="teacher" />
+				<ref m:href="Person" selector="teacher"/>
 			</indexed>
-			<moment selector="startDate" />
-			<moment selector="endDate" />
+			<moment selector="startDate"/>
+			<moment selector="endDate"/>
 		</composed>
 
 		<composed selector="Assignment">
-			<ref m:href="Course" selector="course" />
-			<ref m:href="Assignment" selector="assignment" />
+			<ref m:href="Course" selector="course"/>
+			<ref m:href="Assignment" selector="assignment"/>
 
-			<text selector="name" />
-			<text selector="description" />
+			<text selector="name"/>
+			<text selector="description"/>
 			<indexed selector="documents">
-				<media selector="document" />
+				<media selector="document"/>
 			</indexed>
-			<moment selector="startDate" />
-			<moment selector="endDate" />
+			<moment selector="startDate"/>
+			<moment selector="endDate"/>
 
-			<ref m:href="DeviceUI" selector="deviceUI" />
+			<ref m:href="DeviceUI" selector="deviceUI"/>
 		</composed>
 
 		<composed selector="Session">
-			<ref m:href="Assignment" selector="assignment" />
-			<moment selector="startTime" />
-			<int selector="duration" />
-			<text selector="sessionToken" />
+			<ref m:href="Assignment" selector="assignment"/>
+			<moment selector="startTime"/>
+			<int selector="duration"/>
+			<text selector="sessionToken"/>
 
 			<indexed selector="commands">
-				<ref m:href="DeviceCommand" selector="command" />
+				<ref m:href="DeviceCommand" selector="command"/>
 			</indexed>
 			<!-- <ref selector="data" m:href="SessionData" /> -->
-			<ref m:href="Station" selector="station" />
+			<ref m:href="Station" selector="station"/>
 		</composed>
 
 		<composed selector="Device">
-			<text selector="name" />
-			<ref m:href="Person" selector="owner" />
+			<text selector="name"/>
+			<ref m:href="Person" selector="owner"/>
 			<indexed selector="sharers">
-				<ref m:href="Person" selector="sharer" />
+				<ref m:href="Person" selector="sharer"/>
 			</indexed>
 			<indexed selector="deviceUIs">
-				<ref m:href="DeviceUI" selector="deviceUI" />
+				<ref m:href="DeviceUI" selector="deviceUI"/>
 			</indexed>
 		</composed>
 
 		<composed selector="DeviceUI">
-			<text selector="name" />
-			<text selector="url" />
-			<text selector="layout" />
+			<text selector="name"/>
+			<text selector="url"/>
+			<text selector="layout"/>
 			<indexed selector="keys">
-				<text selector="key" />
+				<text selector="key"/>
 			</indexed>
 		</composed>
 
 
 		<composed selector="DeviceCommand">
-			<ref m:href="Device" selector="device" />
-			<ref m:href="DeviceIO" selector="command" />
+			<ref m:href="Device" selector="device"/>
+			<ref m:href="DeviceIO" selector="command"/>
 			<indexed selector="states">
-				<ref m:href="DeviceIO" selector="state" />
+				<ref m:href="DeviceIO" selector="state"/>
 			</indexed>
 		</composed>
 
 		<composed selector="DeviceIO">
-			<text selector="json" />
-			<int selector="unixtime" />
+			<text selector="json"/>
+			<int selector="unixtime"/>
 		</composed>
 
 		<composed selector="Station">
-			<text selector="name" />
+			<text selector="name"/>
 			<mapped selector="devices">
-				<ref m:href="Device" selector="device" />
+				<ref m:href="Device" selector="device"/>
 			</mapped>
-		</composed>
+		<ref m:href="Person" selector="owner"/>
+        </composed>
 	</model>
 </schema>
