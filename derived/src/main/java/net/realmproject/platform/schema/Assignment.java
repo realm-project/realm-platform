@@ -27,10 +27,10 @@ public interface Assignment extends Resource<Composite>
   @net.objectof.Selector("description:")
   public void setDescription(String a);
   @net.objectof.Selector("documents")
-  public net.objectof.aggr.Listing<Void> getDocuments();
+  public net.objectof.aggr.Listing<byte[]> getDocuments();
 
   @net.objectof.Selector("documents:")
-  public void setDocuments(net.objectof.aggr.Listing<Void> a);
+  public void setDocuments(net.objectof.aggr.Listing<byte[]> a);
   @net.objectof.Selector("startDate")
   public java.util.Date getStartDate();
 

@@ -1,7 +1,6 @@
 package net.realmproject.platform.corc.accessor;
 
 
-import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -14,9 +13,8 @@ import net.objectof.model.Package;
 import net.objectof.model.Transaction;
 import net.objectof.model.impl.aggr.IIndexed;
 import net.objectof.model.query.IQuery;
-import net.realmproject.dcm.accessor.DeviceRecorder;
-import net.realmproject.dcm.command.Command;
-import net.realmproject.dcm.command.DeviceState;
+import net.realmproject.dcm.features.Statefulness.State;
+import net.realmproject.dcm.features.command.Command;
 import net.realmproject.dcm.util.DCMThreadPool;
 import net.realmproject.platform.schema.Device;
 import net.realmproject.platform.schema.DeviceCommand;
@@ -78,12 +76,11 @@ public class IDeviceRecorder implements DeviceRecorder {
     }
 
     @Override
-    public synchronized String recordState(Serializable state) {
+    public synchronized String recordState(State state) {
 
         // only record output from the arm if the state is "busy"
-        DeviceState realmstate = RealmSerialize.convertMessage(state, DeviceState.class);
-        if (realmstate.mode != null) {
-            boolean isBusy = realmstate.mode == DeviceState.Mode.BUSY;
+        if (state.mode != null) {
+            boolean isBusy = state.mode == State.Mode.BUSY;
             if (!isBusy) { return null; }
         }
 

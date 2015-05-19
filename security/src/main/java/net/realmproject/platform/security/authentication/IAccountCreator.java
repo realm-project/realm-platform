@@ -43,8 +43,18 @@ public class IAccountCreator extends IRepoAwareHandler {
 
         System.out.println("IAccountCreator - the username is accepted!");
 
-        Role studentRole = RealmRepo.queryHead(tx, "Role", new IQuery("name", "student"));
-        if (studentRole == null) throw new NullPointerException();
+        // If it is the first account, set the role to "admin"
+        Iterable<Person> iter = tx.enumerate("Person");
+        Role role = null;
+        if (!iter.iterator().hasNext()) {
+        	System.out.println("Creating the first account. The role is set to admin.");
+        	role = RealmRepo.queryHead(tx, "Role", new IQuery("name", "admin"));
+        }
+        else {
+        	role = RealmRepo.queryHead(tx, "Role", new IQuery("name", "student"));
+        }
+        
+        if (role == null) throw new NullPointerException();
 
         String salt = RealmAuthentication.generateSalt();
         String passwordHashed = RealmAuthentication.hash(info.password, salt);
@@ -52,7 +62,7 @@ public class IAccountCreator extends IRepoAwareHandler {
         Person person = tx.create("Person");
         person.setEmail(info.username);
         person.setName(info.fullname);
-        person.setRole(studentRole);
+        person.setRole(role);
         person.setPwdHashed(passwordHashed);
         person.setSalt(salt);
 
