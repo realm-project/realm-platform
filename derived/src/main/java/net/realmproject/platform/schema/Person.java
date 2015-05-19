@@ -36,11 +36,11 @@ public interface Person extends Resource<Composite>
 
   @net.objectof.Selector("role:")
   public void setRole(Role a);
-  @net.objectof.Selector("enroledCourses")
-  public net.objectof.aggr.Listing<Course> getEnroledCourses();
+  @net.objectof.Selector("enrolledCourses")
+  public net.objectof.aggr.Listing<Course> getEnrolledCourses();
 
-  @net.objectof.Selector("enroledCourses:")
-  public void setEnroledCourses(net.objectof.aggr.Listing<Course> a);
+  @net.objectof.Selector("enrolledCourses:")
+  public void setEnrolledCourses(net.objectof.aggr.Listing<Course> a);
   @net.objectof.Selector("pendingCourses")
   public net.objectof.aggr.Listing<Course> getPendingCourses();
 

@@ -103,7 +103,7 @@ public class StudentRecord extends RecordAuthorizer {
 
         // is the assignment referenced by one of their courses?
         Transaction tx = repo().connect(action);
-        for (Course course : person.getEnroledCourses()) {
+        for (Course course : person.getEnrolledCourses()) {
             for (Assignment assignment : tx.<Assignment> enumerate("Assignment")) {
                 if (assignment.getCourse().equals(course)) return true;
             }
