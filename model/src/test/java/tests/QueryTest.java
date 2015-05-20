@@ -41,6 +41,6 @@ public class QueryTest {
         Query query = QueryBuilder.build("key = \"a\\\"a\\\\a\"", null);
         String string = query.toString();
         // make sure it didn't mangle it
-        Assert.assertEquals("key = \"a\\\"a\\\\a\"", string);
+        Assert.assertEquals("key = a\"a\\a", string);
     }
 }
