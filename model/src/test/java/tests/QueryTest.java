@@ -35,6 +35,11 @@ public class QueryTest {
         QueryBuilder.build("bool = False and int = 7 or char = \"7\"", null);
     }
 
+    @Test
+    public void matchTest() {
+        QueryBuilder.build("string =~ \"a*\"", null);
+    }
+
     // string a"a\a
     @Test
     public void escapeTest() {

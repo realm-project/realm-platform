@@ -2,6 +2,7 @@ package net.objectof.model.query.fallback;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.function.BiPredicate;
 
 import net.objectof.model.Kind;
 import net.objectof.model.Package;

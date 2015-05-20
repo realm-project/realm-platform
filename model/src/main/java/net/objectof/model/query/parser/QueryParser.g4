@@ -17,7 +17,7 @@ value: string
      | id
      | bool
      ;
-relation: GT EQUAL | LT EQUAL | EQUAL | BANG EQUAL | CONTAINS | GT | LT ;
+relation: GTE | LTE | EQUAL | UNEQUAL | CONTAINS | GT | LT | MATCH | NOTMATCH ;
 
 operator: AND | OR;
 

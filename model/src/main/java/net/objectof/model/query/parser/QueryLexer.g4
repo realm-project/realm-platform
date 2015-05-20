@@ -1,24 +1,33 @@
 lexer grammar QueryLexer;
 
 //Order MATTERS!
+
+//Relations
 EQUAL : '=';
-BANG : '!';
-DASH : '-';
-AND : 'and';
-OR : 'or';
+UNEQUAL : '!=';
 CONTAINS: 'contains';
-DIGIT : [0-9] ;
-OPENBRACKET : '(';
-CLOSEBRACKET : ')';
 GT : '>';
 LT : '<';
-DOT : '.';
-POUND: '#';
+GTE : '>=';
+LTE : '<=';
+MATCH : '=~';
+NOTMATCH : '!~';
 
+//Operators
+AND : 'and';
+OR : 'or';
+
+//Boolean
 TRUE: 'true' | 'True' | 'TRUE';
 FALSE: 'false' | 'False' | 'FALSE';
 
-
+//etc...
+DASH : '-';
+POUND: '#';
+DIGIT : [0-9] ;
+OPENBRACKET : '(';
+CLOSEBRACKET : ')';
+DOT : '.';
 STRING : '"' (~[\\"] | '\\' [\\"])* '"';
 LETTER : [a-zA-Z];
 LETTERS : LETTER+;

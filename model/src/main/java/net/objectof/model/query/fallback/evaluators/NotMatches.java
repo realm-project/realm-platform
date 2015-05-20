@@ -8,10 +8,10 @@ import net.objectof.model.query.fallback.Evaluator;
 import net.objectof.model.query.fallback.Fallback;
 
 
-public class Unequal implements Evaluator {
+public class NotMatches implements Evaluator {
 
     @Override
     public BiPredicate<Object, Object> forStereotype(Stereotype stereotype) {
-        return Fallback.EQUAL.forStereotype(stereotype).negate();
+        return Fallback.MATCHES.forStereotype(stereotype).negate();
     }
 }

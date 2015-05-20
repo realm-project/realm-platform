@@ -109,6 +109,10 @@ public class QueryBuilder extends QueryParserBaseVisitor<Object> {
                 return Relation.LT;
             case ">":
                 return Relation.GT;
+            case "=~":
+                return Relation.MATCHES;
+            case "!~":
+                return Relation.NOTMATCHES;
             default:
                 throw new UnsupportedOperationException();
         }
