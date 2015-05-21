@@ -54,11 +54,9 @@
 			<moment selector="startTime"/>
 			<int selector="duration"/>
 			<text selector="sessionToken"/>
-
 			<indexed selector="commands">
 				<ref m:href="DeviceCommand" selector="command"/>
 			</indexed>
-			<!-- <ref selector="data" m:href="SessionData" /> -->
 			<ref m:href="Station" selector="station"/>
 		</composed>
 
@@ -101,7 +99,7 @@
 			<mapped selector="devices">
 				<ref m:href="Device" selector="device"/>
 			</mapped>
-		<ref m:href="Person" selector="owner"/>
+			<ref m:href="Person" selector="owner"/>
         </composed>
 	</model>
 </schema>
