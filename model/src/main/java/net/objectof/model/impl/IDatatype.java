@@ -35,6 +35,7 @@ public abstract class IDatatype<T> extends IType
     if (aString == null || aString.length() == 0)
     {
       aWriter.append("\"\"");
+      return;
     }
     char b;
     char c = 0;
