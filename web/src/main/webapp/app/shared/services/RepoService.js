@@ -22,9 +22,15 @@ angular.module('REALM')
                 var info = response;
                 data.resolve(info);
             }, function (response) {
-                console.log('Failed to get' + type + 'info, error code:');
-                console.log(response.status);
-                data.reject(response.status);
+                console.log('Failed to get ' + type + ' info, error code: ');
+                // arash kh
+                if(typeof(response.status) !=="undefined"){
+                	console.log(response.status);
+                }else{
+                	console.log(response.message);
+                }
+                data.reject(response);
+                
             });
             return data.promise;
         };

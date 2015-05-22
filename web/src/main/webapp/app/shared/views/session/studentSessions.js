@@ -95,7 +95,11 @@ angular.module('REALM')
                                         },
                                         function(error)
                                         {
-                                            console.log("failed to get station information"+error.status);
+                                        	if(typeof(error.status) !=="undefined"){
+                                        		console.log("failed to get station information: "+error.status);
+                                        	}else{
+                                        		console.log("failed to get station information:; " + error.message);
+                                        	}
                                         }
                                     )//end of station argumets
                                   },
