@@ -24,7 +24,8 @@ angular.module('REALM')
         readSessions(sessions);
 //-----------------------------------------------------------------------------------------------
         function readSessions(sessions) {
-            if (sessions !== null && sessions !== "" && sessions !== undefined) {
+            // arash kh: also check sessions.value 
+        	if (sessions !== null && sessions !== "" && sessions !== undefined && sessions.value!= "" ) {
                 $scope.dynamicSessions = [];
                 var sessionValue = sessions.value;
                 console.log("sessions are not null")
