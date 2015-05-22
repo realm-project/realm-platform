@@ -11,17 +11,17 @@
 
     <div class="student-profile__item">
         <span class="student-profile__label">Enrolled Courses:</span>
-        <span ng-hide="user.enrolledCourses"  class="student-profile__noData">No Enrolled Courses</span>
-        <ul  class="student-profile__list" ng-show="user.enrolledCourses">
-            <li ng-repeat="course in user.enrolledCourses">---</li>
+        <span ng-hide="user.enrolledCourses.value"  class="student-profile__noData">No Enrolled Courses</span>
+        <ul  class="student-profile__list" ng-show="user.enrolledCourses.value">
+            <li ng-repeat="course in user.enrolledCourses.value">{{course.loc}}</li>
         </ul>
     </div>
 
     <div class="student-profile__item">
         <span class="student-profile__label">Pending Courses:</span>
-        <span ng-hide="user.pendingCourses" class="student-profile__noData">No Pending Courses</span>
-        <ul  class="student-profile__list" ng-show="user.pendingCourses">
-            <li ng-repeat="course in user.pendingCourses">---</li>
+        <span ng-hide="user.pendingCourses.value" class="student-profile__noData">No Pending Courses</span>
+        <ul  class="student-profile__list" ng-show="user.pendingCourses.value">
+            <li ng-repeat="course in user.pendingCourses.value">{{course.loc}}</li>
         </ul>
     </div>
 
