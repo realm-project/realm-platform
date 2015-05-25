@@ -87,7 +87,7 @@ public class IStudentAPIReceiver extends IFn {
         // Ensure that student is a member of session
         if (!student.getSessions().contains(s)) {
             // Student is not a member of session. Set status to "Forbidden"
-            RealmError.send(request, 400, "Student is not authorized to access this session");
+            RealmError.send(request, 403, "Student is not authorized to access this session");
             return;
         }
 
