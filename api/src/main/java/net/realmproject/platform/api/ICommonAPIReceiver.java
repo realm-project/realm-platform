@@ -10,6 +10,7 @@ import net.objectof.rt.impl.IFn;
 import net.realmproject.platform.api.utils.APIUtils;
 import net.realmproject.platform.schema.Person;
 import net.realmproject.platform.schema.Session;
+import net.realmproject.platform.util.RealmError;
 import net.realmproject.platform.util.model.Sessions;
 
 import org.json.JSONException;
@@ -40,7 +41,7 @@ public class ICommonAPIReceiver extends IFn {
 
         // token must not be null
         if (token == null) {
-            request.getHttpResponse().sendError(400, "Token was null!"); // "Bad request"
+            RealmError.send(request, 400, "Token cannot be null");
             return;
         }
 
@@ -49,13 +50,13 @@ public class ICommonAPIReceiver extends IFn {
 
         // session must not be null
         if (s == null) {
-            request.getHttpResponse().sendError(400, "No session with that token!"); // "Bad request"
+            RealmError.send(request, 400, "No session with that token");
             return;
         }
 
         // Ensure that the person is not already added to the session
         if (person.getSessions() != null && person.getSessions().contains(s)) {
-            request.getHttpResponse().sendError(400, "Session is already added!"); // "Bad request"
+            RealmError.send(request, 400, "Session is already added");
             return;
         }
 
@@ -91,8 +92,12 @@ public class ICommonAPIReceiver extends IFn {
         Person student = (Person) APIUtils.getObjectFromRequest("Person", person.tx(), request);
 
         // Ensure the retrieved person is nut null and her/his role is "student"
-        if (student.getName() == null || !(student.getRole().getName().equals("student"))) {
-            request.getHttpResponse().sendError(400, "person is null, or person's role is not student"); // "Bad request"
+        if (student.getName() == null) {
+            RealmError.send(request, 400, "Person cannot be null");
+            return;
+        }
+        if (!student.getRole().getName().equals("student")) {
+            RealmError.send(request, 400, "Person is not a student");
             return;
         }
 
