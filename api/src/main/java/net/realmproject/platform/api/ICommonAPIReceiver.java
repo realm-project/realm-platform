@@ -50,13 +50,13 @@ public class ICommonAPIReceiver extends IFn {
 
         // session must not be null
         if (s == null) {
-            RealmError.send(request, 400, "No session with that token");
+            RealmError.send(request, 400, "Invalid session ID", true);
             return;
         }
 
         // Ensure that the person is not already added to the session
         if (person.getSessions() != null && person.getSessions().contains(s)) {
-            RealmError.send(request, 400, "Session is already added");
+            RealmError.send(request, 400, "Session is already added", true);
             return;
         }
 
