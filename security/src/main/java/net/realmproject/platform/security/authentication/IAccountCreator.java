@@ -12,6 +12,7 @@ import net.realmproject.platform.schema.Person;
 import net.realmproject.platform.schema.Role;
 import net.realmproject.platform.util.RealmAuthentication;
 import net.realmproject.platform.util.RealmCorc;
+import net.realmproject.platform.util.RealmError;
 import net.realmproject.platform.util.RealmRepo;
 import net.realmproject.platform.util.RealmSerialize;
 
@@ -37,7 +38,8 @@ public class IAccountCreator extends IRepoAwareHandler {
 
         Iterable<Person> existingUsers = tx.query("Person", new IQuery("email", info.username));
         if (existingUsers.iterator().hasNext()) {
-            request.getHttpResponse().sendError(403, "That user already exists");
+            request.getHttpResponse().getWriter().print(new RealmError("User already exists"));
+            request.getHttpResponse().setStatus(403);
             return;
         }
 
@@ -47,13 +49,12 @@ public class IAccountCreator extends IRepoAwareHandler {
         Iterable<Person> iter = tx.enumerate("Person");
         Role role = null;
         if (!iter.iterator().hasNext()) {
-        	System.out.println("Creating the first account. The role is set to admin.");
-        	role = RealmRepo.queryHead(tx, "Role", new IQuery("name", "admin"));
+            System.out.println("Creating the first account. The role is set to admin.");
+            role = RealmRepo.queryHead(tx, "Role", new IQuery("name", "admin"));
+        } else {
+            role = RealmRepo.queryHead(tx, "Role", new IQuery("name", "student"));
         }
-        else {
-        	role = RealmRepo.queryHead(tx, "Role", new IQuery("name", "student"));
-        }
-        
+
         if (role == null) throw new NullPointerException();
 
         String salt = RealmAuthentication.generateSalt();

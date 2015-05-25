@@ -8,6 +8,7 @@ import net.objectof.corc.Action;
 import net.objectof.corc.Handler;
 import net.objectof.corc.web.v2.HttpRequest;
 import net.realmproject.platform.util.RealmCorc;
+import net.realmproject.platform.util.RealmError;
 
 
 /**
@@ -53,29 +54,11 @@ public class IPathRouter extends CustomRouter<HttpRequest> {
 
     protected void noChannel(Action aRequest, HttpRequest object) {
         try {
-            object.getHttpResponse().sendError(404);
+            RealmError.send(object, 404, "Path not found.");
         }
         catch (IOException e) {
             e.printStackTrace();
         }
     }
-
-    /*
-     * @Override protected void onExecute(Action aRequest, Object aObject) {
-     * 
-     * HttpRequest request = (HttpRequest) aObject;
-     * 
-     * String requestName = aRequest.getName(); for (int i = 0; i < discard;
-     * i++) { requestName += "/" + RealmCorc.getNextPathElement(requestName,
-     * request.getHttpRequest()); } String channelName =
-     * RealmCorc.getNextPathElement(requestName, request.getHttpRequest());
-     * 
-     * if (channelName == null) { try {
-     * request.getHttpResponse().sendError(404); } catch (IOException e) {
-     * e.printStackTrace(); } } else { Handler<Object> handler =
-     * getChain(channelName); String newActionName = requestName + "/" +
-     * channelName; handler.execute(newAction(aRequest, newActionName),
-     * aObject); } }
-     */
 
 }

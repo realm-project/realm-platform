@@ -10,6 +10,7 @@ import net.objectof.corc.web.v2.HttpRequest;
 import net.realmproject.platform.schema.Person;
 import net.realmproject.platform.security.ISessionHandler;
 import net.realmproject.platform.util.RealmCorc;
+import net.realmproject.platform.util.RealmError;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -35,7 +36,7 @@ public class IReceiverHandler extends ISessionHandler {
         log.debug(RealmCorc.getJson(request.getReader()));
 
         if (methodName == null) {
-            request.getHttpResponse().sendError(404);
+            RealmError.send(request, 400, "Method name cannot be null");
             return;
         }
 
@@ -43,7 +44,7 @@ public class IReceiverHandler extends ISessionHandler {
             this.receiver.perform(methodName, person, request);
         }
         catch (InvalidNameException e) {
-            request.getHttpResponse().sendError(400);
+            RealmError.send(request, 404, "No such method");
         }
 
     }
