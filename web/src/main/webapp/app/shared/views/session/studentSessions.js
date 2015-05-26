@@ -208,7 +208,8 @@ angular.module('REALM')
            /*var station={};
            station.camera="rest/device/camera";
            station.robot="rest/device/mico";*/
-           layout=$scope.updateLayout($.parseJSON(layout),station);
+           //layout=$scope.updateLayout($.parseJSON(layout),station);
+           layout = $.parseJSON(layout);
            localStorage.setItem('layout',JSON.stringify(layout));
            $state.go("experiment."+experimentType);
         }
