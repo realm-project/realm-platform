@@ -3,6 +3,7 @@ package net.realmproject.platform.api.utils;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.io.StringReader;
 import java.text.Format;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -12,6 +13,9 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import javax.json.Json;
+import javax.json.JsonObject;
+import javax.json.JsonReader;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletResponse;
 
@@ -25,9 +29,6 @@ import net.realmproject.platform.schema.Session;
 import net.realmproject.platform.schema.Station;
 import net.realmproject.platform.util.RealmCorc;
 import net.realmproject.platform.util.model.Tokens;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 
 public class APIUtils {
@@ -53,15 +54,21 @@ public class APIUtils {
 
         String params;
         String result = null;
-
+        JsonReader jsonReader = null;
+        
         try {
             params = RealmCorc.getJson(request.getReader());
-            JSONObject jsonObject = new JSONObject(params);
+            jsonReader = Json.createReader(new StringReader(params));
+            JsonObject jsonObject = jsonReader.readObject();
             String paramName = key.toLowerCase();
             result = jsonObject.getString(paramName);
         }
-        catch (IOException | ServletException | JSONException e) {
+        catch (ServletException | IOException e) {
             e.printStackTrace();
+        }
+        finally {
+        	if (jsonReader != null)
+        		jsonReader.close();
         }
 
         return result;

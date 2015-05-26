@@ -12,8 +12,6 @@ import net.realmproject.platform.schema.Person;
 import net.realmproject.platform.schema.Session;
 import net.realmproject.platform.util.model.Sessions;
 
-import org.json.JSONException;
-
 
 @Selector
 public class ICommonAPIReceiver extends IFn {
@@ -32,7 +30,7 @@ public class ICommonAPIReceiver extends IFn {
      */
 
     @Selector
-    public void joinSession(Person person, HttpRequest request) throws IOException, JSONException {
+    public void joinSession(Person person, HttpRequest request) throws IOException {
 
         // Extract the token from request
         String token;
@@ -43,7 +41,6 @@ public class ICommonAPIReceiver extends IFn {
             request.getHttpResponse().sendError(400, "Token was null!"); // "Bad request"
             return;
         }
-
         // Retrieve the session that owns this token
         Session s = Sessions.withToken(person.tx(), token);
 
