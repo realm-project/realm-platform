@@ -75,11 +75,12 @@ angular.module('REALM').directive('joystick', function() {
         var isZeroed = false;
         function runAnimation()
         {
-            window.requestAnimationFrame(runAnimation);
 
-            var gamepads = navigator.webkitGetGamepads();
-
-            var pad = gamepads[scope.gamepad - 1];
+            //to make sure ff there is any gamepad attached
+            if (!!navigator.webkitGetGamepads){
+              var gamepads = navigator.webkitGetGamepads();
+              var pad = gamepads[scope.gamepad - 1];
+            }
             
             if(joystick._pressed)
             {
@@ -118,6 +119,7 @@ angular.module('REALM').directive('joystick', function() {
               }
 
             }
+            window.requestAnimationFrame(runAnimation);
         } 
 
         window.requestAnimationFrame(runAnimation);
