@@ -392,11 +392,11 @@ app.directive('simulationComponent', ['$timeout', '$http', '$q', 'RobotService',
                 function render() 
                 {
                     
-                    $.getJSON("'http://realmproject.net:8443/app/rest/device/mico'",ajaxSuccess);
+                    $.getJSON( localStorage.basePath + "/rest/device/mico",ajaxSuccess);
                     
                     $.ajax({
                       dataType: "jsonp",
-                      url: "'http://realmproject.net:8443/app/rest/device/mico'",
+                      url: localStorage.basePath + "/rest/device/mico",
                       data: data,
                       success: ajaxSuccess
                     });
