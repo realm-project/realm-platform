@@ -58,7 +58,7 @@ public class IDeviceRecorder implements DeviceRecorder {
     }
 
     private Transaction createStateTx() {
-        return repo.connect(getClass().getName() + " - " + id.getUniqueName());
+        return repo.connect(getClass().getName() + " - " + idString);
     }
 
     private synchronized void commitStateTx() {
