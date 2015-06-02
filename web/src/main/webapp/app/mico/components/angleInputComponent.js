@@ -68,7 +68,7 @@ app.directive('angleInputComponent', ['$timeout', '$http', '$q', 'RobotService',
 
                  '<div class="angle-input-component__buttons">'+
                     '<button class="angle-input-component__submitBtn btn btn-primary" ng-click="submitAngleSet(angleSet)">Submit Angles</button>' +
-                    '<button class="btn btn-primary" ng-click="goHome()">Go Home</button>' +
+                    '<button class="btn btn-primary" ng-click="goHome()" ng-show="component.componentOptions.showHomeButton">Go Home</button>' +
                 '</div>'+
                 '</form>' +
             '</div>',

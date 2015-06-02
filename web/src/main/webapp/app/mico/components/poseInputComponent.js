@@ -66,7 +66,7 @@ app.directive('poseInputComponent', ['$timeout', '$http', '$q', 'RobotService', 
                             '</div>'+
                             '<div class="pose-input-component__buttons" >'+
                             '<button class="pose-input-component__submitBtn btn btn-primary" ng-click="submitPose()">Submit Pose</button>' +
-                            '<button class="btn btn-primary" ng-click="goHome()">Go Home</button>' +
+                            '<button class="btn btn-primary" ng-click="goHome()" ng-show="component.componentOptions.showHomeButton">Go Home</button>' +
                             '</div>'+
                         '</form>'+
                     ' </div>',

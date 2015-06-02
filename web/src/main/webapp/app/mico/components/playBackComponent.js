@@ -44,7 +44,7 @@ app.directive('playBackComponent', ['$timeout', '$http', '$q', 'RobotService', '
 
             '<div class="angle-input-component__buttons">'+
                 '<button class="angle-input-component__submitBtn btn btn-primary" ng-disabled="!file" ng-click="submitTrajectory()">Submit</button>' +
-                '<button class="btn btn-primary" ng-click="goHome()">Go Home</button>' +
+                '<button class="btn btn-primary" ng-click="goHome()" ng-show="component.componentOptions.showHomeButton">Go Home</button>' +
             '</div>'+
 
             '</div>'  ,
