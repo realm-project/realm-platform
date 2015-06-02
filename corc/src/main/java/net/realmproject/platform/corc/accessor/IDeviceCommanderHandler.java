@@ -12,6 +12,7 @@ import net.realmproject.dcm.event.bus.DeviceEventBus;
 import net.realmproject.dcm.features.Statefulness.State;
 import net.realmproject.dcm.features.command.Command;
 import net.realmproject.platform.util.RealmCorc;
+import net.realmproject.platform.util.RealmError;
 import net.realmproject.platform.util.RealmSerialize;
 
 
@@ -46,7 +47,7 @@ public class IDeviceCommanderHandler extends IHandler<HttpRequest> {
                 return;
 
             default:
-                http.getHttpResponse().sendError(405); // Method Not Allowed
+                RealmError.send(http, 405, "HTTP method not allowed");
                 return;
         }
     }

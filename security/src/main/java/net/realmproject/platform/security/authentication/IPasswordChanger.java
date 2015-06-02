@@ -7,6 +7,7 @@ import net.objectof.corc.Action;
 import net.objectof.corc.web.v2.HttpRequest;
 import net.realmproject.platform.schema.Person;
 import net.realmproject.platform.util.RealmAuthentication;
+import net.realmproject.platform.util.RealmError;
 
 
 /**
@@ -40,7 +41,8 @@ public class IPasswordChanger extends AbstractAuthenticator<PasswordChange> {
         } else {
             // 401 Unauthorized:
             // "specifically for use when authentication is required and has failed or has not yet been provided"
-            request.getHttpResponse().sendError(401);
+            request.getHttpResponse().getWriter().print(new RealmError("Unauthorized"));
+            request.getHttpResponse().setStatus(401);
         }
     }
 

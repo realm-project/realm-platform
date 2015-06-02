@@ -24,6 +24,7 @@ import net.realmproject.platform.schema.Person;
 import net.realmproject.platform.schema.Session;
 import net.realmproject.platform.schema.Station;
 import net.realmproject.platform.util.RealmCorc;
+import net.realmproject.platform.util.RealmError;
 import net.realmproject.platform.util.model.Assignments;
 import net.realmproject.platform.util.model.Courses;
 import net.realmproject.platform.util.model.Devices;
@@ -99,13 +100,13 @@ public class ITeacherAPIReceiver extends IFn {
         Course c = (Course) APIUtils.getObjectFromRequest("Course", teacher.tx(), request);
 
         if (c == null) {
-            request.getHttpResponse().sendError(400, "course is null!");
+            RealmError.send(request, 400, "Course cannot be null");
             return;
         }
 
         // Ensure that the teacher is a teacher of the course
         if (!c.getTeachers().contains(teacher)) {
-            request.getHttpResponse().sendError(403, "the teacher has no access to this course information!");
+            RealmError.send(request, 403, "Teacher is not authorized to access this course");
             return;
         }
 
@@ -157,13 +158,13 @@ public class ITeacherAPIReceiver extends IFn {
         Course c = (Course) APIUtils.getObjectFromRequest("Course", teacher.tx(), request);
 
         if (c == null) {
-            request.getHttpResponse().sendError(400, "course is null!");
+            RealmError.send(request, 400, "Course cannot be null");
             return;
         }
 
         // Ensure that the teacher is a teacher of the course
         if (!c.getTeachers().contains(teacher)) {
-            request.getHttpResponse().sendError(403, "the teacher has no access to this course information!");
+            RealmError.send(request, 403, "Teacher is not authorized to access this course");
             return;
         }
 
@@ -194,7 +195,7 @@ public class ITeacherAPIReceiver extends IFn {
         Course c = (Course) APIUtils.getObjectFromRequest("Course", teacher.tx(), request);
 
         if (c == null) {
-            request.getHttpResponse().sendError(400, "course is null!");
+            RealmError.send(request, 400, "Course cannot be null");
             return;
         }
 
@@ -212,7 +213,7 @@ public class ITeacherAPIReceiver extends IFn {
         }
 
         if (!isTeacher) {
-            request.getHttpResponse().sendError(403, "the teacher has no access to this course information!");
+            RealmError.send(request, 403, "User is not a teacher");
             return;
         }
 
@@ -243,14 +244,14 @@ public class ITeacherAPIReceiver extends IFn {
         Session s = (Session) APIUtils.getObjectFromRequest("Session", teacher.tx(), request);
 
         if (s == null) {
-            request.getHttpResponse().sendError(400, "assignment is null!");
+            RealmError.send(request, 400, "Assignment cannot be null");
             return;
         }
 
         // Ensure that teacher is the teacher of the course that session belongs
         // to
         if (!s.getAssignment().getCourse().getTeachers().contains(teacher)) {
-            request.getHttpResponse().sendError(403, "the teacher has no access to this session information!");
+            RealmError.send(request, 403, "Teacher is not authorized to access this course");
             return;
         }
 
@@ -323,11 +324,6 @@ public class ITeacherAPIReceiver extends IFn {
             // Retrieve devices owned by this owner
             Iterable<Device> devices = Persons.getOwnedDevices(teacher.tx(), teacher);
 
-            if (devices == null) {
-                request.getHttpResponse().sendError(403, "Owner has no device!");
-                return;
-            }
-
             if (device != null) { // If device is not null, check if the device
                                   // is owned by the teacher or not
                 boolean contains = false;
@@ -338,7 +334,7 @@ public class ITeacherAPIReceiver extends IFn {
                     }
 
                 if (!contains) {
-                    request.getHttpResponse().sendError(403, "Owner has no access to the device!");
+                    RealmError.send(request, 403, "User is not authorized to access this device");
                     return;
                 }
 
@@ -458,7 +454,7 @@ public class ITeacherAPIReceiver extends IFn {
             // The request should contain either date.range, or date.list
             if ((sessionRequest.time.single != null && sessionRequest.time.bulk != null)
                     || (sessionRequest.date.range != null && sessionRequest.date.list != null)) {
-                request.getHttpResponse().sendError(400);
+                RealmError.send(request, 400, "Request should contain either time.single or time.bulk");
                 return;
             }
 
@@ -467,24 +463,24 @@ public class ITeacherAPIReceiver extends IFn {
             String asnLabel = APIUtils.getLabel(sessionRequest.assignment);
 
             if (asnLabel == null) {
-                request.getHttpResponse().sendError(400, "assignment's label is null!");
+                RealmError.send(request, 400, "Assignment label cannot be null");
                 return;
             }
             asn = tx.retrieve("Assignment", asnLabel);
             if (asn == null) {
-                request.getHttpResponse().sendError(400, "assignment is null!");
+                RealmError.send(request, 400, "Assignment cannot be null");
                 return;
             }
 
             // Retrieve station
             String stationLabel = APIUtils.getLabel(sessionRequest.station);
             if (stationLabel == null) {
-                request.getHttpResponse().sendError(400, "assignment's label is null!");
+                RealmError.send(request, 400, "Assignment label cannot be null");
                 return;
             }
             Station station = tx.retrieve("Station", stationLabel);
             if (station == null) {
-                request.getHttpResponse().sendError(400, "station is null!");
+                RealmError.send(request, 400, "Station cannot be null");
                 return;
             }
 

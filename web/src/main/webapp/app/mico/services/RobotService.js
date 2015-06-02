@@ -68,10 +68,10 @@ angular.module('REALM')
                 var robotMode = $q.defer();
                 $http.get(localStorage.basePath + devicePath).then(function(response){
                   //  console.log(response.data);
-                    var mode = response.data.device.mode;
+                    var mode = response.data.mode;
                     robotMode.resolve(mode);
                 },function(response){
-                    console.log('Failed to get pose, error: ' + response.status);
+                    console.log('Failed to get the robot mode, error: ' + response.status);
                     robotMode.reject(response.status);
                 });
                 return robotMode.promise;

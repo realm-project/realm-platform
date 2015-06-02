@@ -13,6 +13,7 @@ import net.objectof.impl.corc.IHandler;
 import net.realmproject.dcm.accessor.DeviceLatencyMonitor;
 import net.realmproject.dcm.accessor.impl.IDeviceLatencyMonitor;
 import net.realmproject.dcm.event.bus.DeviceEventBus;
+import net.realmproject.platform.util.RealmError;
 import net.realmproject.platform.util.RealmSerialize;
 
 
@@ -33,7 +34,7 @@ public class IDeviceLatencyMonitorHandler extends IHandler<HttpRequest> {
     @Override
     protected void onExecute(Action action, HttpRequest http) throws IOException, ServletException {
         if (!"GET".equals(http.getHttpRequest().getMethod())) {
-            http.getHttpResponse().sendError(405); // Method Not Allowed
+            RealmError.send(http, 405, "HTTP method not allowed");
             return;
         }
 

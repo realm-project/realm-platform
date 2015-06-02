@@ -10,7 +10,7 @@ angular.module('REALM')
             
             $http.get(localStorage.basePath + cameraPath).then(function(response){
                 
-                if(angular.isDefined(response.data.image) && response.data.image !== null)
+                if( angular.isDefined(response.data) && angular.isDefined(response.data.image) && response.data.image !== null)
                 {
                     src.resolve("data:image/png;base64," + response.data.image);
                 }

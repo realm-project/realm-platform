@@ -24,7 +24,8 @@ angular.module('REALM')
         readSessions(sessions);
 //-----------------------------------------------------------------------------------------------
         function readSessions(sessions) {
-            if (sessions !== null && sessions !== "" && sessions !== undefined) {
+            // arash kh: also check sessions.value 
+        	if (sessions !== null && sessions !== "" && sessions !== undefined && sessions.value!= "" ) {
                 $scope.dynamicSessions = [];
                 var sessionValue = sessions.value;
                 console.log("sessions are not null")
@@ -95,7 +96,11 @@ angular.module('REALM')
                                         },
                                         function(error)
                                         {
-                                            console.log("failed to get station information"+error.status);
+                                        	if(typeof(error.status) !=="undefined"){
+                                        		console.log("failed to get station information: "+error.status);
+                                        	}else{
+                                        		console.log("failed to get station information:; " + error.message);
+                                        	}
                                         }
                                     )//end of station argumets
                                   },
@@ -203,7 +208,8 @@ angular.module('REALM')
            /*var station={};
            station.camera="rest/device/camera";
            station.robot="rest/device/mico";*/
-           layout=$scope.updateLayout($.parseJSON(layout),station);
+           //layout=$scope.updateLayout($.parseJSON(layout),station);
+           layout = $.parseJSON(layout);
            localStorage.setItem('layout',JSON.stringify(layout));
            $state.go("experiment."+experimentType);
         }

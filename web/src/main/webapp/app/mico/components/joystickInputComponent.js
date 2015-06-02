@@ -19,7 +19,7 @@ app.directive('joystickInputComponent', ['RobotService', function(RobotService) 
                         "<joystick gamepad='1' stick='2' xenabled='false' yenabled='true' ></joystick>" +
         "</div>"+
             "<div class='joystick-input-component__buttons'>"+
-                 "<button class='btn btn-primary' ng-click='goHome()'>Go Home</button>" +
+                 "<button class='btn btn-primary' ng-click='goHome()' ng-show='component.componentOptions.showHomeButton'>Go Home</button>" +
             "</div>",
 
     compile: function CompilingFunction(tElement, tAttrs)
@@ -59,6 +59,7 @@ app.directive('joystickInputComponent', ['RobotService', function(RobotService) 
           joystick._pressed=false;
         }
         
+
         this.moveRobot = function(x,y,z){
           RobotService.move(robotPath,x,y,z);
         }
