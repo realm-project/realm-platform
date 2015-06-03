@@ -38,7 +38,7 @@ public class Devices {
     	Iterable<Station> stations = getStations(tx, device);
     	
     	for (Station station : stations) {
-    		Iterable<Session> tempSessions = tx.query("Session", new IQuery("Station", Relation.EQUAL, station));
+    		Iterable<Session> tempSessions = tx.query("Session", new IQuery("station", Relation.EQUAL, station));
     		for (Session s : tempSessions)
     			sessions.add(s);   	
     	}
