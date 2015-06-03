@@ -1,12 +1,16 @@
 package net.realmproject.platform.util.model;
 
 
+import java.util.List;
+import java.util.ArrayList;
+
 import net.objectof.model.Transaction;
 import net.objectof.model.query.IQuery;
 import net.objectof.model.query.Relation;
 import net.realmproject.platform.schema.Assignment;
 import net.realmproject.platform.schema.Device;
 import net.realmproject.platform.schema.Session;
+import net.realmproject.platform.schema.Station;
 
 
 public class Devices {
@@ -24,8 +28,22 @@ public class Devices {
         return null;
     }
 
+    public static Iterable<Station> getStations(Transaction tx, Device device) {
+        return tx.query("Station", new IQuery("devices", Relation.CONTAINS, device));
+    }
+    
     public static Iterable<Session> getSessions(Transaction tx, Device device) {
-        return tx.query("Session", new IQuery("devices", Relation.CONTAINS, device));
+    	List<Session> sessions = new ArrayList<Session>();
+    	    	
+    	Iterable<Station> stations = getStations(tx, device);
+    	
+    	for (Station station : stations) {
+    		Iterable<Session> tempSessions = tx.query("Session", new IQuery("Station", Relation.EQUAL, station));
+    		for (Session s : tempSessions)
+    			sessions.add(s);   	
+    	}
+    	
+    	return sessions;
     }
 
     public static Iterable<Assignment> getAssignments(Transaction tx, Device device) {
