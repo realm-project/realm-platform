@@ -27,7 +27,7 @@ public class IDeviceCommanderHandler extends IHandler<HttpRequest> {
 
     public IDeviceCommanderHandler(String id, DeviceEventBus bus, DeviceRecorder recorder) {
         super();
-        accessor = new DeviceCommander<>(id, bus);
+        accessor = new DeviceCommander<>(id, bus, recorder);
     }
 
     @Override
