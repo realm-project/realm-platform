@@ -98,27 +98,38 @@ angular.module('REALM')
                                         {
                                         	if(typeof(error.status) !=="undefined"){
                                         		console.log("failed to get station information: "+error.status);
-                                        	}else{
+                                        	}else if(typeof(error.message) !=="undefined"){
                                         		console.log("failed to get station information:; " + error.message);
                                         	}
+                                            $rootScope.toggle('loadSessionError','on');
                                         }
                                     )//end of station argumets
                                   },
                                 function(error)
                                 {
-                                    console.log(error.status)
+                                    if(typeof(error.status) !=="undefined"){
+                                        console.log(error.status)
+                                    }
                                     console.log("failed to get course information");
+                                    $rootScope.toggle('loadSessionError','on');
                                 }
                             )
                         },
                         function (error) {
-                            console.log(error.status)
+                            if(typeof(error.status) !=="undefined"){
+                                console.log(error.status)
+                            }
                             console.log("failed to get deviceUI information");
+                            $rootScope.toggle('loadSessionError','on');
                         }
                     )
                 },
                 function (error) {
+                    if(typeof(error.status) !=="undefined"){
+                        console.log(error.status)
+                    }
                     console.log("failed to get assignment information");
+                    $rootScope.toggle('loadSessionError','on');
                 }
             )//end of promise checking
         } //end of function
@@ -164,10 +175,23 @@ angular.module('REALM')
                             $rootScope.toggle("addSessionOverlay", "off");
 
                         }, function (error) {
+                            console.log("cannot get user informations");
                         })
                 },
                 function (error) {
                     console.log("Unable to add user to session")
+                    if(error.data.message=="Invalid session ID"){
+                        $rootScope.toggle("addSessionOverlay", "off");
+                        $rootScope.toggle('addSessionInvalidToken','on');
+
+                    }else if (error.data.message=="Session is already added"){
+                        $rootScope.toggle("addSessionOverlay", "off");
+                        $rootScope.toggle('addSessionUsedToken','on');
+
+                    }else{
+                        $rootScope.toggle("addSessionOverlay", "off");
+                        $rootScope.toggle('addSessionFailedOverlay','on');
+                    }
                 }
             );
 

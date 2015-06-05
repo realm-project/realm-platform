@@ -65,7 +65,7 @@
 		<p>
 			Please input session token.
 		</p>
-		<p toggle="off" bubble target="accessDeniedOverlay">
+		<p>
 			<input class="overlay__input" ng-model="sessionTokenString"></input>
 			<span class="btn btn-primary" ng-click="addUserToSession()">Ok</span>
 		</p>  
@@ -75,10 +75,41 @@
 	<div overlay="addSessionFailedOverlay">
 		<h4 class="overlay-title">Failed to add Session</h4>    
 		<p>
-		
+			Failed to add Session.
 		</p>
-		<p toggle="off" bubble target="accessDeniedOverlay">
+		<p toggle="off" bubble target="addSessionFailedOverlay">
 			<span class="btn btn-primary">Ok</span>
 		</p>  
-	</div>	
+	</div>
+	
+	<div overlay="addSessionUsedToken">
+			<h4 class="overlay-title">Failed to add Session</h4>    
+			<p>
+				The token is already added. Please check your session page.
+			</p>
+			<p toggle="off" bubble target="addSessionUsedToken">
+				<span class="btn btn-primary">Ok</span>
+			</p>  
+	</div>
+
+	<div overlay="addSessionInvalidToken">
+			<h4 class="overlay-title">Failed to add Session</h4>    
+			<p>
+				Sorry, the token is not valid.
+			</p>
+			<p toggle="off" bubble target="addSessionInvalidToken">
+				<span class="btn btn-primary">Ok</span>
+			</p>  
+	</div>
+
+	<div overlay="loadSessionError">
+			<h4 class="overlay-title">Failed to load sessions</h4>    
+			<p>
+				Cannot load your sessions. Please contact your system administrator.
+			</p>
+			<p toggle="off" bubble target="loadSessionError">
+				<span class="btn btn-primary">Ok</span>
+			</p>  
+	</div>
+
 </div>
