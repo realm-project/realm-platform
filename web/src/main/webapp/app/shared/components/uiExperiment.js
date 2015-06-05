@@ -38,7 +38,7 @@ angular.module('REALM').directive('uiExperiment',['$timeout', '$http', '$q','Rob
         //this should get updated dynamically
         // the default value is for mico
         var robotPath = "rest/device/mico";
-        if (typeof($scope.layout.options.robotPath) != "undefined"){
+        if ($scope.layout.options != null && typeof($scope.layout.options.robotPath) != "undefined"){
             robotPath = $scope.layout.options.robotPath;
         }
         $scope.robotMode="IDLE";
