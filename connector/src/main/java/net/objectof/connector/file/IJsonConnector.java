@@ -132,7 +132,6 @@ class IJsonPackage extends ISourcePackage {
                 if (kind.getPartOf() != null) {
                     continue;
                 }
-                System.out.println(kind);
                 Iterable<Resource<?>> iter = tx.enumerate(kind.getComponentName());
                 for (Resource<?> res : iter) {
                     ensurePersistentID(res, tx);

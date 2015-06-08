@@ -96,7 +96,6 @@ public abstract class ISqlRepo extends IRepo {
             // now that all types have been loaded, wire up the reference
             // targets
             for (IRepoType<?> sourceType : typeReferences.keySet()) {
-                System.out.println(sourceType);
                 int targetId = typeReferences.get(sourceType);
                 IRepoType<?> targetType = loadedTypes.get(targetId);
                 sourceType.getParts().add(targetType);

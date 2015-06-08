@@ -116,7 +116,6 @@ public class ISourcePackage extends IPackage {
                 }
                 String un = ns + '/' + node.getLocalName();
                 String val = node.getNodeValue();
-                System.out.println(aElement.getAttribute("selector") + "\tmetadata name: " + un + " value: " + val);
                 Property p = createProperty(ns, node.getLocalName(), aType, val);
                 map.put(un, p);
             }

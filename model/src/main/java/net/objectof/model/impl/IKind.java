@@ -213,7 +213,6 @@ public class IKind<T> extends IPeer<T> implements Kind<T>, Member {
     private final synchronized IFieldset createFields() {
         IFieldset fields = theFields;
         // Check again, while synchronized, to handle race conditions.
-        System.out.println(this);
         if (fields == null) {
             List<IKind<?>> parts = getParts();
             int len = parts.size();
