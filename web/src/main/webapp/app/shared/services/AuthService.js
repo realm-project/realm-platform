@@ -40,6 +40,7 @@ angular.module('REALM')
     			var deferred = $q.defer();
                 if(serverDown)
                 {
+                    /*
                     console.log("server is down");
                     var personObject = {
                                 loc:"Person-1",
@@ -69,6 +70,7 @@ angular.module('REALM')
                             }
                     that.currentUser = personObject;
                     deferred.resolve(personObject);
+                    */
                 }
                 else{
                     //Call REALM Login API
