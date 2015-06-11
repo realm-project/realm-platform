@@ -12,7 +12,7 @@ import net.objectof.connector.ConnectorException;
 import net.objectof.corc.Action;
 import net.objectof.corc.web.v2.HttpRequest;
 import net.realmproject.platform.schema.Person;
-import net.realmproject.platform.util.RealmError;
+import net.realmproject.platform.util.RealmResponse;
 
 
 /**
@@ -54,7 +54,7 @@ public class IAuthenticator extends AbstractAuthenticator<LoginInfo> {
             } else {
                 // 401 Unauthorized:
                 // "specifically for use when authentication is required and has failed or has not yet been provided"
-                request.getHttpResponse().getWriter().print(new RealmError("Login Failed", true));
+                request.getHttpResponse().getWriter().print(new RealmResponse("Login Failed", true));
                 request.getHttpResponse().setStatus(401);
             }
 

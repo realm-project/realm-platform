@@ -8,7 +8,7 @@ import net.objectof.corc.Handler;
 import net.objectof.corc.web.v2.HttpRequest;
 import net.realmproject.platform.schema.Person;
 import net.realmproject.platform.security.ISessionHandler;
-import net.realmproject.platform.util.RealmError;
+import net.realmproject.platform.util.RealmResponse;
 
 
 public class IAuthorizationHandler extends ISessionHandler {
@@ -26,7 +26,7 @@ public class IAuthorizationHandler extends ISessionHandler {
         if (auth.authorize(action, request, person)) {
             chain(action, request);
         } else {
-            RealmError.send(request, 405, "Unauthorized");
+            RealmResponse.send(request, 405, "Unauthorized");
         }
     }
 

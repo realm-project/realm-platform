@@ -10,7 +10,7 @@ import net.objectof.rt.impl.IFn;
 import net.realmproject.platform.api.utils.APIUtils;
 import net.realmproject.platform.schema.Person;
 import net.realmproject.platform.schema.Session;
-import net.realmproject.platform.util.RealmError;
+import net.realmproject.platform.util.RealmResponse;
 import net.realmproject.platform.util.model.Sessions;
 
 
@@ -39,7 +39,7 @@ public class ICommonAPIReceiver extends IFn {
 
         // token must not be null
         if (token == null) {
-            RealmError.send(request, 400, "Token cannot be null");
+            RealmResponse.send(request, 400, "Token cannot be null");
             return;
         }
         // Retrieve the session that owns this token
@@ -47,13 +47,13 @@ public class ICommonAPIReceiver extends IFn {
 
         // session must not be null
         if (s == null) {
-            RealmError.send(request, 400, "Invalid session ID", true);
+            RealmResponse.send(request, 400, "Invalid session ID", true);
             return;
         }
 
         // Ensure that the person is not already added to the session
         if (person.getSessions() != null && person.getSessions().contains(s)) {
-            RealmError.send(request, 400, "Session is already added", true);
+            RealmResponse.send(request, 400, "Session is already added", true);
             return;
         }
 
@@ -90,11 +90,11 @@ public class ICommonAPIReceiver extends IFn {
 
         // Ensure the retrieved person is nut null and her/his role is "student"
         if (student.getName() == null) {
-            RealmError.send(request, 400, "Person cannot be null");
+            RealmResponse.send(request, 400, "Person cannot be null");
             return;
         }
         if (!student.getRole().getName().equals("student")) {
-            RealmError.send(request, 400, "Person is not a student");
+            RealmResponse.send(request, 400, "Person is not a student");
             return;
         }
 

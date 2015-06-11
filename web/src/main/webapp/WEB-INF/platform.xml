@@ -16,6 +16,7 @@
 		<constructor-arg>
 			<map>
 				<entry key="login" value-ref="platform-login" />
+				<entry key="logout" value-ref="platform-logout" />
 				<entry key="signup" value-ref="platform-signup" />
 				<entry key="passwordreset" value-ref="platform-passwordreset" />
 				<entry key="device" value-ref="platform-authn-device" />
@@ -40,7 +41,8 @@
 		<constructor-arg value="10000" />
 	</bean>
 
-
+	<!-- Logout -->
+	<bean id="platform-logout" class="net.realmproject.platform.security.authentication.Logout" />
 
 	<!-- Signup -->
 	<bean id="platform-signup" class="net.realmproject.platform.security.authentication.IAccountCreator">

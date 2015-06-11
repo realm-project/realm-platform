@@ -24,7 +24,7 @@ import net.realmproject.platform.schema.Person;
 import net.realmproject.platform.schema.Session;
 import net.realmproject.platform.schema.Station;
 import net.realmproject.platform.util.RealmCorc;
-import net.realmproject.platform.util.RealmError;
+import net.realmproject.platform.util.RealmResponse;
 import net.realmproject.platform.util.model.Assignments;
 import net.realmproject.platform.util.model.Courses;
 import net.realmproject.platform.util.model.Devices;
@@ -100,13 +100,13 @@ public class ITeacherAPIReceiver extends IFn {
         Course c = (Course) APIUtils.getObjectFromRequest("Course", teacher.tx(), request);
 
         if (c == null) {
-            RealmError.send(request, 400, "Course cannot be null");
+            RealmResponse.send(request, 400, "Course cannot be null");
             return;
         }
 
         // Ensure that the teacher is a teacher of the course
         if (!c.getTeachers().contains(teacher)) {
-            RealmError.send(request, 403, "Teacher is not authorized to access this course");
+            RealmResponse.send(request, 403, "Teacher is not authorized to access this course");
             return;
         }
 
@@ -158,13 +158,13 @@ public class ITeacherAPIReceiver extends IFn {
         Course c = (Course) APIUtils.getObjectFromRequest("Course", teacher.tx(), request);
 
         if (c == null) {
-            RealmError.send(request, 400, "Course cannot be null");
+            RealmResponse.send(request, 400, "Course cannot be null");
             return;
         }
 
         // Ensure that the teacher is a teacher of the course
         if (!c.getTeachers().contains(teacher)) {
-            RealmError.send(request, 403, "Teacher is not authorized to access this course");
+            RealmResponse.send(request, 403, "Teacher is not authorized to access this course");
             return;
         }
 
@@ -195,7 +195,7 @@ public class ITeacherAPIReceiver extends IFn {
         Course c = (Course) APIUtils.getObjectFromRequest("Course", teacher.tx(), request);
 
         if (c == null) {
-            RealmError.send(request, 400, "Course cannot be null");
+            RealmResponse.send(request, 400, "Course cannot be null");
             return;
         }
 
@@ -213,7 +213,7 @@ public class ITeacherAPIReceiver extends IFn {
         }
 
         if (!isTeacher) {
-            RealmError.send(request, 403, "User is not a teacher");
+            RealmResponse.send(request, 403, "User is not a teacher");
             return;
         }
 
@@ -244,14 +244,14 @@ public class ITeacherAPIReceiver extends IFn {
         Session s = (Session) APIUtils.getObjectFromRequest("Session", teacher.tx(), request);
 
         if (s == null) {
-            RealmError.send(request, 400, "Assignment cannot be null");
+            RealmResponse.send(request, 400, "Assignment cannot be null");
             return;
         }
 
         // Ensure that teacher is the teacher of the course that session belongs
         // to
         if (!s.getAssignment().getCourse().getTeachers().contains(teacher)) {
-            RealmError.send(request, 403, "Teacher is not authorized to access this course");
+            RealmResponse.send(request, 403, "Teacher is not authorized to access this course");
             return;
         }
 
@@ -334,7 +334,7 @@ public class ITeacherAPIReceiver extends IFn {
                     }
 
                 if (!contains) {
-                    RealmError.send(request, 403, "User is not authorized to access this device");
+                    RealmResponse.send(request, 403, "User is not authorized to access this device");
                     return;
                 }
 
@@ -454,7 +454,7 @@ public class ITeacherAPIReceiver extends IFn {
             // The request should contain either date.range, or date.list
             if ((sessionRequest.time.single != null && sessionRequest.time.bulk != null)
                     || (sessionRequest.date.range != null && sessionRequest.date.list != null)) {
-                RealmError.send(request, 400, "Request should contain either time.single or time.bulk");
+                RealmResponse.send(request, 400, "Request should contain either time.single or time.bulk");
                 return;
             }
 
@@ -463,24 +463,24 @@ public class ITeacherAPIReceiver extends IFn {
             String asnLabel = APIUtils.getLabel(sessionRequest.assignment);
 
             if (asnLabel == null) {
-                RealmError.send(request, 400, "Assignment label cannot be null");
+                RealmResponse.send(request, 400, "Assignment label cannot be null");
                 return;
             }
             asn = tx.retrieve("Assignment", asnLabel);
             if (asn == null) {
-                RealmError.send(request, 400, "Assignment cannot be null");
+                RealmResponse.send(request, 400, "Assignment cannot be null");
                 return;
             }
 
             // Retrieve station
             String stationLabel = APIUtils.getLabel(sessionRequest.station);
             if (stationLabel == null) {
-                RealmError.send(request, 400, "Assignment label cannot be null");
+                RealmResponse.send(request, 400, "Assignment label cannot be null");
                 return;
             }
             Station station = tx.retrieve("Station", stationLabel);
             if (station == null) {
-                RealmError.send(request, 400, "Station cannot be null");
+                RealmResponse.send(request, 400, "Station cannot be null");
                 return;
             }
 

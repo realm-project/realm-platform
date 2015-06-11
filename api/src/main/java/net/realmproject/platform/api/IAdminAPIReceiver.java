@@ -13,7 +13,7 @@ import net.realmproject.platform.schema.Device;
 import net.realmproject.platform.schema.DeviceUI;
 import net.realmproject.platform.schema.Person;
 import net.realmproject.platform.schema.Session;
-import net.realmproject.platform.util.RealmError;
+import net.realmproject.platform.util.RealmResponse;
 import net.realmproject.platform.util.model.Assignments;
 import net.realmproject.platform.util.model.Courses;
 import net.realmproject.platform.util.model.DeviceUIs;
@@ -49,7 +49,7 @@ public class IAdminAPIReceiver extends IFn {
         Person teacher = (Person) APIUtils.getObjectFromRequest("Person", admin.tx(), request);
 
         if (teacher == null) {
-            RealmError.send(request, 400, "Teacher cannot be null");
+            RealmResponse.send(request, 400, "Teacher cannot be null");
             return;
         }
 
@@ -80,7 +80,7 @@ public class IAdminAPIReceiver extends IFn {
         Person teacher = (Person) APIUtils.getObjectFromRequest("Person", admin.tx(), request);
 
         if (teacher == null) {
-            RealmError.send(request, 400, "Teacher cannot be null");
+            RealmResponse.send(request, 400, "Teacher cannot be null");
             return;
         }
 
@@ -111,7 +111,7 @@ public class IAdminAPIReceiver extends IFn {
         Person teacher = (Person) APIUtils.getObjectFromRequest("Person", admin.tx(), request);
 
         if (teacher == null) {
-            RealmError.send(request, 400, "Teacher cannot be null");
+            RealmResponse.send(request, 400, "Teacher cannot be null");
             return;
         }
 
@@ -142,7 +142,7 @@ public class IAdminAPIReceiver extends IFn {
         Course course = (Course) APIUtils.getObjectFromRequest("Course", admin.tx(), request);
 
         if (course == null) {
-            RealmError.send(request, 400, "Course cannot be null");
+            RealmResponse.send(request, 400, "Course cannot be null");
             return;
         }
 
@@ -173,7 +173,7 @@ public class IAdminAPIReceiver extends IFn {
         Course course = (Course) APIUtils.getObjectFromRequest("Course", admin.tx(), request);
 
         if (course == null) {
-            RealmError.send(request, 400, "Course cannot be null");
+            RealmResponse.send(request, 400, "Course cannot be null");
             return;
         }
 
@@ -204,7 +204,7 @@ public class IAdminAPIReceiver extends IFn {
         Device device = (Device) APIUtils.getObjectFromRequest("Device", admin.tx(), request);
 
         if (device == null) {
-            RealmError.send(request, 400, "Device cannot be null");
+            RealmResponse.send(request, 400, "Device cannot be null");
             return;
         }
 
@@ -235,7 +235,7 @@ public class IAdminAPIReceiver extends IFn {
         DeviceUI deviceUI = (DeviceUI) APIUtils.getObjectFromRequest("DeviceUI", admin.tx(), request);
 
         if (deviceUI == null) {
-            RealmError.send(request, 400, "DeviceUI cannot be null");
+            RealmResponse.send(request, 400, "DeviceUI cannot be null");
             return;
         }
 
@@ -265,7 +265,7 @@ public class IAdminAPIReceiver extends IFn {
         Assignment asn = (Assignment) APIUtils.getObjectFromRequest("Assignment", admin.tx(), request);
 
         if (asn == null) {
-            RealmError.send(request, 400, "Assignment cannot be null");
+            RealmResponse.send(request, 400, "Assignment cannot be null");
             return;
         }
 
@@ -296,7 +296,7 @@ public class IAdminAPIReceiver extends IFn {
         Assignment asnTemplate = (Assignment) APIUtils.getObjectFromRequest("Assignment", admin.tx(), request);
 
         if (asnTemplate == null) {
-            RealmError.send(request, 400, "Assignment template cannot be null");
+            RealmResponse.send(request, 400, "Assignment template cannot be null");
             return;
         }
 
@@ -328,7 +328,7 @@ public class IAdminAPIReceiver extends IFn {
         Course crsTemplate = (Course) APIUtils.getObjectFromRequest("Course", admin.tx(), request);
 
         if (crsTemplate == null) {
-            RealmError.send(request, 400, "Course template cannot be null");
+            RealmResponse.send(request, 400, "Course template cannot be null");
             return;
         }
 
@@ -360,7 +360,7 @@ public class IAdminAPIReceiver extends IFn {
         Person owner = (Person) APIUtils.getObjectFromRequest("Person", admin.tx(), request);
 
         if (owner == null) {
-            RealmError.send(request, 400, "Person cannot be null");
+            RealmResponse.send(request, 400, "Person cannot be null");
             return;
         }
 
@@ -391,7 +391,7 @@ public class IAdminAPIReceiver extends IFn {
         DeviceUI deviceUI = (DeviceUI) APIUtils.getObjectFromRequest("DeviceUI", admin.tx(), request);
 
         if (deviceUI == null) {
-            RealmError.send(request, 400, "DeviceUI cannot be null");
+            RealmResponse.send(request, 400, "DeviceUI cannot be null");
             return;
         }
 
@@ -421,7 +421,7 @@ public class IAdminAPIReceiver extends IFn {
         Session session = (Session) APIUtils.getObjectFromRequest("Session", admin.tx(), request);
 
         if (session == null) {
-            RealmError.send(request, 400, "Session cannot be null");
+            RealmResponse.send(request, 400, "Session cannot be null");
             return;
         }
 
@@ -451,7 +451,7 @@ public class IAdminAPIReceiver extends IFn {
         Course course = (Course) APIUtils.getObjectFromRequest("Course", admin.tx(), request);
 
         if (course == null) {
-            RealmError.send(request, 400, "Course cannot be null");
+            RealmResponse.send(request, 400, "Course cannot be null");
             return;
         }
 

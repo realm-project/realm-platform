@@ -6,18 +6,18 @@ import java.io.IOException;
 import net.objectof.corc.web.v2.HttpRequest;
 
 
-public class RealmError {
+public class RealmResponse {
 
     public boolean display = false;
     public String message = "";
 
-    public RealmError() {}
+    public RealmResponse() {}
 
-    public RealmError(String message) {
+    public RealmResponse(String message) {
         this.message = message;
     }
 
-    public RealmError(String message, boolean display) {
+    public RealmResponse(String message, boolean display) {
         this.message = message;
         this.display = display;
     }
@@ -26,7 +26,7 @@ public class RealmError {
         return RealmSerialize.serialize(this);
     }
 
-    public static void send(HttpRequest request, String message) throws IOException {
+    public static void sendError(HttpRequest request, String message) throws IOException {
         send(request, 400, message);
     }
 
@@ -35,7 +35,7 @@ public class RealmError {
     }
 
     public static void send(HttpRequest request, int status, String message, boolean display) throws IOException {
-        request.getHttpResponse().getWriter().print(new RealmError(message, display));
+        request.getHttpResponse().getWriter().print(new RealmResponse(message, display));
         request.getHttpResponse().setStatus(status);
     }
 
