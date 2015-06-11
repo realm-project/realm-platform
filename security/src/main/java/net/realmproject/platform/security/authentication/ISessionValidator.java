@@ -8,7 +8,7 @@ import net.objectof.corc.Handler;
 import net.objectof.corc.web.v2.HttpRequest;
 import net.realmproject.platform.schema.Person;
 import net.realmproject.platform.security.ISessionHandler;
-import net.realmproject.platform.util.RealmError;
+import net.realmproject.platform.util.RealmResponse;
 
 
 /**
@@ -29,7 +29,7 @@ public class ISessionValidator extends ISessionHandler {
         if (person == null) {
             // 401 Unauthorized:
             // "specifically for use when authentication is required and has failed or has not yet been provided"
-            request.getHttpResponse().getWriter().print(new RealmError("Unauthorized"));
+            request.getHttpResponse().getWriter().print(new RealmResponse("Unauthorized"));
             request.getHttpResponse().setStatus(401);
             return;
         }

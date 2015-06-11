@@ -8,7 +8,7 @@ import net.objectof.corc.Action;
 import net.objectof.corc.Handler;
 import net.objectof.corc.web.v2.HttpRequest;
 import net.realmproject.platform.util.RealmCorc;
-import net.realmproject.platform.util.RealmError;
+import net.realmproject.platform.util.RealmResponse;
 
 
 /**
@@ -54,7 +54,7 @@ public class IPathRouter extends CustomRouter<HttpRequest> {
 
     protected void noChannel(Action aRequest, HttpRequest object) {
         try {
-            RealmError.send(object, 404, "Path not found.");
+            RealmResponse.send(object, 404, "Path not found.");
         }
         catch (IOException e) {
             e.printStackTrace();

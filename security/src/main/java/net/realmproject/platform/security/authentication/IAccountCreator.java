@@ -12,7 +12,7 @@ import net.realmproject.platform.schema.Person;
 import net.realmproject.platform.schema.Role;
 import net.realmproject.platform.util.RealmAuthentication;
 import net.realmproject.platform.util.RealmCorc;
-import net.realmproject.platform.util.RealmError;
+import net.realmproject.platform.util.RealmResponse;
 import net.realmproject.platform.util.RealmRepo;
 import net.realmproject.platform.util.RealmSerialize;
 
@@ -38,7 +38,7 @@ public class IAccountCreator extends IRepoAwareHandler {
 
         Iterable<Person> existingUsers = tx.query("Person", new IQuery("email", info.username));
         if (existingUsers.iterator().hasNext()) {
-            request.getHttpResponse().getWriter().print(new RealmError("User already exists"));
+            request.getHttpResponse().getWriter().print(new RealmResponse("User already exists"));
             request.getHttpResponse().setStatus(403);
             return;
         }

@@ -11,7 +11,7 @@ import net.realmproject.platform.schema.Assignment;
 import net.realmproject.platform.schema.Course;
 import net.realmproject.platform.schema.Person;
 import net.realmproject.platform.schema.Session;
-import net.realmproject.platform.util.RealmError;
+import net.realmproject.platform.util.RealmResponse;
 import net.realmproject.platform.util.model.Courses;
 import net.realmproject.platform.util.model.Sessions;
 
@@ -43,7 +43,7 @@ public class IStudentAPIReceiver extends IFn {
         Course c = (Course) APIUtils.getObjectFromRequest("Course", student.tx(), request);
 
         if (c == null) {
-            RealmError.send(request, 400, "Course cannot be null");
+            RealmResponse.send(request, 400, "Course cannot be null");
             return;
         }
 
@@ -56,7 +56,7 @@ public class IStudentAPIReceiver extends IFn {
             APIUtils.addQueryResultToResponse(assignments, request);
 
         } else { // Student is not enrolled in the course.
-            RealmError.send(request, 403, "Student is not authorized to access this course"); // "Forbidden"
+            RealmResponse.send(request, 403, "Student is not authorized to access this course"); // "Forbidden"
         }
     }
 
@@ -80,14 +80,14 @@ public class IStudentAPIReceiver extends IFn {
         Session s = (Session) APIUtils.getObjectFromRequest("Session", student.tx(), request);
 
         if (s == null) {
-            RealmError.send(request, 400, "Session cannot be null");
+            RealmResponse.send(request, 400, "Session cannot be null");
             return;
         }
 
         // Ensure that student is a member of session
         if (!student.getSessions().contains(s)) {
             // Student is not a member of session. Set status to "Forbidden"
-            RealmError.send(request, 403, "Student is not authorized to access this session");
+            RealmResponse.send(request, 403, "Student is not authorized to access this session");
             return;
         }
 
