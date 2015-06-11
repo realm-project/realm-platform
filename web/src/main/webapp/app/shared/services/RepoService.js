@@ -50,7 +50,7 @@ angular.module('REALM')
 
                 }, function (response) {
                     console.log('Failed to add user to session, error code: ' + response.status);
-                    join.reject()
+                    join.reject(response)
                 });
             return join.promise;
         }

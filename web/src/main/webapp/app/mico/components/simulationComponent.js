@@ -392,11 +392,11 @@ app.directive('simulationComponent', ['$timeout', '$http', '$q', 'RobotService',
                 function render() 
                 {
                     
-                    $.getJSON( localStorage.basePath + "/rest/device/mico",ajaxSuccess);
+                    $.getJSON( localStorage.basePath + scope.component.componentOptions.url ,ajaxSuccess);
                     
                     $.ajax({
                       dataType: "jsonp",
-                      url: localStorage.basePath + "/rest/device/mico",
+                      url: localStorage.basePath +  scope.component.componentOptions.url,
                       data: data,
                       success: ajaxSuccess
                     });

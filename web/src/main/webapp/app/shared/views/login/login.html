@@ -2,7 +2,7 @@
 
 <div class="scrollable">
 	<div class="scrollable-content section">
-		<form name="loginForm" class="login-form">
+		<form name="loginForm" class="login-form" ng-submit="login(credentials)">
 			
 
 			<!--EMAIL INPUT-->
@@ -32,7 +32,7 @@
 
 			<!--LOGIN BUTTON-->
 			<div class="form-group row">
-				<button ng-click="login(credentials)" class="login-form__button btn btn-primary">Login</button>
+				<input type="submit" class="login-form__button btn btn-primary" value="Login">
 			</div>
 
 		</form>
