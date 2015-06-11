@@ -22,6 +22,7 @@ public class Logout extends IHandler<HttpRequest> {
         HttpSession session = request.getHttpRequest().getSession(false);
         if (session == null) {
             RealmResponse.send(request, 401, "You have already logged out");
+            return;
         }
         session.invalidate();
         RealmResponse.send(request, 200, "Logged Out");
