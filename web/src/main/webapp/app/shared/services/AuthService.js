@@ -2,28 +2,17 @@
 
 angular.module('REALM')
     .service('AuthService',function($http, $q, $cookies, $timeout, $rootScope, AUTH_EVENTS, StorageService){
-
-        //flag for when service is down, true = mock response
-        var serverDown = false;
-        
-        //reference to AuthService
-        var that = this;
-
-        //default value of currentUser is null, changes after real/fake response
-        this.currentUser = null;
-        
-
+ 
         //urls
         var loginPath = 'rest/login';
-
+        var logoutPath ='rest/logout';
 
         this.refreshCurrentUser = function(){
 
-            var userPath = localStorage.basePath + 'rest/repo/Person/' + that.getCurrentUser().loc + ".json";
+            var userPath = localStorage.basePath + 'rest/repo/Person/' + JSON.parse(localStorage.currentUser).loc + ".json";
             $http.get(userPath).then(function(response){
                 console.log("in refreshCurrentUser: get user response:");
                 console.log(response.data);
-                that.currentUser = response.data;
                 localStorage.currentUser=JSON.stringify(response.data);
                 console.log("in refreshCurrentUser refreshed the current user");
             },function(response){
@@ -32,82 +21,59 @@ angular.module('REALM')
         }
 
         this.getCurrentUser = function(){
-            return this.currentUser || JSON.parse(localStorage.currentUser);
+            return JSON.parse(localStorage.currentUser);
         }
 //---------------------------------------------------------------------------
     	this.login = function(credentials){
     		
     			var deferred = $q.defer();
-                if(serverDown)
-                {
-                    /*
-                    console.log("server is down");
-                    var personObject = {
-                                loc:"Person-1",
-                                value: {
-                                    name: "Joshua Asokanthan",
-                                    email: "a@b.com",
-                                    sessions:[
-                                                {
-                                                    assignment: 'Forward Kinematics',
-                                                    experimentType: 'forwardKinematics',
-                                                    course: 'MSE 404',
-                                                    startDateTime: 'Jan 1, 2014 11:00:00',
-                                                    endDateTime: 'Jan 1, 2015 12:00:00',
-                                                    fromNow:null,
-                                                    isActive:null
-                                                },{
-                                                    assignment: 'Inverse Kinematics',
-                                                    experimentType: 'inverseKinematics',
-                                                    course: 'MSE 404',
-                                                    startDateTime: 'Jan 2, 2015 11:00:00',
-                                                    endDateTime: 'Jan 2, 2015 12:00:00',
-                                                    fromNow:null,
-                                                    isActive:null
-                                                }
-                                            ]
-                                }
-                            }
-                    that.currentUser = personObject;
-                    deferred.resolve(personObject);
-                    */
-                }
-                else{
-                    //Call REALM Login API
-                    $http.post(localStorage.basePath + loginPath,{"username": credentials.email, "password": credentials.password}, {withCredentials:true})
-                    .then(function(response){
+             
+                //Call REALM Login API
+                $http.post(localStorage.basePath + loginPath,{"username": credentials.email, "password": credentials.password}, {withCredentials:true})
+                .then(function(response){
+                    
+                    console.log("Login Response: ");
+                    console.log(response);
+
+                    $timeout(function(){
                         
-                        console.log("Login Response: ");
-                        console.log(response);
-
-                        $timeout(function(){
-                            
-                            var allCookies = document.cookie;
-                            console.log("Cookies: ");
-                            console.log(allCookies);
+                        //var allCookies = document.cookie;
+                        //console.log("Cookies: ");
+                        //console.log(allCookies);
 
 
-                            //When login is successful, deferred.promise is resolved with value = person object returned from login API
-                            if(response.status == 200)
-                            {
-                                var personObject = response.data;
-                                that.currentUser = personObject;
-                                deferred.resolve(personObject);
-                            }
-                            //When login fails, deferred.promise is rejected with reason = status code returned from login server
-                            else
-                            {
-                                deferred.reject(response.status);
-                            }
-                        });
-                    }, function(response) {
-                        console.log('login fail error: ' + response.status)
-                        deferred.reject(response.status);
+                        //When login is successful, deferred.promise is resolved with value = person object returned from login API
+                        if(response.status == 200)
+                        {
+                            var personObject = response.data;
+                            localStorage.currentUser = JSON.stringify(personObject);
+                            deferred.resolve(personObject);
+                        }
+                        //When login fails, deferred.promise is rejected with reason = status code returned from login server
+                        else
+                        {
+                            deferred.reject(response.status);
+                        }
                     });
-                }
-
+                }, function(response) {
+                    console.log('login fail error: ' + response.status)
+                    deferred.reject(response.status);
+                });
+                
     			return deferred.promise;
     		}
+
+        this.logout = function(){
+            localStorage.removeItem('currentUser');
+            var deferred = $q.defer();
+            $http.post(localStorage.basePath + logoutPath).then(function(response){
+                deferred.resolve(response);
+            },function(errResponse){
+                deferred.reject(errResponse);
+            });
+            return deferred.promise;
+        };
+
   //------------------------------------------------------------------------------------------------
     	this.isAuthenticated = function(){
     		
