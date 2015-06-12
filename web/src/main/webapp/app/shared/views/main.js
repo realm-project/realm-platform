@@ -1,4 +1,4 @@
-angular.module('REALM').controller('MainController', function($rootScope, $scope, USER_ROLES, AuthService){
+angular.module('REALM').controller('MainController', function($rootScope, $scope, USER_ROLES, AuthService, $state){
 
   $scope.currentUser = null;
   $scope.userRoles = USER_ROLES;
@@ -13,5 +13,15 @@ angular.module('REALM').controller('MainController', function($rootScope, $scope
   });
   
   $scope.userAgent =  navigator.userAgent;
+
+  $scope.logoutFunction = function(){
+
+    AuthService.logout().then(function(response){
+      $state.go('login');
+    },function(errResponse){
+      console.log(errResponse);
+      $state.go('login');
+    });
+  }
 
 });

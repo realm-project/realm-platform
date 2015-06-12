@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('REALM')
-.controller('LoginController', function ($scope, $rootScope, AuthService, StorageService, AUTH_EVENTS, $state) {
+.controller('LoginController', function ($scope, $rootScope, AuthService, StorageService, AUTH_EVENTS, $state, RepoService) {
     
     
 
@@ -21,14 +21,13 @@ angular.module('REALM')
     if(StorageService.isAvailable())
     {
         //If user has logged in before, localStorage.rememberMe should be non-null
-        if(localStorage.rememberMe !== null)
+        if(typeof(localStorage.rememberMe) !== "undefined")
         {
             //If rememberMe is true, autoFill email
-            if(localStorage.rememberMe === "true" && localStorage.currentUser !== null && localStorage.currentUser !== undefined)
+            if(localStorage.rememberMe === "true" && typeof(localStorage.rememberedEmail) !== "undefined")
             {
-                var user = JSON.parse(localStorage.currentUser);
-
-                $scope.credentials.email = user.value.email;
+                $scope.credentials.email = localStorage.rememberedEmail;
+                $scope.userSettings.rememberMe = true;
             }            
         }
     }
@@ -36,12 +35,16 @@ angular.module('REALM')
     
     $scope.login = function(credentials){
         
-
-        if($scope.userSettings.rememberMe && StorageService.isAvailable())
-        {
-            localStorage.rememberMe = "true";
+        if(StorageService.isAvailable()){
+            if($scope.userSettings.rememberMe)
+            {
+                localStorage.rememberMe = "true";
+                localStorage.rememberedEmail = credentials.email;
+            }else{
+                localStorage.rememberMe = "false";
+                localStorage.removeItem("rememberedEmail");
+            }
         }
-
         //On login success, event arg = none (AuthService.currentUser is now available though)
         //On login failure, event arg = error code
         AuthService.login(credentials).then(function(personObject){
@@ -60,16 +63,38 @@ angular.module('REALM')
 
     $scope.$on(AUTH_EVENTS.loginSuccess, function() {
 
-        //store user
-        if(StorageService.isAvailable())
-        {
-            localStorage.currentUser = JSON.stringify(AuthService.getCurrentUser());
-        }
-        
-        $scope.firstName = AuthService.currentUser.value.name.split(' ')[0];
+        $scope.firstName = AuthService.getCurrentUser().value.name.split(' ')[0];
         
         //$rootScope.toggle('loginSuccessOverlay','on');
-        $state.go('studentHome');
+        var userRole= RepoService.getObject("role",AuthService.getCurrentUser().value.role.loc);
+        userRole.then(
+            function(response)
+            {
+                if(typeof(response.data)!="undefined" && typeof(response.data.value)!="undefined" && typeof(response.data.value.name)!="undefined")
+                {
+                    if(response.data.value.name=="student"){
+                        $state.go('studentHome');
+                    }else if (response.data.value.name=="teacher"){
+                        $state.go('teacherHome');
+                    }else if(response.data.value.name=="admin"){
+                        console.log("admin login");
+                        $state.go('teacherHome');
+                    }else{
+                        console.log("Unknown user role");
+                        console.log(response);
+                        $rootScope.$broadcast(AUTH_EVENTS.notFound);
+                    }
+                }else{
+                    console.log("Unknown user role");
+                    console.log(response);
+                    $rootScope.$broadcast(AUTH_EVENTS.notFound);
+                }
+            },function(response){
+                console.log("Cannot get the user role");
+                console.log(response);
+                $rootScope.$broadcast(AUTH_EVENTS.notFound);
+            }
+        );
     });
 
     $scope.$on(AUTH_EVENTS.loginFailed, function() {

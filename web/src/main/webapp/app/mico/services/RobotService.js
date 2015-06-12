@@ -123,7 +123,7 @@ angular.module('REALM')
                     "numtwist": 0,
                     "twists": {}
                 },
-                "record":"true"
+                "record":true
             }
             postData.arguments.numtwist=twists.length;
             postData.arguments.twists=twists;

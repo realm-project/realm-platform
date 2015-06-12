@@ -1,12 +1,4 @@
-<!DOCTYPE html>
-<html>
-<head lang="en">
-    <meta charset="UTF-8">
-    <title></title>
-    <link rel="stylesheet" type="text/css" href="styles/teacherSessions.css">
-</head>
-<body>
-
+<link rel="stylesheet" type="text/css" href="assets/css/reviewSessions.css">
 
 <div class="date-range date-range-review">
     <div class="date-range__start-date row tab-content__top-row review-start">
@@ -25,5 +17,9 @@
 </div>
 <div class="gridStyle" ng-grid="gridOptions"></div>
 <div class="gridStyle" ng-grid="gridOptionsAll"></div>
-</body>
-</html>
+
+
+<div content-for="common-menu">
+    <a class="list-group-item" ui-sref="teacherHome"><i class="left-sidebar-icon fa fa-home"> Home</i></a>
+    <a class="list-group-item" ui-sref="login"><i class="left-sidebar-icon fa fa-sign-out"> Sign out</i></a>
+</div>

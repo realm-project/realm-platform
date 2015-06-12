@@ -18,7 +18,7 @@ app.config(function ($stateProvider, $urlRouterProvider) {
         .state('notifications',{url: '/signup', templateUrl: 'shared/views/login/signup.html', controller: 'SignupController', data: {authorizedRoles:['guest']}})
 
         //teachers
-        .state('teacherHome',{url: '/signup', templateUrl: 'shared/views/login/signup.html', controller: 'SignupController', data: {authorizedRoles:['guest']}})
+        .state('teacherHome',{url: '/teacherHome', templateUrl: 'shared/views/account/teacherHome.html', controller: 'teacherHomeController', data: {authorizedRoles:['teacher']}})
         .state('teacherCourses',{url: '/signup', templateUrl: 'shared/views/login/signup.html', controller: 'SignupController', data: {authorizedRoles:['guest']}})
         .state('teacherAssignments',{url: '/signup', templateUrl: 'shared/views/login/signup.html', controller: 'SignupController', data: {authorizedRoles:['guest']}})
         .state('teacherSessions',{url: '/teacherSessions', templateUrl: 'shared/views/session/teacherSessions.html', controller: 'TeacherSessionsController', data: {authorizedRoles:['teacher']}})

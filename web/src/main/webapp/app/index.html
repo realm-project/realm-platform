@@ -67,7 +67,7 @@
                 <div yield-to="common-menu">
                     <a class="list-group-item" ui-sref="studentHome"><i class="left-sidebar-icon fa fa-home"></i>Home<i
                             class="fa fa-chevron-right pull-right"></i></a>
-                    <a class="list-group-item" ui-sref="login"><i class="left-sidebar-icon fa fa-sign-out"></i>Log Out<i
+                    <a class="list-group-item" ng-click="logoutFunction()"><i class="left-sidebar-icon fa fa-sign-out"></i>Log Out<i
                             class="fa fa-chevron-right pull-right"></i></a>
                 </div>
 
@@ -162,6 +162,7 @@
     <script src="shared/views/login/login.js"></script>
     <script src="shared/views/login/signup.js"></script>
     <script src="shared/views/account/studentHome.js"></script>
+    <script src="shared/views/account/teacherHome.js"></script>
     <script src="shared/views/account/studentCourses.js"></script>
     <script src="shared/views/account/studentProfile.js"></script>
     <script src="shared/views/session/studentSessions.js"></script>
