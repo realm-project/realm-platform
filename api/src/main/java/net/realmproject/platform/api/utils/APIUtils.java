@@ -16,7 +16,6 @@ import java.util.List;
 import javax.json.Json;
 import javax.json.JsonObject;
 import javax.json.JsonReader;
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletResponse;
 
 import net.objectof.corc.web.v2.HttpRequest;
@@ -55,7 +54,7 @@ public class APIUtils {
         String params;
         String result = null;
         JsonReader jsonReader = null;
-        
+
         try {
             params = RealmCorc.getJson(request.getReader());
             jsonReader = Json.createReader(new StringReader(params));
@@ -63,12 +62,11 @@ public class APIUtils {
             String paramName = key.toLowerCase();
             result = jsonObject.getString(paramName);
         }
-        catch (ServletException | IOException e) {
+        catch (IOException e) {
             e.printStackTrace();
         }
         finally {
-        	if (jsonReader != null)
-        		jsonReader.close();
+            if (jsonReader != null) jsonReader.close();
         }
 
         return result;

@@ -12,8 +12,8 @@ import net.realmproject.platform.schema.Person;
 import net.realmproject.platform.schema.Role;
 import net.realmproject.platform.util.RealmAuthentication;
 import net.realmproject.platform.util.RealmCorc;
-import net.realmproject.platform.util.RealmResponse;
 import net.realmproject.platform.util.RealmRepo;
+import net.realmproject.platform.util.RealmResponse;
 import net.realmproject.platform.util.RealmSerialize;
 
 
@@ -38,8 +38,7 @@ public class IAccountCreator extends IRepoAwareHandler {
 
         Iterable<Person> existingUsers = tx.query("Person", new IQuery("email", info.username));
         if (existingUsers.iterator().hasNext()) {
-            request.getHttpResponse().getWriter().print(new RealmResponse("User already exists"));
-            request.getHttpResponse().setStatus(403);
+            RealmResponse.send(request, 403, "User already exists");
             return;
         }
 
@@ -57,6 +56,11 @@ public class IAccountCreator extends IRepoAwareHandler {
 
         if (role == null) throw new NullPointerException();
 
+        if (info.password == null || info.password.length() < 6) {
+            RealmResponse.send(request, 403, "Password must be at least 6 characters in length");
+            return;
+        }
+
         String salt = RealmAuthentication.generateSalt();
         String passwordHashed = RealmAuthentication.hash(info.password, salt);
 
@@ -71,5 +75,4 @@ public class IAccountCreator extends IRepoAwareHandler {
         tx.close();
 
     }
-
 }
