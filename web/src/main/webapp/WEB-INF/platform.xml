@@ -61,7 +61,7 @@
 			</bean>
 		</constructor-arg>
 		<!-- allow up to 1 attempt over 120 seconds -->
-		<constructor-arg value="1" />
+		<constructor-arg value="3" />
 		<constructor-arg value="120000" />
 	</bean>
 	
@@ -73,7 +73,7 @@
 			</bean>
 		</constructor-arg>
 		<!-- allow up to 1 attempt over 120 seconds -->
-		<constructor-arg value="1" />
+		<constructor-arg value="5" />
 		<constructor-arg value="120000" />
 	</bean>
 
