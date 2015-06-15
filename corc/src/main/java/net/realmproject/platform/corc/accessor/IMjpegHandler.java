@@ -17,6 +17,7 @@ import net.objectof.corc.web.v2.HttpRequest;
 import net.objectof.impl.corc.IHandler;
 import net.realmproject.dcm.accessor.impl.IDeviceAccessor;
 import net.realmproject.dcm.device.stock.camera.Frame;
+import net.realmproject.dcm.event.bus.DeviceEventBus;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -24,14 +25,15 @@ import org.apache.commons.logging.LogFactory;
 
 public class IMjpegHandler extends IHandler<HttpRequest> {
 
-    IDeviceAccessor<Frame> camera;
-
-    public IMjpegHandler(IDeviceAccessor<Frame> camera) {
-        this.camera = camera;
-    }
-
     private static final byte[] CRLF = new byte[] { 0x0d, 0x0a };
     private static final String CONTENT_TYPE = "multipart/x-mixed-replace";
+    private static final String DELIM = "delim";
+
+    IDeviceAccessor<Frame> camera;
+
+    public IMjpegHandler(String id, DeviceEventBus bus) {
+        this.camera = new IDeviceAccessor<>(id, bus);
+    }
 
     private Log logger = LogFactory.getLog(getClass());
 
@@ -40,61 +42,63 @@ public class IMjpegHandler extends IHandler<HttpRequest> {
         return HttpRequest.class;
     }
 
+    // Modified from
+    // https://github.com/x-nagasawa/kmkt/blob/master/src/com/github/kmkt/util/MjpegServlet.java
     @Override
     protected void onExecute(Action action, HttpRequest request) throws IOException, ServletException {
         HttpServletRequest req = request.getHttpRequest();
         HttpServletResponse resp = request.getHttpResponse();
+        OutputStream out = new BufferedOutputStream(resp.getOutputStream());
 
         BlockingQueue<byte[]> frames = new LinkedBlockingQueue<>(10);
-
-        String remote = req.getRemoteAddr() + ":" + req.getRemotePort();
-
         Consumer<Frame> listener = (frame -> {
-            frames.offer(frame.image);
-        });
-
-        try {
-
-            logger.info("Accept HTTP connection from " + remote);
-
-            String delemeter_str = Long.toHexString(System.currentTimeMillis());
-            byte[] delimiter = ("--" + delemeter_str).getBytes();
-
-            resp.setStatus(HttpServletResponse.SC_OK);
-            resp.setContentType(CONTENT_TYPE + ";boundary=" + delemeter_str);
-            resp.setHeader("Connection", "Close");
-
-            camera.getListeners().add(listener);
-            OutputStream out = new BufferedOutputStream(resp.getOutputStream());
+            if (frame.image == null) { return; }
             try {
-                while (true) {
-                    sendFrame(out, frames.take(), delimiter);
-                }
-            }
-            catch (IOException e) {
-                // connection closed
-                logger.info("Close HTTP connection from " + remote);
+                frames.put(frame.image);
             }
             catch (InterruptedException e) {
-                // Interrupted
-                out.close();
+                // TODO Auto-generated catch block
                 e.printStackTrace();
             }
+        });
+        camera.getListeners().add(listener);
 
+        logger.info("Accept HTTP connection from " + req.getRemoteAddr());
+
+        // write initial header
+        resp.setStatus(HttpServletResponse.SC_OK);
+        resp.setContentType(CONTENT_TYPE + ";boundary=" + DELIM);
+        resp.setHeader("Connection", "keep-alive");
+
+        // loop until we're interrupted or the connection is closed, waiting for
+        // new frames and transmitting them
+        try {
+            while (true) {
+                sendFrame(out, frames.take());
+            }
+        }
+        catch (IOException e) {
+            // connection closed
+            logger.info("Close HTTP connection from " + req.getRemoteAddr());
+        }
+        catch (InterruptedException e) {
+            // Interrupted
+            out.close();
+            e.printStackTrace();
         }
         finally {
             camera.getListeners().remove(listener);
         }
-
     }
 
-    private void sendFrame(OutputStream out, byte[] frame, byte[] delimiter) throws IOException {
+    private void sendFrame(OutputStream out, byte[] frame) throws IOException {
+
         if (frame == null) return;
 
         byte[] content_type = "Content-Type: image/jpeg".getBytes();
         byte[] content_length = ("Content-Length: " + frame.length).getBytes();
 
-        out.write(delimiter);
+        out.write(("--" + DELIM).getBytes());
         out.write(CRLF);
         out.write(content_type);
         out.write(CRLF);
@@ -104,6 +108,7 @@ public class IMjpegHandler extends IHandler<HttpRequest> {
         out.write(frame);
         out.write(CRLF);
         out.flush();
+
     }
 
 }
