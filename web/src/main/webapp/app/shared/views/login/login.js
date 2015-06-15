@@ -65,36 +65,17 @@ angular.module('REALM')
 
         $scope.firstName = AuthService.getCurrentUser().value.name.split(' ')[0];
         
-        //$rootScope.toggle('loginSuccessOverlay','on');
-        var userRole= RepoService.getObject("role",AuthService.getCurrentUser().value.role.loc);
-        userRole.then(
-            function(response)
-            {
-                if(typeof(response.data)!="undefined" && typeof(response.data.value)!="undefined" && typeof(response.data.value.name)!="undefined")
-                {
-                    if(response.data.value.name=="student"){
-                        $state.go('studentHome');
-                    }else if (response.data.value.name=="teacher"){
-                        $state.go('teacherHome');
-                    }else if(response.data.value.name=="admin"){
-                        console.log("admin login");
-                        $state.go('teacherHome');
-                    }else{
-                        console.log("Unknown user role");
-                        console.log(response);
-                        $rootScope.$broadcast(AUTH_EVENTS.notFound);
-                    }
-                }else{
-                    console.log("Unknown user role");
-                    console.log(response);
-                    $rootScope.$broadcast(AUTH_EVENTS.notFound);
-                }
-            },function(response){
-                console.log("Cannot get the user role");
-                console.log(response);
-                $rootScope.$broadcast(AUTH_EVENTS.notFound);
-            }
-        );
+        if(AuthService.isAuthorized("student")){
+            $state.go('studentHome');
+        }else if(AuthService.isAuthorized("teacher")){
+            $state.go('teacherHome');
+        }else if(AuthService.isAuthorized("admin")){
+            // not any specific page for admins
+            console.log("admin login");
+            $state.go('teacherHome');
+        }else{
+            $rootScope.$broadcast(AUTH_EVENTS.notFound);
+        }
     });
 
     $scope.$on(AUTH_EVENTS.loginFailed, function() {
