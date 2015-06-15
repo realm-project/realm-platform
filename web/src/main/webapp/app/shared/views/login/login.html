@@ -110,10 +110,14 @@
 		<!--FORGOT PASSWORD OVERLAY-->
 		<div overlay="forgotPasswordOverlay">
 			<h4 class="overlay-title">Forgot Your Password?</h4>    
-			<p>Press OK to send login instructions to {{credentials.email}} (note: this feature hasn't been implemented yet)</p>
-			<p toggle="off" bubble target="forgotPasswordOverlay">
-				<span class="btn btn-primary">Ok</span>
-			</p>  
+			<p>Press "Send Email" to send login instructions to {{credentials.email}}</p>
+			<span toggle="off" bubble target="forgotPasswordOverlay">
+				<span class="btn btn-primary" ng-click="sendEmail()">Send Email</span>
+			</span>  
+			<span toggle="off" bubble target="forgotPasswordOverlay">
+				<span class="btn btn-primary">Return</span>
+			</span>  
+
 		</div>
 
 

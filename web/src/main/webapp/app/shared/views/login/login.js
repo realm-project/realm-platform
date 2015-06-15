@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('REALM')
-.controller('LoginController', function ($scope, $rootScope, AuthService, StorageService, AUTH_EVENTS, $state, RepoService) {
+.controller('LoginController', function ($scope, $rootScope, AuthService, StorageService, AUTH_EVENTS, $state, RepoService , $http) {
     
     
 
@@ -31,6 +31,7 @@ angular.module('REALM')
             }            
         }
     }
+    //TODO: give an appropriate message if storageService was not available
     
     
     $scope.login = function(credentials){
@@ -60,6 +61,16 @@ angular.module('REALM')
             }    
         });
     }
+    $scope.sendEmail=function(){
+        //TODO: show loading icon
+        $http.post(localStorage.basePath + "rest/forgotpassword",{"username": $scope.credentials.email}, {withCredentials:true}).then(function(response){
+            //TODO: hide loading icon
+            console.log(response);
+        },function(errResponse){
+            //TODO: hide loading icon and show an appropriate error message
+            console.log(errResponse);
+        });
+    }
 
     $scope.$on(AUTH_EVENTS.loginSuccess, function() {
 
@@ -86,19 +97,3 @@ angular.module('REALM')
         $rootScope.toggle('resourceNotFoundOverlay','on');
     });
 });
-
-
-/*switch(User.currentUser.role)
-            {
-                case 'student': 
-                    $state.go('studentHome');
-                    break;
-                case 'teacher': 
-                    $state.go('teacherHome');
-                    break;
-                case 'admin': 
-                    $state.go('adminHome');
-                    break;
-                default:
-                    alert('Error: User has no role');
-            }*/
