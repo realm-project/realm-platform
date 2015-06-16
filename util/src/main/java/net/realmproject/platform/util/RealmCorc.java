@@ -69,7 +69,7 @@ public class RealmCorc {
         return StringUtils.join(fullPath, "/");
     }
 
-    public static String getJson(Reader jsonReader) throws IOException, ServletException {
+    public static String getJson(Reader jsonReader) throws IOException {
 
         if (jsonReader.markSupported()) {
             // jsonReader.mark(Integer.MAX_VALUE);

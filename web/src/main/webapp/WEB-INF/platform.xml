@@ -17,8 +17,9 @@
 			<map>
 				<entry key="login" value-ref="platform-login" />
 				<entry key="logout" value-ref="platform-logout" />
+				<entry key="forgotpassword" value-ref="platform-password-forgot" />
+				<entry key="resetpassword" value-ref="platform-password-reset" />
 				<entry key="signup" value-ref="platform-signup" />
-				<entry key="passwordreset" value-ref="platform-passwordreset" />
 				<entry key="device" value-ref="platform-authn-device" />
 				<entry key="repo" value-ref="platform-authn-repository" />
 				<entry key="api" value-ref="platform-authn-api" />
@@ -51,10 +52,30 @@
 
 
 
-	<!-- Password Reset -->
-	<bean id="platform-passwordreset" class="net.realmproject.platform.security.authentication.IPasswordResetter">
-		<constructor-arg ref="application-database" />
+	<!-- Forgot Password -->
+	<bean id="platform-password-forgot" class="net.objectof.model.corc.IRateLimiter">
+		<constructor-arg>
+			<bean class="net.realmproject.platform.security.authentication.password.ForgotPassword">
+				<constructor-arg ref="application-database" />
+			</bean>
+		</constructor-arg>
+		<!-- allow up to 1 attempt over 120 seconds -->
+		<constructor-arg value="3" />
+		<constructor-arg value="120000" />
 	</bean>
+	
+	<!-- Reset Password -->
+	<bean id="platform-password-reset" class="net.objectof.model.corc.IRateLimiter">
+		<constructor-arg>
+			<bean class="net.realmproject.platform.security.authentication.password.ResetPassword">
+				<constructor-arg ref="application-database" />
+			</bean>
+		</constructor-arg>
+		<!-- allow up to 1 attempt over 120 seconds -->
+		<constructor-arg value="5" />
+		<constructor-arg value="120000" />
+	</bean>
+
 
 
 

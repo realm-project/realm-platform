@@ -1,4 +1,4 @@
-package net.realmproject.platform.security.authentication;
+package net.realmproject.platform.security.authentication.password;
 
 
 import net.objectof.connector.Connector;
@@ -6,6 +6,7 @@ import net.objectof.connector.ConnectorException;
 import net.objectof.corc.Action;
 import net.objectof.corc.web.v2.HttpRequest;
 import net.realmproject.platform.schema.Person;
+import net.realmproject.platform.security.authentication.AbstractAuthenticator;
 import net.realmproject.platform.util.RealmAuthentication;
 import net.realmproject.platform.util.RealmResponse;
 
@@ -18,14 +19,14 @@ import net.realmproject.platform.util.RealmResponse;
  *
  */
 
-public class IPasswordChanger extends AbstractAuthenticator<PasswordChange> {
+public class ChangePassword extends AbstractAuthenticator<ChangePasswordData> {
 
-    public IPasswordChanger(Connector connector) throws ConnectorException {
-        super(connector, PasswordChange.class);
+    public ChangePassword(Connector connector) throws ConnectorException {
+        super(connector, ChangePasswordData.class);
     }
 
     @Override
-    protected void onAuthenticate(Action action, HttpRequest request, Person person, PasswordChange info,
+    protected void onAuthenticate(Action action, HttpRequest request, Person person, ChangePasswordData info,
             boolean success) throws Exception {
 
         if (success) {
