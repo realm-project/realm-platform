@@ -48,10 +48,15 @@ app.run(function ($rootScope, $state, AUTH_EVENTS, AuthService) {
     //------------------------------------------------
     $rootScope.$on('$stateChangeStart', function (event, next) {
         var authorizedRoles = next.data.authorizedRoles;
-        if(next.url == '/login' || next.url == '/signup'){
-            //No need to authorize, anyone can access
+
+        for (var index in authorizedRoles){
+            if(authorizedRoles[index]=='guest'){
+                //No need to authorize, anyone can access
+            return;
+            }
         }
-        else if(!AuthService.isAuthorized(authorizedRoles)) {
+            
+        if(!AuthService.isAuthorized(authorizedRoles)) {
             event.preventDefault();
             if (AuthService.isAuthenticated()) {
                 // user is not allowed

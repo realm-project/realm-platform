@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('REALM')
-.controller('LoginController', function ($scope, $rootScope, AuthService, StorageService, AUTH_EVENTS, $state, RepoService , $http) {
+.controller('LoginController', function ($scope, $rootScope, AuthService, StorageService, AUTH_EVENTS, $state, RepoService , $http, USER_ROLES) {
     
     
 
@@ -76,13 +76,12 @@ angular.module('REALM')
 
         $scope.firstName = AuthService.getCurrentUser().value.name.split(' ')[0];
         
-        if(AuthService.isAuthorized("student")){
+        if(AuthService.isAuthorized(USER_ROLES.student)){
             $state.go('studentHome');
-        }else if(AuthService.isAuthorized("teacher")){
+        }else if(AuthService.isAuthorized(USER_ROLES.teacher)){
             $state.go('teacherHome');
-        }else if(AuthService.isAuthorized("admin")){
+        }else if(AuthService.isAuthorized(USER_ROLES.admin)){
             // not any specific page for admins
-            console.log("admin login");
             $state.go('teacherHome');
         }else{
             $rootScope.$broadcast(AUTH_EVENTS.notFound);
