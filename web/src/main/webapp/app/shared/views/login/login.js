@@ -16,7 +16,7 @@ angular.module('REALM')
     }
     
     $scope.firstName = '';
-
+    $scope.generalErrorMessage = '';
 
     if(StorageService.isAvailable())
     {
@@ -65,9 +65,17 @@ angular.module('REALM')
         //TODO: show loading icon
         $http.post(localStorage.basePath + "rest/forgotpassword",{"username": $scope.credentials.email}, {withCredentials:true}).then(function(response){
             //TODO: hide loading icon
-            console.log(response);
+            $rootScope.toggle('forgotPasswordSuccessOverlay','on');
+            
         },function(errResponse){
-            //TODO: hide loading icon and show an appropriate error message
+            //TODO: hide loading icon
+            if (errResponse.data !== undefined && errResponse.data.message !== undefined && errResponse.data.display === true)
+            {
+                $scope.generalErrorMessage = errResponse.data.message;
+                $rootScope.toggle('generalErrorOverlay','on');
+            }else{
+                $rootScope.toggle('resourceNotFoundOverlay','on');
+            }
             console.log(errResponse);
         });
     }

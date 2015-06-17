@@ -10,6 +10,8 @@ app.config(function ($stateProvider, $urlRouterProvider) {
         .state('login', {url:'/login', templateUrl: 'shared/views/login/login.html', controller: 'LoginController', data: {authorizedRoles:['guest']}})
         .state('signup', {url: '/signup', templateUrl: 'shared/views/login/signup.html', controller: 'SignupController', data: {authorizedRoles:['guest']}})
 
+        .state('resetPass', {url:'/resetPass/:tokenID', templateUrl: 'shared/views/login/resetPass.html', controller: 'ResetPassController', data: {authorizedRoles:['guest']}})
+
         //students
         .state('studentHome',{url: '/studentHome', templateUrl: 'shared/views/account/studentHome.html', controller: 'StudentHomeController', data: {authorizedRoles:['student','teacher']}})
         .state('studentProfile',{url: '/studentProfile', templateUrl: 'shared/views/account/studentProfile.html', controller: 'StudentProfileController', data: {authorizedRoles:['student','teacher']}})

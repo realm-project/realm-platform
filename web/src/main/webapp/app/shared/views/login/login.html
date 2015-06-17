@@ -102,7 +102,7 @@
 				Something went wrong. Sorry for the inconvenience. PLease contact the system administrator.
 			</p>
 			<p toggle="off" bubble target="resourceNotFoundOverlay">
-				<a><span class="btn btn-success btn-lg">Enter REALM</span></a>
+				<a><span class="btn btn-primary">Enter REALM</span></a>
 			</p>  
 		</div>
 
@@ -120,5 +120,22 @@
 
 		</div>
 
+		<!--General Error messages -->
+		<div overlay="generalErrorOverlay">
+			<h4 class="overlay-title">Error</h4>    
+			<p>Error: {{generalErrorMessage}}</p>
+			<p toggle="off" bubble target="generalErrorOverlay">
+				<a><span class="btn btn-primary">Return</span></a>
+			</p> 
+		</div>
+
+		<!-- forgotPasswordSuccessOverlay -->
+		<div overlay="forgotPasswordSuccessOverlay">
+			<h4 class="overlay-title">Reset Password</h4>    
+			<p>We have sent the reset password instructions to {{credentials.email}}</p>
+			<p toggle="off" bubble target="forgotPasswordSuccessOverlay">
+				<a><span class="btn btn-success">OK</span></a>
+			</p> 
+		</div>		
 
 </div>
