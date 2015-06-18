@@ -25,11 +25,6 @@ public class IDeviceCommanderHandler extends IHandler<HttpRequest> {
         accessor = new DeviceCommander<>(id, bus);
     }
 
-    public IDeviceCommanderHandler(String id, DeviceEventBus bus, DeviceRecorder recorder) {
-        super();
-        accessor = new DeviceCommander<>(id, bus, recorder);
-    }
-
     @Override
     protected void onExecute(Action action, HttpRequest http) throws IOException, ServletException {
         switch (http.getHttpRequest().getMethod()) {
@@ -43,7 +38,7 @@ public class IDeviceCommanderHandler extends IHandler<HttpRequest> {
                 String json = RealmCorc.getJson(http.getReader());
                 Command command = RealmSerialize.deserialize(json, Command.class);
                 String label = accessor.sendCommand(command);
-                http.getWriter().write("{\"label\": \"" + label + "\"}");
+                http.getWriter().write("{\"id\": \"" + label + "\"}");
                 return;
 
             default:

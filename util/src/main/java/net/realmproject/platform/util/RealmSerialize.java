@@ -1,6 +1,7 @@
 package net.realmproject.platform.util;
 
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.Collections;
 import java.util.Map;
@@ -18,7 +19,7 @@ public class RealmSerialize {
         return (Map<String, Serializable>) deserialize(serialize(o));
     }
 
-    public static <T> T convertMessage(Object publication, Class<T> clazz) {
+    public static <T> T convertMessage(Object publication, Class<T> clazz) throws IOException {
         String asString = serialize(publication);
         return deserialize(asString, clazz);
     }
@@ -27,7 +28,8 @@ public class RealmSerialize {
         return new JSONDeserializer<Object>().deserialize(json);
     }
 
-    public static <T> T deserialize(String json, Class<T> clazz) {
+    public static <T> T deserialize(String json, Class<T> clazz) throws IOException {
+        if (json == null || json.length() == 0) { throw new IOException(); }
         return new JSONDeserializer<T>().deserialize(json, clazz);
     }
 

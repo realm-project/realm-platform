@@ -8,9 +8,11 @@ import net.objectof.corc.web.v2.HttpRequest;
 import net.objectof.model.impl.aggr.IIndexed;
 import net.objectof.rt.impl.IFn;
 import net.realmproject.platform.api.utils.APIUtils;
+import net.realmproject.platform.schema.DeviceCommand;
 import net.realmproject.platform.schema.Person;
 import net.realmproject.platform.schema.Session;
 import net.realmproject.platform.util.RealmResponse;
+import net.realmproject.platform.util.model.DeviceCommands;
 import net.realmproject.platform.util.model.Sessions;
 
 
@@ -100,5 +102,20 @@ public class ICommonAPIReceiver extends IFn {
 
         // Add the name of student to the response
         APIUtils.addStringResultToResponse(student.getName(), request);
+    }
+
+    @Selector
+    public void getDeviceCommandById(Person person, HttpRequest request) throws IOException {
+        String id = APIUtils.getStringFromRequest("id", request);
+        if (id == null) {
+            RealmResponse.send(request, 400, "DeviceCommand Id cannot be null");
+        }
+
+        DeviceCommand command = DeviceCommands.forId(person.tx(), id);
+        if (command == null) {
+            RealmResponse.send(request, 400, "DeviceCommand not found");
+        }
+
+        RealmResponse.sendJson(request, command);
     }
 }
