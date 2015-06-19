@@ -32,7 +32,7 @@
 				</dependencies>
 				<groupId>objectof</groupId>
 				<artifactId>objectof-maven-plugin</artifactId>
-				<version>0.1.1</version>
+				<version>0.1.2</version>
 				<configuration>
 					<file>RealmGenerationContext.xml</file>
 				</configuration>
@@ -61,7 +61,7 @@
  		<dependency> 
  			<groupId>objectof</groupId>
  			<artifactId>objectof-model</artifactId>
- 			<version>0.1.1</version>
+ 			<version>0.1.2</version>
 		</dependency>
 		<dependency>
 			<groupId>net.realmproject.platform</groupId>
@@ -77,7 +77,7 @@
 		<dependency>
 			<groupId>objectof</groupId>
 			<artifactId>objectof-repo</artifactId>
-			<version>0.1.1</version>
+			<version>0.1.2</version>
 		</dependency>
 		<dependency>
 			<groupId>postgresql</groupId>
@@ -88,7 +88,7 @@
 		<dependency>
 			<groupId>objectof</groupId>
 			<artifactId>objectof-maven-plugin</artifactId>
-			<version>0.1.1</version>
+			<version>0.1.2</version>
 			<type>maven-plugin</type>
 		</dependency>
 	</dependencies>
