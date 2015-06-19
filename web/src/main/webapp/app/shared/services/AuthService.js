@@ -31,33 +31,27 @@ angular.module('REALM')
                 //Call REALM Login API
                 $http.post(localStorage.basePath + loginPath,{"username": credentials.email, "password": credentials.password}, {withCredentials:true})
                 .then(function(response){
-                    
-                    console.log("Login Response: ");
-                    console.log(response);
 
-                    $timeout(function(){
-                        
-                        //var allCookies = document.cookie;
-                        //console.log("Cookies: ");
-                        //console.log(allCookies);
+                    //When login is successful, deferred.promise is resolved with value = person object returned from login API   
+                    var personObject = response.data;
+                    // read the user role after login
+                    $http.get(localStorage.basePath + 'rest/repo/role/' + personObject.value.role.loc + ".json").then(function(roleResponse){
+                        if(typeof(roleResponse.data)!="undefined" && typeof(roleResponse.data.value)!=="undefined" && typeof(roleResponse.data.value.name)!=="undefined"){
 
-
-                        //When login is successful, deferred.promise is resolved with value = person object returned from login API
-                        if(response.status == 200)
-                        {
-                            var personObject = response.data;
                             localStorage.currentUser = JSON.stringify(personObject);
+                            localStorage.currentRole = roleResponse.data.value.name;
                             deferred.resolve(personObject);
+                        }else{
+                            console.log("cannot read the user role");
+                            deferred.reject(404);
                         }
-                        //When login fails, deferred.promise is rejected with reason = status code returned from login server
-                        else
-                        {
-                            deferred.reject(response.status);
-                        }
-                    });
-                }, function(response) {
-                    console.log('login fail error: ' + response.status)
-                    deferred.reject(response.status);
+                    },function(errResponse){
+                        console.log('login fail error: cannot load the user role' + errResponse.status)
+                        deferred.reject(errResponse.status);
+                    });                      
+                }, function(errResponse) {
+                    console.log('login fail error: ' + errResponse.status)
+                    deferred.reject(errResponse.status);
                 });
                 
     			return deferred.promise;
@@ -65,6 +59,7 @@ angular.module('REALM')
 
         this.logout = function(){
             localStorage.removeItem('currentUser');
+            localStorage.removeItem('currentRole');
             var deferred = $q.defer();
             $http.post(localStorage.basePath + logoutPath).then(function(response){
                 deferred.resolve(response);
@@ -77,33 +72,38 @@ angular.module('REALM')
   //------------------------------------------------------------------------------------------------
     	this.isAuthenticated = function(){
     		
-            /*if(StorageService.isAvailable())
+            if(StorageService.isAvailable())
             {
-                return (localStorage.currentUser !== null);
+                return (typeof(localStorage.currentUser) !== "undefined");
             }
             else
             {
-                //FAKE IT TIL YOU MAKE IT
-                return true;
-            }*/
-
-            return true;
+                // we do not support browsers without localStorage
+                // possible solution: use cookie
+                return false;
+            }
     	}
 
     	this.isAuthorized = function (authorizedRoles) {
-	        /*if (!angular.isArray(authorizedRoles)) {
-	           authorizedRoles = [authorizedRoles];
+	        
+            if (!angular.isArray(authorizedRoles)) {
+                // to handle single authorizedRoles (example: 'teacher')
+                authorizedRoles = [authorizedRoles];
 	        }
 	        
-            if(StorageService.isAvailable())
-            {
-                return (this.isAuthenticated() && authorizedRoles.indexOf(localStorage.currentUser.role) !== -1);
+            if(StorageService.isAvailable() && this.isAuthenticated())
+            {  
+                if (localStorage.currentRole === "admin"){
+                    // admin can access any page
+                    return true;
+                }else{
+                    return (authorizedRoles.indexOf(localStorage.currentRole) !== -1);
+                }
+                  
+            }else{
+                // user is not logged-in or the browser does not support localStorage
+                // we do not support browsers without localStorage. possible solution: use cookie
+                return false;
             }
-            else
-            {
-                return (this.isAuthenticated() && authorizedRoles.indexOf($rootScope.currentUser.role) !== -1);
-            }*/
-
-            return true;
 	    }
 });

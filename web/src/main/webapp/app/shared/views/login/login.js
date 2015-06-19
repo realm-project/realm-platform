@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('REALM')
-.controller('LoginController', function ($scope, $rootScope, AuthService, StorageService, AUTH_EVENTS, $state, RepoService) {
+.controller('LoginController', function ($scope, $rootScope, AuthService, StorageService, AUTH_EVENTS, $state, RepoService , $http, USER_ROLES) {
     
     
 
@@ -16,7 +16,7 @@ angular.module('REALM')
     }
     
     $scope.firstName = '';
-
+    $scope.generalErrorMessage = '';
 
     if(StorageService.isAvailable())
     {
@@ -31,6 +31,7 @@ angular.module('REALM')
             }            
         }
     }
+    //TODO: give an appropriate message if storageService was not available
     
     
     $scope.login = function(credentials){
@@ -60,41 +61,39 @@ angular.module('REALM')
             }    
         });
     }
+    $scope.sendEmail=function(){
+        //TODO: show loading icon
+        $http.post(localStorage.basePath + "rest/forgotpassword",{"username": $scope.credentials.email}, {withCredentials:true}).then(function(response){
+            //TODO: hide loading icon
+            $rootScope.toggle('forgotPasswordSuccessOverlay','on');
+            
+        },function(errResponse){
+            //TODO: hide loading icon
+            if (errResponse.data !== undefined && errResponse.data.message !== undefined && errResponse.data.display === true)
+            {
+                $scope.generalErrorMessage = errResponse.data.message;
+                $rootScope.toggle('generalErrorOverlay','on');
+            }else{
+                $rootScope.toggle('resourceNotFoundOverlay','on');
+            }
+            console.log(errResponse);
+        });
+    }
 
     $scope.$on(AUTH_EVENTS.loginSuccess, function() {
 
         $scope.firstName = AuthService.getCurrentUser().value.name.split(' ')[0];
         
-        //$rootScope.toggle('loginSuccessOverlay','on');
-        var userRole= RepoService.getObject("role",AuthService.getCurrentUser().value.role.loc);
-        userRole.then(
-            function(response)
-            {
-                if(typeof(response.data)!="undefined" && typeof(response.data.value)!="undefined" && typeof(response.data.value.name)!="undefined")
-                {
-                    if(response.data.value.name=="student"){
-                        $state.go('studentHome');
-                    }else if (response.data.value.name=="teacher"){
-                        $state.go('teacherHome');
-                    }else if(response.data.value.name=="admin"){
-                        console.log("admin login");
-                        $state.go('teacherHome');
-                    }else{
-                        console.log("Unknown user role");
-                        console.log(response);
-                        $rootScope.$broadcast(AUTH_EVENTS.notFound);
-                    }
-                }else{
-                    console.log("Unknown user role");
-                    console.log(response);
-                    $rootScope.$broadcast(AUTH_EVENTS.notFound);
-                }
-            },function(response){
-                console.log("Cannot get the user role");
-                console.log(response);
-                $rootScope.$broadcast(AUTH_EVENTS.notFound);
-            }
-        );
+        if(AuthService.isAuthorized(USER_ROLES.student)){
+            $state.go('studentHome');
+        }else if(AuthService.isAuthorized(USER_ROLES.teacher)){
+            $state.go('teacherHome');
+        }else if(AuthService.isAuthorized(USER_ROLES.admin)){
+            // not any specific page for admins
+            $state.go('teacherHome');
+        }else{
+            $rootScope.$broadcast(AUTH_EVENTS.notFound);
+        }
     });
 
     $scope.$on(AUTH_EVENTS.loginFailed, function() {
@@ -105,19 +104,3 @@ angular.module('REALM')
         $rootScope.toggle('resourceNotFoundOverlay','on');
     });
 });
-
-
-/*switch(User.currentUser.role)
-            {
-                case 'student': 
-                    $state.go('studentHome');
-                    break;
-                case 'teacher': 
-                    $state.go('teacherHome');
-                    break;
-                case 'admin': 
-                    $state.go('adminHome');
-                    break;
-                default:
-                    alert('Error: User has no role');
-            }*/

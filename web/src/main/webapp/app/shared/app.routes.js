@@ -10,22 +10,24 @@ app.config(function ($stateProvider, $urlRouterProvider) {
         .state('login', {url:'/login', templateUrl: 'shared/views/login/login.html', controller: 'LoginController', data: {authorizedRoles:['guest']}})
         .state('signup', {url: '/signup', templateUrl: 'shared/views/login/signup.html', controller: 'SignupController', data: {authorizedRoles:['guest']}})
 
+        .state('resetPass', {url:'/resetPass/:tokenID', templateUrl: 'shared/views/login/resetPass.html', controller: 'ResetPassController', data: {authorizedRoles:['guest']}})
+
         //students
-        .state('studentHome',{url: '/studentHome', templateUrl: 'shared/views/account/studentHome.html', controller: 'StudentHomeController', data: {authorizedRoles:['student']}})
-        .state('studentProfile',{url: '/studentProfile', templateUrl: 'shared/views/account/studentProfile.html', controller: 'StudentProfileController', data: {authorizedRoles:['student']}})
-        .state('studentCourses',{url: '/studentCourses', templateUrl: 'shared/views/account/studentCourses.html', controller: 'StudentCoursesController', data: {authorizedRoles:['student']}})
-        .state('studentSessions',{url: '/studentSessions', templateUrl: 'shared/views/session/studentSessions.html', controller: 'StudentSessionsController', data: {authorizedRoles:['student']}})
-        .state('notifications',{url: '/signup', templateUrl: 'shared/views/login/signup.html', controller: 'SignupController', data: {authorizedRoles:['guest']}})
+        .state('studentHome',{url: '/studentHome', templateUrl: 'shared/views/account/studentHome.html', controller: 'StudentHomeController', data: {authorizedRoles:['student','teacher']}})
+        .state('studentProfile',{url: '/studentProfile', templateUrl: 'shared/views/account/studentProfile.html', controller: 'StudentProfileController', data: {authorizedRoles:['student','teacher']}})
+        .state('studentCourses',{url: '/studentCourses', templateUrl: 'shared/views/account/studentCourses.html', controller: 'StudentCoursesController', data: {authorizedRoles:['student','teacher']}})
+        .state('studentSessions',{url: '/studentSessions', templateUrl: 'shared/views/session/studentSessions.html', controller: 'StudentSessionsController', data: {authorizedRoles:['student','teacher']}})
+        //.state('notifications',{url: '/signup', templateUrl: 'shared/views/login/signup.html', controller: 'SignupController', data: {authorizedRoles:['guest']}})
 
         //teachers
         .state('teacherHome',{url: '/teacherHome', templateUrl: 'shared/views/account/teacherHome.html', controller: 'teacherHomeController', data: {authorizedRoles:['teacher']}})
-        .state('teacherCourses',{url: '/signup', templateUrl: 'shared/views/login/signup.html', controller: 'SignupController', data: {authorizedRoles:['guest']}})
-        .state('teacherAssignments',{url: '/signup', templateUrl: 'shared/views/login/signup.html', controller: 'SignupController', data: {authorizedRoles:['guest']}})
+        //.state('teacherCourses',{url: '/signup', templateUrl: 'shared/views/login/signup.html', controller: 'SignupController', data: {authorizedRoles:['guest']}})
+        //.state('teacherAssignments',{url: '/signup', templateUrl: 'shared/views/login/signup.html', controller: 'SignupController', data: {authorizedRoles:['guest']}})
         .state('teacherSessions',{url: '/teacherSessions', templateUrl: 'shared/views/session/teacherSessions.html', controller: 'TeacherSessionsController', data: {authorizedRoles:['teacher']}})
         .state('reviewsSessions',{url: '/reviewSessions', templateUrl: 'shared/views/session/reviewSessions.html', controller: 'ReviewSessionsController', data: {authorizedRoles:['teacher']}})
-        .state('teacherStudents',{url: '/signup', templateUrl: 'shared/views/login/signup.html', controller: 'SignupController', data: {authorizedRoles:['guest']}})
-        .state('teacherProfile',{url: '/signup', templateUrl: 'shared/views/login/signup.html', controller: 'SignupController', data: {authorizedRoles:['guest']}})
-        .state('adminHome',{url: '/signup', templateUrl: 'shared/views/login/signup.html', controller: 'SignupController', data: {authorizedRoles:['guest']}})
+        //.state('teacherStudents',{url: '/signup', templateUrl: 'shared/views/login/signup.html', controller: 'SignupController', data: {authorizedRoles:['guest']}})
+        //.state('teacherProfile',{url: '/signup', templateUrl: 'shared/views/login/signup.html', controller: 'SignupController', data: {authorizedRoles:['guest']}})
+        //.state('adminHome',{url: '/signup', templateUrl: 'shared/views/login/signup.html', controller: 'SignupController', data: {authorizedRoles:['guest']}})
 
         //experiment state
         .state('experiment',{url: '/experiment', templateUrl: 'shared/views/experiment/experiment.html', controller: 'ExperimentController', data: {authorizedRoles:['student']}});
@@ -42,16 +44,21 @@ app.config(function ($stateProvider, $urlRouterProvider) {
 });
 
 
-app.run(function ($rootScope, AUTH_EVENTS, AuthService) {
+app.run(function ($rootScope, $state, AUTH_EVENTS, AuthService) {
     //check if session storage has any states stored!
     //if yes, then add the states
     //------------------------------------------------
     $rootScope.$on('$stateChangeStart', function (event, next) {
         var authorizedRoles = next.data.authorizedRoles;
-        if(next.url == '/login' || next.url == '/signup' || next.url == '/studentHome'){
-            //No need to authorize, anyone can access
+
+        for (var index in authorizedRoles){
+            if(authorizedRoles[index]=='guest'){
+                //No need to authorize, anyone can access
+            return;
+            }
         }
-        else if(!AuthService.isAuthorized(authorizedRoles)) {
+            
+        if(!AuthService.isAuthorized(authorizedRoles)) {
             event.preventDefault();
             if (AuthService.isAuthenticated()) {
                 // user is not allowed
@@ -60,6 +67,7 @@ app.run(function ($rootScope, AUTH_EVENTS, AuthService) {
                 // user is not logged in
                 $rootScope.$broadcast(AUTH_EVENTS.notAuthenticated);
             }
+            $state.go('login');
         }
     });
 });
