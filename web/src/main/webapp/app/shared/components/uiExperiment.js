@@ -32,29 +32,32 @@ angular.module('REALM').directive('uiExperiment',['$timeout', '$http', '$q','Rob
     },
     controller: function ControllerFunction($scope, $rootScope, $element, $attrs)
     {
-        //window.hScroll = new IScroll($($element).find('.ui-experiment__container').get(0), { scrollX: true, scrollY: false, mouseWheel: false, disableMouse: true, scrollbars: true, interactiveScrollbars:true, snap:true });
-        //window.vScrolls = [];
-        //**************************BUSY INDICATOR CODE****************************/
-        //this should get updated dynamically
-        // the default value is for mico
-        var robotPath = "rest/device/mico";
-        if ($scope.layout.options != null && typeof($scope.layout.options.robotPath) != "undefined"){
-            robotPath = $scope.layout.options.robotPath;
+        
+        
+        if ($scope.layout.options != null && $scope.layout.options.supportRobotMode !== undefined && $scope.layout.options.supportRobotMode === false){
+            // skip the robot mode request if supportRobotMode===false
+        }else{
+            // get the robot mode in a timeout
+            // the default value for robotpath is mico
+            var robotPath = "rest/device/mico";
+            if ($scope.layout.options != null && $scope.layout.options.robotPath !== undefined){
+                robotPath = $scope.layout.options.robotPath;
+            }
+            $scope.robotMode="IDLE";
+            $rootScope.robotStatus="IDLE";
+            var getRobotState = function(){
+                RobotService.getMode(robotPath).then(function(mode){
+                    $scope.robotMode=mode;
+                    $rootScope.robotStatus=mode;
+                    //console.log(mode)
+                    setTimeout(getRobotState,30);
+                }, function(response){
+                    //console.log(response);
+                    setTimeout(getRobotState,30);
+                });
+            };
+            getRobotState();
         }
-        $scope.robotMode="IDLE";
-        $rootScope.robotStatus="IDLE";
-        var getRobotState = function(){
-            RobotService.getMode(robotPath).then(function(mode){
-                $scope.robotMode=mode;
-                $rootScope.robotStatus=mode;
-                //console.log(mode)
-                setTimeout(getRobotState,30);
-            }, function(response){
-                //console.log(response);
-                setTimeout(getRobotState,30);
-            });
-        };
-        getRobotState();
 
         $scope.$watch('robotMode',function()
         {
