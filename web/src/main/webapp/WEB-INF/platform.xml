@@ -20,7 +20,6 @@
 				<entry key="forgotpassword" value-ref="platform-password-forgot" />
 				<entry key="resetpassword" value-ref="platform-password-reset" />
 				<entry key="signup" value-ref="platform-signup" />
-				<entry key="passwordreset" value-ref="platform-passwordreset" />
 				<entry key="device" value-ref="platform-authn-device" />
 				<entry key="repo" value-ref="platform-authn-repository" />
 				<entry key="api" value-ref="platform-authn-api" />
