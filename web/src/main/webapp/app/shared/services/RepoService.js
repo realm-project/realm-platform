@@ -70,8 +70,8 @@ angular.module('REALM')
                     "device": device
                 }
             }
-            console.log(apiPath);
-            console.log(postData)
+            //console.log(apiPath);
+            //console.log(postData)
             $http.post(apiPath, postData).then(
                 function (response) {
                     console.log(response);

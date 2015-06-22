@@ -8,6 +8,10 @@
 	
 
 	<bean id="platform" class="net.objectof.model.corc.IExceptionHandler">
+		<constructor-arg ref="platform-nocache" />
+	</bean>
+	
+	<bean id="platform-nocache" class="net.realmproject.platform.corc.INoCacheHandler">
 		<constructor-arg ref="platform-router" />
 	</bean>
 
@@ -20,7 +24,6 @@
 				<entry key="forgotpassword" value-ref="platform-password-forgot" />
 				<entry key="resetpassword" value-ref="platform-password-reset" />
 				<entry key="signup" value-ref="platform-signup" />
-				<entry key="passwordreset" value-ref="platform-passwordreset" />
 				<entry key="device" value-ref="platform-authn-device" />
 				<entry key="repo" value-ref="platform-authn-repository" />
 				<entry key="api" value-ref="platform-authn-api" />

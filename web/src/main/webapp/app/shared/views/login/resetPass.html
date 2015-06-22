@@ -1,0 +1,94 @@
+<link href="assets/css/resetPass.css" rel="stylesheet" type="text/css"/>
+
+<div class="scrollable">
+	<div class="scrollable-content section">
+		<form name="resetForm" class="reset-form" ng-submit="resetPass()">
+
+			<div class="form-group row">
+				<label class="control-label reset-form__label col-xs-12 col-sm-3 col-lg-3">Reset Token</label>
+				<div class="form-control-wrapper col-xs-12 col-sm-6 col-lg-6">
+						<input required name="resetToken" ng-model="resetData.token" class="form-control">
+				</div>
+			</div>
+			
+			<div class="form-group row">
+				<label class="control-label reset-form__label col-xs-12 col-sm-3 col-lg-3">Username(email)</label>
+				<div class="form-control-wrapper col-xs-12 col-sm-6 col-lg-6">
+						<input required type="email" name="email" placeholder="Email" ng-model="resetData.email" class="form-control">
+				</div>
+			</div>
+
+			<!--PASSWORD INPUT-->
+			<div class="form-group row">
+				<label class="control-label reset-form__label col-xs-12 col-sm-3 col-lg-3">New Password</label>
+				<div class="form-control-wrapper col-xs-12 col-sm-6 col-lg-6">
+					<input required ng-minlength="6" equals="{{resetData.confirmPassword}}" type="password" name="password" placeholder="Password" ng-model="resetData.password" class="form-control">
+				</div>
+			</div>
+
+			<!--CONFIRM PASSWORD INPUT-->
+			<div class="form-group row">
+				<label class="control-label reset-form__label col-xs-12 col-sm-3 col-lg-3">Password Confirm</label>
+				<div class="form-control-wrapper col-xs-12 col-sm-6 col-lg-6">
+					<input required ng-minlength="6" equals="{{resetData.password}}" type="password" name="confirmPassword" placeholder="Password Confirm" ng-model="resetData.confirmPassword" class="form-control"/>
+				</div>
+			</div>
+			<p ng-show="submitted && resetData.password !== resetData.confirmPassword" class="reset-form-warning">
+				<span class="fa fa-exclamation-circle"></span>
+				 Your password does not match
+			</p>
+			
+			<!--RESET BUTTON-->
+			<div class="form-group row">
+				<input type="submit" class="reset-form__button btn btn-primary" value="Login">
+			</div>
+
+		</form>
+	</div>
+
+		<!--TITLE-->
+		<div content-for="title">
+			<i class="fa fa-sign-in"></i>	
+			<span>Reset Password</span>
+		</div>
+
+		<!--LEFT SIDEBAR-->
+		<div content-for="common-menu">
+         <a class="list-group-item" ui-sref="login">Login<i class="fa fa-chevron-right pull-right"></i></a>
+         <a class="list-group-item" ui-sref="signup">Sign Up <i class="fa fa-chevron-right pull-right"></i></a>
+      </div>
+
+		<!--BOTTOM NAVBAR-->
+		<div content-for="bottom-navbar">		
+		</div>
+		
+		<!--RESOURCE NOT FOUND OVERLAY-->
+		<div overlay="resourceNotFoundOverlay">
+			<h4 class="overlay-title">It's not you, it's us!</h4>    
+			<p>
+				Something went wrong. Sorry for the inconvenience. PLease contact the system administrator.
+			</p>
+			<p toggle="off" bubble target="resourceNotFoundOverlay">
+				<a><span class="btn btn-primary">Return</span></a>
+			</p>  
+		</div>
+
+		<!--General Error messages -->
+		<div overlay="generalErrorOverlay">
+			<h4 class="overlay-title">Error</h4>    
+			<p>Error: {{generalErrorMessage}}</p>
+			<p toggle="off" bubble target="generalErrorOverlay">
+				<a><span class="btn btn-primary">Return</span></a>
+			</p> 
+		</div>
+
+		<!-- password update -->
+		<div overlay="passwordUpdateOverlay">
+			<h4 class="overlay-title">Error</h4>    
+			<p>Your password updated successfully. Now you can login with your new password.</p>
+			<p toggle="off" bubble target="passwordUpdateOverlay">
+				<a ui-sref="login">><span class="btn btn-primary">Goto login page</span></a>
+			</p> 
+		</div>
+
+</div>
