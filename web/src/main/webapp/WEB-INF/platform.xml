@@ -8,6 +8,10 @@
 	
 
 	<bean id="platform" class="net.objectof.model.corc.IExceptionHandler">
+		<constructor-arg ref="platform-nocache" />
+	</bean>
+	
+	<bean id="platform-nocache" class="net.realmproject.platform.corc.INoCacheHandler">
 		<constructor-arg ref="platform-router" />
 	</bean>
 
