@@ -17,7 +17,6 @@ import net.realmproject.dcm.event.DeviceEventType;
 import net.realmproject.dcm.event.Logging;
 import net.realmproject.dcm.features.Statefulness.State;
 import net.realmproject.dcm.features.command.Command;
-import net.realmproject.dcm.features.command.CommandState;
 import net.realmproject.dcm.features.recording.RecordWriter;
 import net.realmproject.dcm.util.DCMThreadPool;
 import net.realmproject.platform.schema.Device;
@@ -74,9 +73,9 @@ public class CommandRecordWriter implements RecordWriter<DeviceEvent>, Logging {
             // for commands
             onCommand((Command) payload);
 
-        } else if (eventType == DeviceEventType.VALUE_CHANGED && payload instanceof CommandState) {
+        } else if (eventType == DeviceEventType.VALUE_CHANGED && payload instanceof State) {
             // for responses to commands
-            onState((CommandState) payload);
+            onState((State) payload);
         }
 
     }
@@ -90,7 +89,7 @@ public class CommandRecordWriter implements RecordWriter<DeviceEvent>, Logging {
         isDirty = false;
     }
 
-    private synchronized void onState(CommandState state) {
+    private synchronized void onState(State state) {
 
         // only record output from the arm if the state is "busy"
         if (state.mode != null) {
@@ -103,7 +102,8 @@ public class CommandRecordWriter implements RecordWriter<DeviceEvent>, Logging {
         }
 
         // Find the command with a command id equal to this state's command id
-        DeviceCommand lastCommand = DeviceCommands.forId(tx, state.commandId());
+        String commandId = state.getId();
+        DeviceCommand lastCommand = DeviceCommands.forId(tx, commandId);
         if (lastCommand == null) { return; }
 
         // the states of the last command should be already created
