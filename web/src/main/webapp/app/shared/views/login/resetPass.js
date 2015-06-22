@@ -14,11 +14,6 @@ angular.module('REALM')
     $scope.submitted = false;
 
     $scope.resetPass = function(){
-        $scope.submitted = true;
-        if($scope.resetData.confirmPassword !== $scope.resetData.password || $scope.resetData.password.length < 6 ){
-            return;
-        }
-
         //TODO: show loading icon
         $http.post(localStorage.basePath + "rest/resetpassword" ,{"username": $scope.resetData.email , "token": $scope.resetData.token, "password": $scope.resetData.password}, {withCredentials:true}).then(function(response){
             //TODO: hide loading icon
