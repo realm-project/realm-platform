@@ -22,7 +22,7 @@
 			<div class="form-group row">
 				<label class="control-label reset-form__label col-xs-12 col-sm-3 col-lg-3">New Password</label>
 				<div class="form-control-wrapper col-xs-12 col-sm-6 col-lg-6">
-					<input required ng-minlength="6" equals="{{resetData.confirmPassword}}" type="password" name="password" placeholder="Password" ng-model="resetData.password" class="form-control">
+					<input required equals="{{resetData.confirmPassword}}" min-length="6" type="password" name="password" placeholder="Password" ng-model="resetData.password" class="form-control">
 				</div>
 			</div>
 
@@ -30,12 +30,16 @@
 			<div class="form-group row">
 				<label class="control-label reset-form__label col-xs-12 col-sm-3 col-lg-3">Password Confirm</label>
 				<div class="form-control-wrapper col-xs-12 col-sm-6 col-lg-6">
-					<input required ng-minlength="6" equals="{{resetData.password}}" type="password" name="confirmPassword" placeholder="Password Confirm" ng-model="resetData.confirmPassword" class="form-control"/>
+					<input required equals="{{resetData.password}}" min-length="6" type="password" name="confirmPassword" placeholder="Password Confirm" ng-model="resetData.confirmPassword" class="form-control"/>
 				</div>
 			</div>
 			<p ng-show="submitted && resetData.password !== resetData.confirmPassword" class="reset-form-warning">
 				<span class="fa fa-exclamation-circle"></span>
 				 Your password does not match
+			</p>
+			<p ng-show="submitted && (resetData.password.length < 6 || resetData.confirmPassword.lenght < 6)" class="reset-form-warning">
+				<span class="fa fa-exclamation-circle"></span>
+				 Your password is too short (min length: 6 character).
 			</p>
 			
 			<!--RESET BUTTON-->
