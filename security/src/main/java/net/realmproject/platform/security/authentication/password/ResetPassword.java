@@ -44,10 +44,12 @@ public class ResetPassword extends IRepoAwareHandler {
         String storedToken = (String) session.getAttribute("password-reset-token");
         if (storedUsername == null || storedToken == null) {
             RealmResponse.send(request, 401, "Invalid password reset session");
+            return;
         }
         Object storedPerson = session.getAttribute("person");
         if (storedPerson != null) {
             RealmResponse.send(request, 401, "Password cannot be reset by a logged in user");
+            return;
         }
 
         // make sure the new password is good enough
@@ -74,6 +76,7 @@ public class ResetPassword extends IRepoAwareHandler {
 
         } else {
             RealmResponse.send(request, 400, "Invalid username or token");
+            return;
         }
 
     }
