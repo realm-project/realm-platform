@@ -34,6 +34,8 @@ import net.realmproject.platform.util.model.Devices;
 // at a time.
 public class CommandRecordWriter implements RecordWriter<DeviceEvent>, Logging {
 
+    public static final String LAST_COMMAND_ID = "LastCommandId";
+
     Connector connector;
     Package pkg;
     Transaction tx;
@@ -102,7 +104,8 @@ public class CommandRecordWriter implements RecordWriter<DeviceEvent>, Logging {
         }
 
         // Find the command with a command id equal to this state's command id
-        String commandId = state.getId();
+        String commandId = (String) state.getProperty(LAST_COMMAND_ID);
+        if (commandId == null) { return; }
         DeviceCommand lastCommand = DeviceCommands.forId(tx, commandId);
         if (lastCommand == null) { return; }
 
@@ -135,7 +138,7 @@ public class CommandRecordWriter implements RecordWriter<DeviceEvent>, Logging {
     }
 
     private synchronized void onCommand(Command command) {
-        if (!command.record) { return; }
+        if (!command.isToRecord()) { return; }
 
         Transaction tx = pkg.connect(CommandRecordWriter.class.getName());
 

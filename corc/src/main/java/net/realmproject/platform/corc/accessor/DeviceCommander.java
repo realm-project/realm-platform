@@ -16,7 +16,7 @@ public class DeviceCommander<T extends State> extends IDeviceAccessor<T> {
 
     public String sendCommand(Command command) {
         String label = null;
-        if (command.record) {
+        if (command.isToRecord()) {
             label = command.getId();
         }
         send(getId(), bus, DeviceEventType.MESSAGE, command);
