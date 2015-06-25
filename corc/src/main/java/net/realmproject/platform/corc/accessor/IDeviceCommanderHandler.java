@@ -9,8 +9,8 @@ import net.objectof.corc.Action;
 import net.objectof.corc.web.v2.HttpRequest;
 import net.objectof.impl.corc.IHandler;
 import net.realmproject.dcm.event.bus.DeviceEventBus;
-import net.realmproject.dcm.features.Statefulness.State;
 import net.realmproject.dcm.features.command.Command;
+import net.realmproject.dcm.features.statefulness.Statefulness.State;
 import net.realmproject.platform.util.RealmCorc;
 import net.realmproject.platform.util.RealmResponse;
 import net.realmproject.platform.util.RealmSerialize;
@@ -20,9 +20,9 @@ public class IDeviceCommanderHandler extends IHandler<HttpRequest> {
 
     DeviceCommander<State> accessor;
 
-    public IDeviceCommanderHandler(String id, DeviceEventBus bus) {
+    public IDeviceCommanderHandler(String id, String deviceId, DeviceEventBus bus) {
         super();
-        accessor = new DeviceCommander<>(id, bus);
+        accessor = new DeviceCommander<>(id, deviceId, bus);
     }
 
     @Override

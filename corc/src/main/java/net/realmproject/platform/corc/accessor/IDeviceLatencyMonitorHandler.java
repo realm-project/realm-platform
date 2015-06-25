@@ -21,9 +21,9 @@ public class IDeviceLatencyMonitorHandler extends IHandler<HttpRequest> {
 
     DeviceLatencyMonitor monitor;
 
-    public IDeviceLatencyMonitorHandler(String id, DeviceEventBus bus) {
+    public IDeviceLatencyMonitorHandler(String id, DeviceEventBus bus, String targetId) {
         super();
-        monitor = new IDeviceLatencyMonitor(id, bus);
+        monitor = new IDeviceLatencyMonitor(id, bus, targetId);
     }
 
     @Override

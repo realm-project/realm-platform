@@ -15,9 +15,9 @@ import net.objectof.model.query.IQuery;
 import net.realmproject.dcm.event.DeviceEvent;
 import net.realmproject.dcm.event.DeviceEventType;
 import net.realmproject.dcm.event.Logging;
-import net.realmproject.dcm.features.Statefulness.State;
 import net.realmproject.dcm.features.command.Command;
 import net.realmproject.dcm.features.recording.RecordWriter;
+import net.realmproject.dcm.features.statefulness.Statefulness.State;
 import net.realmproject.dcm.util.DCMThreadPool;
 import net.realmproject.platform.schema.Device;
 import net.realmproject.platform.schema.DeviceCommand;
@@ -68,7 +68,7 @@ public class CommandRecordWriter implements RecordWriter<DeviceEvent>, Logging {
     public synchronized void write(DeviceEvent event) {
         if (isClosed) { throw new IllegalStateException("Resource is closed"); }
 
-        Object payload = event.getValue();
+        Object payload = event.getPayload();
         DeviceEventType eventType = event.getDeviceEventType();
 
         if (eventType == DeviceEventType.MESSAGE && payload instanceof Command) {

@@ -20,9 +20,9 @@ public class IDeviceAccessorHandler extends IHandler<HttpRequest> {
 
     DeviceAccessor<Serializable> accessor;
 
-    public IDeviceAccessorHandler(String id, DeviceEventBus bus) {
+    public IDeviceAccessorHandler(String id, String deviceId, DeviceEventBus bus) {
         super();
-        accessor = new IDeviceAccessor<>(id, bus);
+        accessor = new IDeviceAccessor<>(id, deviceId, bus);
     }
 
     @Override
