@@ -87,7 +87,8 @@
 			<indexed selector="states">
 				<ref m:href="DeviceIO" selector="state"/>
 			</indexed>
-		</composed>
+		<text selector="uuid"/>
+        </composed>
 
 		<composed selector="DeviceIO">
 			<text selector="json"/>
