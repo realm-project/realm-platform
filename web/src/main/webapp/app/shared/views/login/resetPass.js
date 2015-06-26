@@ -14,11 +14,6 @@ angular.module('REALM')
     $scope.submitted = false;
 
     $scope.resetPass = function(){
-        $scope.submitted = true;
-        if($scope.resetData.confirmPassword !== $scope.resetData.password){
-            return;
-        }
-
         //TODO: show loading icon
         $http.post(localStorage.basePath + "rest/resetpassword" ,{"username": $scope.resetData.email , "token": $scope.resetData.token, "password": $scope.resetData.password}, {withCredentials:true}).then(function(response){
             //TODO: hide loading icon
@@ -26,7 +21,7 @@ angular.module('REALM')
             
         },function(errResponse){
             //TODO: hide loading icon
-            if (errResponse.data !== undefined && errResponse.data.message !== undefined && errResponse.data.display === true)
+            if (errResponse.data !== undefined && errResponse.data.message !== undefined)
             {
                 $scope.generalErrorMessage = errResponse.data.message;
                 $rootScope.toggle('generalErrorOverlay','on');

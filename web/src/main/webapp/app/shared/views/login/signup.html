@@ -26,22 +26,45 @@
 			<div class="form-group row">
 				<label for="accountDetails_password_input" class="control-label signup-form__label col-xs-12 col-sm-3 col-lg-3">Password</label>
 				<div class="form-control-wrapper col-xs-12 col-sm-6 col-lg-6">
-					<input required equals="{{accountDetails.confirmPassword}}" type="password" name="password" placeholder="Password" ng-model="accountDetails.password" class="form-control">
+					<input required equals="{{accountDetails.confirmPassword}}" min-length="6" type="password" name="password" placeholder="Password" ng-model="accountDetails.password" class="form-control">
 				</div>
 			</div>
 
 			<!--CONFIRM PASSWORD INPUT-->
 			<div class="form-group row">
-				<label for="accountDetails_confirm_password_input" class="control-label signup-form__label col-xs-12 col-sm-3 col-lg-3">Password Confirm</label>
+				<label for="accountDetails_confirm_password_input" class="control-label signup-form__label col-xs-12 col-sm-3 ">Password Confirm</label>
 				<div class="form-control-wrapper col-xs-12 col-sm-6 col-lg-6">
-					<input required equals="{{accountDetails.password}}" type="password" name="confirmPassword" placeholder="Password Confirm" ng-model="accountDetails.confirmPassword" class="form-control"/>
+					<input required equals="{{accountDetails.password}}" min-length="6" type="password" name="confirmPassword" placeholder="Password Confirm" ng-model="accountDetails.confirmPassword" class="form-control"/>
+				</div>
+			</div>
+			<div ng-show="submitted && signupForm.$error.equals" class="form-group row">
+				<div class="col-sm-3"></div>
+				<div class="signup-form-warning col-xs-12 col-sm-6">
+					<span class="fa fa-exclamation-circle"></span>
+					 Your password does not match
+				</div>
+			</div>
+			<div ng-show="submitted && signupForm.password.$error.minLength" class="form-group row">
+				<div class="col-sm-3"></div>
+				<div class="signup-form-warning col-xs-12 col-sm-6">
+					<span class="fa fa-exclamation-circle"></span>
+					 Your password is too short (min length: 6 characters).
+				</div>
+			</div>
+			<!--LOGIN BUTTON-->
+			<div class="form-group row">
+				<button ng-click="submitted = true; signupForm.$valid && signup()" class="signup-form__button btn btn-primary">Sign Up</button>
+			</div>
+
+			<div class="form-group row">
+				<div class="col-md-12 control">
+					<div class="signup-form__message">
+						Already have an account?
+						<a ui-sref="login">Login Here</a>
+					</div>
 				</div>
 			</div>
 
-			<!--LOGIN BUTTON-->
-			<div class="form-group row">
-				<button ng-click="signup()" class="signup-form__button btn btn-primary" ng-class="{disabled: signupForm.$invalid}">Sign Up</button>
-			</div>
 		</form>
 	</div>
 
@@ -83,11 +106,18 @@
 
 	<div overlay="signupFailureOverlay">
 		<h4 class="overlay-title">Error</h4>    
-		<p>
-			Unable to signup for REALM. Please try again later.
-		</p>
+		<p>Unable to signup for REALM. Please try again later.</p>
 		<p toggle="off" bubble target="signupFailureOverlay">
-			<a><span class="btn btn-failure btn-lg">Close</span></a>
+			<a><span class="btn btn-primary btn-lg">Close</span></a>
 		</p>  
 	</div>
+
+	<div overlay="generalErrorOverlay">
+		<h4 class="overlay-title">Error</h4>    
+		<p>Error: {{generalErrorMessage}}</p>
+		<p toggle="off" bubble target="generalErrorOverlay">
+			<a><span class="btn btn-primary">Return</span></a>
+		</p> 
+	</div>
+
 </div>
