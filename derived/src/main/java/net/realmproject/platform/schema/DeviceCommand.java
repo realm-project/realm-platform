@@ -21,5 +21,10 @@ public interface DeviceCommand extends Resource<Composite>
 
   @net.objectof.Selector("states:")
   public void setStates(net.objectof.aggr.Listing<DeviceIO> a);
+  @net.objectof.Selector("uuid")
+  public String getUuid();
+
+  @net.objectof.Selector("uuid:")
+  public void setUuid(String a);
 
 }

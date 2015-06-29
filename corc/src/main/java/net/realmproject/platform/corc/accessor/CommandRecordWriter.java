@@ -173,6 +173,7 @@ public class CommandRecordWriter implements RecordWriter<DeviceEvent>, Logging {
         dc.setCommand(dio);
         dc.setStates(tx.create("DeviceCommand.states"));
         dc.setDevice(device);
+        dc.setUuid(command.getId());
 
         // Create the list of commands for the retrieved session, if not created
         // already

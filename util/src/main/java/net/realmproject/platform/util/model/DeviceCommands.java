@@ -17,6 +17,6 @@ public class DeviceCommands {
     }
 
     public static DeviceCommand forId(Transaction tx, String commandId) {
-        return RealmRepo.queryHead(tx, "DeviceCommand", new IQuery("id", commandId));
+        return RealmRepo.queryHead(tx, "DeviceCommand", new IQuery("uuid", commandId));
     }
 }

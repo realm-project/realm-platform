@@ -36,5 +36,13 @@ public class IDeviceCommandBean
   {
     _("states", a);
   }
+  public String getUuid()
+  {
+    return (String) _("uuid");
+  }
+  public void setUuid(String a)
+  {
+    _("uuid", a);
+  }
 
 }
