@@ -44,12 +44,12 @@
     <dependency>
     	<groupId>net.realmproject.dcm</groupId>
     	<artifactId>realm-dcm-accessor</artifactId>
-    	<version>2.0.0-alpha.4</version>
+    	<version>2.0.0-alpha.5</version>
     </dependency>
     <dependency>
     	<groupId>net.realmproject.dcm</groupId>
     	<artifactId>realm-dcm-stock</artifactId>
-    	<version>2.0.0-alpha.4</version>
+    	<version>2.0.0-alpha.5</version>
     </dependency>
   </dependencies>
   <build>
