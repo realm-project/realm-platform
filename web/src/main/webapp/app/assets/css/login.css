@@ -1,7 +1,7 @@
 .login-form {
 	background-color: #ffffff;
 	box-shadow: 0 0 4px rgba(0, 0, 0, 0.4);
-    max-width: 800px;
+    max-width: 700px;
     display: block;
     margin-left: auto;
     margin-right: auto;
@@ -37,5 +37,13 @@
 	content:'Y';
 }
 
+.login-form__message{
+	border-top: 1px solid #DDD7E0;
+	padding-top:15px;
+	font-weight: bold;
+	font-size: 12px;
+}
 
-
+.login-form__message > a{
+	color: #007aff;
+}
