@@ -115,6 +115,11 @@ public class ICommonAPIReceiver extends IFn {
         if (command == null) {
             RealmResponse.send(request, 400, "DeviceCommand not found");
         }
+        
+        Session session = DeviceCommands.getSession(person.tx(), command);
+        
+        if (!person.getSessions().contains(session))
+        	RealmResponse.send(request, 400, "Session is not accessible for the person!");
 
         RealmResponse.sendJson(request, command);
     }
