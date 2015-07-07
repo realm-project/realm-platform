@@ -25,7 +25,7 @@ angular.module('REALM').directive('breadCrumb', function($rootScope, $compile, $
 
 				var breadCrumbElement ="";
 				if (AuthService.isAuthenticated){
-					var parentState = $scope.getParent(toState);
+					var parentState = toState;
 					while(parentState){
 						breadCrumbElement = "<a class='breadCrumb-element' ui-sref='"+ parentState.name +"'> > "+ parentState.name+ "</a>"  + breadCrumbElement;
 						// get parent of current parent
