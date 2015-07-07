@@ -10,7 +10,7 @@ import net.objectof.corc.web.v2.HttpRequest;
 import net.objectof.impl.corc.IHandler;
 import net.realmproject.dcm.event.bus.DeviceEventBus;
 import net.realmproject.dcm.features.command.Command;
-import net.realmproject.dcm.features.statefulness.Statefulness.State;
+import net.realmproject.dcm.features.statefulness.State;
 import net.realmproject.platform.util.RealmCorc;
 import net.realmproject.platform.util.RealmResponse;
 import net.realmproject.platform.util.RealmSerialize;
