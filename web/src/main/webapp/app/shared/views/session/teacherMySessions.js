@@ -225,7 +225,7 @@ angular.module('REALM')
                             url: '/' + experimentType,
                             controller: 'ExperimentTemplateController',
                             templateUrl: 'shared/views/experiment/experimentTemplate.html',
-                            data: {authorizedRoles:['student']}
+                            data: {authorizedRoles:['teacher'],pageName:"Experiment"}
                         });
                 }
 

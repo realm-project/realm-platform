@@ -13,19 +13,19 @@ app.config(function ($stateProvider, $urlRouterProvider) {
         .state('resetPass', {url:'/resetPass/:tokenID', templateUrl: 'shared/views/login/resetPass.html', controller: 'ResetPassController', data: {authorizedRoles:['guest']}})
 
         //students
-        .state('studentHome',{url: '/studentHome', templateUrl: 'shared/views/account/studentHome.html', controller: 'StudentHomeController', data: {authorizedRoles:['student','teacher']}})
-        .state('studentHome.profile',{url: '/profile', templateUrl: 'shared/views/account/studentProfile.html', controller: 'StudentProfileController', data: {authorizedRoles:['student','teacher']}})
-        .state('studentHome.courses',{url: '/courses', templateUrl: 'shared/views/account/studentCourses.html', controller: 'StudentCoursesController', data: {authorizedRoles:['student','teacher']}})
-        .state('studentHome.sessions',{url: '/sessions', templateUrl: 'shared/views/session/studentSessions.html', controller: 'StudentSessionsController', data: {authorizedRoles:['student','teacher']}})
+        .state('studentHome',{url: '/studentHome', templateUrl: 'shared/views/account/studentHome.html', controller: 'StudentHomeController', data: {authorizedRoles:['student','teacher'],pageName:"Home"}})
+        .state('studentHome.profile',{url: '/profile', templateUrl: 'shared/views/account/studentProfile.html', controller: 'StudentProfileController', data: {authorizedRoles:['student','teacher'],pageName:"Profile"}})
+        .state('studentHome.courses',{url: '/courses', templateUrl: 'shared/views/account/studentCourses.html', controller: 'StudentCoursesController', data: {authorizedRoles:['student','teacher'],pageName:"Courses"}})
+        .state('studentHome.sessions',{url: '/sessions', templateUrl: 'shared/views/session/studentSessions.html', controller: 'StudentSessionsController', data: {authorizedRoles:['student','teacher'],pageName:"Sessions"}})
         //.state('notifications',{url: '/signup', templateUrl: 'shared/views/login/signup.html', controller: 'SignupController', data: {authorizedRoles:['guest']}})
 
         //teachers
-        .state('teacherHome',{url: '/teacherHome', templateUrl: 'shared/views/account/teacherHome.html', controller: 'teacherHomeController', data: {authorizedRoles:['teacher']}})
-        .state('teacherHome.profile',{url: '/profile', templateUrl: 'shared/views/account/studentProfile.html', controller: 'StudentProfileController', data: {authorizedRoles:['teacher']}})
-        .state('teacherHome.courses',{url: '/courses', templateUrl: 'shared/views/account/studentCourses.html', controller: 'StudentCoursesController', data: {authorizedRoles:['teacher']}})
-        .state('teacherHome.mySessions',{url: '/mySessions', templateUrl: 'shared/views/session/studentSessions.html', controller: 'TeacherMySessionsController', data: {authorizedRoles:['teacher']}})
-        .state('teacherHome.createSessions',{url: '/createSessions', templateUrl: 'shared/views/session/teacherSessions.html', controller: 'TeacherSessionsController', data: {authorizedRoles:['teacher']}})
-        .state('teacherHome.reviewsSessions',{url: '/reviewSessions', templateUrl: 'shared/views/session/reviewSessions.html', controller: 'ReviewSessionsController', data: {authorizedRoles:['teacher']}});
+        .state('teacherHome',{url: '/teacherHome', templateUrl: 'shared/views/account/teacherHome.html', controller: 'teacherHomeController', data: {authorizedRoles:['teacher'],pageName:"Home"}})
+        .state('teacherHome.profile',{url: '/profile', templateUrl: 'shared/views/account/studentProfile.html', controller: 'StudentProfileController', data: {authorizedRoles:['teacher'],pageName:"Profile"}})
+        .state('teacherHome.courses',{url: '/courses', templateUrl: 'shared/views/account/studentCourses.html', controller: 'StudentCoursesController', data: {authorizedRoles:['teacher'],pageName:"Courses"}})
+        .state('teacherHome.mySessions',{url: '/mySessions', templateUrl: 'shared/views/session/studentSessions.html', controller: 'TeacherMySessionsController', data: {authorizedRoles:['teacher'],pageName:"Sessions"}})
+        .state('teacherHome.createSessions',{url: '/createSessions', templateUrl: 'shared/views/session/teacherSessions.html', controller: 'TeacherSessionsController', data: {authorizedRoles:['teacher'],pageName:"Create Sessions"}})
+        .state('teacherHome.reviewsSessions',{url: '/reviewSessions', templateUrl: 'shared/views/session/reviewSessions.html', controller: 'ReviewSessionsController', data: {authorizedRoles:['teacher'],pageName:"review Sessions"}});
         
     //Redirect to login state if URL does not correspond to a defined state
     $urlRouterProvider
