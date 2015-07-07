@@ -26,6 +26,10 @@ public class RealmResponse {
         return RealmSerialize.serialize(this);
     }
 
+    public static void sendJson(HttpRequest request, Object toJson) throws IOException {
+        send(request, 200, RealmSerialize.serialize(toJson));
+    }
+
     public static void sendOk(HttpRequest request, String message) throws IOException {
         send(request, 200, message);
     }

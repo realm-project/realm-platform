@@ -12,15 +12,15 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import net.objectof.corc.Action;
 import net.objectof.corc.web.v2.HttpRequest;
 import net.objectof.impl.corc.IHandler;
 import net.realmproject.dcm.accessor.impl.IDeviceAccessor;
 import net.realmproject.dcm.device.stock.camera.Frame;
 import net.realmproject.dcm.event.bus.DeviceEventBus;
-
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 
 
 public class IMjpegHandler extends IHandler<HttpRequest> {
@@ -31,8 +31,8 @@ public class IMjpegHandler extends IHandler<HttpRequest> {
 
     IDeviceAccessor<Frame> camera;
 
-    public IMjpegHandler(String id, DeviceEventBus bus) {
-        this.camera = new IDeviceAccessor<>(id, bus);
+    public IMjpegHandler(String id, String deviceId, DeviceEventBus bus) {
+        this.camera = new IDeviceAccessor<>(id, deviceId, bus);
     }
 
     private Log logger = LogFactory.getLog(getClass());
