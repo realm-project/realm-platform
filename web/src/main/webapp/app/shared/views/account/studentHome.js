@@ -10,17 +10,17 @@ angular.module('REALM')
         switch(page)
         {
             case 'Sessions':
-                $state.go('studentSessions')
+                $state.go('studentHome.sessions')
                 break;
             case 'Profile':
-                $state.go('studentProfile')
+                $state.go('studentHome.profile')
                 break;
             case 'Courses':
-                $state.go('studentCourses')
+                $state.go('studentHome.courses')
                 break;
-            case 'Notifications':
-                $state.go('notifications')
-                break;
+            //case 'Notifications':
+            //    $state.go('notifications')
+            //    break;
             default:
                 alert('invalid page argument');
                 break;

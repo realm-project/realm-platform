@@ -49,19 +49,7 @@
 
 	<!--INJECTED HTML-->
 
-		<!--TOP NAVBAR-->
-		<!--div content-for="top-navbar">
-			<div class="navbar-brand navbar-brand-center" yield-to="title">
-				<i class="fa fa-sign-in"></i>
-	          	<span>Login</span>
-	        </div>
-	        <div class="btn-group pull-left">
-	          <div ng-click="toggle('mainSidebar')" class="btn btn-navbar sidebar-toggle">
-	            <i class="fa fa-bars"></i>
-	          </div>
-	        </div>
-		</div-->
-
+	
 		<!--TITLE-->
 		<div content-for="title">
 			<i class="fa fa-sign-in"></i>	
@@ -70,29 +58,13 @@
 
 		<!--LEFT SIDEBAR-->
 		<div content-for="common-menu">
-            <a class="list-group-item" ui-sref="login">Login<i class="fa fa-chevron-right pull-right"></i></a>
-            <a class="list-group-item" ui-sref="signup">Sign Up <i class="fa fa-chevron-right pull-right"></i></a>
-        </div>
-
-		<!--BOTTOM NAVBAR-->
-		<div content-for="bottom-navbar">
-			<!--div class="btn-group btn-group--login justified">
-				<a ng-click="login(credentials)" class="btn btn-navbar" ng-class="{disabled: loginForm.$invalid}"><i class="fa fa-sign-in fa-navbar"></i> Log In</a>
-				<a ui-sref="signup" class="btn btn-navbar"><i class="fa fa-clipboard fa-navbar"></i> Sign Up</a>
-			</div-->
+				<a class="list-group-item" ui-sref="login">Login<i class="fa fa-chevron-right pull-right"></i></a>
+				<a class="list-group-item" ui-sref="signup">Sign Up <i class="fa fa-chevron-right pull-right"></i></a>
 		</div>
-		
-		<!--LOGIN SUCCESS OVERLAY-->
-		<!--div overlay="loginSuccessOverlay">
-			<h4 class="overlay-title">Welcome {{firstName}}</h4>    
-			<p>
-				
-			</p>
-			<p toggle="off" bubble target="loginSuccessOverlay">
-				<a ui-sref="studentHome" ><span class="btn btn-success btn-lg">Enter REALM</span></a>
-			</p>  
-		</div-->
-		
+
+
+	<!--OVERLAYS-->
+
 		<!--ACCESS DENIED OVERLAY-->
 		<div overlay="accessDeniedOverlay">
 			<h4 class="overlay-title">Access Denied</h4>    

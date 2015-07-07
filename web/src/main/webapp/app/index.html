@@ -56,14 +56,6 @@
                 <img src="assets/img/REALMBanner.png"></img>
             </div>
             <div class="list-group" toggle="off" bubble target="mainSidebar">
-                <!--div class="common-menu--before-login" yield-to="common-menu--before-login">
-                  <a class="list-group-item" ui-sref="login">Log In<i class="fa fa-chevron-right pull-right"></i></a>
-                  <a class="list-group-item" ui-sref="signup">Sign Up <i class="fa fa-chevron-right pull-right"></i></a>
-                </div>
-                <div class="common-menu--after-login" >
-                  <a class="list-group-item" ui-sref="studentHome"><i class="left-sidebar-icon fa fa-home"></i>Home<i class="fa fa-chevron-right pull-right"></i></a>
-                  <a class="list-group-item" ui-sref="login"><i class="left-sidebar-icon fa fa-sign-out"></i>Log Out<i class="fa fa-chevron-right pull-right"></i></a>
-                </div-->
                 <div yield-to="common-menu">
                     <a class="list-group-item" ui-sref="studentHome"><i class="left-sidebar-icon fa fa-home"></i>Home<i
                             class="fa fa-chevron-right pull-right"></i></a>
@@ -92,9 +84,13 @@
             <div ng-click="toggle('mainSidebar','on')" class="btn btn-navbar sidebar-toggle">
                 <i class="fa fa-bars"></i> <!-- here is where I can write MENU beside the menu icon-->
             </div>
-
         </div>
+        <div class="navbar-brand navbar-brand-left">
+            <bread-crumb></bread-crumb>
+        </div>
+
         <div class="navbar-brand navbar-brand-left" yield-to="top-navbar__left">
+            
         </div>
 
     </div>
@@ -169,21 +165,9 @@
     <script src="shared/views/session/studentSessions.js"></script>
     <script src="shared/views/session/teacherSessions.js"></script>
     <script src="shared/views/session/reviewSessions.js"></script>
+    <script src="shared/views/session/teacherMySessions.js"></script>
     <script src="shared/views/experiment/experimentTemplate.js"></script>
-
     <script src="shared/views/experiment/experiment.js"></script>
-
-    <!--views required for the old code
-    <script src="scripts/controllers/teacherHome.js"></script>
-    <script src="scripts/controllers/teacherCourses.js"></script>
-    <script src="scripts/controllers/teacherProfile.js"></script>
-    <script src="mico/views/experiments/forwardkinematics.js"></script>
-    <script src="mico/views/experiments/inversekinematics.js"></script>
-    <script src="mico/views/experiments/teachpoints.js"></script>
-    <script src="mico/views/experiments/dynamicresponse.js"></script>
-    <script src="mico/views/experiments/teachpointsanddynamicresponse.js"></script>
-    -->
-
 
     <!--SERVICES-->
     <script src="shared/services/CameraFeedService.js"></script>
@@ -196,6 +180,8 @@
     <script src="shared/components/uiExperiment.js"></script>
     <script src="shared/components/uiSection.js"></script>
     <script src="shared/components/uiComponent.js"></script>
+
+    <script src="shared/components/breadCrumb.js"></script>
 
     <script src="mico/components/cameraFeedComponent.js"></script>
     <script src="mico/components/angleInputComponent.js"></script>
@@ -211,12 +197,12 @@
     <script src="mico/components/fingerControlComponent.js"></script>
 
     <!--robot HELPERS-->
-    <script src="mico/components/helpers/equals.js"></script>
     <script src="mico/components/helpers/numericInput.js"></script>
     <script src="mico/components/helpers/joystick.js"></script>
     <script src="mico/components/helpers/poseChart.js"></script>
     <!--UI HELPERS -->
     <script src="shared/components/helpers/minLength.js"></script>
+    <script src="shared/components/helpers/equals.js"></script>
 
 </body>
 </html>

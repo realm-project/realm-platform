@@ -1,52 +1,55 @@
-<link href="assets/css/studentHome.css" rel="stylesheet" type="text/css"></link>
+<div ui-view>
 
-<div class="scrollable" data-anijs="if:click, do: bounce, to: .homepage-item__icon">
-	<div class="scrollable-content section">
-		<div ng-click="goToPage('Sessions')" class="homepage-item sessions">
-			<div class="homepage-item__icon">
+	<link href="assets/css/studentHome.css" rel="stylesheet" type="text/css"></link>
+	<div class="scrollable" data-anijs="if:click, do: bounce, to: .homepage-item__icon">
+		<div class="scrollable-content section">
+			<div ng-click="goToPage('Sessions')" class="homepage-item sessions">
+				<div class="homepage-item__icon">
+				</div>
+				<div class="homepage-item__label">
+				</div>
 			</div>
-			<div class="homepage-item__label">
+			<div ng-click="goToPage('Profile')" class="homepage-item profile">
+				<div class="homepage-item__icon">
+				</div>
+				<div class="homepage-item__label">
+				</div>
+			</div>
+			<div ng-click="goToPage('Courses')" class="homepage-item courses">
+				<div class="homepage-item__icon">
+				</div>
+				<div class="homepage-item__label">
+				</div>
+			</div>
+			<div class="homepage-item notifications" ng-show="false">
+				<div class="homepage-item__icon" >
+				</div>
+				<div class="homepage-item__label">
+				</div>
 			</div>
 		</div>
-		<div ng-click="goToPage('Profile')" class="homepage-item profile">
-			<div class="homepage-item__icon">
+
+		
+		<!--INJECTED HTML-->
+			<div content-for="title">
+				<span>Home</span>
 			</div>
-			<div class="homepage-item__label">
+
+
+			<!--LEFT SIDEBAR LIST GROUP-->
+			<!--div content-for="common-menu">
+				<a class="list-group-item" ui-sref="studentHome"><i class="left-sidebar-icon fa fa-home"></i>Home<i class="fa fa-chevron-right pull-right"></i></a>
+				<a class="list-group-item" ui-sref="login"><i class="left-sidebar-icon fa fa-sign-out"></i>Log Out<i class="fa fa-chevron-right pull-right"></i></a>
+			</div-->
+
+			<!--BOTTOM NAVBAR-->
+			<div content-for="bottom-navbar">
+				<div class="btn-group btn-group-experiment--forward-kinematics justified">
+					<!--a class="btn btn-navbar" ng-click="prevSection()"><i class="fa fa-chevron-left fa-navbar"></i> Prev</a>
+					<a class="btn btn-navbar" ng-click="nextSection()">Next <i class="fa fa-chevron-right fa-navbar"></i></a-->
+				</div>
 			</div>
-		</div>
-		<div ng-click="goToPage('Courses')" class="homepage-item courses">
-			<div class="homepage-item__icon">
-			</div>
-			<div class="homepage-item__label">
-			</div>
-		</div>
-		<div class="homepage-item notifications" ng-show="false">
-			<div class="homepage-item__icon" >
-			</div>
-			<div class="homepage-item__label">
-			</div>
-		</div>
+		<!---->
 	</div>
 
-	
-	<!--INJECTED HTML-->
-		<div content-for="title">
-			<span>Home</span>
-		</div>
-
-
-		<!--LEFT SIDEBAR LIST GROUP-->
-		<!--div content-for="common-menu">
-			<a class="list-group-item" ui-sref="studentHome"><i class="left-sidebar-icon fa fa-home"></i>Home<i class="fa fa-chevron-right pull-right"></i></a>
-			<a class="list-group-item" ui-sref="login"><i class="left-sidebar-icon fa fa-sign-out"></i>Log Out<i class="fa fa-chevron-right pull-right"></i></a>
-		</div-->
-
-		<!--BOTTOM NAVBAR-->
-		<div content-for="bottom-navbar">
-			<div class="btn-group btn-group-experiment--forward-kinematics justified">
-				<!--a class="btn btn-navbar" ng-click="prevSection()"><i class="fa fa-chevron-left fa-navbar"></i> Prev</a>
-				<a class="btn btn-navbar" ng-click="nextSection()">Next <i class="fa fa-chevron-right fa-navbar"></i></a-->
-			</div>
-		</div>
-	<!---->
 </div>
