@@ -4,42 +4,34 @@
 	<div class="scrollable" data-anijs="if:click, do: bounce, to: .homepage-item__icon">
 		<div class="scrollable-content section">
 
-			
-
 			<div ng-click="goToPage('Sessions')" class="homepage-item sessions">
-				<div class="homepage-item__icon">
-				</div>
-				<div class="homepage-item__label">
-				</div>
+				<img class="homepage-item__icon" src="assets/img/sessionsIcon.svg">
+				<h1 class="homepage-item__label">My Sessions</h1>
+				<div style="clear:both"></div>
 			</div>
 			<div ng-click="goToPage('Profile')" class="homepage-item profile">
-				<div class="homepage-item__icon">
-				</div>
-				<div class="homepage-item__label">
-				</div>
+				<img class="homepage-item__icon" src="assets/img/profileIcon.svg">
+				<h1 class="homepage-item__label">Profile</h1>
+				<div style="clear:both"></div>
 			</div>
 			<div ng-click="goToPage('Courses')" class="homepage-item courses">
-				<div class="homepage-item__icon">
-				</div>
-				<div class="homepage-item__label">
-				</div>
+				<img class="homepage-item__icon" src="assets/img/coursesIcon.svg">
+				<h1 class="homepage-item__label">Courses</h1>
+				<div style="clear:both"></div>
 			</div>
-			<div ng-click="goToPage('CreateSessions')" class="homepage-item sessions">
-				<h1>Create Sessions</h1>
+			<div ng-click="goToPage('CreateSessions')" class="homepage-item createSessions">
+				<img class="homepage-item__icon" src="assets/img/createIcon.svg" src="assets/img/sessionsIcon.svg">
+				<h1 class="homepage-item__label">Create Sessions</h1>
+				<div style="clear:both"></div>
 			</div>
-			<div ng-click="goToPage('ReviewSessions')" class="homepage-item sessions">
-				<h1>Review Sessions</h1>
+			<div ng-click="goToPage('ReviewSessions')" class="homepage-item reviewSessions">
+				<img class="homepage-item__icon" src="assets/img/reviewIcon.svg">
+				<h1 class="homepage-item__label">Review Sessions</h1>
+				<div style="clear:both"></div>
 			</div>
-			<div class="homepage-item notifications" ng-show="false">
-				<div class="homepage-item__icon" >
-				</div>
-				<div class="homepage-item__label">
-				</div>
-			</div>
+			
 		</div>
 	</div>
-
-
 
 
 	<div content-for="title">
