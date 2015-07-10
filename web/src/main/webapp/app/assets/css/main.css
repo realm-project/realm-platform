@@ -265,17 +265,9 @@ ui-experiment {
 
 .ui-experiment__container {
     background-color: #eee;
-    width: 100%;
-    height: 100%;
-    overflow-y: scroll;
-    padding-bottom: 20px;
+    margin-bottom: 70px;
 }
 
-.ui-experiment__content {
-    width: 100%;
-    white-space: nowrap;
-    /*height:100%;*/
-}
 
 ui-section {
     display: inline-block;

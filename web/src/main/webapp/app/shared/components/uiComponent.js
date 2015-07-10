@@ -43,7 +43,7 @@ angular.module('REALM').directive('uiComponent', function($compile,$timeout)
             return function linkingFunction(scope, element, attrs, sectionController) {
                 // packery reload (new UI)
                 $timeout(function(){ 
-                    var container = document.querySelector('#container');
+                    var container = document.querySelector('.ui-experiment__container');
                     var pckry = new Packery( container, {
                     itemSelector: '.ui-section',
                     gutter: 10
