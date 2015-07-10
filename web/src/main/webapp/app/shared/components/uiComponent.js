@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('REALM').directive('uiComponent', function($compile) 
+angular.module('REALM').directive('uiComponent', function($compile,$timeout) 
 {  
     var componentContentTemplates = 
     {
@@ -40,14 +40,16 @@ angular.module('REALM').directive('uiComponent', function($compile)
                     "</div>",
         compile: function CompilingFunction(tElement, tAttrs)
         {
-            return {
-                pre: function(scope, element, attrs, sectionController) {
-
-                },
-                post: function(scope, element, attrs, sectionController) {
-                  
-                }
-              }
+            return function linkingFunction(scope, element, attrs, sectionController) {
+                // packery reload (new UI)
+                $timeout(function(){ 
+                    var container = document.querySelector('#container');
+                    var pckry = new Packery( container, {
+                    itemSelector: '.ui-section',
+                    gutter: 10
+                    });
+                });
+            }
         },
         controller: function ComponentController($scope, $element, $attrs)
         {

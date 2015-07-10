@@ -72,6 +72,13 @@ app.directive('cameraFeedComponent' , function($timeout, $http, $q, CameraFeedSe
                                 }
                                 renderVideo();
                             }
+                            // Packery reload (newUI)
+                            var container = document.querySelector('#container');
+                            var pckry = new Packery( container, {
+                                itemSelector: '.ui-section',
+                                gutter: 10
+                            });
+      
 
                         }); // end of timeout
                         

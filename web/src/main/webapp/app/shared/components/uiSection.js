@@ -8,17 +8,10 @@ angular.module('REALM').directive('uiSection', function() {
         section: '=section'  
     },
     template:   "<div class='ui-section__container'>" +
-                   // "<div class='ui-section__scroller'>" +
-                        /*"<div class='ui-section__header'>" + 
-                            "<h2 class='ui-section__title'>{{section.sectionOptions.title}}</h2>" +
-                        "</div>" +*/
-                        "<div class='ui-section__content'>" + 
-                            "<ui-component ng-repeat='component in section.components' index='{{$index}}' component='component' sectionOptions='section.sectionOptions'>"+
-                            "</ui-component>" +
-                        "</div>" +
-                        /*"<div class='ui-section__footer'>" +
-                        "</div>" +*/
-                    //"</div>" +
+                    "<div class='ui-section__content'>" + 
+                        "<ui-component ng-repeat='component in section.components' index='{{$index}}' component='component' sectionOptions='section.sectionOptions'>"+
+                        "</ui-component>" +
+                    "</div>" +
                 "</div>",
     compile: function CompilingFunction(tElement, tAttrs)
     {
@@ -31,6 +24,7 @@ angular.module('REALM').directive('uiSection', function() {
         setTimeout(function(){
           vScroll.refresh();
         },50);*/
+
       }
     },
     controller: function SectionController($scope, $element, $attrs)
