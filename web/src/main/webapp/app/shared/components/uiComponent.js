@@ -43,12 +43,34 @@ angular.module('REALM').directive('uiComponent', function($compile,$timeout)
             return function linkingFunction(scope, element, attrs, sectionController) {
                 // packery reload (new UI)
                 $timeout(function(){ 
-                    var container = document.querySelector('.ui-experiment__container');
-                    var pckry = new Packery( container, {
-                    itemSelector: '.ui-section',
-                    gutter: 10
+
+                    var $container = $('.ui-experiment__container');
+                    
+                    $container.packery({
+                      itemSelector: '.ui-section',
+                      gutter: 0,
+                      percentPosition: true
                     });
+              
+                    var $itemElems = $($container.packery('getItemElements'));
+                    // make item elements draggable
+                    $itemElems.draggable();
+                    // bind Draggable events to Packery
+                    $container.packery( 'bindUIDraggableEvents', $itemElems );
+                    
+                    // // handle resizing
+                    // var resizeTimeout;
+                    // $itemElems.on( 'resize', function( event, ui ) {
+                    //     // debounce
+                    //     if ( resizeTimeout ) {
+                    //         clearTimeout( resizeTimeout );
+                    //     }
+                    //     resizeTimeout = setTimeout( function() {
+                    //         $container.packery( 'fit', ui.element[0] );
+                    //     }, 100 );
+                    // });
                 });
+
             }
         },
         controller: function ComponentController($scope, $element, $attrs)

@@ -76,9 +76,9 @@ app.directive('cameraFeedComponent' , function($timeout, $http, $q, CameraFeedSe
                             var container = document.querySelector('.ui-experiment__container');
                             var pckry = new Packery( container, {
                                 itemSelector: '.ui-section',
-                                gutter: 10
+                                gutter: 0,
+                                percentPosition: true
                             });
-      
 
                         }); // end of timeout
                         
