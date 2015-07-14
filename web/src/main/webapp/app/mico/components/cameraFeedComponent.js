@@ -79,6 +79,22 @@ app.directive('cameraFeedComponent' , function($timeout, $http, $q, CameraFeedSe
                         // support camera resizing
                         if (scope.component.componentOptions.resizable !== undefined && scope.component.componentOptions.resizable === true && scope.streamType === "MJPEG"){
 
+                            var tempSection = $(iElement).parents().eq(5);
+                            var temoContainer = $(iElement).parents().eq(2);
+                            tempSection.resizable({aspectRatio: true})
+
+                            var resizeTimeout;
+                            tempSection.on( 'resize', function( event, ui ) {
+                                // debounce
+                                if ( resizeTimeout ) {
+                                    clearTimeout( resizeTimeout );
+                                }
+                                resizeTimeout = setTimeout( function() {
+                                    tempSection.height(temoContainer.height()+20);
+                                    $container.packery( 'fit', ui.element[0] );
+                                }, 100 );
+                            });
+
                         }
                     }); // end of timeout 
                 }
