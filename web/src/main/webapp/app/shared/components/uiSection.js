@@ -5,11 +5,12 @@ angular.module('REALM').directive('uiSection', function() {
     restrict: 'E',
     replace: false, 
     scope: {
-        section: '=section'  
+        section: '=',
+        layoutOptions: '='  
     },
     template:   "<div class='ui-section__container'>" +
                     "<div class='ui-section__content'>" + 
-                        "<ui-component ng-repeat='component in section.components' index='{{$index}}' component='component' sectionOptions='section.sectionOptions'>"+
+                        "<ui-component ng-repeat='component in section.components' index='{{$index}}' component='component' section-options='section.sectionOptions' layout-options='layoutOptions'>"+
                         "</ui-component>" +
                     "</div>" +
                 "</div>",
@@ -29,7 +30,6 @@ angular.module('REALM').directive('uiSection', function() {
     },
     controller: function SectionController($scope, $element, $attrs)
     {
-        var that = this;
 
         /*var vScroll = new IScroll($($element).find('.ui-section__container').get(0), { scrollX: false, scrollY: true, mouseWheel: true, disableMouse:true, disablePointer:true, scrollbars:true, interactiveScrollbars:true, snap:true});
         window.vScrolls.push(vScroll);

@@ -25,9 +25,11 @@ angular.module('REALM').directive('uiComponent', function($compile,$timeout)
         restrict: 'E',
         replace: false,
         scope: {
-            component: '=component',
-            sectionOptions: '=sectionOptions',
-            toggleComponentShowing: '&toggleComponentShowing'
+            component: '=',
+            sectionOptions: '=',
+            toggleComponentShowing: '&toggleComponentShowing',
+            layoutOptions: '='
+
         },
         template:   "<div class='ui-component__container'>" + 
                         "<div class='ui-component__header'>" +
@@ -53,22 +55,13 @@ angular.module('REALM').directive('uiComponent', function($compile,$timeout)
                     });
               
                     var $itemElems = $($container.packery('getItemElements'));
-                    // make item elements draggable
-                    $itemElems.draggable();
-                    // bind Draggable events to Packery
-                    $container.packery( 'bindUIDraggableEvents', $itemElems );
                     
-                    // // handle resizing
-                    // var resizeTimeout;
-                    // $itemElems.on( 'resize', function( event, ui ) {
-                    //     // debounce
-                    //     if ( resizeTimeout ) {
-                    //         clearTimeout( resizeTimeout );
-                    //     }
-                    //     resizeTimeout = setTimeout( function() {
-                    //         $container.packery( 'fit', ui.element[0] );
-                    //     }, 100 );
-                    // });
+                    if (scope.layoutOptions === undefined || scope.layoutOptions === null || scope.layoutOptions.draggable === undefined || scope.layoutOptions.draggable!==false){
+                        // make item elements draggable
+                        $itemElems.draggable();
+                        // bind Draggable events to Packery
+                        $container.packery( 'bindUIDraggableEvents', $itemElems );
+                    }
                 });
 
             }

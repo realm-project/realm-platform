@@ -8,7 +8,7 @@ angular.module('REALM').directive('uiExperiment',['$timeout', '$http', '$q','Rob
         layout: '=layout'
     },
     template: '<div class="js-packery ui-experiment__container" data-packery-options=\'{ "itemSelector": ".ui-section", "gutter": 10 }\'>' +
-                    "<ui-section class='ui-section' ng-repeat='section in layout.sections' ng-model='layout.sections' section='section'>" +
+                    "<ui-section class='ui-section' ng-repeat='section in layout.sections' section='section' layout-options='layout.options'>" +
                     "</ui-section>" +
               "</div>",
 
