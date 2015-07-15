@@ -2,6 +2,8 @@ package net.realmproject.platform.api;
 
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collection;
 
 import net.objectof.Selector;
 import net.objectof.corc.web.v2.HttpRequest;
@@ -493,5 +495,38 @@ public class IAdminAPIReceiver extends IFn {
 
         // Retrieve the list of students and add them to the response
         APIUtils.addQueryResultToResponse(Students.enumerate(admin.tx()), request);
+    }
+    
+    @Selector
+    public void getSessionsForCourse(Person admin, HttpRequest request) {
+    	
+    	System.out.println("in admin.getSessionsForCourse");
+    	
+    	ArrayList<Session> sessions = new ArrayList<Session>();
+    	
+    	Course course = (Course) APIUtils.getObjectFromRequest("Course", admin.tx(), request);
+    	try {
+    		if (course == null) {
+    			RealmResponse.send(request, 400, "Course cannot be null!");
+    			return;
+    		}
+
+    		// Retrieve the list of assignments of the course
+    		Iterable<Assignment> assignments = Courses.getAssignments(admin.tx(), course);
+
+    		// Retrieve sessions of assignments
+    		for (Assignment assignment : assignments) {
+    			Iterable<Session> asnSessions = Assignments.getSessions(admin.tx(), assignment);
+
+    			for (Session session : asnSessions)
+    				sessions.add(session);
+    		}
+    		
+    		// Add sessions to response
+            APIUtils.addQueryResultToResponse(sessions, request);
+
+    	} catch (IOException e) {
+    		e.printStackTrace();
+    	}
     }
 }
