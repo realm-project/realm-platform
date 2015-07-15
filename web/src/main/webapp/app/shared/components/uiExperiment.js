@@ -7,28 +7,18 @@ angular.module('REALM').directive('uiExperiment',['$timeout', '$http', '$q','Rob
     scope: {
         layout: '=layout'
     },
-    template: "<div class='ui-experiment__container'>" +
-            //    "<div class='ui-experiment__scroller'>" +
-                  "<div class='ui-experiment__content'>" +
-                    "<ui-section class='ui-section' ng-repeat='section in layout.sections' ng-model='layout.sections' section='section'>" +
+    template: '<div class="js-packery ui-experiment__container" data-packery-options=\'{ "itemSelector": ".ui-section", "gutter": 10 }\'>' +
+                    "<ui-section class='ui-section' ng-repeat='section in layout.sections' section='section' layout-options='layout.options'>" +
                     "</ui-section>" +
-                  "</div>" +
-               // "</div>" +
               "</div>",
 
     compile: function CompilingFunction(tElement, tAttrs)
     {
-      //can only manipulate DOM here (can't access scope yet)
-
-      
-      return {
-        pre: function(scope, element, attrs, ctrl, transcludeFn) {
-
-        },
-        post: function(scope, element, attrs, ctrl, transcludeFn) {
-          
+        //can only manipulate DOM here (can't access scope yet)
+        return function LinkingFunction(scope, element, attrs, ctrl, transcludeFn) {
+            
         }
-      }
+      
     },
     controller: function ControllerFunction($scope, $rootScope, $element, $attrs)
     {

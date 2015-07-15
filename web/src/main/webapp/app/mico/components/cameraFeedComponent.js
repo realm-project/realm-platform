@@ -23,59 +23,80 @@ app.directive('cameraFeedComponent' , function($timeout, $http, $q, CameraFeedSe
             compile: function CompilingFunction(tElement, tAttrs)
             {
                 //can only manipulate DOM here (can't access scope yet)
-                //tElement.replaceWith(this.template);
-                return{
-                    pre: function preLink(scope, iElement, iAttrs, controller) {
-                        // it is the best place to append extra DOMs based on the scope options
-                    },
-                    post: function postLink(scope, iElement, iAttrs, controller) {
-                        $timeout(function(){ 
-                            if (scope.streamType === "MJPEG"){
-                                // do nothing
-                            }else{
-                                // imageArray streamType
-                                
-                                var cameraPath = scope.component.componentOptions.url;
+                
+                return function linkingFunction(scope, iElement, iAttrs, controller) {
+                    $timeout(function(){ 
+                        if (scope.streamType === "MJPEG"){
+                            // do nothing
+                        }else{
+                            // imageArray streamType
+                            
+                            var cameraPath = scope.component.componentOptions.url;
 
-                                var componentContent = iElement.parent();
-                                var cameraFeedComponent = iElement;
-                                var canvas = $(iElement).find('.camera-feed-component__canvas');
-                                var canvasContainer = $(iElement).find('.camera-feed-component__container');
-                                var canvasElement = $(iElement).find(".camera-feed-component__canvas").get(0);
-                                var canvasContext = canvasElement.getContext('2d');
-                                var ComponentController = scope.ComponentController;
-                                
-                                //CameraFeedService.setSize(viewerWidth);
-                                
-                                var imgData;
-                                var img = new Image();
-                                
-                                var renderVideo = function(){
-                                    var promise = CameraFeedService.getCurrentFrame(cameraPath);
-                                    promise.then(function(message){
-                                        imgData = message;
-                                        img.src = imgData;
+                            var componentContent = iElement.parent();
+                            var cameraFeedComponent = iElement;
+                            var canvas = $(iElement).find('.camera-feed-component__canvas');
+                            var canvasContainer = $(iElement).find('.camera-feed-component__container');
+                            var canvasElement = $(iElement).find(".camera-feed-component__canvas").get(0);
+                            var canvasContext = canvasElement.getContext('2d');
+                            var ComponentController = scope.ComponentController;
+                            
+                            //CameraFeedService.setSize(viewerWidth);
+                            
+                            var imgData;
+                            var img = new Image();
+                            
+                            var renderVideo = function(){
+                                var promise = CameraFeedService.getCurrentFrame(cameraPath);
+                                promise.then(function(message){
+                                    imgData = message;
+                                    img.src = imgData;
 
-                                        canvasContext.canvas.width = canvasContainer.width();
-                                        canvasContext.canvas.height = canvasContainer.height();
-                                        
-                                        var computedHeight = (img.height/img.width)*canvasContext.canvas.width;
-                                        canvasContext.drawImage(img,0,0,canvasContainer.width(),computedHeight);
-                                        
-                                        canvasContainer.height(computedHeight);
-                                        setTimeout(renderVideo,30);
-                                    },function(response){
-                                        console.log('Failed to get camera feed image, error code: ');
-                                        console.log(response.status);
-                                        setTimeout(renderVideo,30);  
-                                    });
-                                }
-                                renderVideo();
+                                    canvasContext.canvas.width = canvasContainer.width();
+                                    canvasContext.canvas.height = canvasContainer.height();
+                                    
+                                    var computedHeight = (img.height/img.width)*canvasContext.canvas.width;
+                                    canvasContext.drawImage(img,0,0,canvasContainer.width(),computedHeight);
+                                    
+                                    canvasContainer.height(computedHeight);
+                                    setTimeout(renderVideo,30);
+                                },function(response){
+                                    console.log('Failed to get camera feed image, error code: ');
+                                    console.log(response.status);
+                                    setTimeout(renderVideo,30);  
+                                });
                             }
+                            renderVideo();
+                        }
+                        // Packery reload after changing the camera size(newUI)
+                        var $container = $('.ui-experiment__container');
+                        $container.packery({
+                            itemSelector: '.ui-section',
+                            gutter: 0,
+                            percentPosition: true
+                        });
+                      
+                        // support camera resizing
+                        if (scope.component.componentOptions.resizable !== undefined && scope.component.componentOptions.resizable === true && scope.streamType === "MJPEG"){
 
-                        }); // end of timeout
-                        
-                    }
+                            var tempSection = $(iElement).parents().eq(5);
+                            var temoContainer = $(iElement).parents().eq(2);
+                            tempSection.resizable({aspectRatio: true})
+
+                            var resizeTimeout;
+                            tempSection.on( 'resize', function( event, ui ) {
+                                // debounce
+                                if ( resizeTimeout ) {
+                                    clearTimeout( resizeTimeout );
+                                }
+                                resizeTimeout = setTimeout( function() {
+                                    tempSection.height(temoContainer.height()+20);
+                                    $container.packery( 'fit', ui.element[0] );
+                                }, 100 );
+                            });
+
+                        }
+                    }); // end of timeout 
                 }
             }
         }

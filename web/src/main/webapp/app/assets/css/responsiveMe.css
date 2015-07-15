@@ -10,11 +10,6 @@ ui-section:last-child
     float:left;
     margin-top: 5px;
 }
-.ui-experiment__content
-{
-    white-space: normal;
-
-}
 .angle-input-container {
     width: 27%;
 }

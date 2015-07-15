@@ -97,7 +97,13 @@ a.list-group-item:first-child {
     font-size: 25px;
     text-align: left;
     float: left;
+    padding: 0px;
+    height: auto;
 }
+
+.navbar-brand-left-element{
+    padding:15px;
+} 
 
 .home-link {
     cursor: pointer;
@@ -259,17 +265,9 @@ ui-experiment {
 
 .ui-experiment__container {
     background-color: #eee;
-    width: 100%;
-    height: 100%;
-    overflow-y: scroll;
-    padding-bottom: 20px;
+    margin-bottom: 70px;
 }
 
-.ui-experiment__content {
-    width: 100%;
-    white-space: nowrap;
-    /*height:100%;*/
-}
 
 ui-section {
     display: inline-block;
@@ -287,7 +285,7 @@ ui-section {
      /*  background-color: red;*/
     }
 
-    .camera-feed-component__container {
+    .camera-feed-component__canvas {
         height: calc(100vw - 60px);
     }
 }
@@ -299,9 +297,10 @@ ui-section {
     /*    background-color: yellow;*/
     }
 
-    .camera-feed-component__container {
+    .camera-feed-component__canvas {
         height: calc(50vw - 60px);
     }
+
 }
 
 @media  (min-width: 1400px) and (max-width: 2045px) {
@@ -310,7 +309,7 @@ ui-section {
    /*     background-color: blue;*/
     }
 
-    .camera-feed-component__container {
+    .camera-feed-component__canvas {
         height: calc(((100vw - 350px) / 2) - 60px);
     }
 }
@@ -377,10 +376,8 @@ ui-component {
 }
 
 .ui-component__header {
-    padding: 15px;
-    padding-bottom: 5px;
+    padding: 5px;
     border-bottom: 1px solid darkgrey;
-
     background: #e5e5e5;
     -webkit-touch-callout: none;
     -webkit-user-select: none;
@@ -392,6 +389,7 @@ ui-component {
 }
 
 .ui-component__title {
+    margin-bottom: 0px;
     text-align: center;
     -webkit-touch-callout: none;
     -webkit-user-select: none;
@@ -580,9 +578,9 @@ camera-feed-component {
 
 }
 
-.camera-feed-component__canvas {
-    /*width:100%;
-    height:100%;*/
+.camera-feed-cameraImage{
+    height: 100%;
+    width:100%
 }
 
 /*********************NUMERIC INPUT***********************/
@@ -946,6 +944,11 @@ joystick {
     display: inline-block;
 }
 
+joystick.single{
+    width:100%;
+    margin-left: calc(50% - 120px);
+}
+
 .joystick__container {
     height: 200px;
     width: 100%;
@@ -1256,9 +1259,30 @@ hr
 {
     font-size: 18px;
     font-weight: normal;
-
 }
 .radioLabel:not(:last-child)
 {
     padding-right: 15px;
+}
+
+a.breadCrumb-element{
+    padding: 2px;
+    margin: 0px 3px;
+    cursor: pointer;
+    text-decoration: none;
+    font-size: 0.8em;
+    font-weight: bold;
+    color: white;
+}
+
+.scrollable-content{
+    padding-bottom: 100px;
+}
+
+.navbar-top{
+    margin-bottom: 0px;
+}
+
+.app-content{
+    overflow-y: auto;
 }

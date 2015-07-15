@@ -3,15 +3,17 @@
     width:90%;
     float: left;
 }
-.ui-experiment__content
+.ui-experiment__container
 {
-    white-space: normal;
-    float:left;
-    clear: both;
+	padding-bottom: 70px;
 }
 .angle-input-container {
     width: 27%;
 }
 .pose-input-container {
     width: 27%;
+}
+
+.navbar-brand-right{
+	display:none;
 }

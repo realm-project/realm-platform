@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('REALM')
-    .controller('StudentSessionsController', function ($scope, $rootScope, AuthService, AUTH_EVENTS, $state, $http, $q, RepoService) {
+    .controller('TeacherMySessionsController', function ($scope, $rootScope, AuthService, AUTH_EVENTS, $state, $http, $q, RepoService) {
 
 
 
@@ -211,7 +211,7 @@ angular.module('REALM')
                 var stateChecker=false;
                 for(var i=0;i<$state.get().length;i++)
                 {
-                    if("studentHome.sessions."+experimentType==$state.get()[i].name)
+                    if("teacherHome.sessions."+experimentType==$state.get()[i].name)
                     {
                         console.log("the state already exists!")
                         stateChecker=true;
@@ -220,12 +220,12 @@ angular.module('REALM')
                 if(!stateChecker)
                 {
                     console.log("state is new and is being created!");
-                    app.stateProvider.state("studentHome.sessions."+experimentType,
+                    app.stateProvider.state("teacherHome.sessions."+experimentType,
                         {
                             url: '/' + experimentType,
                             controller: 'ExperimentTemplateController',
                             templateUrl: 'shared/views/experiment/experimentTemplate.html',
-                            data: {authorizedRoles:['student'],pageName:"Experiment"}
+                            data: {authorizedRoles:['teacher'],pageName:"Experiment"}
                         });
                 }
 
@@ -235,7 +235,7 @@ angular.module('REALM')
            //layout=$scope.updateLayout($.parseJSON(layout),station);
            layout = $.parseJSON(layout);
            localStorage.setItem('layout',JSON.stringify(layout));
-           $state.go("studentHome.sessions."+experimentType);
+           $state.go("teacherHome.sessions."+experimentType);
         }
 //-----------------------------------------------------------------------------
         /**
