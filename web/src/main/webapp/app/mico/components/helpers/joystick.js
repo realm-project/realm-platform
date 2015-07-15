@@ -59,14 +59,17 @@ angular.module('REALM').directive('joystick', function() {
 
           //console.log("****************************");
           var x = window.joysticks[0].getX();
-          var x2= window.joysticks[0].deltaX();
+          //var x2= window.joysticks[0].deltaX();
           var y = window.joysticks[0].getY();
-          var y2= window.joysticks[0].deltaY();
-          var z = window.joysticks[1].getY();
-          var z2= window.joysticks[1].deltaY();
-         //console.log("joystick.js: "+'x: ' +  x +  " y: " +  y + " z: " + z);
-         //console.log("---(delta): "+'x2: ' +  x2 +  " y2: " +  y2 + " z2: " + z2);
-        // console.log(window.joysticks[0]);
+          //var y2= window.joysticks[0].deltaY();
+          var z = 0;
+          if (window.joysticks.length >1){
+            z = window.joysticks[1].getY();
+          }
+          //var z2= window.joysticks[1].deltaY();
+          //console.log("joystick.js: "+'x: ' +  x +  " y: " +  y + " z: " + z);
+          //console.log("---(delta): "+'x2: ' +  x2 +  " y2: " +  y2 + " z2: " + z2);
+          // console.log(window.joysticks[0]);
           
           parentCtrl.moveRobot(x, y, z);
           
