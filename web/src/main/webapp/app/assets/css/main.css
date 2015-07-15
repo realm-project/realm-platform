@@ -376,10 +376,8 @@ ui-component {
 }
 
 .ui-component__header {
-    padding: 15px;
-    padding-bottom: 5px;
+    padding: 5px;
     border-bottom: 1px solid darkgrey;
-
     background: #e5e5e5;
     -webkit-touch-callout: none;
     -webkit-user-select: none;
@@ -391,6 +389,7 @@ ui-component {
 }
 
 .ui-component__title {
+    margin-bottom: 0px;
     text-align: center;
     -webkit-touch-callout: none;
     -webkit-user-select: none;

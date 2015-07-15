@@ -58,7 +58,9 @@ angular.module('REALM').directive('uiComponent', function($compile,$timeout)
                     
                     if (scope.layoutOptions === undefined || scope.layoutOptions === null || scope.layoutOptions.draggable === undefined || scope.layoutOptions.draggable!==false){
                         // make item elements draggable
-                        $itemElems.draggable();
+                        $itemElems.draggable({
+                            handle: ".ui-component__header"
+                        });
                         // bind Draggable events to Packery
                         $container.packery( 'bindUIDraggableEvents', $itemElems );
                     }
