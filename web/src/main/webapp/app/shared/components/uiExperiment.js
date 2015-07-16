@@ -35,38 +35,39 @@ angular.module('REALM').directive('uiExperiment',['$timeout', '$http', '$q','Rob
             }
             $scope.robotMode="IDLE";
             $rootScope.robotStatus="IDLE";
+
+            var robotTimeout;
             var getRobotState = function(){
                 RobotService.getMode(robotPath).then(function(mode){
                     $scope.robotMode=mode;
                     $rootScope.robotStatus=mode;
-                    //console.log(mode)
-                    setTimeout(getRobotState,30);
-                }, function(response){
-                    //console.log(response);
-                    setTimeout(getRobotState,30);
+                    robotTimeout = setTimeout(getRobotState,200);
+                }, function(errorResponse){
+                    console.log(errorResponse);
+                    robotTimeout = setTimeout(getRobotState,200);
                 });
             };
             getRobotState();
         }
 
+        $scope.$on("$destroy", function(){
+            clearTimeout(robotTimeout);
+        });
+
+
         $scope.$watch('robotMode',function()
         {
             if($scope.robotMode=="IDLE")
             {
-               document.body.style.cursor='default';
-                $rootScope.robotStatus=$scope.robotMode;
                 $("body").css("cursor", "default");
                 console.log("robot stopped | Mode: "+$scope.robotMode);
             }
             if($scope.robotMode=="BUSY")
             {
-                //document.body.style.cursor='wait';
-               // $rootScope.robotStatus=$scope.robotMode;
                 $("body").css("cursor", "progress");
                 console.log("robot started moving.... | Mode: "+$scope.robotMode);
             }
         });
-        //***************************************************************************/
 
     }
   }
