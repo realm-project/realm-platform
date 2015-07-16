@@ -49,7 +49,7 @@ app.directive('poseStateComponent', ['$timeout', '$http', '$q', 'RobotService', 
 
             $scope.$on("$destroy", function(){
                 clearTimeout(poseStateTimeout);
-            }
+            });
 
             getPoseState();
         },

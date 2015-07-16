@@ -56,7 +56,7 @@ app.directive('angleStateComponent', ['$timeout', '$http', '$q', 'RobotService',
 
             $scope.$on("$destroy", function(){
                 clearTimeout(angleStateTimeout);
-            }
+            });
 
             getAngleState();
         },
