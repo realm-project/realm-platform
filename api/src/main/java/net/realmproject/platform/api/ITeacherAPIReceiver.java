@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
@@ -519,5 +520,45 @@ public class ITeacherAPIReceiver extends IFn {
         finally {
             tx.close();
         }
+    }
+    
+    @Selector
+    public void getSessionsForCourse(Person teacher, HttpRequest request) {
+    	ArrayList<Session> sessions = new ArrayList<Session>();
+    	
+    	Course course = (Course) APIUtils.getObjectFromRequest("Course", teacher.tx(), request);
+    	try {
+    		if (course == null) {
+    			RealmResponse.send(request, 400, "Course cannot be null!");
+    			return;
+    		}
+
+    		// Ensure that the teacher is a teacher of the course
+    		if (!course.getTeachers().contains(teacher)) {
+    			RealmResponse.send(request, 403, "Teacher is not authorized to access this course!");
+    			return;
+    		}
+
+    		// Retrieve the list of assignments of the course
+    		Iterable<Assignment> assignments = Courses.getAssignments(teacher.tx(), course);
+
+    		// Retrieve sessions of assignments
+    		for (Assignment assignment : assignments) {
+    			
+    			Iterable<Session> asnSessions = Assignments.getSessions(teacher.tx(), assignment);
+    			
+//    			sessions.addAll((Collection<Session>) Assignments.getSessions(teacher.tx(), assignment));
+    			
+    			for (Session session : asnSessions)
+    				sessions.add(session);
+    				
+    		}
+    		
+    		// Add sessions to response
+            APIUtils.addQueryResultToResponse(sessions, request);
+
+    	} catch (IOException e) {
+    		e.printStackTrace();
+    	}
     }
 }
