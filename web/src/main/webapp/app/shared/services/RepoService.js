@@ -50,7 +50,7 @@ angular.module('REALM')
 
                 }, function (response) {
                     console.log('Failed to add user to session, error code: ' + response.status);
-                    join.reject(response)
+                    join.reject(response);
                 });
             return join.promise;
         }
@@ -79,7 +79,7 @@ angular.module('REALM')
 
                 }, function (response) {
                     console.log('Failed to get sessions per owner per device, error code: ' + response.status);
-                    sessions.reject()
+                    sessions.reject();
                 });
             return sessions.promise;
         }
@@ -99,7 +99,7 @@ angular.module('REALM')
 
                 }, function (response) {
                     console.log('Failed to get courses for teacher, error code: ' + response.status);
-                    courses.reject()
+                    courses.reject();
                 });
             return courses.promise;
         }
@@ -120,7 +120,7 @@ angular.module('REALM')
 
                 }, function (response) {
                     console.log('Failed to get assignments for course, error code: ' + response.status);
-                    assignments.reject()
+                    assignments.reject();
                 });
             return assignments.promise;
         }
@@ -137,9 +137,29 @@ angular.module('REALM')
 
                 }, function (response) {
                     console.log('Failed to create sessions: ' + response.status);
-                    defer.reject()
+                    defer.reject();
                 });
             return defer.promise;
+        }
+
+        this.getSessionsForCourse = function(course){
+            var defer = $q.defer();
+            var apiPath = localStorage.basePath + 'rest/api/teacher/getSessionsForCourse';
+            var postData = {
+                "course":course
+            }
+            $http.post(apiPath, postData).then(
+                function (response) {
+                    console.log(response);
+                    defer.resolve(response);
+
+                }, function (errorResponse) {
+                    console.log('Failed to get sessions for course');
+                    console.log(errorResponse);
+                    defer.reject();
+                });
+            return defer.promise;
+
         }
 //-------------------------------------------------------------------------------
     });
