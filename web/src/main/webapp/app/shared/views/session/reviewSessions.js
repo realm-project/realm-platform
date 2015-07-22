@@ -87,7 +87,7 @@ angular.module('REALM').controller('ReviewSessionsController', function ($scope,
         return loop;
     }
     function someFunction(callback) {
-        console.log('in the loop!');
+        //console.log('in the loop!');
         callback();
     }
 
