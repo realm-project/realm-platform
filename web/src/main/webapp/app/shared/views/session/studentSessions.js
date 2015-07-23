@@ -161,8 +161,8 @@ angular.module('REALM')
             }
         }
 //----------------------------------------------------------------------------
-        $scope.addUserToSession = function () {
-            var joinSession = RepoService.addUserToSession($scope.sessionTokenString);
+        $scope.addUserToSession = function (sessionToken) {
+            var joinSession = RepoService.addUserToSession(sessionToken);
             joinSession.then(
                 function (response) {
                     var user = RepoService.getObject("Person", AuthService.getCurrentUser().loc)
