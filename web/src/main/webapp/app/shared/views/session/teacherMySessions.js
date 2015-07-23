@@ -161,8 +161,8 @@ angular.module('REALM')
             }
         }
 //----------------------------------------------------------------------------
-        $scope.addUserToSession = function () {
-            var joinSession = RepoService.addUserToSession($scope.sessionTokenString);
+        $scope.addUserToSession = function (sessionToken) {
+            var joinSession = RepoService.addUserToSession(sessionToken);
             joinSession.then(
                 function (response) {
                     var user = RepoService.getObject("Person", AuthService.getCurrentUser().loc)
@@ -211,7 +211,7 @@ angular.module('REALM')
                 var stateChecker=false;
                 for(var i=0;i<$state.get().length;i++)
                 {
-                    if("teacherHome.sessions."+experimentType==$state.get()[i].name)
+                    if("teacherHome.mySessions."+experimentType==$state.get()[i].name)
                     {
                         console.log("the state already exists!")
                         stateChecker=true;
@@ -220,7 +220,7 @@ angular.module('REALM')
                 if(!stateChecker)
                 {
                     console.log("state is new and is being created!");
-                    app.stateProvider.state("teacherHome.sessions."+experimentType,
+                    app.stateProvider.state("teacherHome.mySessions."+experimentType,
                         {
                             url: '/' + experimentType,
                             controller: 'ExperimentTemplateController',
@@ -235,7 +235,7 @@ angular.module('REALM')
            //layout=$scope.updateLayout($.parseJSON(layout),station);
            layout = $.parseJSON(layout);
            localStorage.setItem('layout',JSON.stringify(layout));
-           $state.go("teacherHome.sessions."+experimentType);
+           $state.go("teacherHome.mySessions."+experimentType);
         }
 //-----------------------------------------------------------------------------
         /**

@@ -7,7 +7,7 @@ app.directive('cameraFeedComponent' , function($timeout, $http, $q, CameraFeedSe
             scope: true,
             template: "<div class='camera-feed-component__container' ng-switch='streamType'>" +
                         "<canvas ng-switch-when='imageArray' class='camera-feed-component__canvas'> </canvas>" +
-                        "<img ng-switch-when='MJPEG' class='camera-feed-cameraImage' src='{{streamPath}}'>"+
+                        "<img ng-switch-when='MJPEG' class='camera-feed-cameraImage' ng-src='{{streamPath}}'>"+
                         "<canvas ng-switch-default class='camera-feed-component__canvas'> </canvas>" +
                       "</div>",
             controller: function CameraFeedComponentController($scope, $element, $attrs)

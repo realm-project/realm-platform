@@ -228,10 +228,9 @@ angular.module('REALM')
                         }
                     }
                 };
-                //console.log(postData);
-               // console.log("robot service: "+ 'x: ' +  x +  " y: " +  y + " z: " + z);
+                
                 $http.post(localStorage.basePath + devicePath, postData).then(function(response){
-                    console.log("Performed 'move' action on robot successfully for "+ "x: " +  x +  " y: " +  y + " z: " + z+" "+response.status);
+                   // console.log("Performed 'move' action on robot successfully for "+ "x: " +  x +  " y: " +  y + " z: " + z+" "+response.status);
                 },function(response){
                     console.log("Robot 'move' action failed, error code for: "+"x: " +  x +  " y: " +  y + " z: " + z +" "+response.status);
                     if(x==0 && y==0 && z==0)

@@ -4,21 +4,17 @@ angular.module('REALM').controller('ReviewSessionsController', function ($scope,
 
 
     $scope.sessions=[];
-    $scope.allSessions=[];
+    $scope.filteredSessions=[];
+
     $scope.UIStartDate=new Date;
     $scope.UIEndDate=new Date;
-    $scope.filteredSessions=[];
 
     $scope.$watch('UIStartDate',function(){
         $scope.filteredSessions=[];
-        console.log("start changed to:");
-        console.log($scope.UIStartDate);
         $scope.filterSessions($scope.UIStartDate,$scope.UIEndDate);
     });
     $scope.$watch('UIEndDate',function(){
         $scope.filteredSessions=[];
-        console.log("end changed to:")
-        console.log($scope.UIEndDate);
         $scope.filterSessions($scope.UIStartDate,$scope.UIEndDate)
     });
 
@@ -36,7 +32,7 @@ angular.module('REALM').controller('ReviewSessionsController', function ($scope,
 
 
     $scope.gridOptionsAll = {
-        data: 'allSessions',
+        data: 'sessions',
         enableHighlighting: true,
         columnDefs: [
             //{field:'kindLabel', displayName:'label'},
@@ -91,7 +87,7 @@ angular.module('REALM').controller('ReviewSessionsController', function ($scope,
         return loop;
     }
     function someFunction(callback) {
-        console.log('in the loop!');
+        //console.log('in the loop!');
         callback();
     }
 
@@ -99,9 +95,6 @@ angular.module('REALM').controller('ReviewSessionsController', function ($scope,
         asyncLoop(iterations, function (loop) {
             someFunction(function (result) {
                 $scope.createSessionInformation($scope.sessionsArray[loop.iteration()]);
-                // log the iteration
-                console.log(loop.iteration());
-                // Okay, for cycle could continue
                 loop.next();
             })
         },function () {
@@ -118,18 +111,30 @@ angular.module('REALM').controller('ReviewSessionsController', function ($scope,
             session.startTime=response.data.value.startTime;
             session.duration=response.data.value.duration.toString();
             $scope.sessions.push(session);
-            $scope.allSessions.push(session);
-            console.log("created session!")
-           },function(error){})
+            
+           },function(error){
+                console.log("error in creating session!");
+           }
+        );
     }
 
-    RepoService.getSessionsForDeviceOwner().then(function(response){
-        var sessionList=response.data;
-        $scope.sessionsArray=sessionList.split(",");
-        console.log($scope.sessionsArray);
-        $scope.run($scope.sessionsArray.length-1);
-    },function(error){
-        console.log("failed to get sessions for device owner " +error.status)
-    })
+    // read list of sessions :
+    RepoService.getCoursesForTeacher().then(
+        function(response){
+            var courseList = response.data.substring(0,response.data.length-1).split(",");
+            courseList.forEach(function(course){
+                RepoService.getSessionsForCourse(course).then(
+                    function(response){
+                        $scope.sessionsArray = response.data.substring(0,response.data.length-1).split(",");
+                        $scope.run($scope.sessionsArray.length);
+                    },function(errorResponse){
+                        console.log("failed to get sessions for course");            
+                    }
+                );
+            });
+        },function(errorResponse){
+            console.log("failed to get courses for teacher");
+        }
+    );
 
 });

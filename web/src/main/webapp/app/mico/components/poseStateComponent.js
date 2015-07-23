@@ -35,17 +35,21 @@ app.directive('poseStateComponent', ['$timeout', '$http', '$q', 'RobotService', 
             $scope.data = {};
             
             var robotPath = $scope.component.componentOptions.url;
-
+            var poseStateTimeout;
             var getPoseState = function(){
                 RobotService.getPose(robotPath).then(function(poseState){
                     $scope.data.position = poseState.position;
                     $scope.data.orientation = poseState.orientation;
-                    setTimeout(getPoseState,30);
+                    poseStateTimeout = setTimeout(getPoseState,100);
                 }, function(response){
                     console.log(response);
-                    setTimeout(getPoseState,30);
+                    poseStateTimeout = setTimeout(getPoseState,100);
                 });
             };
+
+            $scope.$on("$destroy", function(){
+                clearTimeout(poseStateTimeout);
+            });
 
             getPoseState();
         },
