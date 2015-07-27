@@ -51,6 +51,8 @@ public class IMjpegHandler extends IHandler<HttpRequest> {
         OutputStream out = new BufferedOutputStream(resp.getOutputStream());
 
         BlockingQueue<byte[]> frames = new LinkedBlockingQueue<>(10);
+        frames.offer(camera.getState().image);
+        frames.offer(camera.getState().image);
         Consumer<Frame> listener = (frame -> {
             if (frame.image == null) { return; }
             try {
