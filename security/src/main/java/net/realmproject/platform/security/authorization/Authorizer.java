@@ -10,4 +10,10 @@ public interface Authorizer {
 
     boolean authorize(Action action, HttpRequest request, Person person);
 
+    String uuid();
+
+    default boolean cacheable() {
+        return true;
+    }
+
 }

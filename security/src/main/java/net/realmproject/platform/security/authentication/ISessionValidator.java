@@ -6,7 +6,6 @@ import net.objectof.connector.ConnectorException;
 import net.objectof.corc.Action;
 import net.objectof.corc.Handler;
 import net.objectof.corc.web.v2.HttpRequest;
-import net.realmproject.platform.schema.Person;
 import net.realmproject.platform.security.ISessionHandler;
 import net.realmproject.platform.util.RealmResponse;
 
@@ -24,11 +23,12 @@ public class ISessionValidator extends ISessionHandler {
     }
 
     @Override
-    protected void onExecute(Action action, HttpRequest request, Person person) throws Exception {
+    protected void onExecute(Action action, HttpRequest request, String username) throws Exception {
 
-        if (person == null) {
+        if (username == null) {
             // 401 Unauthorized:
-            // "specifically for use when authentication is required and has failed or has not yet been provided"
+            // "specifically for use when authentication is required and has
+            // failed or has not yet been provided"
             request.getHttpResponse().getWriter().print(new RealmResponse("Unauthorized"));
             request.getHttpResponse().setStatus(401);
             return;

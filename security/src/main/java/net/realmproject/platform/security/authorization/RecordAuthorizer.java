@@ -13,9 +13,10 @@ import net.objectof.corc.web.v2.HttpRequest;
 import net.objectof.model.Package;
 import net.objectof.model.Transaction;
 import net.realmproject.platform.schema.Person;
+import net.realmproject.platform.security.authorization.authorizers.AbstractAuthorizer;
 
 
-public abstract class RecordAuthorizer implements Authorizer {
+public abstract class RecordAuthorizer extends AbstractAuthorizer {
 
     protected Package repo;
 

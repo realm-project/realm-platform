@@ -13,12 +13,12 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.lang.StringUtils;
+
 import net.objectof.corc.web.v2.HttpRequest;
 import net.objectof.model.Transaction;
 import net.realmproject.platform.schema.Person;
 import net.realmproject.platform.util.model.Persons;
-
-import org.apache.commons.lang.StringUtils;
 
 
 public class RealmCorc {
@@ -103,10 +103,7 @@ public class RealmCorc {
 
     public static Person getUser(Transaction tx, HttpRequest request) {
 
-        HttpSession session = request.getHttpRequest().getSession(false);
-        if (session == null) { return null; }
-
-        Object oUsername = session.getAttribute("person");
+        Object oUsername = getUsername(request);
         if (oUsername == null) { return null; }
 
         try {
@@ -116,6 +113,14 @@ public class RealmCorc {
         catch (ClassCastException e) {
             return null;
         }
+
+    }
+
+    public static String getUsername(HttpRequest request) {
+
+        HttpSession session = request.getHttpRequest().getSession(false);
+        if (session == null) { return null; }
+        return session.getAttribute("person").toString();
 
     }
 
