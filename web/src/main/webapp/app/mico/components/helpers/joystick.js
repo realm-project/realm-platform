@@ -82,11 +82,6 @@ angular.module('REALM').directive('joystick', function() {
           var gamepads;
           var pad;
 
-          //to make sure if there is any gamepad is supported
-          if (!!navigator.webkitGetGamepads){
-             gamepads = navigator.webkitGetGamepads();
-             pad = gamepads[scope.gamepad - 1];
-          }
            //to make sure if there is any gamepad is supported
           if (!!navigator.getGamepads){
             gamepads = navigator.getGamepads();
@@ -111,22 +106,22 @@ angular.module('REALM').directive('joystick', function() {
           }
           if(pad !== undefined)
           {
+            if (pad.buttons[0].pressed === true){
+              var xAxisIndex = 2*(scope.stick - 1);
+              var yAxisIndex = 2*(scope.stick - 1) + 1;
 
-            var xAxisIndex = 2*(scope.stick - 1);
-            var yAxisIndex = 2*(scope.stick - 1) + 1;
-
-            var x = pad.axes[xAxisIndex];
-            var y = pad.axes[yAxisIndex];
-
-            if((Math.abs(x) > stickMovedThreshold || Math.abs(y) > stickMovedThreshold) && joystick._pressed === false)
-            {
-              isZeroed = false;
-              scope.$broadcast('GAMEPAD-MOVED',x,y);
-            }
-            else if(!isZeroed)
-            {
-              isZeroed = true;
-              scope.$broadcast('GAMEPAD-MOVED',0,0);
+              var x = pad.axes[xAxisIndex];
+              var y = pad.axes[yAxisIndex];            
+              if((Math.abs(x) > stickMovedThreshold || Math.abs(y) > stickMovedThreshold) && joystick._pressed === false)
+              {
+                isZeroed = false;
+                scope.$broadcast('GAMEPAD-MOVED',x,y);
+              }
+              else if(!isZeroed)
+              {
+                isZeroed = true;
+                scope.$broadcast('GAMEPAD-MOVED',0,0);
+              }
             }
           }
           window.requestAnimationFrame(runAnimation);
