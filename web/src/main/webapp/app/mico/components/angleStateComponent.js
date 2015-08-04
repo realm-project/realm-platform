@@ -36,27 +36,27 @@ app.directive('angleStateComponent', ['$timeout', '$http', '$q', 'RobotService',
                     value: 0.00
                 }]
             };
+            var angleStateTimeout;
+
             var getAngleState = function(){
                 RobotService.getJoints($scope.component.componentOptions.url).then(function(angleState){
                     $scope.angleSet.value = angleState.radians;
-                    
                     $scope.angleSet.angles[0].value = angleState.radians[0];
                     $scope.angleSet.angles[1].value = angleState.radians[1];
                     $scope.angleSet.angles[2].value = angleState.radians[2];
                     $scope.angleSet.angles[3].value = angleState.radians[3];
                     $scope.angleSet.angles[4].value = angleState.radians[4];
                     $scope.angleSet.angles[5].value = angleState.radians[5];
-
-
-
-
-                    setTimeout(getAngleState,30);
-                }, function(response){
-                    console.log(response);
-
-                    setTimeout(getAngleState,30);
+                    angleStateTimeout = setTimeout(getAngleState,100);
+                }, function(errorResponse){
+                    console.log(errorResponse);
+                    angleStateTimeout = setTimeout(getAngleState,100);
                 });
             };
+
+            $scope.$on("$destroy", function(){
+                clearTimeout(angleStateTimeout);
+            });
 
             getAngleState();
         },

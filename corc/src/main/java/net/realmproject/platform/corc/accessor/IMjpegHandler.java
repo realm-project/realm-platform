@@ -19,8 +19,8 @@ import net.objectof.corc.Action;
 import net.objectof.corc.web.v2.HttpRequest;
 import net.objectof.impl.corc.IHandler;
 import net.realmproject.dcm.accessor.impl.IDeviceAccessor;
-import net.realmproject.dcm.device.stock.camera.Frame;
 import net.realmproject.dcm.event.bus.DeviceEventBus;
+import net.realmproject.dcm.stock.camera.Frame;
 
 
 public class IMjpegHandler extends IHandler<HttpRequest> {
@@ -51,6 +51,8 @@ public class IMjpegHandler extends IHandler<HttpRequest> {
         OutputStream out = new BufferedOutputStream(resp.getOutputStream());
 
         BlockingQueue<byte[]> frames = new LinkedBlockingQueue<>(3);
+        frames.offer(camera.getState().image);
+        frames.offer(camera.getState().image);
         Consumer<Frame> listener = (frame -> {
             if (frame.image == null) { return; }
             try {

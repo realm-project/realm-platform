@@ -13,31 +13,20 @@ app.config(function ($stateProvider, $urlRouterProvider) {
         .state('resetPass', {url:'/resetPass/:tokenID', templateUrl: 'shared/views/login/resetPass.html', controller: 'ResetPassController', data: {authorizedRoles:['guest']}})
 
         //students
-        .state('studentHome',{url: '/studentHome', templateUrl: 'shared/views/account/studentHome.html', controller: 'StudentHomeController', data: {authorizedRoles:['student','teacher']}})
-        .state('studentProfile',{url: '/studentProfile', templateUrl: 'shared/views/account/studentProfile.html', controller: 'StudentProfileController', data: {authorizedRoles:['student','teacher']}})
-        .state('studentCourses',{url: '/studentCourses', templateUrl: 'shared/views/account/studentCourses.html', controller: 'StudentCoursesController', data: {authorizedRoles:['student','teacher']}})
-        .state('studentSessions',{url: '/studentSessions', templateUrl: 'shared/views/session/studentSessions.html', controller: 'StudentSessionsController', data: {authorizedRoles:['student','teacher']}})
+        .state('studentHome',{url: '/studentHome', templateUrl: 'shared/views/account/studentHome.html', controller: 'StudentHomeController', data: {authorizedRoles:['student','teacher'],pageName:"Home"}})
+        .state('studentHome.profile',{url: '/profile', templateUrl: 'shared/views/account/studentProfile.html', controller: 'StudentProfileController', data: {authorizedRoles:['student','teacher'],pageName:"Profile"}})
+        .state('studentHome.courses',{url: '/courses', templateUrl: 'shared/views/account/studentCourses.html', controller: 'StudentCoursesController', data: {authorizedRoles:['student','teacher'],pageName:"Courses"}})
+        .state('studentHome.sessions',{url: '/sessions', templateUrl: 'shared/views/session/studentSessions.html', controller: 'StudentSessionsController', data: {authorizedRoles:['student','teacher'],pageName:"Sessions"}})
         //.state('notifications',{url: '/signup', templateUrl: 'shared/views/login/signup.html', controller: 'SignupController', data: {authorizedRoles:['guest']}})
 
         //teachers
-        .state('teacherHome',{url: '/teacherHome', templateUrl: 'shared/views/account/teacherHome.html', controller: 'teacherHomeController', data: {authorizedRoles:['teacher']}})
-        //.state('teacherCourses',{url: '/signup', templateUrl: 'shared/views/login/signup.html', controller: 'SignupController', data: {authorizedRoles:['guest']}})
-        //.state('teacherAssignments',{url: '/signup', templateUrl: 'shared/views/login/signup.html', controller: 'SignupController', data: {authorizedRoles:['guest']}})
-        .state('teacherSessions',{url: '/teacherSessions', templateUrl: 'shared/views/session/teacherSessions.html', controller: 'TeacherSessionsController', data: {authorizedRoles:['teacher']}})
-        .state('reviewsSessions',{url: '/reviewSessions', templateUrl: 'shared/views/session/reviewSessions.html', controller: 'ReviewSessionsController', data: {authorizedRoles:['teacher']}})
-        //.state('teacherStudents',{url: '/signup', templateUrl: 'shared/views/login/signup.html', controller: 'SignupController', data: {authorizedRoles:['guest']}})
-        //.state('teacherProfile',{url: '/signup', templateUrl: 'shared/views/login/signup.html', controller: 'SignupController', data: {authorizedRoles:['guest']}})
-        //.state('adminHome',{url: '/signup', templateUrl: 'shared/views/login/signup.html', controller: 'SignupController', data: {authorizedRoles:['guest']}})
-
-        //experiment state
-        .state('experiment',{url: '/experiment', templateUrl: 'shared/views/experiment/experiment.html', controller: 'ExperimentController', data: {authorizedRoles:['student']}});
-        /*states for specific experiments
-        .state('experiment.template',{url: '/template', templateUrl: 'shared/views/experiment/experimentTemplate.html', controller: 'ExperimentTemplateController', data: {authorizedRoles:['student']}})
-        .state('experiment.forwardKinematics',{url: '/forwardKinematics', templateUrl: 'mico/views/experiments/forwardkinematics.html', controller: 'ForwardKinematicsController', data: {authorizedRoles:['student']}})
-        .state('experiment.inverseKinematics',{url: '/inverseKinematics', templateUrl: 'mico/views/experiments/inversekinematics.html', controller: 'InverseKinematicsController', data: {authorizedRoles:['student']}})
-        .state('experiment.dynamicResponseAndControl',{url: '/dynamicResponseAndControl', templateUrl: 'mico/views/experiments/dynamicresponse.html', controller: 'DynamicResponseController', data: {authorizedRoles:['student']}})
-        .state('experiment.teachPoints',{url: '/teachPoints', templateUrl: 'mico/views/experiments/teachpoints.html', controller: 'TeachPointsController', data: {authorizedRoles:['student']}})
-        .state('experiment.dynamicResponse',{url: '/dynamicResponse', templateUrl: 'mico/views/experiments/teachpointsanddynamicresponse.html', controller: 'TeachPointsAndDynamicResponseController', data: {authorizedRoles:['student']}});*/
+        .state('teacherHome',{url: '/teacherHome', templateUrl: 'shared/views/account/teacherHome.html', controller: 'teacherHomeController', data: {authorizedRoles:['teacher'],pageName:"Home"}})
+        .state('teacherHome.profile',{url: '/profile', templateUrl: 'shared/views/account/studentProfile.html', controller: 'StudentProfileController', data: {authorizedRoles:['teacher'],pageName:"Profile"}})
+        .state('teacherHome.courses',{url: '/courses', templateUrl: 'shared/views/account/studentCourses.html', controller: 'StudentCoursesController', data: {authorizedRoles:['teacher'],pageName:"Courses"}})
+        .state('teacherHome.mySessions',{url: '/mySessions', templateUrl: 'shared/views/session/studentSessions.html', controller: 'TeacherMySessionsController', data: {authorizedRoles:['teacher'],pageName:"Sessions"}})
+        .state('teacherHome.createSessions',{url: '/createSessions', templateUrl: 'shared/views/session/teacherSessions.html', controller: 'TeacherSessionsController', data: {authorizedRoles:['teacher'],pageName:"Create Sessions"}})
+        .state('teacherHome.reviewsSessions',{url: '/reviewSessions', templateUrl: 'shared/views/session/reviewSessions.html', controller: 'ReviewSessionsController', data: {authorizedRoles:['teacher'],pageName:"review Sessions"}});
+        
     //Redirect to login state if URL does not correspond to a defined state
     $urlRouterProvider
         .otherwise('/login');
@@ -45,9 +34,7 @@ app.config(function ($stateProvider, $urlRouterProvider) {
 
 
 app.run(function ($rootScope, $state, AUTH_EVENTS, AuthService) {
-    //check if session storage has any states stored!
-    //if yes, then add the states
-    //------------------------------------------------
+    
     $rootScope.$on('$stateChangeStart', function (event, next) {
         var authorizedRoles = next.data.authorizedRoles;
 
@@ -108,10 +95,6 @@ localStorage.basePath = currentURL.slice(0,indexOfSpecificPath);
 
 if(document.location.hostname==="localhost")
 {
-   // localStorage.basePath="http://localhost:8080/realm/";
-    //localStorage.basePath=currentURL;
     var indexOfSpecificPath = currentURL.indexOf('app');
     localStorage.basePath = currentURL.slice(0,indexOfSpecificPath);
-
 }
-console.log("basePath is: "+localStorage.basePath);

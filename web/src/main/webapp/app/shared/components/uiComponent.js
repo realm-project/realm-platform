@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('REALM').directive('uiComponent', function($compile) 
+angular.module('REALM').directive('uiComponent', function($compile,$timeout) 
 {  
     var componentContentTemplates = 
     {
@@ -25,9 +25,11 @@ angular.module('REALM').directive('uiComponent', function($compile)
         restrict: 'E',
         replace: false,
         scope: {
-            component: '=component',
-            sectionOptions: '=sectionOptions',
-            toggleComponentShowing: '&toggleComponentShowing'
+            component: '=',
+            sectionOptions: '=',
+            toggleComponentShowing: '&toggleComponentShowing',
+            layoutOptions: '='
+
         },
         template:   "<div class='ui-component__container'>" + 
                         "<div class='ui-component__header'>" +
@@ -40,14 +42,31 @@ angular.module('REALM').directive('uiComponent', function($compile)
                     "</div>",
         compile: function CompilingFunction(tElement, tAttrs)
         {
-            return {
-                pre: function(scope, element, attrs, sectionController) {
+            return function linkingFunction(scope, element, attrs, sectionController) {
+                // packery reload (new UI)
+                $timeout(function(){ 
 
-                },
-                post: function(scope, element, attrs, sectionController) {
-                  
-                }
-              }
+                    var $container = $('.ui-experiment__container');
+                    
+                    $container.packery({
+                      itemSelector: '.ui-section',
+                      gutter: 0,
+                      percentPosition: true
+                    });
+              
+                    var $itemElems = $($container.packery('getItemElements'));
+                    
+                    if (scope.layoutOptions === undefined || scope.layoutOptions === null || scope.layoutOptions.draggable === undefined || scope.layoutOptions.draggable!==false){
+                        // make item elements draggable
+                        $itemElems.draggable({
+                            handle: ".ui-component__header"
+                        });
+                        // bind Draggable events to Packery
+                        $container.packery( 'bindUIDraggableEvents', $itemElems );
+                    }
+                });
+
+            }
         },
         controller: function ComponentController($scope, $element, $attrs)
         {

@@ -13,21 +13,12 @@
     <link rel="shortcut icon" href="assets/img/favicon.png">
 
     <!--STYLESHEETS-->
-    <!--TODC BOOTSTRAP THEME-->
-    <!--<link rel="stylesheet" href="assets/css/todc-css/bootstrap.css"/>-->
-    <!--<link rel="stylesheet" href="assets/css/todc-css/bootstrap-theme.css"/>
-    <link rel="stylesheet" href="assets/css/todc-css/todc-bootstrap.css"/>-->
-    <!--<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
-    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">-->
     <link rel="stylesheet" href="assets/bower_components/ng-grid/ng-grid.css"/>
     <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css" rel="stylesheet">
     <link href="assets/css/modal.css" rel="stylesheet">
     <!--MOBILE ANGULAR UI-->
     <link rel="stylesheet" href="assets/css/mobile-angular-ui-base.css"/>
-    <link rel="stylesheet" href="assets/css/mobile-angular-ui-desktop.css"/>
-    <!--SLIDEBOX-->
-    <!--USING ISCROLL INSTEAD
-    <link href="assets/bower_components/slidebox/css/slidebox.css" rel="stylesheet" type="text/css"/> -->
+    <link rel="stylesheet" href="assets/css/mobile-angular-ui-desktop.css"/> 
     <!--JQuery-->
     <link rel="stylesheet" href="assets/css/jquery/jquery-ui.css">
     <link rel="stylesheet" href="assets/css/jquery/jquery-ui.min.css">
@@ -56,14 +47,6 @@
                 <img src="assets/img/REALMBanner.png"></img>
             </div>
             <div class="list-group" toggle="off" bubble target="mainSidebar">
-                <!--div class="common-menu--before-login" yield-to="common-menu--before-login">
-                  <a class="list-group-item" ui-sref="login">Log In<i class="fa fa-chevron-right pull-right"></i></a>
-                  <a class="list-group-item" ui-sref="signup">Sign Up <i class="fa fa-chevron-right pull-right"></i></a>
-                </div>
-                <div class="common-menu--after-login" >
-                  <a class="list-group-item" ui-sref="studentHome"><i class="left-sidebar-icon fa fa-home"></i>Home<i class="fa fa-chevron-right pull-right"></i></a>
-                  <a class="list-group-item" ui-sref="login"><i class="left-sidebar-icon fa fa-sign-out"></i>Log Out<i class="fa fa-chevron-right pull-right"></i></a>
-                </div-->
                 <div yield-to="common-menu">
                     <a class="list-group-item" ui-sref="studentHome"><i class="left-sidebar-icon fa fa-home"></i>Home<i
                             class="fa fa-chevron-right pull-right"></i></a>
@@ -79,30 +62,29 @@
 </div>
 
 <!--RIGHT SIDEBAR-->
-<!--And this is where I'd put a right sidebar....IF I HAD ONE-->
 
 <div class="app">
 
     <!--TOP NAVBAR-->
-    <div class="navbar navbar-app navbar-absolute-top" yield-to="top-navbar">
+    <div class="navbar navbar-app navbar-top" yield-to="top-navbar">
         <div class="navbar-brand navbar-brand-right" yield-to="title">
             <span>REALM</span>
         </div>
         <div class="btn-group pull-left">
             <div ng-click="toggle('mainSidebar','on')" class="btn btn-navbar sidebar-toggle">
-                <i class="fa fa-bars"></i> <!-- here is where I can write MENU beside the menu icon-->
+                <i class="fa fa-bars"></i>
             </div>
-
         </div>
+        <div class="navbar-brand navbar-brand-left navbar-brand-left-element">
+            <bread-crumb></bread-crumb>
+        </div>
+
         <div class="navbar-brand navbar-brand-left" yield-to="top-navbar__left">
+            
         </div>
 
     </div>
 
-    <!--BOTTOM NAVBAR-->
-    <div class="navbar navbar-app navbar-absolute-bottom" yield-to="bottom-navbar">
-
-    </div>
 
     <!--APP BODY-->
     <div class="app-body" ng-class="{loading: loading}">
@@ -112,6 +94,10 @@
 
         <div ui-view class="app-content" ng-hide="loading"></ng-view>
         </div>
+    </div>
+
+    <!--BOTTOM NAVBAR-->
+    <div class="navbar navbar-app navbar-absolute-bottom" yield-to="bottom-navbar">
 
     </div>
 </div>
@@ -148,6 +134,8 @@
 	<!--ThreeX -->
 	<script src="assets/js/three.min.js"></script>
 	<script src="assets/js/threex.keyboardstate.js"></script>
+    <!--packery-->
+    <script src="assets/js/packery.pkgd.min.js"></script>
 	
     <!--MODALS-->
     <script src="mico/views/partials/robotModal.js"></script>
@@ -169,21 +157,9 @@
     <script src="shared/views/session/studentSessions.js"></script>
     <script src="shared/views/session/teacherSessions.js"></script>
     <script src="shared/views/session/reviewSessions.js"></script>
+    <script src="shared/views/session/teacherMySessions.js"></script>
     <script src="shared/views/experiment/experimentTemplate.js"></script>
-
     <script src="shared/views/experiment/experiment.js"></script>
-
-    <!--views required for the old code
-    <script src="scripts/controllers/teacherHome.js"></script>
-    <script src="scripts/controllers/teacherCourses.js"></script>
-    <script src="scripts/controllers/teacherProfile.js"></script>
-    <script src="mico/views/experiments/forwardkinematics.js"></script>
-    <script src="mico/views/experiments/inversekinematics.js"></script>
-    <script src="mico/views/experiments/teachpoints.js"></script>
-    <script src="mico/views/experiments/dynamicresponse.js"></script>
-    <script src="mico/views/experiments/teachpointsanddynamicresponse.js"></script>
-    -->
-
 
     <!--SERVICES-->
     <script src="shared/services/CameraFeedService.js"></script>
@@ -196,6 +172,8 @@
     <script src="shared/components/uiExperiment.js"></script>
     <script src="shared/components/uiSection.js"></script>
     <script src="shared/components/uiComponent.js"></script>
+
+    <script src="shared/components/breadCrumb.js"></script>
 
     <script src="mico/components/cameraFeedComponent.js"></script>
     <script src="mico/components/angleInputComponent.js"></script>
@@ -211,12 +189,12 @@
     <script src="mico/components/fingerControlComponent.js"></script>
 
     <!--robot HELPERS-->
-    <script src="mico/components/helpers/equals.js"></script>
     <script src="mico/components/helpers/numericInput.js"></script>
     <script src="mico/components/helpers/joystick.js"></script>
     <script src="mico/components/helpers/poseChart.js"></script>
     <!--UI HELPERS -->
     <script src="shared/components/helpers/minLength.js"></script>
+    <script src="shared/components/helpers/equals.js"></script>
 
 </body>
 </html>
