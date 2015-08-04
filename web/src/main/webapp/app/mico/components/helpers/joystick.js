@@ -79,37 +79,39 @@ angular.module('REALM').directive('joystick', function() {
         function runAnimation()
         {
 
-            //to make sure ff there is any gamepad attached
-            if (!!navigator.webkitGetGamepads){
-              var gamepads = navigator.webkitGetGamepads();
-              var pad = gamepads[scope.gamepad - 1];
-            }
-            
-            if(joystick._pressed)
-            {
-              var x = joystick.getX();
-              var y = joystick.getY();
-              
-              if((Math.abs(x) > stickMovedThreshold || Math.abs(y) > stickMovedThreshold))
-              {
-                isZeroed = false;
-                scope.$broadcast('JOYSTICK-MOVED');
-              }
-            }
-            else if(!isZeroed)
-            {
-              isZeroed = true;
-              scope.$broadcast('GAMEPAD-MOVED',0,0); 
-            }
-            if(pad !== undefined)
-            {
+          var gamepads;
+          var pad;
 
+           //to make sure if there is any gamepad is supported
+          if (!!navigator.getGamepads){
+            gamepads = navigator.getGamepads();
+            pad = gamepads[scope.gamepad - 1];
+          }
+          
+          if(joystick._pressed)
+          {
+            var x = joystick.getX();
+            var y = joystick.getY();
+            
+            if((Math.abs(x) > stickMovedThreshold || Math.abs(y) > stickMovedThreshold))
+            {
+              isZeroed = false;
+              scope.$broadcast('JOYSTICK-MOVED');
+            }
+          }
+          else if(!isZeroed)
+          {
+            isZeroed = true;
+            scope.$broadcast('GAMEPAD-MOVED',0,0); 
+          }
+          if(pad !== undefined)
+          {
+            if (pad.buttons[0].pressed === true){
               var xAxisIndex = 2*(scope.stick - 1);
               var yAxisIndex = 2*(scope.stick - 1) + 1;
 
               var x = pad.axes[xAxisIndex];
-              var y = pad.axes[yAxisIndex];
-
+              var y = pad.axes[yAxisIndex];            
               if((Math.abs(x) > stickMovedThreshold || Math.abs(y) > stickMovedThreshold) && joystick._pressed === false)
               {
                 isZeroed = false;
@@ -120,9 +122,9 @@ angular.module('REALM').directive('joystick', function() {
                 isZeroed = true;
                 scope.$broadcast('GAMEPAD-MOVED',0,0);
               }
-
             }
-            window.requestAnimationFrame(runAnimation);
+          }
+          window.requestAnimationFrame(runAnimation);
         } 
 
         window.requestAnimationFrame(runAnimation);
