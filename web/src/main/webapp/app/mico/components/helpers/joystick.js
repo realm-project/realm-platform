@@ -49,30 +49,30 @@ angular.module('REALM').directive('joystick', function() {
               joystick._onUp();
           });
         
-        scope.$on('GAMEPAD-MOVED', function(event,x,y){
-          parentCtrl.moveJoystick(joystick, containerElement, x, y);
-          
-          
+        scope.$on('GAMEPAD-MOVED', function(event,padElement, isZeroCommand, x, y){
+
+          parentCtrl.moveJoystick(joystick, containerElement, isZeroCommand, x, y ,padElement);
+
         });
         
-        scope.$on('JOYSTICK-MOVED', function(event){
+        scope.$on('JOYSTICK-MOVED', function(event , isZeroCommand){
 
-          //console.log("****************************");
-          var x = window.joysticks[0].getX();
-          //var x2= window.joysticks[0].deltaX();
-          var y = window.joysticks[0].getY();
-          //var y2= window.joysticks[0].deltaY();
-          var z = 0;
-          if (window.joysticks.length >1){
-            z = window.joysticks[1].getY();
+          if (isZeroCommand){
+            parentCtrl.moveRobot(0, 0, 0, 0, false, false, false, false);
+
+          }else{
+            var axis0 = window.joysticks[0].getX();
+            var axis1 = window.joysticks[0].getY();
+            var axis2 = 0;
+            var axis3 = 0;
+
+            if (window.joysticks.length >1){
+              axis2 = window.joysticks[1].getX();
+              axis3 = window.joysticks[1].getY();
+            }
+
+            parentCtrl.moveRobot(axis0, axis1, axis2, axis3, false, false, false, false);
           }
-          //var z2= window.joysticks[1].deltaY();
-          //console.log("joystick.js: "+'x: ' +  x +  " y: " +  y + " z: " + z);
-          //console.log("---(delta): "+'x2: ' +  x2 +  " y2: " +  y2 + " z2: " + z2);
-          // console.log(window.joysticks[0]);
-          
-          parentCtrl.moveRobot(x, y, z);
-          
         })
         
         var isZeroed = false;
@@ -96,33 +96,35 @@ angular.module('REALM').directive('joystick', function() {
             if((Math.abs(x) > stickMovedThreshold || Math.abs(y) > stickMovedThreshold))
             {
               isZeroed = false;
-              scope.$broadcast('JOYSTICK-MOVED');
+              scope.$broadcast('JOYSTICK-MOVED' , false);
             }
           }
           else if(!isZeroed)
           {
             isZeroed = true;
-            scope.$broadcast('GAMEPAD-MOVED',0,0); 
+            scope.$broadcast('JOYSTICK-MOVED', true); 
           }
+
+          
           if(pad !== undefined)
           {
-            if (pad.buttons[0].pressed === true){
-              var xAxisIndex = 2*(scope.stick - 1);
-              var yAxisIndex = 2*(scope.stick - 1) + 1;
 
-              var x = pad.axes[xAxisIndex];
-              var y = pad.axes[yAxisIndex];            
-              if((Math.abs(x) > stickMovedThreshold || Math.abs(y) > stickMovedThreshold) && joystick._pressed === false)
-              {
-                isZeroed = false;
-                scope.$broadcast('GAMEPAD-MOVED',x,y);
-              }
-              else if(!isZeroed)
-              {
-                isZeroed = true;
-                scope.$broadcast('GAMEPAD-MOVED',0,0);
-              }
+            var xAxisIndex = 2*(scope.stick - 1);
+            var yAxisIndex = 2*(scope.stick - 1) + 1;
+            var x = pad.axes[xAxisIndex];
+            var y = pad.axes[yAxisIndex];    
+
+            if((Math.abs(x) > stickMovedThreshold || Math.abs(y) > stickMovedThreshold ) && joystick._pressed === false)
+            {
+              isZeroed = false;
+              scope.$broadcast('GAMEPAD-MOVED', pad, false, x, y);
             }
+            else if(!isZeroed)
+            {
+              isZeroed = true;
+              scope.$broadcast('GAMEPAD-MOVED', pad ,true , 0 , 0);
+            }
+          
           }
           window.requestAnimationFrame(runAnimation);
         } 
