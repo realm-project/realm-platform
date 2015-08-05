@@ -59,8 +59,7 @@ public class IMjpegHandler extends IHandler<HttpRequest> {
                 frames.put(frame.image);
             }
             catch (InterruptedException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
+                Thread.currentThread().interrupt();
             }
         });
         camera.getListeners().add(listener);
