@@ -21,12 +21,14 @@ import org.apache.commons.logging.LogFactory;
 import io.humble.video.Codec;
 import io.humble.video.Container;
 import io.humble.video.Encoder;
+import io.humble.video.KeyValueBag;
 import io.humble.video.MediaPacket;
 import io.humble.video.MediaPicture;
 import io.humble.video.Muxer;
 import io.humble.video.MuxerFormat;
 import io.humble.video.MuxerStream;
 import io.humble.video.PixelFormat;
+import io.humble.video.Property;
 import io.humble.video.Rational;
 import io.humble.video.awt.MediaPictureConverter;
 import io.humble.video.awt.MediaPictureConverterFactory;
@@ -59,11 +61,18 @@ public class IVP8HumbleHandler extends IHandler<HttpRequest> implements Logging 
     // https://github.com/x-nagasawa/kmkt/blob/master/src/com/github/kmkt/util/MjpegServlet.java
     @Override
     protected void onExecute(Action action, HttpRequest request) throws IOException, ServletException, InterruptedException {
-        HttpServletRequest req = request.getHttpRequest();
+        
+    	long startTime = System.currentTimeMillis();
+    	
+    	HttpServletRequest req = request.getHttpRequest();
         HttpServletResponse resp = request.getHttpResponse();
         //OutputStream out = new BufferedOutputStream(resp.getOutputStream());
         OutputStream out = resp.getOutputStream();
 
+        /**
+         * Set up a queue to pull in Frame objects and store the image byte[].
+         */
+        //frame dropping by setting max queue size
         BlockingQueue<byte[]> frames = new LinkedBlockingQueue<>(3);
         frames.offer(camera.getState().image);
         frames.offer(camera.getState().image);
@@ -77,9 +86,9 @@ public class IVP8HumbleHandler extends IHandler<HttpRequest> implements Logging 
             }
         });
         camera.getListeners().add(listener);
+        
         logger.info("Accept HTTP connection from " + req.getRemoteAddr());
         
-
 
         //use a 1ms-based framerate, then we say that a new frame is at frame# now-start 
         Rational framerate = Rational.make(1d / 1000d);
@@ -92,7 +101,16 @@ public class IVP8HumbleHandler extends IHandler<HttpRequest> implements Logging 
          * First we create a muxer using the filename 
          */
         Muxer muxer = Muxer.make(outputStreamURL, null, "webm");
-        
+        muxer.setOutputBufferLength(64);
+          
+        System.out.println("flush_packets = " + muxer.getPropertyAsBoolean("flush_packets"));
+        System.out.println("max_delay = " + muxer.getPropertyAsInt("max_delay"));
+        System.out.println("rtbufsize = " + muxer.getPropertyAsInt("rtbufsize"));
+        System.out.println("chunk_duration = " + muxer.getPropertyAsInt("chunk_duration"));
+        System.out.println("packetsize = " + muxer.getPropertyAsInt("packetsize"));
+        muxer.setProperty("flush_packets", true);
+        muxer.setProperty("max_delay", 50);
+        muxer.setProperty("rtbufsize", 65536);
         
         /** Now, we need to decide what type of codec to use to encode video. Muxers
          * have limited sets of codecs they can use. We're going to pick the first one that
@@ -163,8 +181,8 @@ public class IVP8HumbleHandler extends IHandler<HttpRequest> implements Logging 
             pixelformat);
         picture.setTimeBase(framerate);
      
+
         
-        long startTime = System.currentTimeMillis();
         // loop until we're interrupted or the connection is closed, waiting for
         // new frames and transmitting them
         final MediaPacket packet = MediaPacket.make();
@@ -172,15 +190,18 @@ public class IVP8HumbleHandler extends IHandler<HttpRequest> implements Logging 
         	while (true) {
         		
         		byte[] bytes = frames.take();
+        		long time = timestamp(startTime);
+        		if (time < 1) { continue; }
         		
             	/** Make the jpeg image && convert image to TYPE_3BYTE_BGR */
             	BufferedImage jpeg = ImageIO.read(new ByteArrayInputStream(bytes));
             	final BufferedImage screen = convertToType(jpeg, BufferedImage.TYPE_3BYTE_BGR);
                 
             	/** This is LIKELY not in YUV420P format, so we're going to convert it using some handy utilities. */
-				if (converter == null)
+				if (converter == null) {
 					converter = MediaPictureConverterFactory.createConverter(screen, picture);
-				converter.toPicture(picture, screen, timestamp(startTime));
+				}
+				converter.toPicture(picture, screen, time);
             	
 				do {
 					encoder.encode(packet, picture);
