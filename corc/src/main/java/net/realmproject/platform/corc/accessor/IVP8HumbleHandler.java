@@ -30,6 +30,7 @@ import io.humble.video.PixelFormat;
 import io.humble.video.Rational;
 import io.humble.video.awt.MediaPictureConverter;
 import io.humble.video.awt.MediaPictureConverterFactory;
+import io.humble.video.customio.HumbleIO;
 import net.objectof.corc.Action;
 import net.objectof.corc.web.v2.HttpRequest;
 import net.objectof.impl.corc.IHandler;
@@ -42,7 +43,7 @@ import net.realmproject.dcm.stock.camera.Frame;
 public class IVP8HumbleHandler extends IHandler<HttpRequest> implements Logging {
    
     IDeviceAccessor<Frame> camera;
-
+    
     public IVP8HumbleHandler(String id, String deviceId, DeviceEventBus bus) {
         this.camera = new IDeviceAccessor<>(id, deviceId, bus);
     }
@@ -60,7 +61,8 @@ public class IVP8HumbleHandler extends IHandler<HttpRequest> implements Logging 
     protected void onExecute(Action action, HttpRequest request) throws IOException, ServletException, InterruptedException {
         HttpServletRequest req = request.getHttpRequest();
         HttpServletResponse resp = request.getHttpResponse();
-        OutputStream out = new BufferedOutputStream(resp.getOutputStream());
+        //OutputStream out = new BufferedOutputStream(resp.getOutputStream());
+        OutputStream out = resp.getOutputStream();
 
         BlockingQueue<byte[]> frames = new LinkedBlockingQueue<>(3);
         frames.offer(camera.getState().image);
@@ -79,15 +81,17 @@ public class IVP8HumbleHandler extends IHandler<HttpRequest> implements Logging 
         
 
 
-        Rational framerate = Rational.make(1d / 15d);
-
+        //use a 1ms-based framerate, then we say that a new frame is at frame# now-start 
+        Rational framerate = Rational.make(1d / 1000d);
+        long frameCount = 1;
         
         
+        String outputStreamURL = HumbleIO.map(out);
         
         /** 
          * First we create a muxer using the filename 
          */
-        Muxer muxer = Muxer.make("afile.webm", null, null);
+        Muxer muxer = Muxer.make(outputStreamURL, null, "webm");
         
         
         /** Now, we need to decide what type of codec to use to encode video. Muxers
@@ -178,16 +182,19 @@ public class IVP8HumbleHandler extends IHandler<HttpRequest> implements Logging 
 					converter = MediaPictureConverterFactory.createConverter(screen, picture);
 				converter.toPicture(picture, screen, timestamp(startTime));
             	
-				
 				do {
-			        encoder.encode(packet, picture);
-			        if (packet.isComplete())
-			          muxer.write(packet, false);
-			      } while (packet.isComplete());
+					encoder.encode(packet, picture);
+					if (packet.isComplete()) {
+						muxer.write(packet, false);
+					}
+				} while (packet.isComplete());
+				out.flush();
+				
+				frameCount++;
 				
         	}
         }
-        catch (IOException e) {
+        catch (IOException | RuntimeException e) {
             // connection closed
             logger.info("Close HTTP connection from " + req.getRemoteAddr());
         }
@@ -202,13 +209,13 @@ public class IVP8HumbleHandler extends IHandler<HttpRequest> implements Logging 
              * So, they need to be flushed as well. As with the decoders, the convention is to pass in a null
              * input until the output is not complete.
              */
-			do {
-				encoder.encode(packet, null);
-				if (packet.isComplete())
-					muxer.write(packet, false);
-			} while (packet.isComplete());
-			
-			muxer.close();
+//			do {
+//				encoder.encode(packet, null);
+//				if (packet.isComplete())
+//					muxer.write(packet, false);
+//			} while (packet.isComplete());
+//			
+//			muxer.close();
         	
             camera.getListeners().remove(listener);
         }
