@@ -61,12 +61,15 @@ angular.module('REALM').directive('joystick', function() {
             parentCtrl.moveRobot(0, 0, 0, 0, false, false, false, false);
 
           }else{
-            var axis0 = window.joysticks[0].getX();
-            var axis1 = window.joysticks[0].getY();
+            var axis0 = 0;
+            var axis1 = 0;
             var axis2 = 0;
             var axis3 = 0;
-
-            if (window.joysticks.length >1){
+            if (scope.stick ==1){
+              axis0 = window.joysticks[0].getX();
+              axis1 = window.joysticks[0].getY();
+            }
+            else if (scope.stick ==2){
               axis2 = window.joysticks[1].getX();
               axis3 = window.joysticks[1].getY();
             }
