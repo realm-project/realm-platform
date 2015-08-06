@@ -22,8 +22,11 @@ import com.xuggle.xuggler.ICodec;
 import com.xuggle.xuggler.ICodec.ID;
 import com.xuggle.xuggler.IContainer;
 import com.xuggle.xuggler.IContainerFormat;
+import com.xuggle.xuggler.IMetaData;
 import com.xuggle.xuggler.IPacket;
 import com.xuggle.xuggler.IPixelFormat;
+import com.xuggle.xuggler.IPixelFormat.Type;
+import com.xuggle.xuggler.IRational;
 import com.xuggle.xuggler.IStream;
 import com.xuggle.xuggler.IStreamCoder;
 import com.xuggle.xuggler.IStreamCoder.Direction;
@@ -50,7 +53,7 @@ public class IVP8Handler extends IHandler<HttpRequest> implements Logging {
     private IStreamCoder coder;
     private ICodec codec;
     
-    private long startTime = System.currentTimeMillis();
+    private long startTime = 0;
     private long frameCount = 0;
     
     IDeviceAccessor<Frame> camera;
@@ -90,13 +93,21 @@ public class IVP8Handler extends IHandler<HttpRequest> implements Logging {
 
         logger.info("Accept HTTP connection from " + req.getRemoteAddr());
 
+        startTime = System.currentTimeMillis();
+        
         container = IContainer.make();
         format = webm();
+        
         coder = IStreamCoder.make(Direction.ENCODING, format.getOutputDefaultVideoCodec());
-        coder.open();
+        coder.setTimeBase(IRational.make(1f/15f));
+        coder.setPixelType(Type.YUV420P);
+        coder.setWidth(512);
+        coder.setHeight(384);
+                
         stream = container.addNewStream(coder);
         codec = coder.getCodec();
-        
+
+        coder.open(null, null);
         
         if (container.open(out, format) < 0) { 
         	getLog().error("Could not open container");
@@ -130,6 +141,10 @@ public class IVP8Handler extends IHandler<HttpRequest> implements Logging {
         }
     }
 
+    private long timestamp() {
+    	return (System.currentTimeMillis() - startTime) * 1000;
+    }
+    
     private void sendFrame(byte[] frame) throws IOException {
 
         if (frame == null) return;
@@ -137,8 +152,7 @@ public class IVP8Handler extends IHandler<HttpRequest> implements Logging {
         IPacket packet = IPacket.make();
         BufferedImage image = ImageIO.read(new ByteArrayInputStream(frame));
         IConverter converter = ConverterFactory.createConverter(image, IPixelFormat.Type.YUV420P);
-        long timestamp = (System.currentTimeMillis() - startTime) * 1000;
-        IVideoPicture picture = converter.toPicture(image, timestamp);
+        IVideoPicture picture = converter.toPicture(image, timestamp());
         
         if (frameCount % 150 == 0) {
         	picture.setKeyFrame(true);
