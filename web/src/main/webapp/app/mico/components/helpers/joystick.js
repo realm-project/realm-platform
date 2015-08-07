@@ -79,6 +79,7 @@ angular.module('REALM').directive('joystick', function() {
         })
         
         var isZeroed = false;
+        var gamepadIsZeroed = false;
         function runAnimation()
         {
 
@@ -119,12 +120,12 @@ angular.module('REALM').directive('joystick', function() {
 
             if((Math.abs(x) > stickMovedThreshold || Math.abs(y) > stickMovedThreshold ) && joystick._pressed === false)
             {
-              isZeroed = false;
+              gamepadIsZeroed = false;
               scope.$broadcast('GAMEPAD-MOVED', pad, false, x, y);
             }
-            else if(!isZeroed)
+            else if(!gamepadIsZeroed)
             {
-              isZeroed = true;
+              gamepadIsZeroed = true;
               scope.$broadcast('GAMEPAD-MOVED', pad ,true , 0 , 0);
             }
           
