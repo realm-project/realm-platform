@@ -36,7 +36,14 @@ angular.module('REALM')
                             var sessionData = response.data;
                             $scope.createSession(sessionData);
                         }, function (error) {
-                            console.log(error.status);
+                            console.log(error);
+                            if (error.status !== undefined && error.status == 401){
+                                // Unathorized -- session timeout
+                                $rootScope.toggle('sessionTimeoutError','on');
+                            }else{
+                                // could not get the sessions
+                                $rootScope.toggle('loadSessionError','on');
+                            }
                         });
                 }//end of for
             }//end of if
