@@ -54,7 +54,7 @@ public class CommandRecordWriter implements RecordWriter<DeviceEvent>, Logging {
         Device device = RealmRepo.queryHead(tx, "Device", new IQuery("name", deviceId));
         this.deviceId = device.id();
 
-        DCMThreadPool.getPool().scheduleAtFixedRate(this::flush, 1, 1, TimeUnit.MINUTES);
+        DCMThreadPool.getScheduledPool().scheduleAtFixedRate(this::flush, 1, 1, TimeUnit.MINUTES);
 
     }
 
