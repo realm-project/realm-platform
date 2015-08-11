@@ -66,7 +66,10 @@ public class CommandRecordWriter implements RecordWriter<DeviceEvent>, Logging {
 
     @Override
     public synchronized void write(DeviceEvent event) {
-        if (isClosed) { throw new IllegalStateException("Resource is closed"); }
+        if (isClosed) {
+            getLog().info("Attempting to write to closed " + getClass().getSimpleName());
+            return;
+        }
 
         Object payload = event.getPayload();
         DeviceEventType eventType = event.getDeviceEventType();

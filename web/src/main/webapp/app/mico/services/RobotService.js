@@ -209,38 +209,32 @@ angular.module('REALM')
         }
 //---------------------------------------------------------------------------------------------------------------
             //JOYSTICK
-            this.move = function(devicePath,x,y,z) {
-                z = z*-1;
+            this.move = function(devicePath,axis0, axis1, axis2, axis3, button0, button1, button2, button3) {
 
                 var postData = {
                     'record':false,
                     'action': "move",
                     'arguments': {
-                        'linear': {
-                            'x':x,
-                            'y':y,
-                            'z':z
+                        'axes': {
+                            'axis0':axis0,
+                            'axis1':axis1,
+                            'axis2':axis2,
+                            'axis3':axis3
                         },
-                        'angular': {
-                            x:0,
-                            y:0,
-                            z:0
+                        'buttons': {
+                            'button0':button0,
+                            'button1':button1,
+                            'button2':button2,
+                            'button3':button3
                         }
                     }
                 };
                 
                 $http.post(localStorage.basePath + devicePath, postData).then(function(response){
-                   // console.log("Performed 'move' action on robot successfully for "+ "x: " +  x +  " y: " +  y + " z: " + z+" "+response.status);
+                   
                 },function(response){
-                    console.log("Robot 'move' action failed, error code for: "+"x: " +  x +  " y: " +  y + " z: " + z +" "+response.status);
-                    if(x==0 && y==0 && z==0)
-                    {
-                        console.log("resending zero command!")
-                        that.move(devicePath,0,0,0);
-                    }
+                    console.log("Robot 'move' action failed"+response.status);
                 });
-
-                //console.log('MOVE x:' + x + ' y: ' + y + ' z: ' + z);
             }
 
     });

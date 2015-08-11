@@ -57,28 +57,34 @@ app.directive('joystickInputComponent', ['RobotService', function(RobotService) 
       $scope.xyLabel="X, Y:";
       $scope.zLabel="Z:";
 
-      this.moveJoystick = function(joystick, container, x, y){
+      this.moveJoystick = function(joystick, container, isZeroCommand, x, y, padElement){
         
         joystick._pressed = true;
         joystick._stickEl.style.display="";
 
         joystick._onMove(container.offset().left + 100 + (x*joystick._stickRadius),container.offset().top + 100 + (y*joystick._stickRadius));
         
-        var x1 = window.joysticks[0].getX();
-        var y1 = window.joysticks[0].getY();
-        var y2 =0;
-        if (window.joysticks.length >1){
-          y2 = window.joysticks[1].getY();
+        if(isZeroCommand){
+          this.moveRobot (0 ,0 ,0 ,0 , false ,false ,false ,false);
+        }else{
+          var axis0 = padElement.axes[0];
+          var axis1 = padElement.axes[1];
+          var axis2 = padElement.axes[2];
+          var axis3 = padElement.axes[3];
+          var button0 = padElement.buttons[0].pressed;
+          var button1 = padElement.buttons[1].pressed;
+          var button2 = padElement.buttons[2].pressed;
+          var button3 = padElement.buttons[3].pressed;
+          this.moveRobot (axis0, axis1, axis2, axis3, button0, button1, button2, button3);
         }
         
-        this.moveRobot(x1, y1, y2);
-
         joystick._pressed=false;
       }
       
 
-      this.moveRobot = function(x,y,z){
-        RobotService.move(robotPath,x,y,z);
+      this.moveRobot = function(axis0, axis1, axis2, axis3, button0, button1, button2, button3){
+
+        RobotService.move(robotPath,axis0, axis1, axis2, axis3, button0, button1, button2, button3);
       }
 
       $scope.goHome=function()
