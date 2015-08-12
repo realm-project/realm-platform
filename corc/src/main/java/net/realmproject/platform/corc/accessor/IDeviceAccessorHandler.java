@@ -9,9 +9,9 @@ import javax.servlet.ServletException;
 import net.objectof.corc.Action;
 import net.objectof.corc.web.v2.HttpRequest;
 import net.objectof.impl.corc.IHandler;
-import net.realmproject.dcm.accessor.DeviceAccessor;
-import net.realmproject.dcm.accessor.impl.IDeviceAccessor;
 import net.realmproject.dcm.event.bus.DeviceEventBus;
+import net.realmproject.dcm.features.accessor.DeviceAccessor;
+import net.realmproject.dcm.features.accessor.IDeviceAccessor;
 import net.realmproject.platform.util.RealmResponse;
 import net.realmproject.platform.util.RealmSerialize;
 
