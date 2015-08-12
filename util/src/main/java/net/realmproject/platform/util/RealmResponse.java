@@ -45,6 +45,7 @@ public class RealmResponse {
     public static void send(HttpRequest request, int status, String message, boolean display) throws IOException {
         request.getHttpResponse().getWriter().print(new RealmResponse(message, display));
         request.getHttpResponse().setStatus(status);
+        request.getHttpResponse().getWriter().close();
     }
 
 }
