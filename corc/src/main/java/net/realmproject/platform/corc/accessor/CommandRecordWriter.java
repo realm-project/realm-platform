@@ -17,7 +17,7 @@ import net.realmproject.dcm.event.DeviceEventType;
 import net.realmproject.dcm.event.Logging;
 import net.realmproject.dcm.features.command.Command;
 import net.realmproject.dcm.features.recording.RecordWriter;
-import net.realmproject.dcm.features.statefulness.State;
+import net.realmproject.dcm.features.stateful.State;
 import net.realmproject.dcm.util.DCMThreadPool;
 import net.realmproject.platform.schema.Device;
 import net.realmproject.platform.schema.DeviceCommand;
