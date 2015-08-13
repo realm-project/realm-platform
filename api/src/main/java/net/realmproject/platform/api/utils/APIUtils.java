@@ -18,6 +18,9 @@ import javax.json.JsonObject;
 import javax.json.JsonReader;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import net.objectof.corc.web.v2.HttpRequest;
 import net.objectof.model.Resource;
 import net.objectof.model.Transaction;
@@ -33,6 +36,7 @@ import net.realmproject.platform.util.model.Tokens;
 public class APIUtils {
 
     static final long ONE_MINUTE_IN_MILLIS = 60000; // Milliseconds
+    private Log log = LogFactory.getLog(getClass());
 
     public static String getLabel(String kindLabel) {
 
@@ -148,9 +152,6 @@ public class APIUtils {
                 long durationInMilli = request.time.bulk.duration * ONE_MINUTE_IN_MILLIS;
                 long currnetTime = startTimeInMilli;
 
-                System.out.println("startTimeInMilli: " + startTimeInMilli + ", endTimeInMilli: " + endTimeInMilli
-                        + ", currnetTime: " + currnetTime);
-
                 while (currnetTime + durationInMilli <= endTimeInMilli) {
                     createSingleSession(tx, assignment, new Date(currnetTime), request.time.bulk.duration, station);
                     currnetTime += durationInMilli + gapBetweenSessions;
@@ -249,9 +250,9 @@ public class APIUtils {
 
         Iterable<Resource<?>> resources = tx.query(kind, new IQuery("name", resourceName));
 
-        if (!resources.iterator().hasNext()) {
-            System.out.println("No resource named " + resourceName + " exists!");
-        } else resource = resources.iterator().next();
+        if (resources.iterator().hasNext()) {
+            resource = resources.iterator().next();
+        }
 
         return resource;
     }

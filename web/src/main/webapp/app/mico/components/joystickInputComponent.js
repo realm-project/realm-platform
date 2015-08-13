@@ -63,20 +63,21 @@ app.directive('joystickInputComponent', ['RobotService', function(RobotService) 
         joystick._stickEl.style.display="";
 
         joystick._onMove(container.offset().left + 100 + (x*joystick._stickRadius),container.offset().top + 100 + (y*joystick._stickRadius));
-
+        
         if(isZeroCommand){
           this.moveRobot (0 ,0 ,0 ,0 , false ,false ,false ,false);
         }else{
-          var axis0 = pad.axes[0];
-          var axis1 = pad.axes[1];
-          var axis2 = pad.axes[2];
-          var axis3 = pad.axes[3];
-          var button0 = pad.buttons[0].pressed;
-          var button1 = pad.buttons[1].pressed;
-          var button2 = pad.buttons[2].pressed;
-          var button3 = pad.buttons[3].pressed;
+          var axis0 = padElement.axes[0];
+          var axis1 = padElement.axes[1];
+          var axis2 = padElement.axes[2];
+          var axis3 = padElement.axes[3];
+          var button0 = padElement.buttons[0].pressed;
+          var button1 = padElement.buttons[1].pressed;
+          var button2 = padElement.buttons[2].pressed;
+          var button3 = padElement.buttons[3].pressed;
           this.moveRobot (axis0, axis1, axis2, axis3, button0, button1, button2, button3);
         }
+        
         joystick._pressed=false;
       }
       

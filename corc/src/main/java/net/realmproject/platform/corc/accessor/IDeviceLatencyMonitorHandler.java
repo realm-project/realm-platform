@@ -10,9 +10,9 @@ import javax.servlet.ServletException;
 import net.objectof.corc.Action;
 import net.objectof.corc.web.v2.HttpRequest;
 import net.objectof.impl.corc.IHandler;
-import net.realmproject.dcm.accessor.DeviceLatencyMonitor;
-import net.realmproject.dcm.accessor.impl.IDeviceLatencyMonitor;
 import net.realmproject.dcm.event.bus.DeviceEventBus;
+import net.realmproject.dcm.stock.ping.DeviceLatencyMonitor;
+import net.realmproject.dcm.stock.ping.IDeviceLatencyMonitor;
 import net.realmproject.platform.util.RealmResponse;
 import net.realmproject.platform.util.RealmSerialize;
 

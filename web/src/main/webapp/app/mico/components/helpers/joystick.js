@@ -61,12 +61,15 @@ angular.module('REALM').directive('joystick', function() {
             parentCtrl.moveRobot(0, 0, 0, 0, false, false, false, false);
 
           }else{
-            var axis0 = window.joysticks[0].getX();
-            var axis1 = window.joysticks[0].getY();
+            var axis0 = 0;
+            var axis1 = 0;
             var axis2 = 0;
             var axis3 = 0;
-
-            if (window.joysticks.length >1){
+            if (scope.stick ==1){
+              axis0 = window.joysticks[0].getX();
+              axis1 = window.joysticks[0].getY();
+            }
+            else if (scope.stick ==2){
               axis2 = window.joysticks[1].getX();
               axis3 = window.joysticks[1].getY();
             }
@@ -76,6 +79,7 @@ angular.module('REALM').directive('joystick', function() {
         })
         
         var isZeroed = false;
+        var gamepadIsZeroed = false;
         function runAnimation()
         {
 
@@ -116,12 +120,12 @@ angular.module('REALM').directive('joystick', function() {
 
             if((Math.abs(x) > stickMovedThreshold || Math.abs(y) > stickMovedThreshold ) && joystick._pressed === false)
             {
-              isZeroed = false;
+              gamepadIsZeroed = false;
               scope.$broadcast('GAMEPAD-MOVED', pad, false, x, y);
             }
-            else if(!isZeroed)
+            else if(!gamepadIsZeroed)
             {
-              isZeroed = true;
+              gamepadIsZeroed = true;
               scope.$broadcast('GAMEPAD-MOVED', pad ,true , 0 , 0);
             }
           

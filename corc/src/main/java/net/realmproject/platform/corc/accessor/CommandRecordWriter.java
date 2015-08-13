@@ -17,7 +17,7 @@ import net.realmproject.dcm.event.DeviceEventType;
 import net.realmproject.dcm.event.Logging;
 import net.realmproject.dcm.features.command.Command;
 import net.realmproject.dcm.features.recording.RecordWriter;
-import net.realmproject.dcm.features.statefulness.State;
+import net.realmproject.dcm.features.stateful.State;
 import net.realmproject.dcm.util.DCMThreadPool;
 import net.realmproject.platform.schema.Device;
 import net.realmproject.platform.schema.DeviceCommand;
@@ -54,7 +54,7 @@ public class CommandRecordWriter implements RecordWriter<DeviceEvent>, Logging {
         Device device = RealmRepo.queryHead(tx, "Device", new IQuery("name", deviceId));
         this.deviceId = device.id();
 
-        DCMThreadPool.getPool().scheduleAtFixedRate(this::flush, 1, 1, TimeUnit.MINUTES);
+        DCMThreadPool.getScheduledPool().scheduleAtFixedRate(this::flush, 1, 1, TimeUnit.MINUTES);
 
     }
 
@@ -66,7 +66,10 @@ public class CommandRecordWriter implements RecordWriter<DeviceEvent>, Logging {
 
     @Override
     public synchronized void write(DeviceEvent event) {
-        if (isClosed) { throw new IllegalStateException("Resource is closed"); }
+        if (isClosed) {
+            getLog().info("Attempting to write to closed " + getClass().getSimpleName());
+            return;
+        }
 
         Object payload = event.getPayload();
         DeviceEventType eventType = event.getDeviceEventType();
