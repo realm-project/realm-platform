@@ -4,7 +4,11 @@ angular.module('REALM')
     .controller('TeacherMySessionsController', function ($scope, $rootScope, AuthService, AUTH_EVENTS, $state, $http, $q, RepoService) {
 
 
+        $rootScope.mainScope.bottomNavbarCollapse = false;
 
+        $scope.$on("$destroy", function(){
+            $rootScope.mainScope.bottomNavbarCollapse = true;
+        });
 
         var user = RepoService.getObject("Person", AuthService.getCurrentUser().loc)
         user.then(
