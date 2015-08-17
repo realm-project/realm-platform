@@ -3,7 +3,7 @@
 
 	<div class="scrollable" data-anijs="if:click, do: bounce, to: .homepage-item__icon">
 		<div class="scrollable-content section">
-	        <div ng-show="!dynamicSessions.length">No session</div>
+	        <div ng-show="!dynamicSessions.length">No session to show</div>
 			<div ng-repeat="session in dynamicSessions track by $index" class="student-session-overview clearfix">
 				
 				<div class="student-session-overview__toolbar clearfix">
@@ -106,10 +106,20 @@
 		<div overlay="loadSessionError">
 				<h4 class="overlay-title">Failed to load sessions</h4>    
 				<p>
-					Cannot load your sessions. Please contact your system administrator.
+					We cannot load your sessions. Please contact your system administrator.
 				</p>
 				<p toggle="off" bubble target="loadSessionError">
 					<span class="btn btn-primary">Ok</span>
+				</p>  
+		</div>
+
+		<div overlay="sessionTimeoutError">
+				<h4 class="overlay-title">Connection Timeout</h4>    
+				<p>
+					We cannot load your sessions. Please login to the system again.
+				</p>
+				<p toggle="off" bubble target="sessionTimeoutError">
+					<a ui-sref="login"><span class="btn btn-primary">Login</span></a>
 				</p>  
 		</div>
 

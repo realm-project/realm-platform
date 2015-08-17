@@ -2,7 +2,6 @@
 {
     width:32%;
     float:left;
-
 }
 
 .angle-input-container {
@@ -11,3 +10,7 @@
 .pose-input-container {
     width: 28%;
 }
+
+.navbar-brand-left-element{
+	max-width: calc(100vw - 98px);
+} 
