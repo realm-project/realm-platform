@@ -18,13 +18,13 @@ import net.realmproject.dcm.event.Logging;
 import net.realmproject.dcm.features.command.Command;
 import net.realmproject.dcm.features.recording.RecordWriter;
 import net.realmproject.dcm.features.stateful.State;
+import net.realmproject.dcm.util.DCMSerialize;
 import net.realmproject.dcm.util.DCMThreadPool;
 import net.realmproject.platform.schema.Device;
 import net.realmproject.platform.schema.DeviceCommand;
 import net.realmproject.platform.schema.DeviceIO;
 import net.realmproject.platform.schema.Session;
 import net.realmproject.platform.util.RealmRepo;
-import net.realmproject.platform.util.RealmSerialize;
 import net.realmproject.platform.util.model.DeviceCommands;
 import net.realmproject.platform.util.model.Devices;
 
@@ -116,7 +116,7 @@ public class CommandRecordWriter implements RecordWriter<DeviceEvent>, Logging {
         IIndexed<DeviceIO> states = (IIndexed<DeviceIO>) lastCommand.getStates();
         if (states == null) { return; }
 
-        String json = RealmSerialize.serialize(state);
+        String json = DCMSerialize.serialize(state);
         // don't add if it's the same as before
         if (states.size() > 0) {
             DeviceIO lastState = states.get(states.size() - 1);
@@ -146,7 +146,7 @@ public class CommandRecordWriter implements RecordWriter<DeviceEvent>, Logging {
         Transaction tx = pkg.connect(CommandRecordWriter.class.getName());
 
         // Extract json command
-        String json = RealmSerialize.serialize(command);
+        String json = DCMSerialize.serialize(command);
 
         // Retrieve the device with deviceId mentioned in method arguments
         Device device = tx.retrieve(deviceId);

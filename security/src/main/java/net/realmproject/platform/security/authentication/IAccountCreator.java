@@ -7,6 +7,7 @@ import net.objectof.corc.Action;
 import net.objectof.corc.web.v2.HttpRequest;
 import net.objectof.model.Transaction;
 import net.objectof.model.query.IQuery;
+import net.realmproject.dcm.util.DCMSerialize;
 import net.realmproject.platform.corc.IRepoAwareHandler;
 import net.realmproject.platform.schema.Person;
 import net.realmproject.platform.schema.Role;
@@ -14,7 +15,6 @@ import net.realmproject.platform.util.RealmAuthentication;
 import net.realmproject.platform.util.RealmCorc;
 import net.realmproject.platform.util.RealmRepo;
 import net.realmproject.platform.util.RealmResponse;
-import net.realmproject.platform.util.RealmSerialize;
 
 
 public class IAccountCreator extends IRepoAwareHandler {
@@ -28,7 +28,7 @@ public class IAccountCreator extends IRepoAwareHandler {
 
         String json = RealmCorc.getJson(request.getHttpRequest().getReader());
 
-        SignUpInfo info = RealmSerialize.deserialize(json, SignUpInfo.class);
+        SignUpInfo info = DCMSerialize.deserialize(json, SignUpInfo.class);
         Transaction tx = repo().connect(action);
 
         Iterable<Person> existingUsers = tx.query("Person", new IQuery("email", info.username));

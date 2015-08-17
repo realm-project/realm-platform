@@ -10,12 +10,12 @@ import net.objectof.connector.ConnectorException;
 import net.objectof.corc.Action;
 import net.objectof.corc.web.v2.HttpRequest;
 import net.objectof.model.Transaction;
+import net.realmproject.dcm.util.DCMSerialize;
 import net.realmproject.platform.corc.IRepoAwareHandler;
 import net.realmproject.platform.schema.Person;
 import net.realmproject.platform.util.RealmAuthentication;
 import net.realmproject.platform.util.RealmCorc;
 import net.realmproject.platform.util.RealmResponse;
-import net.realmproject.platform.util.RealmSerialize;
 import net.realmproject.platform.util.model.Persons;
 
 
@@ -35,7 +35,7 @@ public class ResetPassword extends IRepoAwareHandler {
 
         // grab the data from the reset password document
         String json = RealmCorc.getJson(request.getHttpRequest().getReader());
-        ResetPasswordData reset = RealmSerialize.deserialize(json, ResetPasswordData.class);
+        ResetPasswordData reset = DCMSerialize.deserialize(json, ResetPasswordData.class);
 
         // fetch the stored username and token from the password reset request.
         // Make sure the fields both exist, and make sure the 'person' field

@@ -4,6 +4,7 @@ package net.realmproject.platform.util;
 import java.io.IOException;
 
 import net.objectof.corc.web.v2.HttpRequest;
+import net.realmproject.dcm.util.DCMSerialize;
 
 
 public class RealmResponse {
@@ -23,11 +24,11 @@ public class RealmResponse {
     }
 
     public String toString() {
-        return RealmSerialize.serialize(this);
+        return DCMSerialize.serialize(this);
     }
 
     public static void sendJson(HttpRequest request, Object toJson) throws IOException {
-        send(request, 200, RealmSerialize.serialize(toJson));
+        send(request, 200, DCMSerialize.serialize(toJson));
     }
 
     public static void sendOk(HttpRequest request, String message) throws IOException {

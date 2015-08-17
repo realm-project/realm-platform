@@ -1,20 +1,20 @@
 package net.realmproject.platform.security.authentication;
 
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import net.objectof.connector.Connector;
 import net.objectof.connector.ConnectorException;
 import net.objectof.corc.Action;
 import net.objectof.corc.Handler;
 import net.objectof.corc.web.v2.HttpRequest;
+import net.realmproject.dcm.util.DCMSerialize;
 import net.realmproject.platform.corc.IRepoAwareHandler;
 import net.realmproject.platform.schema.Person;
 import net.realmproject.platform.util.RealmAuthentication;
 import net.realmproject.platform.util.RealmCorc;
-import net.realmproject.platform.util.RealmSerialize;
 import net.realmproject.platform.util.model.Persons;
-
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 
 
 public abstract class AbstractAuthenticator<T extends LoginInfo> extends IRepoAwareHandler {
@@ -38,7 +38,7 @@ public abstract class AbstractAuthenticator<T extends LoginInfo> extends IRepoAw
     protected final void onExecute(Action action, HttpRequest request) throws Exception {
 
         String json = RealmCorc.getJson(request.getHttpRequest().getReader());
-        T info = RealmSerialize.deserialize(json, inputClass);
+        T info = DCMSerialize.deserialize(json, inputClass);
         authenticate(action, request, info);
 
     }

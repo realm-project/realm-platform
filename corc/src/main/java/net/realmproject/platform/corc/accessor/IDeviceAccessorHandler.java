@@ -12,8 +12,8 @@ import net.objectof.impl.corc.IHandler;
 import net.realmproject.dcm.event.bus.DeviceEventBus;
 import net.realmproject.dcm.features.accessor.DeviceAccessor;
 import net.realmproject.dcm.features.accessor.IDeviceAccessor;
+import net.realmproject.dcm.util.DCMSerialize;
 import net.realmproject.platform.util.RealmResponse;
-import net.realmproject.platform.util.RealmSerialize;
 
 
 public class IDeviceAccessorHandler extends IHandler<HttpRequest> {
@@ -30,7 +30,7 @@ public class IDeviceAccessorHandler extends IHandler<HttpRequest> {
         switch (http.getHttpRequest().getMethod()) {
 
             case "GET":
-                String state = RealmSerialize.serialize(accessor.getState());
+                String state = DCMSerialize.serialize(accessor.getState());
                 http.getWriter().write(state);
                 return;
 
