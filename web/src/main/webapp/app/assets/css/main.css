@@ -274,7 +274,7 @@ ui-section {
     background: #eee;
     float: left;
     margin-top:20px;
-    min-width: 400px;
+    /*min-width: 400px;*/
 
 }
 
@@ -942,6 +942,7 @@ joystick-input-component {
 joystick {
     width: 50%;
     display: inline-block;
+    min-width: 200px;
 }
 
 joystick.single{
@@ -950,10 +951,10 @@ joystick.single{
 }
 
 .joystick__container {
-    height: 200px;
-    width: 100%;
+    height: 170px;
+    width: 200px;
     display: block;
-    margin-left: 20px;
+    margin: auto;
 }
 .joystick-input-component__label
 {
