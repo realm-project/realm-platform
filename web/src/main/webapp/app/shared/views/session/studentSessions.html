@@ -1,7 +1,7 @@
 <div ui-view>
 	<link rel="stylesheet" type="text/css" href="assets/css/studentSessions.css">
 
-	<div class="scrollable" data-anijs="if:click, do: bounce, to: .homepage-item__icon">
+	<div class="scrollable">
 		<div class="scrollable-content section">
 	        <div ng-show="!dynamicSessions.length">No session to show</div>
 			<div ng-repeat="session in dynamicSessions track by $index" class="student-session-overview clearfix">
