@@ -561,4 +561,10 @@ public class ITeacherAPIReceiver extends IFn {
     		e.printStackTrace();
     	}
     }
+    
+    @Selector
+    public void getStationsForTeacher(Person teacher, HttpRequest request) {
+    	Iterable<Station> stations = Teachers.getStations(teacher.tx(), teacher);
+    	APIUtils.addQueryResultToResponse(stations, request);
+    }
 }

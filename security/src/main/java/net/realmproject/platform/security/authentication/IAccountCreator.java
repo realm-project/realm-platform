@@ -21,17 +21,12 @@ public class IAccountCreator extends IRepoAwareHandler {
 
     public IAccountCreator(Connector connector) throws ConnectorException {
         super(connector);
-        System.out.println("IAccountCreator");
     }
 
     @Override
     protected void onExecute(Action action, HttpRequest request) throws Exception {
 
-        System.out.println("IAccountCreator - onExecute");
-
         String json = RealmCorc.getJson(request.getHttpRequest().getReader());
-
-        System.out.println("IAccountCreator - json:" + json);
 
         SignUpInfo info = RealmSerialize.deserialize(json, SignUpInfo.class);
         Transaction tx = repo().connect(action);
@@ -42,13 +37,13 @@ public class IAccountCreator extends IRepoAwareHandler {
             return;
         }
 
-        System.out.println("IAccountCreator - the username is accepted!");
+        log().trace("IAccountCreator - the username is accepted!");
 
         // If it is the first account, set the role to "admin"
         Iterable<Person> iter = tx.enumerate("Person");
         Role role = null;
         if (!iter.iterator().hasNext()) {
-            System.out.println("Creating the first account. The role is set to admin.");
+            log().info("Creating the first account. The role is set to admin.");
             role = RealmRepo.queryHead(tx, "Role", new IQuery("name", "admin"));
         } else {
             role = RealmRepo.queryHead(tx, "Role", new IQuery("name", "student"));

@@ -1,13 +1,18 @@
 package net.realmproject.platform.util.model;
 
 
+import java.util.ArrayList;
+import java.util.Collection;
+
 import net.objectof.model.Transaction;
 import net.objectof.model.query.IMultiQuery;
 import net.objectof.model.query.IQuery;
 import net.objectof.model.query.Relation;
 import net.realmproject.platform.schema.Course;
+import net.realmproject.platform.schema.Device;
 import net.realmproject.platform.schema.Person;
 import net.realmproject.platform.schema.Role;
+import net.realmproject.platform.schema.Station;
 
 
 public class Teachers {
@@ -30,6 +35,35 @@ public class Teachers {
         IMultiQuery mq = new IMultiQuery(courseList, Relation.CONTAINS, courses);
         return tx.query("Person", mq);
 
+    }
+    
+    public static Iterable<Station> getStations(Transaction tx, Person teacher) {
+    	
+    	ArrayList<Station> stations = new ArrayList<Station>();
+    	Boolean deviceIsNotAccessible = false;
+    	    	
+    	Iterable<Station> allStations = tx.enumerate("Station");
+    	
+    	for (Station station : allStations) {
+    		deviceIsNotAccessible = false;
+    		
+    		if (station.getOwner().equals(teacher)) {
+    			stations.add(station);
+    			continue;
+    		}
+    		
+    		Collection<Device> devices = station.getDevices().values();
+    		for (Device device : devices) {
+    			if (!(device.getOwner().equals(teacher) || device.getSharers().contains(teacher))) {
+    				deviceIsNotAccessible = true;
+    				break;
+    			}
+    		}
+    		if (deviceIsNotAccessible) continue;
+    		else stations.add(station);
+    	}
+    	
+    	return stations;
     }
 
     public static Iterable<Person> enumerate(Transaction tx) {

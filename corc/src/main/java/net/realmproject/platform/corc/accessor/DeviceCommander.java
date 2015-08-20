@@ -1,10 +1,10 @@
 package net.realmproject.platform.corc.accessor;
 
 
-import net.realmproject.dcm.accessor.impl.IDeviceAccessor;
 import net.realmproject.dcm.event.bus.DeviceEventBus;
+import net.realmproject.dcm.features.accessor.IDeviceAccessor;
 import net.realmproject.dcm.features.command.Command;
-import net.realmproject.dcm.features.statefulness.State;
+import net.realmproject.dcm.features.stateful.State;
 
 
 public class DeviceCommander<T extends State> extends IDeviceAccessor<T> {
