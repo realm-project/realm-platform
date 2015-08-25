@@ -488,14 +488,17 @@ public class ITeacherAPIReceiver extends IFn {
             if (sessionRequest.date.range != null) {
                 List<Date> dates = APIUtils.createDateList(sessionRequest.date.range.start,
                         sessionRequest.date.range.end);
+                
+                if (sessionRequest.time.single != null) 
+                	createSessionType = "single";
+                else // sessionRequest.time.bulk != null
+                	createSessionType = "bulk";
 
                 for (Date date : dates) {
-                    if (APIUtils.dateIsInDays(date, sessionRequest.date.range.days)) {
-
-                        if (sessionRequest.time.single != null) createSessionType = "single";
-                        else // sessionRequest.time.bulk != null
-                        createSessionType = "bulk";
-
+//                	int daysLen = sessionRequest.date.range.days.length;
+                	
+                	// If "days" list is empty, or the day of "date" is included in the "days" list, create session for the "date"
+                    if (sessionRequest.date.range.days.length == 0 || APIUtils.dateIsInDays(date, sessionRequest.date.range.days)) {
                         APIUtils.createSession(tx, asn, date, station, sessionRequest, createSessionType);
                     }
                 }
