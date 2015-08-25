@@ -441,6 +441,8 @@ public class ITeacherAPIReceiver extends IFn {
 
     @Selector
     public void createSession(Person teacher, HttpRequest request) {
+    	
+    	int numberOfCreatedSessions = 0;
 
         Transaction tx = teacher.tx().getPackage().connect(teacher);
 
@@ -499,7 +501,7 @@ public class ITeacherAPIReceiver extends IFn {
                 	
                 	// If "days" list is empty, or the day of "date" is included in the "days" list, create session for the "date"
                     if (sessionRequest.date.range.days.length == 0 || APIUtils.dateIsInDays(date, sessionRequest.date.range.days)) {
-                        APIUtils.createSession(tx, asn, date, station, sessionRequest, createSessionType);
+                    	numberOfCreatedSessions += APIUtils.createSession(tx, asn, date, station, sessionRequest, createSessionType);
                     }
                 }
             } else {// sessionRequest.date.list != null
@@ -511,11 +513,13 @@ public class ITeacherAPIReceiver extends IFn {
                     else // sessionRequest.time.bulk != null
                     createSessionType = "bulk";
 
-                    APIUtils.createSession(tx, asn, date, station, sessionRequest, createSessionType);
+                    numberOfCreatedSessions += APIUtils.createSession(tx, asn, date, station, sessionRequest, createSessionType);
                 }
             }
 
             tx.post();
+            
+            APIUtils.addStringResultToResponse("Number of created sessions: " + Integer.toString(numberOfCreatedSessions), request);            
         }
         catch (IllegalArgumentException | ParseException | IOException | ServletException e) {
             e.printStackTrace();

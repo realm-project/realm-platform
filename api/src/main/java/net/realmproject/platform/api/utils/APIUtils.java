@@ -134,14 +134,17 @@ public class APIUtils {
         }
     }
 
-    public static void createSession(Transaction tx, Assignment assignment, Date date, Station station,
+    public static int createSession(Transaction tx, Assignment assignment, Date date, Station station,
             CreateSession request, String type) {
+    	int numberOfCreatedSessions = 0;
+    	
         try {
             if (type.equals("single")) {
 
                 Date startTime = concatDateTime(date, request.time.single.start);
 
                 createSingleSession(tx, assignment, startTime, request.time.single.duration, station);
+                numberOfCreatedSessions ++;
             } else if (type.equals("bulk")) {
 
                 long gapBetweenSessions = 10 * ONE_MINUTE_IN_MILLIS;
@@ -154,6 +157,7 @@ public class APIUtils {
 
                 while (currnetTime + durationInMilli <= endTimeInMilli) {
                     createSingleSession(tx, assignment, new Date(currnetTime), request.time.bulk.duration, station);
+                    numberOfCreatedSessions ++;
                     currnetTime += durationInMilli + gapBetweenSessions;
 
                 }
@@ -163,6 +167,7 @@ public class APIUtils {
         catch (Exception e) {
             e.printStackTrace();
         }
+		return numberOfCreatedSessions;
     }
 
     public static Date concatDateTime(Date date, String time) throws ParseException {
