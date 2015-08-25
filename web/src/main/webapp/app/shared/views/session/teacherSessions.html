@@ -75,7 +75,7 @@
 				<label class="col-xs-12 col-sm-4">Session Dates: </label>
 				<div class="tabs col-sm-6">
 					<tabset>
-						<tab heading="Range" select="dateRangeTabSelected()">
+						<tab heading="Range" select="dateRangeTabSelected()" active="childModel.rangeTabIsActive">
 							<div class="date-range">	
 								<div class="date-range__start-date row tab-content__top-row">
 									<label class="col-xs-12">Start Date: </label>
@@ -86,7 +86,7 @@
 									</div>
 								</div>
 								
-								<div class="date-range__end-date row">
+								<div class="date-range__end-date row" ng-show="vm.sessionTimesType=='Bulk'">
 									<label class="col-xs-12">End Date: </label>
 									<div class="col-xs-12">
 										<div class="calendar-container">
@@ -95,7 +95,7 @@
 									</div>
 								</div>
 								
-								<div class="date-range__days row">
+								<div class="date-range__days row" ng-show="vm.sessionTimesType=='Bulk'">
 									<label class="col-xs-12">Days: </label>
 									<div class="col-xs-12">
 										<div class="btn-group days-btn-group">
@@ -109,7 +109,7 @@
 								</div>
 							</div>
 						</tab>
-						<tab heading="List" select="dateListTabSelected()">
+						<tab heading="List" select="dateListTabSelected()" ng-show="vm.sessionTimesType=='Bulk'">
 							<div class="date-list">
 								<div class="row">
 									<div class="col-xs-12">
@@ -205,17 +205,30 @@
 		<p>
 			We cannot create your session(s). Please contact your system administrator.
 		</p>
-		<p toggle="off" bubble target="craeteSessionError">
+		<p toggle="off" bubble target="createSessionError">
 			<span class="btn btn-primary">Ok</span>
 		</p>  
 	</div>
 
-	<div overlay="craeteSessionSuccess">
+	<div overlay="createSessionSuccess">
 		<h4 class="overlay-title">Session(s) created</h4>    
 		<p>
 			Your session(s) successfuly created. You can review your sessions in the Review Sessions page.
 		</p>
-		<p toggle="off" bubble target="craeteSessionSuccess">
+		<span toggle="off" bubble target="createSessionSuccess">
+			<span class="btn btn-primary">Return</span>
+		</span> 
+		<span toggle="off" bubble target="createSessionSuccess">
+			<a ui-sref="teacherHome.reviewsSessions"><span class="btn btn-primary">Goto Review Sessions</span></a>
+		</span> 
+	</div>
+
+	<div overlay="createSessionZero">
+		<h4 class="overlay-title">Could not make any session</h4>    
+		<p>
+			We cannot create your session(s). Please make sure Start date, End date and Week days are appropriate.
+		</p>
+		<p toggle="off" bubble target="createSessionZero">
 			<span class="btn btn-primary">Ok</span>
 		</p>  
 	</div>

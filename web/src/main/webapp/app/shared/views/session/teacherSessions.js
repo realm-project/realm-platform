@@ -12,8 +12,14 @@ angular.module('REALM')
 
     $scope.assignments=[];
     $scope.stations = [];
-    $scope.vm={};
+    $scope.vm={
+        sessionTimesType:'Single'
+    };
     $scope.assignmentArray=[];
+
+    $scope.childModel = {
+        rangeTabIsActive : false
+    };
 
     // create the list of stations
     RepoService.getStationsForTeacher(AuthService.getCurrentUser().loc).then(function(response){
@@ -180,6 +186,7 @@ $scope.initialize=function(assignmentNames)
         $scope.singleSessionTabSelected = function()
         {
             $scope.vm.sessionTimesType = 'Single';
+            $scope.childModel.rangeTabIsActive = true;
         }
 
         $scope.bulkSessionTabSelected = function()
@@ -276,7 +283,6 @@ $scope.initialize=function(assignmentNames)
                 postData.time.single.start=startTime;
                 postData.time.single.duration=$scope.vm.duration;
             }
-
             //Bulk Session Creation
             else if($scope.vm.sessionTimesType==='Bulk')
             {
@@ -323,11 +329,16 @@ $scope.initialize=function(assignmentNames)
 
                 var days=[];
 
-                for(var day in $scope.vm.days)
-                {
-                    if($scope.vm.days[day])
+                if($scope.vm.sessionTimesType==='Single'){
+                    // ignore week days and send an empty array on single sessions
+                }else if($scope.vm.sessionTimesType==='Bulk'){
+                    // create week days list for Bulk sessions
+                    for(var day in $scope.vm.days)
                     {
-                        days.push(day);
+                        if($scope.vm.days[day])
+                        {
+                            days.push(day);
+                        }
                     }
                 }
 
@@ -356,11 +367,15 @@ $scope.initialize=function(assignmentNames)
             //Final Shipment
            
             RepoService.createSessions(postData).then(function(response){
-                $rootScope.toggle('craeteSessionSuccess','on');
+                if (response.data==='0'){
+                    $rootScope.toggle('createSessionZero','on');
+                }else{
+                    $rootScope.toggle('createSessionSuccess','on');
+                }
             },function(error){
                 console.log("failed to create sessions");
                 console.log(error);
-                $rootScope.toggle('craeteSessionError','on');
+                $rootScope.toggle('createSessionError','on');
             })
 
         }//end of createSessions
