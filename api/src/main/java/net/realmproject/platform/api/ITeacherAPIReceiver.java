@@ -519,7 +519,7 @@ public class ITeacherAPIReceiver extends IFn {
 
             tx.post();
             
-            APIUtils.addStringResultToResponse("Number of created sessions: " + Integer.toString(numberOfCreatedSessions), request);            
+            APIUtils.addStringResultToResponse(Integer.toString(numberOfCreatedSessions), request);            
         }
         catch (IllegalArgumentException | ParseException | IOException | ServletException e) {
             e.printStackTrace();
