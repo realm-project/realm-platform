@@ -37,6 +37,9 @@ public class IDeviceCommanderHandler extends IHandler<HttpRequest> {
             case "POST":
                 String json = RealmCorc.getJson(http.getReader());
                 Command command = DCMSerialize.deserialize(json, Command.class);
+                // need to regenerate id since deserialization clobbers it with
+                // null
+                command.generateId();
                 String label = accessor.sendCommand(command);
                 http.getWriter().write("{\"id\": \"" + label + "\"}");
                 return;

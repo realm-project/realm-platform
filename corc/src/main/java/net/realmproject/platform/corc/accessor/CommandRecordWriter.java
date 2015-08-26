@@ -142,7 +142,7 @@ public class CommandRecordWriter implements RecordWriter<DeviceEvent>, Logging {
 
         // check if this command indicated that it wanted state to be recorded
         Boolean toRecord = recordCommandCache.getIfPresent(commandId);
-        if (toRecord != true) { return; }
+        if (toRecord == null || toRecord != true) { return; }
 
         // find the DeviceCommand based on the command id
         DeviceCommand lastCommand = deviceCommandCache.getUnchecked(commandId);
