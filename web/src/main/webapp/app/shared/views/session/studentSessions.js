@@ -4,8 +4,13 @@ angular.module('REALM')
     .controller('StudentSessionsController', function ($scope, $rootScope, AuthService, AUTH_EVENTS, $state, $http, $q, RepoService) {
 
 
+        $rootScope.mainScope.bottomNavbarCollapse = false;
 
 
+        $scope.$on("$destroy", function(){
+            $rootScope.mainScope.bottomNavbarCollapse = true;
+        });
+        
         var user = RepoService.getObject("Person", AuthService.getCurrentUser().loc)
         user.then(
             function (response) {
@@ -36,7 +41,14 @@ angular.module('REALM')
                             var sessionData = response.data;
                             $scope.createSession(sessionData);
                         }, function (error) {
-                            console.log(error.status);
+                            console.log(error);
+                            if (error.status !== undefined && error.status == 401){
+                                // Unathorized -- session timeout
+                                $rootScope.toggle('sessionTimeoutError','on');
+                            }else{
+                                // could not get the sessions
+                                $rootScope.toggle('loadSessionError','on');
+                            }
                         });
                 }//end of for
             }//end of if

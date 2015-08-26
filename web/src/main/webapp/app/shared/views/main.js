@@ -3,6 +3,8 @@ angular.module('REALM').controller('MainController', function($rootScope, $scope
   $scope.currentUser = null;
   $scope.userRoles = USER_ROLES;
   $scope.isAuthorized = AuthService.isAuthorized;
+  $scope.bottomNavbarCollapse = true;
+  $rootScope.mainScope = $scope;
 
   $rootScope.$on("$routeChangeStart", function(){
     $rootScope.loading = true;

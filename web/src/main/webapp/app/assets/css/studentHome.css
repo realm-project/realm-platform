@@ -1,23 +1,22 @@
 .homepage-item {
 	cursor:pointer;
 	height:70px;
-	width:calc(100% - 50px);
-    max-width: 1000px;
-	margin-left:auto;
-	margin-right:auto;
-	margin-top:25px;
-	margin-bottom:25px;
+	width:calc(100% -50px);
+	max-width: 1000px;
+	margin: 25px auto;
 	padding:15px;
-	/*background-image: linear-gradient(to bottom, #dddddd 0%, rgba(247, 247, 247, 0.8) 25%), linear-gradient(to top, #dddddd 0%, rgba(247, 247, 247, 0.8) 23.75px), linear-gradient(to left, #dddddd 0%,rgba(247, 247, 247, 0.8) 23.75px), linear-gradient(to right, #dddddd 0%,rgba(247, 247, 247, 0.8) 23.75px);
-	background-size:cover,cover,cover,cover;*/
-	/*background-image: linear-gradient(to bottom, #dddddd 0%, rgba(247, 247, 247, 0.8) 25%),linear-gradient(to top, #dddddd 100%, rgba(247, 247, 247, 0.8) 75%);
-	background-size:cover,contain;*/
-	/*background-image: linear-gradient(to top, #dddddd 0%, rgba(247,247,247,0.8) 25%, rgba(247,247,247,0.8) 75%, #dddddd 100%);*/
 	background-color: #ffffff;
 	border: 1px solid #dddddd;
 	box-shadow: 0 0 4px rgba(0, 0, 0, 0.4);
-    /*max-width: 1200px;*/
 }
+
+@media (max-width: 900px){
+	.homepage-item {
+		width:calc(100% - 20px);
+		margin: 12px auto;
+	}
+}
+
 
 .homepage-item:hover {
 	box-shadow: 0 0 8px rgba(0, 0, 0, 0.4);
@@ -43,13 +42,13 @@
 	width:calc(100% - 90px);
 	margin-left:15px;
 	float:left;
-    -webkit-touch-callout: none;
-    -webkit-user-select: none;
-    -khtml-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-    color: #4e2583;
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	color: #4e2583;
 }
 
 .sessions .homepage-item__icon{

@@ -2,7 +2,6 @@
 {
     width:47%;
     float:left;
-
 }
 ui-section:last-child
 {
@@ -16,3 +15,7 @@ ui-section:last-child
 .pose-input-container {
     width: 27%;
 }
+
+.navbar-brand-left-element{
+	max-width: calc(100vw - 98px);
+} 

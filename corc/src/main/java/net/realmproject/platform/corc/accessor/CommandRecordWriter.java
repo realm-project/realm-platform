@@ -4,6 +4,11 @@ package net.realmproject.platform.corc.accessor;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
+import com.google.common.cache.Cache;
+import com.google.common.cache.CacheBuilder;
+import com.google.common.cache.CacheLoader;
+import com.google.common.cache.LoadingCache;
+
 import net.objectof.aggr.Composite;
 import net.objectof.connector.Connector;
 import net.objectof.connector.ConnectorException;
@@ -40,17 +45,41 @@ public class CommandRecordWriter implements RecordWriter<DeviceEvent>, Logging {
     Package pkg;
     Transaction tx;
 
-    Id<Composite> deviceId;
-    boolean isDirty = false;
-    Id<Composite> lastCommand;
-    boolean isClosed = false;
+    private Id<Composite> deviceId;
+    private boolean isDirty = false;
+    private boolean isClosed = false;
+
+    private boolean recordAllCommands = false;
+
+    // caches DeviceCommand objects so we don't always have to query them.
+    // Remember to clear the cache when the tx is posted/changed
+    LoadingCache<String, DeviceCommand> deviceCommandCache = CacheBuilder.newBuilder()
+            .maximumSize(100)
+            // flush will clear it anyways
+            .expireAfterAccess(2, TimeUnit.MINUTES)
+            .build(new CacheLoader<String, DeviceCommand>() {
+
+                @Override
+                public DeviceCommand load(String key) {
+                    return DeviceCommands.forId(tx, key);
+                }
+            });
+
+    // remember which Commands requested recording so that we don't have to
+    // deserialize the DeviceCommand's DeviceIO json every time we want to
+    // record state. Expire after a few minutes to prevent Commands which never
+    // terminate from flooding the repo
+    Cache<String, Boolean> recordCommandCache = CacheBuilder.newBuilder()
+            .maximumSize(100)
+            .expireAfterAccess(5, TimeUnit.MINUTES)
+            .build();
 
     public CommandRecordWriter(String deviceId, Connector connector) throws ConnectorException {
         this.connector = connector;
         pkg = connector.getPackage();
         tx = pkg.connect(CommandRecordWriter.class.getName());
 
-        // look up this device's id
+        // look up this device's id once at the start
         Device device = RealmRepo.queryHead(tx, "Device", new IQuery("name", deviceId));
         this.deviceId = device.id();
 
@@ -90,6 +119,7 @@ public class CommandRecordWriter implements RecordWriter<DeviceEvent>, Logging {
         if (isClosed) { throw new IllegalStateException("Resource is closed"); }
         if (!isDirty) { return; }
         tx.post();
+        deviceCommandCache.invalidateAll();
         tx = pkg.connect(CommandRecordWriter.class.getName());
         isDirty = false;
     }
@@ -109,7 +139,13 @@ public class CommandRecordWriter implements RecordWriter<DeviceEvent>, Logging {
         // Find the command with a command id equal to this state's command id
         String commandId = (String) state.getProperty(COMMAND_ID);
         if (commandId == null) { return; }
-        DeviceCommand lastCommand = DeviceCommands.forId(tx, commandId);
+
+        // check if this command indicated that it wanted state to be recorded
+        Boolean toRecord = recordCommandCache.getIfPresent(commandId);
+        if (toRecord != true) { return; }
+
+        // find the DeviceCommand based on the command id
+        DeviceCommand lastCommand = deviceCommandCache.getUnchecked(commandId);
         if (lastCommand == null) { return; }
 
         // the states of the last command should be already created
@@ -131,6 +167,8 @@ public class CommandRecordWriter implements RecordWriter<DeviceEvent>, Logging {
         // add it
         states.add(dio);
 
+        System.out.println(dio);
+
         // don't post here, instead we rely on a scheduled thread to post this
         // transaction regularly this keeps devices from spamming the device
         // recorder and the device recorder from spamming the database
@@ -141,8 +179,14 @@ public class CommandRecordWriter implements RecordWriter<DeviceEvent>, Logging {
     }
 
     private synchronized void onCommand(Command command) {
-        if (!command.isToRecord()) { return; }
+        // if the command doesn't ask for recording, and we're not recording all
+        // commands (not all responses), then just exit out
+        if (!command.isToRecord() && !recordAllCommands) { return; }
 
+        // save the command's desire for recording in the cache.
+        recordCommandCache.put(command.getId(), command.isToRecord());
+
+        // do this on a separate transaction
         Transaction tx = pkg.connect(CommandRecordWriter.class.getName());
 
         // Extract json command
@@ -197,11 +241,22 @@ public class CommandRecordWriter implements RecordWriter<DeviceEvent>, Logging {
 
         tx.post();
         tx.close();
+        // we did this on a separate transaction, but we want to make sure any
+        // new state we receive can find this DeviceCommand
+        flush();
 
     }
 
     private long timestamp() {
         return new Date().getTime();
+    }
+
+    public boolean isRecordAllCommands() {
+        return recordAllCommands;
+    }
+
+    public void setRecordAllCommands(boolean recordAllCommands) {
+        this.recordAllCommands = recordAllCommands;
     }
 
 }

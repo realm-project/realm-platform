@@ -1,19 +1,31 @@
 .ui-section
 {
-    width:90%;
-    float: left;
+	width:90%;
+	float: left;
 }
 .ui-experiment__container
 {
 	padding-bottom: 70px;
 }
 .angle-input-container {
-    width: 27%;
+	width: 27%;
 }
 .pose-input-container {
-    width: 27%;
+	width: 27%;
 }
 
 .navbar-brand-right{
 	display:none;
+}
+
+.navbar-brand-left-element{
+	max-width: calc(100vw - 48px);
+}
+
+.scrollable-content {
+	padding-top: 0px;
+}
+
+.navbar-absolute-bottom.hideBottom{
+	display: none;
 }
