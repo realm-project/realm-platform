@@ -21,25 +21,24 @@ angular.module('REALM').controller('ReviewSessionsController', function ($scope,
     $scope.gridOptions = {
         data: 'filteredSessions',
         enableHighlighting: true,
+        showGroupPanel: true,
+        canSelectRows: true,
         columnDefs: [
-            //{field:'kindLabel', displayName:'label'},
             {field:'token', displayName:'token'},
             {field:'startTime', displayName:'start date'},
             {field:'duration', displayName:'duration'}
-
         ]
     }
-
 
     $scope.gridOptionsAll = {
         data: 'sessions',
         enableHighlighting: true,
+        showGroupPanel: true,
+        canSelectRows: true,
         columnDefs: [
-            //{field:'kindLabel', displayName:'label'},
             {field:'token', displayName:'token'},
             {field:'startTime', displayName:'start date'},
             {field:'duration', displayName:'duration'}
-
         ]
     }
 

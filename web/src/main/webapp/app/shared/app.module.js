@@ -7,7 +7,8 @@ var dependencies = [
     'ui.date',
     'cfp.hotkeys',
     'ui.bootstrap',
-    'ngGrid'];
+    'ui.grid',
+    'ui.grid.selection'];
 //module is created
 var app = angular.module('REALM', dependencies);
 
