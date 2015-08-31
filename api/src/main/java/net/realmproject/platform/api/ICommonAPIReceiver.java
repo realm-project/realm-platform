@@ -14,6 +14,7 @@ import net.realmproject.platform.schema.Session;
 import net.realmproject.platform.util.RealmResponse;
 import net.realmproject.platform.util.model.DeviceCommands;
 import net.realmproject.platform.util.model.Sessions;
+import net.realmproject.platform.util.model.Stations;
 
 
 @Selector
@@ -137,9 +138,10 @@ public class ICommonAPIReceiver extends IFn {
         }
 
         boolean isUser = person.getSessions().contains(session);
-        boolean isOwner = person.equals(session.getStation().getOwner());
+        boolean isStationOwner = person.equals(session.getStation().getOwner());
+        boolean isStationSharer = Stations.getSharers(person.tx(), session.getStation()).contains(person);
 
-        if (!(isUser || isOwner)) {
+        if (!(isUser || isStationOwner || isStationSharer)) {
             RealmResponse.send(request, 400, "Session is not accessible for the person!");
         }
 
