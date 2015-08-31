@@ -3,68 +3,122 @@
 angular.module('REALM')
 .controller('TeacherSessionsController', function ($scope, $rootScope, AuthService, AUTH_EVENTS, $state, $http, $q,RepoService) {
 
+
+    // show the bottom Navbar on mobile devices
+    $rootScope.mainScope.bottomNavbarCollapse = false;
+    $scope.$on("$destroy", function(){
+        $rootScope.mainScope.bottomNavbarCollapse = true;
+    });
+
     $scope.assignments=[];
-    $scope.devices = [];
-        //an array of kind-label assignments
+    $scope.stations = [];
+    $scope.vm={
+        sessionTimesType:'Single'
+    };
     $scope.assignmentArray=[];
-    $scope.vm={};
+
+    $scope.childModel = {
+        rangeTabIsActive : false
+    };
+
+    // create the list of stations
+    RepoService.getStationsForTeacher(AuthService.getCurrentUser().loc).then(function(response){
+        // make array of stations
+        var stationArray = response.data.substring(0, response.data.length - 1).split(",");
+        for (var i=0 ; i < stationArray.length; i++){
+            RepoService.getObject("Station", stationArray[i]).then(function(response){
+                $scope.stations.push(response.data);
+            },function(errorResponse){
+                $rootScope.toggle('loadStationsError','on');
+            });
+        }
+    },function(errorResponse){
+        $rootScope.toggle('loadStationsError','on');
+    });
+
+    // create the list of assignments
+    RepoService.getCoursesForTeacher().then(function(response){
+        var courseArray = response.data.substring(0,response.data.length-1).split(",");
+        
+        if (courseArray.length===0){
+            $rootScope.toggle('noCourseError','on');
+        }
+
+        // to understand the asyncLoop look at: http://stackoverflow.com/questions/4288759/asynchronous-for-cycle-in-javascript
+        asyncLoop(courseArray.length, function(loop){
+            RepoService.getAsnsForCourse(courseArray[loop.iteration()]).then(function(response){
+                // add new assignments to the asssignmentArray
+                $scope.assignmentArray = $scope.assignmentArray.concat(response.data.split(','));
+                loop.next();
+            },function(errorResponse){
+                $rootScope.toggle('loadAssignmentsError','on');
+                loop.next();
+            });
+
+        },function(){
+            if ($scope.assignmentArray.length===0){
+                $rootScope.toggle('noAssignmentError','on');
+            }else{
+                // start the run function to load assignments.
+                $scope.run($scope.assignmentArray.length-1);
+            }
+        });        
+  
+    },function(errorResponse){
+        $rootScope.toggle('loadAssignmentsError','on');
+    });
 
 
-        RepoService.getAsnsForCourse("Course-1").then(function(response)
-        {
-            $scope.assignmentArray=response.data.split(',');
-            $scope.run($scope.assignmentArray.length-1);
-        },function(error){});
 
-
-        function asyncLoop(iterations, func, callback) {
-            var index = 0;
-            var done = false;
-            var loop = {
-                next: function() {
-                    if (done) {
-                        return;
-                    }
-                    if (index < iterations) {
-                        index++;
-                        func(loop);
-                    } else {
-                        done = true;
-                        callback();
-                    }
-                },
-                iteration: function() {
-                    return index - 1;
-                },
-                break: function() {
+    function asyncLoop(iterations, func, callback) {
+        var index = 0;
+        var done = false;
+        var loop = {
+            next: function() {
+                if (done) {
+                    return;
+                }
+                if (index < iterations) {
+                    index++;
+                    func(loop);
+                } else {
                     done = true;
                     callback();
                 }
-            };
-            loop.next();
-            return loop;
-        }
-        function someFunction(callback) {
-            console.log('in the loop!');
-            callback();
-        }
+            },
+            iteration: function() {
+                return index - 1;
+            },
+            break: function() {
+                done = true;
+                callback();
+            }
+        };
+        loop.next();
+        return loop;
+    }
 
-        $scope.run=function(iterations) {
-            asyncLoop(iterations, function (loop) {
-                    someFunction(function (result) {
+    function someFunction(callback) {
+        console.log('in the loop!');
+        callback();
+    }
 
-                        $scope.readAssignmentInformation($scope.assignmentArray[loop.iteration()],loop.iteration());
-                        // log the iteration
-                        console.log(loop.iteration());
-                        // Okay, for cycle could continue
-                        loop.next();
-                    })
-                },
-                function () {
-                    console.log('cycle ended')
-                }
-            );
-        }
+    $scope.run=function(iterations) {
+        asyncLoop(iterations, function (loop) {
+                someFunction(function (result) {
+
+                    $scope.readAssignmentInformation($scope.assignmentArray[loop.iteration()],loop.iteration());
+                    // log the iteration
+                    console.log(loop.iteration());
+                    // Okay, for cycle could continue
+                    loop.next();
+                })
+            },
+            function () {
+                console.log('cycle ended')
+            }
+        );
+    }
 
     $scope.readAssignmentInformation=function(assignmentLocation, index) {
         RepoService.getObject("Assignment", assignmentLocation).then(function (response) {
@@ -95,8 +149,10 @@ $scope.initialize=function(assignmentNames)
     $scope.vm = {
         assignmentTypes: assignmentNames,
         chosenAssignmentType:$scope.assignments[0].name,
-        deviceTypesRadioModel: [{'id':0, 'name':'mico', 'checked':false}],
-            //[{'id':0, 'name':'mico', 'checked':false}, {'id':1, 'name':'mico2', 'checked':false}, {'id':2, 'name':'mico3', 'checked':false}],
+        stationTypesRadioModel: $scope.stations,
+        selectedStation: $scope.stations[0].loc,
+        chosenStationType: $scope.stations[0],
+
         sessionTimesType:'Single',
         sessionStartTime:new Date(),
         sessionEndTime:new Date(),
@@ -117,11 +173,10 @@ $scope.initialize=function(assignmentNames)
 
         $scope.assignmentChanged = function(assignment) {
             $scope.vm.chosenAssignmentType = assignment;
-            $scope.vm.deviceTypes = ['mico'];
         }
 
-        $scope.deviceChanged = function(device) {
-            $scope.vm.chosenDeviceType = device;
+        $scope.stationChanged = function(station) {
+            $scope.vm.chosenStationType = station;
         }
 
         $scope.startTimeChanged = function() {
@@ -131,6 +186,7 @@ $scope.initialize=function(assignmentNames)
         $scope.singleSessionTabSelected = function()
         {
             $scope.vm.sessionTimesType = 'Single';
+            $scope.childModel.rangeTabIsActive = true;
         }
 
         $scope.bulkSessionTabSelected = function()
@@ -176,24 +232,20 @@ $scope.initialize=function(assignmentNames)
             $scope.isOpened = !$scope.isOpened;
         }
 
+
+        // main function to craete new sessions
         $scope.createSessions = function()
         {
-            //var API_url="rest/api/teacher/createSession";
+           
             var postData = {
-                "assignment":"Assignment-5",
-                "devices": ["Device-1"],
+                "assignment":"",
+                "station":"",
                 "time":{},
                 "date":{}
             };
 
-            //Devices
-            /* for(var i=0; i<$scope.vm.deviceTypesRadioModel.length; i++)
-             {
-             if($scope.vm.deviceTypesRadioModel[i].checked)
-             {
-             postData.devices.push($scope.vm.deviceTypesRadioModel[i].name);
-             }
-             }*/
+            // station
+            postData.station = $scope.vm.chosenStationType.loc;
 
             //Assignment
             for (var i=0;i<$scope.assignments.length;i++)
@@ -231,7 +283,6 @@ $scope.initialize=function(assignmentNames)
                 postData.time.single.start=startTime;
                 postData.time.single.duration=$scope.vm.duration;
             }
-
             //Bulk Session Creation
             else if($scope.vm.sessionTimesType==='Bulk')
             {
@@ -278,11 +329,16 @@ $scope.initialize=function(assignmentNames)
 
                 var days=[];
 
-                for(var day in $scope.vm.days)
-                {
-                    if($scope.vm.days[day])
+                if($scope.vm.sessionTimesType==='Single'){
+                    // ignore week days and send an empty array on single sessions
+                }else if($scope.vm.sessionTimesType==='Bulk'){
+                    // create week days list for Bulk sessions
+                    for(var day in $scope.vm.days)
                     {
-                        days.push(day);
+                        if($scope.vm.days[day])
+                        {
+                            days.push(day);
+                        }
                     }
                 }
 
@@ -309,12 +365,17 @@ $scope.initialize=function(assignmentNames)
                 }
             }
             //Final Shipment
-           // $http.post(localStorage.basePath + API_url, postData);
+           
             RepoService.createSessions(postData).then(function(response){
-                console.log("the following data is successfully sent to the server: "+ response.status)
-                console.log(postData);
+                if (response.data==='0'){
+                    $rootScope.toggle('createSessionZero','on');
+                }else{
+                    $rootScope.toggle('createSessionSuccess','on');
+                }
             },function(error){
-                console.log("failed to create sessions" +error.status)
+                console.log("failed to create sessions");
+                console.log(error);
+                $rootScope.toggle('createSessionError','on');
             })
 
         }//end of createSessions
