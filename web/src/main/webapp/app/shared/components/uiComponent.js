@@ -9,15 +9,12 @@ angular.module('REALM').directive('uiComponent', function($compile,$timeout)
         "poseInput": "<pose-input-component></pose-input-component>",
         "angleState": "<angle-state-component></angle-state-component>",
         "poseState": "<pose-state-component></pose-state-component>",
-        "simulation": "<simulation-component></simulation-component>",
         "joystickInput": "<joystick-input-component></joystick-input-component>",
         "trajectorySaveComponent": "<trajectory-save-component></trajectory-save-component>",
         "trajectorySaveReplayComponent": "<trajectory-save-replay-component></trajectory-save-replay-component>",
         "playBack": "<play-back-component></play-back-component>",
         "poseVisualization":"<pose-visualization-component></pose-visualization-component>",
         "fingerControl":"<finger-control-component></finger-control-component>"
-
-        
     }    
     
     return {
