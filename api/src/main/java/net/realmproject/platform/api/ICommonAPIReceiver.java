@@ -136,7 +136,10 @@ public class ICommonAPIReceiver extends IFn {
             RealmResponse.send(request, 400, "Session not found");
         }
 
-        if (!person.getSessions().contains(session)) {
+        boolean isUser = person.getSessions().contains(session);
+        boolean isOwner = person.equals(session.getStation().getOwner());
+
+        if (!(isUser || isOwner)) {
             RealmResponse.send(request, 400, "Session is not accessible for the person!");
         }
 
