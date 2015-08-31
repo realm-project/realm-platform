@@ -15,5 +15,32 @@
             </div>
     </div>
 </div>
-<div class="gridStyle" ng-grid="gridOptions"></div>
-<div class="gridStyle" ng-grid="gridOptionsAll"></div>
+
+<div>
+    <div class="gridStyle" ui-grid="gridOptions" ui-grid-selection>
+        <button ng-click="showDeviceCommands()" class="btn btn-primary" style="margin-top:6px;">Show Device Commands</button>
+    </div>
+</div>
+<div>
+    <div class="gridStyle" ui-grid="gridOptionsAll" ></div>
+</div>
+
+<div overlay="noSessionSelected">
+    <h4 class="overlay-title">You have not selected any session</h4>    
+    <p>
+        Please select a session in the Filtered list to see the list of device commands.
+    </p>
+    <p toggle="off" bubble target="noSessionSelected">
+        <span class="btn btn-primary">Ok</span>
+    </p>  
+</div>
+
+<div overlay="underDevelopment">
+    <h4 class="overlay-title">This feature is still under deveopment</h4>    
+    <p>
+        Thank you for testing our system. This feature is not available yet.
+    </p>
+    <p toggle="off" bubble target="underDevelopment">
+        <span class="btn btn-primary">Ok</span>
+    </p>  
+</div>

@@ -20,28 +20,30 @@ angular.module('REALM').controller('ReviewSessionsController', function ($scope,
 
     $scope.gridOptions = {
         data: 'filteredSessions',
-        enableHighlighting: true,
+        multiSelect: false,
+        enableFullRowSelection: true,
+        gridMenuShowHideColumns:false,
         columnDefs: [
-            //{field:'kindLabel', displayName:'label'},
-            {field:'token', displayName:'token'},
-            {field:'startTime', displayName:'start date'},
-            {field:'duration', displayName:'duration'}
-
+            {field:'token', displayName:'token', enableHiding:false},
+            {field:'startTime', displayName:'start date', enableHiding:false},
+            {field:'duration', displayName:'duration', enableHiding:false}
         ]
-    }
+    };
 
+
+    $scope.gridOptions.onRegisterApi = function(gridApi) {
+        $scope.gridOptionsGridApi = gridApi;
+    };
 
     $scope.gridOptionsAll = {
         data: 'sessions',
-        enableHighlighting: true,
+        gridMenuShowHideColumns:false,
         columnDefs: [
-            //{field:'kindLabel', displayName:'label'},
-            {field:'token', displayName:'token'},
-            {field:'startTime', displayName:'start date'},
-            {field:'duration', displayName:'duration'}
-
+            {field:'token', displayName:'token', enableHiding:false},
+            {field:'startTime', displayName:'start date', enableHiding:false},
+            {field:'duration', displayName:'duration', enableHiding:false}
         ]
-    }
+    };
 
     $scope.filterSessions=function(startDate, endDate)
     {
@@ -50,14 +52,13 @@ angular.module('REALM').controller('ReviewSessionsController', function ($scope,
         {
             var sessionStartDate=new Date;
             sessionStartDate=$scope.sessions[i].startTime;
-            console.log(sessionStartDate);
             if(moment(startDate).isBefore(sessionStartDate) && moment(endDate).isAfter(sessionStartDate))
             {
                 $scope.filteredSessions.push($scope.sessions[i])
             }
         }
 
-    }
+    };
 
     function asyncLoop(iterations, func, callback) {
         var index = 0;
@@ -100,7 +101,7 @@ angular.module('REALM').controller('ReviewSessionsController', function ($scope,
         },function () {
             console.log('cycle ended')
         });
-    }
+    };
 
     $scope.createSessionInformation=function(sessionLocation)
     {
@@ -116,7 +117,17 @@ angular.module('REALM').controller('ReviewSessionsController', function ($scope,
                 console.log("error in creating session!");
            }
         );
-    }
+    };
+
+    $scope.showDeviceCommands = function(){
+        if ($scope.gridOptionsGridApi.selection.getSelectedRows() == ""){
+            //Nothing selected
+            $rootScope.toggle('noSessionSelected','on');
+        }else{
+            // read device commands and show them
+            $rootScope.toggle('underDevelopment','on');
+        }
+    };
 
     // read list of sessions :
     RepoService.getCoursesForTeacher().then(
