@@ -99,7 +99,7 @@ angular.module('REALM')
     }
 
     function someFunction(callback) {
-        console.log('in the loop!');
+        //console.log('in the loop!');
         callback();
     }
 
@@ -109,7 +109,7 @@ angular.module('REALM')
 
                     $scope.readAssignmentInformation($scope.assignmentArray[loop.iteration()],loop.iteration());
                     // log the iteration
-                    console.log(loop.iteration());
+                    //console.log(loop.iteration());
                     // Okay, for cycle could continue
                     loop.next();
                 })
