@@ -6,7 +6,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import net.objectof.model.Transaction;
 import net.realmproject.platform.schema.Device;
 import net.realmproject.platform.schema.Person;
 import net.realmproject.platform.schema.Station;
@@ -14,7 +13,15 @@ import net.realmproject.platform.schema.Station;
 
 public class Stations {
 
-    public static Set<Person> getSharers(Transaction tx, Station station) {
+    /**
+     * Returns a list of all people who own or share access to all
+     * {@link Device}s in a station.
+     * 
+     * @param station
+     *            the station to report on
+     * @return a list of {@link Person}s
+     */
+    public static Set<Person> getSharers(Station station) {
 
         Set<Person> owners = new HashSet<>();
         Set<Person> other = new HashSet<>();
@@ -34,6 +41,21 @@ public class Stations {
 
         return owners;
 
+    }
+
+    /**
+     * Checks to see if the given {@link Person} owns or shares all
+     * {@link Device}s in this station
+     * 
+     * @param person
+     *            the person to report on
+     * @param station
+     *            the station to report on
+     * @return true if this person owns or shares all devices in this station,
+     *         false otherwise
+     */
+    public static boolean isSharer(Person person, Station station) {
+        return getSharers(station).contains(person);
     }
 
 }

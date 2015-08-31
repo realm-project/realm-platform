@@ -11,6 +11,7 @@ import net.realmproject.platform.api.utils.APIUtils;
 import net.realmproject.platform.schema.DeviceCommand;
 import net.realmproject.platform.schema.Person;
 import net.realmproject.platform.schema.Session;
+import net.realmproject.platform.schema.Station;
 import net.realmproject.platform.util.RealmResponse;
 import net.realmproject.platform.util.model.Admins;
 import net.realmproject.platform.util.model.DeviceCommands;
@@ -138,9 +139,11 @@ public class ICommonAPIReceiver extends IFn {
             RealmResponse.send(request, 400, "Session not found");
         }
 
+        Station station = session.getStation();
+
         boolean isUser = person.getSessions().contains(session);
-        boolean isStationOwner = person.equals(session.getStation().getOwner());
-        boolean isStationSharer = Stations.getSharers(person.tx(), session.getStation()).contains(person);
+        boolean isStationOwner = person.equals(station.getOwner());
+        boolean isStationSharer = Stations.isSharer(person, station);
         boolean isAdmin = Admins.isAdmin(person);
 
         if (!(isUser || isStationOwner || isStationSharer) || isAdmin) {
