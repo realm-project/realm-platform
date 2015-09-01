@@ -17,6 +17,7 @@ import org.apache.commons.lang.StringUtils;
 
 import net.objectof.corc.web.v2.HttpRequest;
 import net.objectof.model.Transaction;
+import net.realmproject.dcm.util.DCMSerialize;
 import net.realmproject.platform.schema.Person;
 import net.realmproject.platform.util.model.Persons;
 
@@ -98,7 +99,7 @@ public class RealmCorc {
 
     public static <T> T getJsonAsData(Reader reader, Class<T> c) throws IOException, ServletException {
         String json = getJson(reader);
-        return RealmSerialize.deserialize(json, c);
+        return DCMSerialize.deserialize(json, c);
     }
 
     public static Person getUser(Transaction tx, HttpRequest request) {

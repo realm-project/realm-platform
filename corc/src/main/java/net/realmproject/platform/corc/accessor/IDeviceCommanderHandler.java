@@ -11,9 +11,9 @@ import net.objectof.impl.corc.IHandler;
 import net.realmproject.dcm.event.bus.DeviceEventBus;
 import net.realmproject.dcm.features.command.Command;
 import net.realmproject.dcm.features.stateful.State;
+import net.realmproject.dcm.util.DCMSerialize;
 import net.realmproject.platform.util.RealmCorc;
 import net.realmproject.platform.util.RealmResponse;
-import net.realmproject.platform.util.RealmSerialize;
 
 
 public class IDeviceCommanderHandler extends IHandler<HttpRequest> {
@@ -30,13 +30,16 @@ public class IDeviceCommanderHandler extends IHandler<HttpRequest> {
         switch (http.getHttpRequest().getMethod()) {
 
             case "GET":
-                String state = RealmSerialize.serialize(accessor.getState());
+                String state = DCMSerialize.serialize(accessor.getState());
                 http.getWriter().write(state);
                 return;
 
             case "POST":
                 String json = RealmCorc.getJson(http.getReader());
-                Command command = RealmSerialize.deserialize(json, Command.class);
+                Command command = DCMSerialize.deserialize(json, Command.class);
+                // need to regenerate id since deserialization clobbers it with
+                // null
+                command.generateId();
                 String label = accessor.sendCommand(command);
                 http.getWriter().write("{\"id\": \"" + label + "\"}");
                 return;

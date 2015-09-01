@@ -11,9 +11,12 @@ import net.realmproject.platform.api.utils.APIUtils;
 import net.realmproject.platform.schema.DeviceCommand;
 import net.realmproject.platform.schema.Person;
 import net.realmproject.platform.schema.Session;
+import net.realmproject.platform.schema.Station;
 import net.realmproject.platform.util.RealmResponse;
+import net.realmproject.platform.util.model.Admins;
 import net.realmproject.platform.util.model.DeviceCommands;
 import net.realmproject.platform.util.model.Sessions;
+import net.realmproject.platform.util.model.Stations;
 
 
 @Selector
@@ -115,12 +118,38 @@ public class ICommonAPIReceiver extends IFn {
         if (command == null) {
             RealmResponse.send(request, 400, "DeviceCommand not found");
         }
-        
+
         Session session = DeviceCommands.getSession(person.tx(), command);
-        
+
         if (!person.getSessions().contains(session))
-        	RealmResponse.send(request, 400, "Session is not accessible for the person!");
+            RealmResponse.send(request, 400, "Session is not accessible for the person!");
 
         RealmResponse.sendJson(request, command);
+    }
+
+    @Selector
+    public void getDeviceCommandsForSession(Person person, HttpRequest request) throws IOException {
+        String id = APIUtils.getStringFromRequest("id", request);
+        if (id == null) {
+            RealmResponse.send(request, 400, "Session Id cannot be null");
+        }
+
+        Session session = person.tx().retrieve("Session", Integer.parseInt(id));
+        if (session == null) {
+            RealmResponse.send(request, 400, "Session not found");
+        }
+
+        Station station = session.getStation();
+
+        boolean isUser = person.getSessions().contains(session);
+        boolean isStationOwner = person.equals(station.getOwner());
+        boolean isStationSharer = Stations.isSharer(person, station);
+        boolean isAdmin = Admins.isAdmin(person);
+
+        if (!(isUser || isStationOwner || isStationSharer) || isAdmin) {
+            RealmResponse.send(request, 400, "Session is not accessible for the person!");
+        }
+
+        RealmResponse.sendJson(request, session.getCommands());
     }
 }

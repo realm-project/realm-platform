@@ -10,13 +10,13 @@ import net.objectof.connector.ConnectorException;
 import net.objectof.corc.Action;
 import net.objectof.corc.web.v2.HttpRequest;
 import net.objectof.model.Transaction;
+import net.realmproject.dcm.util.DCMSerialize;
 import net.realmproject.platform.corc.IRepoAwareHandler;
 import net.realmproject.platform.schema.Person;
 import net.realmproject.platform.util.RealmAuthentication;
 import net.realmproject.platform.util.RealmCorc;
 import net.realmproject.platform.util.RealmMedia;
 import net.realmproject.platform.util.RealmResponse;
-import net.realmproject.platform.util.RealmSerialize;
 import net.realmproject.platform.util.model.Persons;
 
 
@@ -37,7 +37,7 @@ public class ForgotPassword extends IRepoAwareHandler {
 
         // grab the email from the document
         String json = RealmCorc.getJson(request.getHttpRequest().getReader());
-        ForgotPasswordData forgot = RealmSerialize.deserialize(json, ForgotPasswordData.class);
+        ForgotPasswordData forgot = DCMSerialize.deserialize(json, ForgotPasswordData.class);
         String email = forgot.username;
 
         // check to make sure a user with the given email exists.
