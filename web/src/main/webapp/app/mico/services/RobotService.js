@@ -231,9 +231,18 @@ angular.module('REALM')
                 };
                 
                 $http.post(localStorage.basePath + devicePath, postData).then(function(response){
-                   
-                },function(response){
-                    console.log("Robot 'move' action failed"+response.status);
+                    // we sent move-command successfully
+                    // do nothing now :)
+                },function(errorResponse){
+                    // resend the command if it is zero command and the error is 429
+                    if(errorResponse == 429 && axis0==0 && axis1 ==0 && axis2 ==0 && axis3 ==0 ){
+                        // that is a reference to current service
+                        that.move(devicePath,axis0, axis1, axis2, axis3, button0, button1, button2, button3);
+                    }
+                    else{
+                        console.log("Robot 'move' action failed");
+                        console.log(errorResponse);
+                    }
                 });
             }
 
