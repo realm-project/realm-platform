@@ -2,6 +2,8 @@ package net.realmproject.platform.corc.accessor;
 
 
 import java.util.Date;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.TimeUnit;
 
 import com.google.common.cache.Cache;
@@ -23,6 +25,7 @@ import net.realmproject.dcm.event.Logging;
 import net.realmproject.dcm.features.command.Command;
 import net.realmproject.dcm.features.recording.RecordWriter;
 import net.realmproject.dcm.features.stateful.State;
+import net.realmproject.dcm.util.DCMInterrupt;
 import net.realmproject.dcm.util.DCMSerialize;
 import net.realmproject.dcm.util.DCMThreadPool;
 import net.realmproject.platform.schema.Device;
@@ -50,6 +53,8 @@ public class CommandRecordWriter implements RecordWriter<DeviceEvent>, Logging {
     private boolean isClosed = false;
 
     private boolean recordAllCommands = false;
+
+    private BlockingQueue<DeviceEvent> eventQueue = new LinkedBlockingQueue<>();
 
     // caches DeviceCommand objects so we don't always have to query them.
     // Remember to clear the cache when the tx is posted/changed
@@ -83,7 +88,13 @@ public class CommandRecordWriter implements RecordWriter<DeviceEvent>, Logging {
         Device device = RealmRepo.queryHead(tx, "Device", new IQuery("name", deviceId));
         this.deviceId = device.id();
 
+        // flush the transaction every minute
         DCMThreadPool.getScheduledPool().scheduleAtFixedRate(this::flush, 1, 1, TimeUnit.MINUTES);
+
+        // write queued events into transaction
+        DCMThreadPool.getPool().submit(() -> {
+            DCMInterrupt.handle(this::writeQueuedEvents, e -> e.printStackTrace());
+        });
 
     }
 
@@ -100,16 +111,25 @@ public class CommandRecordWriter implements RecordWriter<DeviceEvent>, Logging {
             return;
         }
 
-        Object payload = event.getPayload();
-        DeviceEventType eventType = event.getDeviceEventType();
+        eventQueue.offer(event);
+    }
 
-        if (eventType == DeviceEventType.MESSAGE && payload instanceof Command) {
-            // for commands
-            onCommand((Command) payload);
+    private void writeQueuedEvents() throws InterruptedException {
 
-        } else if (eventType == DeviceEventType.VALUE_CHANGED && payload instanceof State) {
-            // for responses to commands
-            onState((State) payload);
+        while (true) {
+
+            DeviceEvent event = eventQueue.take();
+            Object payload = event.getPayload();
+            DeviceEventType eventType = event.getDeviceEventType();
+
+            if (eventType == DeviceEventType.MESSAGE && payload instanceof Command) {
+                // for commands
+                onCommand((Command) payload);
+
+            } else if (eventType == DeviceEventType.VALUE_CHANGED && payload instanceof State) {
+                // for responses to commands
+                onState((State) payload);
+            }
         }
 
     }
@@ -129,11 +149,7 @@ public class CommandRecordWriter implements RecordWriter<DeviceEvent>, Logging {
         // only record output from the arm if the state is "busy"
         if (state.mode != null) {
             boolean isBusy = state.mode == State.Mode.BUSY;
-            if (!isBusy) {
-                // if the state is not busy, try flushing (if dirty)
-                flush();
-                return;
-            }
+            if (!isBusy) { return; }
         }
 
         // Find the command with a command id equal to this state's command id
@@ -167,8 +183,6 @@ public class CommandRecordWriter implements RecordWriter<DeviceEvent>, Logging {
         // add it
         states.add(dio);
 
-        System.out.println(dio);
-
         // don't post here, instead we rely on a scheduled thread to post this
         // transaction regularly this keeps devices from spamming the device
         // recorder and the device recorder from spamming the database
@@ -185,9 +199,6 @@ public class CommandRecordWriter implements RecordWriter<DeviceEvent>, Logging {
 
         // save the command's desire for recording in the cache.
         recordCommandCache.put(command.getId(), command.isToRecord());
-
-        // do this on a separate transaction
-        Transaction tx = pkg.connect(CommandRecordWriter.class.getName());
 
         // Extract json command
         String json = DCMSerialize.serialize(command);
@@ -233,17 +244,11 @@ public class CommandRecordWriter implements RecordWriter<DeviceEvent>, Logging {
         IIndexed<DeviceCommand> commands = (IIndexed<DeviceCommand>) session.getCommands();
         commands.add(dc);
 
-        getLog().info("Wrote DeviceCommand: " + dc);
-        getLog().info("DeviceCommand ID: " + dc.id());
-        getLog().info("DeviceCommand Label: " + dc.id().label());
+        getLog().trace("Wrote DeviceCommand: " + dc);
+        getLog().trace("DeviceCommand ID: " + dc.id());
+        getLog().trace("DeviceCommand Label: " + dc.id().label());
 
         isDirty = true;
-
-        tx.post();
-        tx.close();
-        // we did this on a separate transaction, but we want to make sure any
-        // new state we receive can find this DeviceCommand
-        flush();
 
     }
 
