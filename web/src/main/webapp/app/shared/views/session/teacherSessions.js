@@ -302,7 +302,7 @@ $scope.initialize=function(assignmentNames)
                 startDateMonth = "0" + startDateMonth;
             var startDateDate = startDate.getDate().toString();
             if(startDateDate.length < 2)
-                startDateMonth = "0" + startDateDate;
+                startDateDate = "0" + startDateDate;
 
             startDate = startDateYear + "-" + startDateMonth + "-" + startDateDate;
 
@@ -316,7 +316,7 @@ $scope.initialize=function(assignmentNames)
                 endDateMonth = "0" + endDateMonth;
             var endDateDate = endDate.getDate().toString();
             if(endDateDate.length < 2)
-                endDateMonth = "0" + endDateDate;
+                endDateDate = "0" + endDateDate;
 
             endDate = endDateYear + "-" + endDateMonth + "-" + endDateDate;
 
