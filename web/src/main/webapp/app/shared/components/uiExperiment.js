@@ -28,26 +28,25 @@ angular.module('REALM').directive('uiExperiment',['$timeout', '$http', '$q','Rob
             // skip the robot mode request if supportRobotMode===false
         }else{
             // get the robot mode in a timeout
-            // the default value for robotpath is mico
-            var robotPath = "rest/device/mico";
+            // skip the robot mode if robotPath was undefined
             if ($scope.layout.options != null && $scope.layout.options.robotPath !== undefined){
-                robotPath = $scope.layout.options.robotPath;
-            }
-            $scope.robotMode="IDLE";
-            $rootScope.robotStatus="IDLE";
+                var robotPath = $scope.layout.options.robotPath;
+                $scope.robotMode="IDLE";
+                $rootScope.robotStatus="IDLE";
 
-            var robotTimeout;
-            var getRobotState = function(){
-                RobotService.getMode(robotPath).then(function(mode){
-                    $scope.robotMode=mode;
-                    $rootScope.robotStatus=mode;
-                    robotTimeout = setTimeout(getRobotState,200);
-                }, function(errorResponse){
-                    console.log(errorResponse);
-                    robotTimeout = setTimeout(getRobotState,200);
-                });
-            };
-            getRobotState();
+                var robotTimeout;
+                var getRobotState = function(){
+                    RobotService.getMode(robotPath).then(function(mode){
+                        $scope.robotMode=mode;
+                        $rootScope.robotStatus=mode;
+                        robotTimeout = setTimeout(getRobotState,200);
+                    }, function(errorResponse){
+                        console.log(errorResponse);
+                        robotTimeout = setTimeout(getRobotState,200);
+                    });
+                };
+                getRobotState();
+            }
         }
 
         $scope.$on("$destroy", function(){
