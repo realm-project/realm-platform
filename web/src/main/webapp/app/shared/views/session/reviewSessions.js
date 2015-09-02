@@ -21,7 +21,6 @@ angular.module('REALM').controller('ReviewSessionsController', function ($scope,
     $scope.gridOptions = {
         data: 'filteredSessions',
         multiSelect: false,
-        enableFullRowSelection: true,
         gridMenuShowHideColumns:false,
         columnDefs: [
             {field:'token', displayName:'token', enableHiding:false},
@@ -120,12 +119,22 @@ angular.module('REALM').controller('ReviewSessionsController', function ($scope,
     };
 
     $scope.showDeviceCommands = function(){
-        if ($scope.gridOptionsGridApi.selection.getSelectedRows() == ""){
+        var selectedSession = $scope.gridOptionsGridApi.selection.getSelectedRows();
+
+        if ( selectedSession== ""){
             //Nothing selected
             $rootScope.toggle('noSessionSelected','on');
         }else{
             // read device commands and show them
-            $rootScope.toggle('underDevelopment','on');
+            RepoService.getDeviceCommandsForSession(selectedSession[0].kindLabel).then(
+                function(response){
+                    console.log(response);
+                    alert('hi');
+                }
+                ,function(errorResponse){
+                    $rootScope.toggle('cannotReadDeviceCommands','on');
+                }
+            );
         }
     };
 

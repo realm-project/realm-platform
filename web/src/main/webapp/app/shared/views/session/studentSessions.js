@@ -148,7 +148,7 @@ angular.module('REALM')
         //---------------------------------------------------------------------------------
         $scope.date = function () {
             for (var i = 0; i < $scope.dynamicSessions.length; i++) {
-                $scope.dynamicSessions[i].fromNow = moment(new Date($scope.dynamicSessions.startDateTime)).fromNow();
+                $scope.dynamicSessions[i].fromNow = moment(new Date($scope.dynamicSessions[i].startDateTime)).fromNow();
                 if (moment().isAfter($scope.dynamicSessions[i].startDateTime) && moment().isBefore($scope.dynamicSessions[i].endDateTime)) {
                     $scope.dynamicSessions[i].isActive = true;
                     $scope.dynamicSessions[i].fromNow = 'Active Now!'

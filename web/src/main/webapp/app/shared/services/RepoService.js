@@ -174,5 +174,24 @@ angular.module('REALM')
 		return defer.promise;
 	};
 
+
+	this.getDeviceCommandsForSession = function(sessionID){
+		var defer = $q.defer();
+		var apiPath = localStorage.basePath + 'rest/api/common/getDeviceCommandsForSession';
+		var postData = {
+			"id":sessionID
+		}
+		$http.post(apiPath, postData).then(
+			function (response) {
+				defer.resolve(response);
+
+			}, function (errorResponse) {
+				console.log('Failed to get list of device commands for session');
+				console.log(errorResponse);
+				defer.reject();
+			});
+		return defer.promise;
+	}
+
 });
 
