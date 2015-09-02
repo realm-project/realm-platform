@@ -127,7 +127,7 @@ angular.module('REALM')
             assignment.kindLabel = response.data.loc;
             assignment.name = response.data.value.name;
             $scope.assignments.push(assignment);
-            if(index=$scope.assignmentArray.length-2)
+            if(index=$scope.assignmentArray.length-1)
             {
                 $scope.initialize();
             }
