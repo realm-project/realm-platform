@@ -89,8 +89,6 @@ angular.module('REALM')
 		var apiPath = localStorage.basePath + 'rest/api/teacher/getCoursesForTeacher';
 		var postData = {
 		}
-		console.log(apiPath);
-		console.log(postData)
 		$http.post(apiPath, postData).then(
 			function (response) {
 				courses.resolve(response);
