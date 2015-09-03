@@ -6,8 +6,11 @@ angular.module('REALM').controller('ReviewSessionsController', function ($scope,
     $scope.sessions=[];
     $scope.filteredSessions=[];
 
-    $scope.UIStartDate=new Date;
-    $scope.UIEndDate=new Date;
+    
+    $scope.UIEndDate=new Date();
+    $scope.UIStartDate=new Date();
+    // set the start date 1 dat before the end date
+    $scope.UIStartDate.setDate($scope.UIEndDate.getDate()-1);
 
     $scope.$watch('UIStartDate',function(){
         $scope.filteredSessions=[];
@@ -23,9 +26,9 @@ angular.module('REALM').controller('ReviewSessionsController', function ($scope,
         multiSelect: false,
         gridMenuShowHideColumns:false,
         columnDefs: [
-            {field:'token', displayName:'token', enableHiding:false},
-            {field:'startTime', displayName:'start date', enableHiding:false},
-            {field:'duration', displayName:'duration', enableHiding:false}
+            {field:'token', displayName:'Token', enableHiding:false},
+            {field:'localStartTime', displayName:'Start date', enableHiding:false},
+            {field:'duration', displayName:'Duration', enableHiding:false}
         ]
     };
 
@@ -38,20 +41,18 @@ angular.module('REALM').controller('ReviewSessionsController', function ($scope,
         data: 'sessions',
         gridMenuShowHideColumns:false,
         columnDefs: [
-            {field:'token', displayName:'token', enableHiding:false},
-            {field:'startTime', displayName:'start date', enableHiding:false},
-            {field:'duration', displayName:'duration', enableHiding:false}
+            {field:'token', displayName:'Token', enableHiding:false},
+            {field:'localStartTime', displayName:'Start date', enableHiding:false},
+            {field:'duration', displayName:'Duration', enableHiding:false}
         ]
     };
 
     $scope.filterSessions=function(startDate, endDate)
     {
-        console.log("filtering...")
+        //console.log("filtering...")
         for (var i=0;i<$scope.sessions.length;i++)
         {
-            var sessionStartDate=new Date;
-            sessionStartDate=$scope.sessions[i].startTime;
-            if(moment(startDate).isBefore(sessionStartDate) && moment(endDate).isAfter(sessionStartDate))
+            if(moment(new Date(startDate).toISOString()).isBefore($scope.sessions[i].startTime) && moment(new Date(endDate).toISOString()).isAfter($scope.sessions[i].startTime))
             {
                 $scope.filteredSessions.push($scope.sessions[i])
             }
@@ -94,24 +95,31 @@ angular.module('REALM').controller('ReviewSessionsController', function ($scope,
     $scope.run=function(iterations) {
         asyncLoop(iterations, function (loop) {
             someFunction(function (result) {
-                $scope.createSessionInformation($scope.sessionsArray[loop.iteration()]);
-                loop.next();
+                $scope.createSessionInformation($scope.sessionsArray[loop.iteration()],loop);
             })
         },function () {
-            console.log('cycle ended')
+            //console.log('cycle ended')
+            $scope.filteredSessions=[];
+            $scope.filterSessions($scope.UIStartDate,$scope.UIEndDate)
         });
     };
 
-    $scope.createSessionInformation=function(sessionLocation)
+    $scope.createSessionInformation=function(sessionLocation , loop)
     {
         RepoService.getObject("Session",sessionLocation).then(function(response){
             var session={};
             session.kindLabel=response.data.loc;
             session.token=response.data.value.sessionToken;
             session.startTime=response.data.value.startTime;
+
+            // convert to localTime
+            var tempDate = moment(response.data.value.startTime);
+
+            session.localStartTime = tempDate.year()+'/'+ tempDate.month() + '/' + tempDate.date() + ' - ' + tempDate.hour()+ ':' + tempDate.minute();
+
             session.duration=response.data.value.duration.toString();
             $scope.sessions.push(session);
-            
+            loop.next();
            },function(error){
                 console.log("error in creating session!");
            }
@@ -128,8 +136,9 @@ angular.module('REALM').controller('ReviewSessionsController', function ($scope,
             // read device commands and show them
             RepoService.getDeviceCommandsForSession(selectedSession[0].kindLabel).then(
                 function(response){
+                    console.log("This is what we recieved as DeviceCommands:");
                     console.log(response);
-                    alert('hi');
+                    alert('DeviceCommands are in the console log');
                 }
                 ,function(errorResponse){
                     $rootScope.toggle('cannotReadDeviceCommands','on');
