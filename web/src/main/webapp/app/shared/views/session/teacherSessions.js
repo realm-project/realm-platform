@@ -233,7 +233,7 @@ $scope.initialize=function(assignmentNames)
         }
 
 
-        // main function to craete new sessions
+        // main function to create new sessions
         $scope.createSessions = function()
         {
            
@@ -254,8 +254,8 @@ $scope.initialize=function(assignmentNames)
                    postData.assignment=$scope.assignments[i].kindLabel;
             }
 
-            //Session Times
-            //Sanitizing Times
+
+            //Sanitizing start time
             var startTime = $scope.vm.sessionStartTime;
             var startTimeHours = startTime.getHours().toString();
             if(startTimeHours.length < 2)
@@ -264,9 +264,9 @@ $scope.initialize=function(assignmentNames)
             if(startTimeMinutes.length < 2)
                 startTimeMinutes = "0"+ startTimeMinutes;
 
-            startTime = startTimeHours + ":" + startTimeMinutes;
+            //startTime = startTimeHours + ":" + startTimeMinutes;
 
-            //Sanitizing Times
+            //Sanitizing end time
             var endTime = $scope.vm.sessionEndTime;
             var endTimeHours = endTime.getHours().toString();
             if(endTimeHours.length < 2)
@@ -275,7 +275,46 @@ $scope.initialize=function(assignmentNames)
             if(endTimeMinutes.length < 2)
                 endTimeMinutes = "0"+ endTimeMinutes;
 
-            endTime = endTimeHours + ":" + endTimeMinutes;
+            //endTime = endTimeHours + ":" + endTimeMinutes;
+            
+            
+            //Sanitizing start date
+            var startDate = $scope.vm.sessionStartDate;
+            var startDateYear = startDate.getFullYear();
+            var startDateMonth = startDate.getMonth().toString();
+            var startDateMonthInt=parseInt(startDateMonth)+1;
+            startDateMonth=startDateMonthInt.toString();
+            if(startDateMonth.length < 2)
+                startDateMonth = "0" + startDateMonth;
+            var startDateDate = startDate.getDate().toString();
+            if(startDateDate.length < 2)
+                startDateDate = "0" + startDateDate;
+
+            //startDate = startDateYear + "-" + startDateMonth + "-" + startDateDate;
+
+            //Sanitizing end date
+            var endDate = $scope.vm.sessionEndDate;
+            var endDateYear = endDate.getFullYear();
+            var endDateMonth = endDate.getMonth().toString();
+            var endDateMonthInt=parseInt(endDateMonth)+1;
+            endDateMonth=endDateMonthInt.toString();
+            if(endDateMonth.length < 2)
+                endDateMonth = "0" + endDateMonth;
+            var endDateDate = endDate.getDate().toString();
+            if(endDateDate.length < 2)
+                endDateDate = "0" + endDateDate;
+
+            //endDate = endDateYear + "-" + endDateMonth + "-" + endDateDate;
+
+            // convert date and time to UTC
+
+            var localStartDate = new Date(startDateYear,startDateMonth,startDateDate,startTimeHours,startTimeMinutes,0,0);
+            var localEndDate = new Date(endDateYear,endDateMonth,endDateDate,endTimeHours,endTimeMinutes,0,0);
+            startTime = localStartDate.getUTCHours() + ":" + localEndDate.getUTCMinutes();
+            endTime = localEndDate.getUTCHours() + ":" + localEndDate.getUTCMinutes();
+            startDate = localStartDate.getUTCFullYear() + "-" + localStartDate.getUTCMonth() + "-" + localStartDate.getUTCDate();
+            endDate = localEndDate.getUTCFullYear() + "-" + localEndDate.getUTCMonth() + "-" + localEndDate.getUTCDate();
+
             //Single Session Creation
             if($scope.vm.sessionTimesType==='Single')
             {
@@ -291,34 +330,6 @@ $scope.initialize=function(assignmentNames)
                 postData.time.bulk.end=endTime;
                 postData.time.bulk.duration=$scope.vm.duration;
             }
-            //Session Dates
-            //Sanitizing Output
-            var startDate = $scope.vm.sessionStartDate;
-            var startDateYear = startDate.getFullYear();
-            var startDateMonth = startDate.getMonth().toString();
-            var startDateMonthInt=parseInt(startDateMonth)+1;
-            startDateMonth=startDateMonthInt.toString();
-            if(startDateMonth.length < 2)
-                startDateMonth = "0" + startDateMonth;
-            var startDateDate = startDate.getDate().toString();
-            if(startDateDate.length < 2)
-                startDateDate = "0" + startDateDate;
-
-            startDate = startDateYear + "-" + startDateMonth + "-" + startDateDate;
-
-            //Sanitizing Output
-            var endDate = $scope.vm.sessionEndDate;
-            var endDateYear = endDate.getFullYear();
-            var endDateMonth = endDate.getMonth().toString();
-            var endDateMonthInt=parseInt(endDateMonth)+1;
-            endDateMonth=endDateMonthInt.toString();
-            if(endDateMonth.length < 2)
-                endDateMonth = "0" + endDateMonth;
-            var endDateDate = endDate.getDate().toString();
-            if(endDateDate.length < 2)
-                endDateDate = "0" + endDateDate;
-
-            endDate = endDateYear + "-" + endDateMonth + "-" + endDateDate;
 
             //Date Range
             if($scope.vm.sessionDatesType==='Range')
