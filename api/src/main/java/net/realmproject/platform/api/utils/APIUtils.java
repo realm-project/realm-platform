@@ -25,11 +25,15 @@ import net.objectof.corc.web.v2.HttpRequest;
 import net.objectof.model.Resource;
 import net.objectof.model.Transaction;
 import net.objectof.model.query.IQuery;
+import net.realmproject.dcm.util.DCMSerialize;
 import net.realmproject.platform.api.datatypes.CreateSession;
 import net.realmproject.platform.schema.Assignment;
+import net.realmproject.platform.schema.Person;
 import net.realmproject.platform.schema.Session;
 import net.realmproject.platform.schema.Station;
 import net.realmproject.platform.util.RealmCorc;
+import net.realmproject.platform.util.model.Admins;
+import net.realmproject.platform.util.model.Stations;
 import net.realmproject.platform.util.model.Tokens;
 
 
@@ -132,6 +136,25 @@ public class APIUtils {
         catch (IOException e) {
             e.printStackTrace();
         }
+    }
+    
+    public static void addObjectsToResponse(Iterable<?> queryResult, HttpRequest request) {
+    	
+    	PrintWriter w = null;
+    	HttpServletResponse response = request.getHttpResponse();
+    	
+    	try {
+    		w = response.getWriter();
+    		
+    		w.write(DCMSerialize.serialize(queryResult));
+            w.write(',');
+
+            w.flush();
+    	}
+    	catch (IOException e) {
+    		e.printStackTrace();
+    	}
+    	
     }
 
     public static int createSession(Transaction tx, Assignment assignment, Date date, Station station,
@@ -270,5 +293,29 @@ public class APIUtils {
         session.setDuration(null);
         session.setSessionToken(null);
         session.setStartTime(null);
+    }
+    
+    public static boolean hasReadAccessToSession(Person person, Session session) {
+
+    	boolean isUser = person.getSessions().contains(session);
+
+    	if (isUser || hasWriteAccessToSession(person, session))
+    		return true;
+    	
+    	return false;
+    }
+    
+    public static boolean hasWriteAccessToSession(Person person, Session session) {
+
+    	Station station = session.getStation();
+    	
+    	boolean isStationOwner = person.equals(station.getOwner());
+    	boolean isStationSharer = Stations.isSharer(person, station);
+    	boolean isAdmin = Admins.isAdmin(person);
+
+    	if (isStationOwner || isStationSharer || isAdmin)
+    		return true;
+    	
+    	return false;
     }
 }

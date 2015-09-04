@@ -299,6 +299,32 @@ public class ITeacherAPIReceiver extends IFn {
         APIUtils.addQueryResultToResponse(sessions, request);
 
     }
+    
+    @Selector
+    public void getSessionObjectsForAssignment(Person teacher, HttpRequest request) {
+    	// The assignments's label is included in the request and the
+        // assignments should be retrieved using the label.
+        Assignment a = (Assignment) APIUtils.getObjectFromRequest("Assignment", teacher.tx(), request);
+
+        if (a == null) {
+            request.getHttpResponse().setStatus(400);
+            return;
+        }
+
+        // Ensure that teacher is the teacher of the course that the assignment
+        // belongs to
+        if (!a.getCourse().getTeachers().contains(teacher)) {
+            request.getHttpResponse().setStatus(403);
+            return;
+        }
+
+        // Retrieve sessions of assignment
+        Iterable<Session> sessions = Assignments.getSessions(teacher.tx(), a);
+
+        // Add sessions to the response
+        APIUtils.addObjectsToResponse(sessions, request);
+    }
+    
 
     /**
      * Is called by a teacher user to get the list of sessions for a device. The
