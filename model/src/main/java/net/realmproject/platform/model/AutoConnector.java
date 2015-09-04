@@ -8,15 +8,15 @@ import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 
+import org.w3c.dom.Document;
+
 import net.objectof.connector.Connector;
 import net.objectof.connector.ConnectorException;
 import net.objectof.connector.Parameter;
 import net.objectof.connector.sql.AbstractSQLConnector;
-import net.objectof.connector.sql.ISQLiteConnector;
+import net.objectof.connector.sql.IH2Connector;
 import net.objectof.model.Package;
 import net.objectof.model.Transaction;
-
-import org.w3c.dom.Document;
 
 
 public class AutoConnector implements Connector {
@@ -27,14 +27,15 @@ public class AutoConnector implements Connector {
     private String dbName = null;
 
     public AutoConnector(String appname) {
-        backer = new ISQLiteConnector();
+        // backer = new ISQLiteConnector();
+        backer = new IH2Connector();
 
         String dbdir = System.getProperty("user.home") + "/.realm/applications/" + appname + "/";
         String dbfile = dbdir + appname + ".db";
         new File(dbdir).mkdirs();
 
-        backer.getParameter(ISQLiteConnector.KEY_FILENAME).setValue(dbfile);
-        backer.getParameter(ISQLiteConnector.KEY_REPOSITORY).setValue("realmproject.net:1502/realm");
+        backer.getParameter(IH2Connector.KEY_DIRECTORY).setValue(dbfile);
+        backer.getParameter(IH2Connector.KEY_REPOSITORY).setValue("realmproject.net:1502/realm");
     }
 
     public AutoConnector(Connector backer) {
