@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('REALM').directive('joystick', function() {
+angular.module('REALM').directive('joystick', function($timeout) {
   return {
     restrict: 'E',
     replace: false,
@@ -130,10 +130,11 @@ angular.module('REALM').directive('joystick', function() {
             }
           
           }
-          window.requestAnimationFrame(runAnimation);
+          $timeout(runAnimation,250);
+          //window.requestAnimationFrame(runAnimation);
         } 
-
-        window.requestAnimationFrame(runAnimation);
+        runAnimation();
+        //window.requestAnimationFrame(runAnimation);
       }
     },
     controller: function ControllerFunction($scope, $element, $attrs)
