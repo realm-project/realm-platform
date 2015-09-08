@@ -310,7 +310,7 @@ $scope.initialize=function(assignmentNames)
 
             var localStartDate = new Date(startDateYear,startDateMonth,startDateDate,startTimeHours,startTimeMinutes,0,0);
             var localEndDate = new Date(endDateYear,endDateMonth,endDateDate,endTimeHours,endTimeMinutes,0,0);
-            startTime = localStartDate.getUTCHours() + ":" + localEndDate.getUTCMinutes();
+            startTime = localStartDate.getUTCHours() + ":" + localStartDate.getUTCMinutes();
             endTime = localEndDate.getUTCHours() + ":" + localEndDate.getUTCMinutes();
             startDate = localStartDate.getUTCFullYear() + "-" + localStartDate.getUTCMonth() + "-" + localStartDate.getUTCDate();
             endDate = localEndDate.getUTCFullYear() + "-" + localEndDate.getUTCMonth() + "-" + localEndDate.getUTCDate();
