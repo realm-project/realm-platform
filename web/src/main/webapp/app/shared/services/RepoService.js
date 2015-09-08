@@ -177,7 +177,7 @@ angular.module('REALM')
 		var defer = $q.defer();
 		var apiPath = localStorage.basePath + 'rest/api/common/getDeviceCommandsForSession';
 		var postData = {
-			"id":sessionID
+			"session":sessionID
 		}
 		$http.post(apiPath, postData).then(
 			function (response) {
