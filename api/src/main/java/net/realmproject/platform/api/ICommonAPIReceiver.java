@@ -129,24 +129,13 @@ public class ICommonAPIReceiver extends IFn {
 
     @Selector
     public void getDeviceCommandsForSession(Person person, HttpRequest request) throws IOException {
-        String id = APIUtils.getStringFromRequest("id", request);
-        if (id == null) {
-            RealmResponse.send(request, 400, "Session Id cannot be null");
-        }
+        
+    	net.objectof.model.Transaction tx = person.tx();
+    	Session session = (Session) APIUtils.getObjectFromRequest("Session", tx, request);
+    	
+//    	Session session = (Session) APIUtils.getObjectFromRequest("Session", person.tx(), request);
 
-        Session session = person.tx().retrieve("Session", Integer.parseInt(id));
-        if (session == null) {
-            RealmResponse.send(request, 400, "Session not found");
-        }
-
-        Station station = session.getStation();
-
-        boolean isUser = person.getSessions().contains(session);
-        boolean isStationOwner = person.equals(station.getOwner());
-        boolean isStationSharer = Stations.isSharer(person, station);
-        boolean isAdmin = Admins.isAdmin(person);
-
-        if (!(isUser || isStationOwner || isStationSharer) || isAdmin) {
+        if (!APIUtils.hasReadAccessToSession(person, session)) {
             RealmResponse.send(request, 400, "Session is not accessible for the person!");
         }
 
