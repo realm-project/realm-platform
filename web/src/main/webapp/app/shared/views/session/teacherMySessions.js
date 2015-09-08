@@ -84,6 +84,13 @@ angular.module('REALM')
                                             session.order = $scope.setOrder(name);
                                             session.startDateTime = returnedSession.value.startTime;
                                             session.endDateTime = endDate.toISOString();
+
+                                            // convert to local time
+                                            var tempDate = moment(session.startDateTime);
+                                            session.localStartDate = tempDate.year()+'/'+ tempDate.month() + '/' + tempDate.date() + ' -' + tempDate.hour()+ ':' + tempDate.minute();
+                                            tempDate = moment(session.endDateTime);
+                                            session.localEndDate = tempDate.year()+'/'+ tempDate.month() + '/' + tempDate.date() + ' -' + tempDate.hour()+ ':' + tempDate.minute();
+
                                             session.fromNow = null;
                                             session.isActive = null;
                                             session.station=stationResponse.data.value.devices.value;
@@ -240,10 +247,6 @@ angular.module('REALM')
                         });
                 }
 
-           /*var station={};
-           station.camera="rest/device/camera";
-           station.robot="rest/device/mico";*/
-           //layout=$scope.updateLayout($.parseJSON(layout),station);
            layout = $.parseJSON(layout);
            localStorage.setItem('layout',JSON.stringify(layout));
            $state.go("teacherHome.mySessions."+experimentType);
