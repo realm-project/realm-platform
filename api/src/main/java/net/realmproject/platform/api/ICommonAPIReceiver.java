@@ -139,6 +139,24 @@ public class ICommonAPIReceiver extends IFn {
             RealmResponse.send(request, 400, "Session is not accessible for the person!");
         }
 
-        RealmResponse.sendJson(request, session.getCommands());
+//        RealmResponse.sendJson(request, session.getCommands());
+        APIUtils.addQueryResultToResponse(session.getCommands(), request);
+    }
+    
+    @Selector
+    public void getDeviceCommandObjectsForSession(Person person, HttpRequest request) throws IOException {
+        
+    	net.objectof.model.Transaction tx = person.tx();
+    	Session session = (Session) APIUtils.getObjectFromRequest("Session", tx, request);
+    	
+//    	Session session = (Session) APIUtils.getObjectFromRequest("Session", person.tx(), request);
+
+        if (!APIUtils.hasReadAccessToSession(person, session)) {
+            RealmResponse.send(request, 400, "Session is not accessible for the person!");
+        }
+
+//        RealmResponse.sendJson(request, session.getCommands());
+//        APIUtils.addQueryResultToResponse(session.getCommands(), request);
+        APIUtils.addObjectsToResponse(session.getCommands(), request);
     }
 }
