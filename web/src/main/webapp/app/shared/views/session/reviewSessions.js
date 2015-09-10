@@ -152,12 +152,23 @@ angular.module('REALM').controller('ReviewSessionsController', function ($scope,
         function(response){
             var courseList = response.data.substring(0,response.data.length-1).split(",");
             courseList.forEach(function(course){
-                RepoService.getSessionsForCourse(course).then(
+                RepoService.getAsnsForCourse(course).then(
                     function(response){
-                        $scope.sessionsArray = response.data.substring(0,response.data.length-1).split(",");
-                        $scope.run($scope.sessionsArray.length);
+                        var assignmentList = response.data.substring(0,response.data.length-1).split(",");
+                        assignmentList.forEach(function(assignment){
+                            RepoService.getSessionObjectsForAssignment(assignment).then(
+                                function(response){
+                                    console.log("we recieved some sessions");
+                                    console.log(response);
+                                },function(errorResponse){
+                                    console.log("failed to get session object for assignment");                        
+                                }
+                            );
+                        });
+                        //$scope.sessionsArray = response.data.substring(0,response.data.length-1).split(",");
+                        //$scope.run($scope.sessionsArray.length);
                     },function(errorResponse){
-                        console.log("failed to get sessions for course");            
+                        console.log("failed to get assignment for course");            
                     }
                 );
             });

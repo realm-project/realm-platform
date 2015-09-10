@@ -106,14 +106,13 @@ angular.module('REALM')
 		var postData = {
 			"course":course
 		}
-		console.log(apiPath);
-		console.log(postData)
 		$http.post(apiPath, postData).then(
 			function (response) {
 				assignments.resolve(response);
 
-			}, function (response) {
-				console.log('Failed to get assignments for course, error code: ' + response.status);
+			}, function (errorResponse) {
+				console.log('Failed to get assignments for course');
+				console.log(errorResponse);
 				assignments.reject();
 			});
 		return assignments.promise;
@@ -185,6 +184,24 @@ angular.module('REALM')
 
 			}, function (errorResponse) {
 				console.log('Failed to get list of device commands for session');
+				console.log(errorResponse);
+				defer.reject();
+			});
+		return defer.promise;
+	}
+
+	this.getSessionObjectsForAssignment = function(assignmentID){
+		var defer = $q.defer();
+		var apiPath = localStorage.basePath + 'rest/api/teacher/getSessionObjectsForAssignment';
+		var postData = {
+			"assignment":assignmentID
+		}
+		$http.post(apiPath, postData).then(
+			function (response) {
+				defer.resolve(response);
+
+			}, function (errorResponse) {
+				console.log('Failed to get session objects for assignment');
 				console.log(errorResponse);
 				defer.reject();
 			});
