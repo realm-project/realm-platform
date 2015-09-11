@@ -155,8 +155,6 @@ public class ICommonAPIReceiver extends IFn {
             RealmResponse.send(request, 400, "Session is not accessible for the person!");
         }
 
-//        RealmResponse.sendJson(request, session.getCommands());
-//        APIUtils.addQueryResultToResponse(session.getCommands(), request);
-        APIUtils.addObjectsToResponse(session.getCommands(), request);
+        APIUtils.addObjectQueryResultToResponse(tx, session.getCommands(), request);
     }
 }
