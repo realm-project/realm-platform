@@ -25,7 +25,7 @@ app.config(function ($stateProvider, $urlRouterProvider) {
         .state('teacherHome.courses',{url: '/courses', templateUrl: 'shared/views/account/studentCourses.html', controller: 'StudentCoursesController', data: {authorizedRoles:['teacher'],pageName:"Courses"}})
         .state('teacherHome.mySessions',{url: '/mySessions', templateUrl: 'shared/views/session/studentSessions.html', controller: 'TeacherMySessionsController', data: {authorizedRoles:['teacher'],pageName:"Sessions"}})
         .state('teacherHome.createSessions',{url: '/createSessions', templateUrl: 'shared/views/session/teacherSessions.html', controller: 'TeacherSessionsController', data: {authorizedRoles:['teacher'],pageName:"Create Sessions"}})
-        .state('teacherHome.reviewsSessions',{url: '/reviewSessions', templateUrl: 'shared/views/session/reviewSessions.html', controller: 'ReviewSessionsController', data: {authorizedRoles:['teacher'],pageName:"review Sessions"}});
+        .state('teacherHome.reviewsSessions',{url: '/reviewSessions', templateUrl: 'shared/views/session/reviewSessions.html', controller: 'ReviewSessionsController', data: {authorizedRoles:['teacher'],pageName:"Review Sessions"}});
         
     //Redirect to login state if URL does not correspond to a defined state
     $urlRouterProvider
