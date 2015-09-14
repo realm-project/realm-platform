@@ -6,6 +6,7 @@ angular.module('REALM').controller('ReviewSessionsController', function ($scope,
     $scope.sessions=[];
     $scope.filteredSessions=[];
 
+    $scope.deviceCommands = [];
     
     $scope.UIEndDate=new Date();
     $scope.UIStartDate=new Date();
@@ -67,11 +68,21 @@ angular.module('REALM').controller('ReviewSessionsController', function ($scope,
             //Nothing selected
             $rootScope.toggle('noSessionSelected','on');
         }else{
-            // read device commands and show them
-            RepoService.getDeviceCommandObjectsForSession(selectedSession[0].kindLabel).then(
+            // read commands and show them
+            RepoService.getDeviceIOObjectsForSession(selectedSession[0].kindLabel).then(
                 function(response){
-                    console.log("This is what we recieved as DeviceCommands:");
-                    console.log(response);
+                    $scope.deviceCommands = []
+                    for (var i=0; i < response.data.length; i++){
+                        var tempDeviceCommand = {};
+                        var jsonCommand = JSON.parse(response.data[i].value.json);
+                        tempDeviceCommand.command = jsonCommand.action;
+                        tempDeviceCommand.properties = jsonCommand.properties;
+                        
+                        var tempDate = moment(response.data[i].value.unixtime);
+                        tempDeviceCommand.localDate = tempDate.year()+'/'+ tempDate.month() + '/' + tempDate.date() + ' - ' + tempDate.hour()+ ':' + tempDate.minute();
+                        $scope.deviceCommands.push(tempDeviceCommand);
+                        $rootScope.toggle('deviceCommandsModal','on');
+                    }
                 }
                 ,function(errorResponse){
                     $rootScope.toggle('cannotReadDeviceCommands','on');
