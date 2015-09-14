@@ -23,6 +23,7 @@ import org.apache.commons.logging.LogFactory;
 
 import net.objectof.aggr.Composite;
 import net.objectof.corc.web.v2.HttpRequest;
+import net.objectof.model.Id;
 import net.objectof.model.Resource;
 import net.objectof.model.Transaction;
 import net.objectof.model.impl.IKind;
@@ -150,12 +151,12 @@ public class APIUtils {
 
         try {
         	w = response.getWriter();
-        	
         	sb.append('[');
-        	
         	for (Object o : queryResult) {
         		@SuppressWarnings("unchecked")
 				Resource<Object> r = (Resource<Object>) o;
+        		Id<Object> id = r.id();
+        		id.kind();
                 IKind<Object> kind = (IKind<Object>) r.id().kind();
            		kind.datatype().toJson(r.value(), (IPackage) tx.getPackage(), sb);
            		sb.append(',');

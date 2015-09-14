@@ -2,13 +2,16 @@ package net.realmproject.platform.api;
 
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import net.objectof.Selector;
+import net.objectof.aggr.Listing;
 import net.objectof.corc.web.v2.HttpRequest;
 import net.objectof.model.impl.aggr.IIndexed;
 import net.objectof.rt.impl.IFn;
 import net.realmproject.platform.api.utils.APIUtils;
 import net.realmproject.platform.schema.DeviceCommand;
+import net.realmproject.platform.schema.DeviceIO;
 import net.realmproject.platform.schema.Person;
 import net.realmproject.platform.schema.Session;
 import net.realmproject.platform.schema.Station;
@@ -149,12 +152,29 @@ public class ICommonAPIReceiver extends IFn {
     	net.objectof.model.Transaction tx = person.tx();
     	Session session = (Session) APIUtils.getObjectFromRequest("Session", tx, request);
     	
-//    	Session session = (Session) APIUtils.getObjectFromRequest("Session", person.tx(), request);
-
         if (!APIUtils.hasReadAccessToSession(person, session)) {
             RealmResponse.send(request, 400, "Session is not accessible for the person!");
         }
 
         APIUtils.addObjectQueryResultToResponse(tx, session.getCommands(), request);
+    }
+    
+    @Selector
+    public void getDeviceIOObjectsForSession(Person person, HttpRequest request) throws IOException {
+    	net.objectof.model.Transaction tx = person.tx();
+    	Session session = (Session) APIUtils.getObjectFromRequest("Session", tx, request);
+    	ArrayList<DeviceIO> deviceIOs = new ArrayList<DeviceIO>();
+    	
+        if (!APIUtils.hasReadAccessToSession(person, session)) {
+            RealmResponse.send(request, 400, "Session is not accessible for the person!");
+        }
+
+        Listing<DeviceCommand>  commands = session.getCommands();
+        for (DeviceCommand command : commands) {
+        	if (command.getCommand() != null)
+        		deviceIOs.add(command.getCommand());
+        }
+        
+        APIUtils.addObjectQueryResultToResponse(tx, (Iterable<DeviceIO>)(deviceIOs), request);
     }
 }
