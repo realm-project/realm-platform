@@ -161,7 +161,10 @@ public class APIUtils {
            		kind.datatype().toJson(r.value(), (IPackage) tx.getPackage(), sb);
            		sb.append(',');
             }
-            sb.deleteCharAt(sb.length() - 1).append(']');
+            if (sb.length() == 1) // quesryResult is empty
+            	sb.append(']');
+            else
+            	sb.deleteCharAt(sb.length() - 1).append(']');
 
             w.write(sb.toString());
             w.flush();
