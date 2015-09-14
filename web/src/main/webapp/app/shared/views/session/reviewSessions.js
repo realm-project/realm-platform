@@ -158,15 +158,25 @@ angular.module('REALM').controller('ReviewSessionsController', function ($scope,
                         assignmentList.forEach(function(assignment){
                             RepoService.getSessionObjectsForAssignment(assignment).then(
                                 function(response){
-                                    console.log("we recieved some sessions");
-                                    console.log(response);
+                                    for (var i=0; i<response.data.length; i++){
+                                        var session={};
+                                        session.kindLabel=response.data[i].loc;
+                                        session.token=response.data[i].value.sessionToken;
+                                        session.startTime=response.data[i].value.startTime;
+                                        // convert to localTime
+                                        var tempDate = moment(response.data[i].value.startTime);
+                                        session.localStartTime = tempDate.year()+'/'+ tempDate.month() + '/' + tempDate.date() + ' - ' + tempDate.hour()+ ':' + tempDate.minute();
+                                        session.duration=response.data[i].value.duration.toString();
+                                        $scope.sessions.push(session);
+                                    }
+                                    // update filter after adding each assignment sessions
+                                    $scope.filteredSessions=[];
+                                    $scope.filterSessions($scope.UIStartDate,$scope.UIEndDate)
                                 },function(errorResponse){
                                     console.log("failed to get session object for assignment");                        
                                 }
                             );
                         });
-                        //$scope.sessionsArray = response.data.substring(0,response.data.length-1).split(",");
-                        //$scope.run($scope.sessionsArray.length);
                     },function(errorResponse){
                         console.log("failed to get assignment for course");            
                     }
