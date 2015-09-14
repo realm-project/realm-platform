@@ -21,9 +21,12 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import net.objectof.aggr.Composite;
 import net.objectof.corc.web.v2.HttpRequest;
 import net.objectof.model.Resource;
 import net.objectof.model.Transaction;
+import net.objectof.model.impl.IKind;
+import net.objectof.model.impl.IPackage;
 import net.objectof.model.query.IQuery;
 import net.realmproject.dcm.util.DCMSerialize;
 import net.realmproject.platform.api.datatypes.CreateSession;
@@ -108,7 +111,8 @@ public class APIUtils {
             w.flush();
         }
         catch (IOException e) {
-            e.printStackTrace();
+//            e.printStackTrace();
+        	System.out.println(e.toString());
         }
     }
 
@@ -131,6 +135,34 @@ public class APIUtils {
                 w.write(',');
             }
 
+            w.flush();
+        }
+        catch (IOException e) {
+//            e.printStackTrace();
+        	System.out.println(e.getMessage());
+        }
+    }
+    
+    public static void addObjectQueryResultToResponse(Transaction tx, Iterable<?> queryResult, HttpRequest request) {
+        PrintWriter w = null;
+        HttpServletResponse response = request.getHttpResponse();
+        StringBuilder sb = new StringBuilder();
+
+        try {
+        	w = response.getWriter();
+        	
+        	sb.append('[');
+        	
+        	for (Object o : queryResult) {
+        		@SuppressWarnings("unchecked")
+				Resource<Object> r = (Resource<Object>) o;
+                IKind<Object> kind = (IKind<Object>) r.id().kind();
+           		kind.datatype().toJson(r.value(), (IPackage) tx.getPackage(), sb);
+           		sb.append(',');
+            }
+            sb.deleteCharAt(sb.length() - 1).append(']');
+
+            w.write(sb.toString());
             w.flush();
         }
         catch (IOException e) {

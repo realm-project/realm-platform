@@ -2,6 +2,9 @@ package net.realmproject.platform.api;
 
 
 import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.io.StringWriter;
+import java.io.Writer;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -11,16 +14,28 @@ import java.util.List;
 
 import javax.servlet.ServletException;
 
+import org.codehaus.jackson.JsonGenerationException;
+import org.codehaus.jackson.annotate.JsonAutoDetect.Visibility;
+import org.codehaus.jackson.map.JsonMappingException;
+import org.codehaus.jackson.map.ObjectMapper;
+
 import net.objectof.Selector;
+import net.objectof.aggr.Composite;
 import net.objectof.aggr.Listing;
+import net.objectof.aggr.impl.IListing;
 import net.objectof.corc.web.v2.HttpRequest;
+import net.objectof.model.Resource;
 import net.objectof.model.Transaction;
+import net.objectof.model.impl.IKind;
+import net.objectof.model.impl.IPackage;
 import net.objectof.rt.impl.IFn;
+import net.realmproject.dcm.util.DCMSerialize;
 import net.realmproject.platform.api.datatypes.CreateSession;
 import net.realmproject.platform.api.utils.APIUtils;
 import net.realmproject.platform.schema.Assignment;
 import net.realmproject.platform.schema.Course;
 import net.realmproject.platform.schema.Device;
+import net.realmproject.platform.schema.DeviceCommand;
 import net.realmproject.platform.schema.Person;
 import net.realmproject.platform.schema.Session;
 import net.realmproject.platform.schema.Station;
@@ -301,7 +316,7 @@ public class ITeacherAPIReceiver extends IFn {
     }
     
     @Selector
-    public void getSessionObjectsForAssignment(Person teacher, HttpRequest request) {
+    public void getSessionObjectsForAssignment(Person teacher, HttpRequest request) throws JsonGenerationException, JsonMappingException, IOException {
     	// The assignments's label is included in the request and the
         // assignments should be retrieved using the label.
         Assignment a = (Assignment) APIUtils.getObjectFromRequest("Assignment", teacher.tx(), request);
@@ -320,9 +335,19 @@ public class ITeacherAPIReceiver extends IFn {
 
         // Retrieve sessions of assignment
         Iterable<Session> sessions = Assignments.getSessions(teacher.tx(), a);
-
-        // Add sessions to the response
-        APIUtils.addObjectsToResponse(sessions, request);
+        
+//        StringBuilder sb = new StringBuilder("[");
+//    
+//        for (Session s : sessions) {
+//            IKind<Composite> kind = (IKind<Composite>) s.id().kind();
+//       		kind.datatype().toJson(s.value(), (IPackage) teacher.tx().getPackage(), sb);
+//       		sb.append(',');
+//        }
+//        sb.deleteCharAt(sb.length() - 1).append(']');
+//        
+//        APIUtils.addStringResultToResponse(sb.toString(), request);
+        
+        APIUtils.addObjectQueryResultToResponse(teacher.tx(), sessions, request);
     }
     
 
