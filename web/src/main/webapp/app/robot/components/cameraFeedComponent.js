@@ -90,7 +90,7 @@ app.directive('cameraFeedComponent' , function($timeout, $http, $q, CameraFeedSe
                                     clearTimeout( resizeTimeout );
                                 }
                                 resizeTimeout = setTimeout( function() {
-                                    tempSection.height(temoContainer.height()+20);
+                                    tempSection.height(temoContainer.height()+5);
                                     $container.packery( 'fit', ui.element[0] );
                                 }, 100 );
                             });

@@ -190,6 +190,43 @@ angular.module('REALM')
 		return defer.promise;
 	}
 
+	this.getDeviceCommandObjectsForSession = function(sessionID){
+		var defer = $q.defer();
+		var apiPath = localStorage.basePath + 'rest/api/common/getDeviceCommandObjectsForSession';
+		var postData = {
+			"session":sessionID
+		}
+		$http.post(apiPath, postData).then(
+			function (response) {
+				defer.resolve(response);
+
+			}, function (errorResponse) {
+				console.log('Failed to get device command objects for session');
+				console.log(errorResponse);
+				defer.reject();
+			});
+		return defer.promise;
+	}
+
+	this.getDeviceIOObjectsForSession = function(sessionID){
+		var defer = $q.defer();
+		var apiPath = localStorage.basePath + 'rest/api/common/getDeviceIOObjectsForSession';
+		var postData = {
+			"session":sessionID
+		}
+		$http.post(apiPath, postData).then(
+			function (response) {
+				defer.resolve(response);
+
+			}, function (errorResponse) {
+				console.log('Failed to get deviceIO objects for session');
+				console.log(errorResponse);
+				defer.reject();
+			});
+		return defer.promise;
+	}
+
+
 	this.getSessionObjectsForAssignment = function(assignmentID){
 		var defer = $q.defer();
 		var apiPath = localStorage.basePath + 'rest/api/teacher/getSessionObjectsForAssignment';

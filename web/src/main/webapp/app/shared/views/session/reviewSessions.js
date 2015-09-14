@@ -5,8 +5,9 @@ angular.module('REALM').controller('ReviewSessionsController', function ($scope,
 
     $scope.sessions=[];
     $scope.filteredSessions=[];
+    $scope.deviceCommands = [];
+    $scope.selectedDeviceIO = "Please select a command to see details here";    
 
-    
     $scope.UIEndDate=new Date();
     $scope.UIStartDate=new Date();
     // set the start date 1 dat before the end date
@@ -31,8 +32,6 @@ angular.module('REALM').controller('ReviewSessionsController', function ($scope,
             {field:'duration', displayName:'Duration', enableHiding:false}
         ]
     };
-
-
     $scope.gridOptions.onRegisterApi = function(gridApi) {
         $scope.gridOptionsGridApi = gridApi;
     };
@@ -47,6 +46,26 @@ angular.module('REALM').controller('ReviewSessionsController', function ($scope,
         ]
     };
 
+    $scope.deviceCommandGrid = {
+        data: 'deviceCommands',
+        multiSelect: false,
+        gridMenuShowHideColumns:false,
+        columnDefs: [
+            {field:'command', displayName:'Name', enableHiding:false},
+            {field:'localDate', displayName:'Date', enableHiding:false}
+        ]
+    };
+    
+    $scope.deviceCommandGrid.onRegisterApi = function(gridApi) {
+        //$scope.deviceCommandGridApi = gridApi;
+        gridApi.selection.on.rowSelectionChanged($scope,function(row) {
+            $scope.selectedDeviceIO = JSON.stringify(row.entity.properties, null, 4);
+        });
+    };
+
+
+
+
     $scope.filterSessions=function(startDate, endDate)
     {
         //console.log("filtering...")
@@ -60,72 +79,6 @@ angular.module('REALM').controller('ReviewSessionsController', function ($scope,
 
     };
 
-    function asyncLoop(iterations, func, callback) {
-        var index = 0;
-        var done = false;
-        var loop = {
-            next: function() {
-                if (done) {
-                    return;
-                }
-                if (index < iterations) {
-                    index++;
-                    func(loop);
-                } else {
-                    done = true;
-                    callback();
-                }
-            },
-            iteration: function() {
-                return index - 1;
-            },
-            break: function() {
-                done = true;
-                callback();
-            }
-        };
-        loop.next();
-        return loop;
-    }
-    function someFunction(callback) {
-        //console.log('in the loop!');
-        callback();
-    }
-
-    $scope.run=function(iterations) {
-        asyncLoop(iterations, function (loop) {
-            someFunction(function (result) {
-                $scope.createSessionInformation($scope.sessionsArray[loop.iteration()],loop);
-            })
-        },function () {
-            //console.log('cycle ended')
-            $scope.filteredSessions=[];
-            $scope.filterSessions($scope.UIStartDate,$scope.UIEndDate)
-        });
-    };
-
-    $scope.createSessionInformation=function(sessionLocation , loop)
-    {
-        RepoService.getObject("Session",sessionLocation).then(function(response){
-            var session={};
-            session.kindLabel=response.data.loc;
-            session.token=response.data.value.sessionToken;
-            session.startTime=response.data.value.startTime;
-
-            // convert to localTime
-            var tempDate = moment(response.data.value.startTime);
-
-            session.localStartTime = tempDate.year()+'/'+ tempDate.month() + '/' + tempDate.date() + ' - ' + tempDate.hour()+ ':' + tempDate.minute();
-
-            session.duration=response.data.value.duration.toString();
-            $scope.sessions.push(session);
-            loop.next();
-           },function(error){
-                console.log("error in creating session!");
-           }
-        );
-    };
-
     $scope.showDeviceCommands = function(){
         var selectedSession = $scope.gridOptionsGridApi.selection.getSelectedRows();
 
@@ -133,12 +86,23 @@ angular.module('REALM').controller('ReviewSessionsController', function ($scope,
             //Nothing selected
             $rootScope.toggle('noSessionSelected','on');
         }else{
-            // read device commands and show them
-            RepoService.getDeviceCommandsForSession(selectedSession[0].kindLabel).then(
+            // read commands and show them
+            RepoService.getDeviceIOObjectsForSession(selectedSession[0].kindLabel).then(
                 function(response){
-                    console.log("This is what we recieved as DeviceCommands:");
-                    console.log(response);
-                    alert('DeviceCommands are in the console log');
+                    $scope.deviceCommands = []
+                    for (var i=0; i < response.data.length; i++){
+                        var tempDeviceCommand = {};
+                        var jsonCommand = JSON.parse(response.data[i].value.json);
+                        tempDeviceCommand.command = jsonCommand.action;
+                        tempDeviceCommand.properties = jsonCommand.properties;
+                        
+                        var tempDate = moment(response.data[i].value.unixtime);
+                        tempDeviceCommand.localDate = tempDate.year()+'/'+ tempDate.month() + '/' + tempDate.date() + ' - ' + tempDate.hour()+ ':' + tempDate.minute();
+                        $scope.deviceCommands.push(tempDeviceCommand);
+                    }
+
+                    $scope.selectedDeviceIO = "Please select a command to see details here";   
+                    $rootScope.toggle('deviceCommandsModal','on');
                 }
                 ,function(errorResponse){
                     $rootScope.toggle('cannotReadDeviceCommands','on');
@@ -158,15 +122,25 @@ angular.module('REALM').controller('ReviewSessionsController', function ($scope,
                         assignmentList.forEach(function(assignment){
                             RepoService.getSessionObjectsForAssignment(assignment).then(
                                 function(response){
-                                    console.log("we recieved some sessions");
-                                    console.log(response);
+                                    for (var i=0; i<response.data.length; i++){
+                                        var session={};
+                                        session.kindLabel=response.data[i].loc;
+                                        session.token=response.data[i].value.sessionToken;
+                                        session.startTime=response.data[i].value.startTime;
+                                        // convert to localTime
+                                        var tempDate = moment(response.data[i].value.startTime);
+                                        session.localStartTime = tempDate.year()+'/'+ tempDate.month() + '/' + tempDate.date() + ' - ' + tempDate.hour()+ ':' + tempDate.minute();
+                                        session.duration=response.data[i].value.duration.toString();
+                                        $scope.sessions.push(session);
+                                    }
+                                    // update filter after adding each assignment sessions
+                                    $scope.filteredSessions=[];
+                                    $scope.filterSessions($scope.UIStartDate,$scope.UIEndDate)
                                 },function(errorResponse){
                                     console.log("failed to get session object for assignment");                        
                                 }
                             );
                         });
-                        //$scope.sessionsArray = response.data.substring(0,response.data.length-1).split(",");
-                        //$scope.run($scope.sessionsArray.length);
                     },function(errorResponse){
                         console.log("failed to get assignment for course");            
                     }
