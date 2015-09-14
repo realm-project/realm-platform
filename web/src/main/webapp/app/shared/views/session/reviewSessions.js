@@ -5,9 +5,9 @@ angular.module('REALM').controller('ReviewSessionsController', function ($scope,
 
     $scope.sessions=[];
     $scope.filteredSessions=[];
-
     $scope.deviceCommands = [];
-    
+    $scope.selectedDeviceIO = "Please select a command to see details here";    
+
     $scope.UIEndDate=new Date();
     $scope.UIStartDate=new Date();
     // set the start date 1 dat before the end date
@@ -32,8 +32,6 @@ angular.module('REALM').controller('ReviewSessionsController', function ($scope,
             {field:'duration', displayName:'Duration', enableHiding:false}
         ]
     };
-
-
     $scope.gridOptions.onRegisterApi = function(gridApi) {
         $scope.gridOptionsGridApi = gridApi;
     };
@@ -47,6 +45,26 @@ angular.module('REALM').controller('ReviewSessionsController', function ($scope,
             {field:'duration', displayName:'Duration', enableHiding:false}
         ]
     };
+
+    $scope.deviceCommandGrid = {
+        data: 'deviceCommands',
+        multiSelect: false,
+        gridMenuShowHideColumns:false,
+        columnDefs: [
+            {field:'command', displayName:'Name', enableHiding:false},
+            {field:'localDate', displayName:'Date', enableHiding:false}
+        ]
+    };
+    
+    $scope.deviceCommandGrid.onRegisterApi = function(gridApi) {
+        //$scope.deviceCommandGridApi = gridApi;
+        gridApi.selection.on.rowSelectionChanged($scope,function(row) {
+            $scope.selectedDeviceIO = JSON.stringify(row.entity.properties, null, 4);
+        });
+    };
+
+
+
 
     $scope.filterSessions=function(startDate, endDate)
     {
@@ -81,8 +99,10 @@ angular.module('REALM').controller('ReviewSessionsController', function ($scope,
                         var tempDate = moment(response.data[i].value.unixtime);
                         tempDeviceCommand.localDate = tempDate.year()+'/'+ tempDate.month() + '/' + tempDate.date() + ' - ' + tempDate.hour()+ ':' + tempDate.minute();
                         $scope.deviceCommands.push(tempDeviceCommand);
-                        $rootScope.toggle('deviceCommandsModal','on');
                     }
+
+                    $scope.selectedDeviceIO = "Please select a command to see details here";   
+                    $rootScope.toggle('deviceCommandsModal','on');
                 }
                 ,function(errorResponse){
                     $rootScope.toggle('cannotReadDeviceCommands','on');

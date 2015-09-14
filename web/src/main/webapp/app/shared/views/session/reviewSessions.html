@@ -47,11 +47,19 @@
 
 
 <div overlay="deviceCommandsModal">
-    <h4 class="overlay-title">Device Commands</h4>    
-    <p>List of device commands for the selected session</p>
-    <div>
-        <div class="gridStyle" ui-grid="gridOptionsAll"></div>
+    <h4 class="overlay-title">List of device commands for the selected session</h4>    
+    <br>
+    <div style="display: inline-block;">
+        <div style="display:table-cell;">
+            <div class="gridStyle deviceIOgrid" ui-grid="deviceCommandGrid" ui-grid-selection></div>
+        </div>
+        <div style="display:table-cell; padding-left:40px;">
+            <br>
+            <h5>Properties of selected device command</h5>
+            <textarea readonly style="width:100%;" rows="6">{{selectedDeviceIO}}</textarea>
+        </div>
     </div>
+    <br>
     <p toggle="off" bubble target="deviceCommandsModal">
         <span class="btn btn-primary">Close</span>
     </p>  

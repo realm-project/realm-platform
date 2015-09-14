@@ -1219,8 +1219,13 @@ hr
     margin-left: 50px;
     margin-top: 80px;
     float: left;
-
 }
+
+.gridStyle.deviceIOgrid{
+    margin: auto;
+    float:none;
+}
+
 .clear{clear:both}
 /***********************************/
 .alert-process
