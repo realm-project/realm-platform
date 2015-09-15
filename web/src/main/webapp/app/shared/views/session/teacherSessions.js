@@ -23,6 +23,12 @@ angular.module('REALM')
 
     // create the list of stations
     RepoService.getStationsForTeacher(AuthService.getCurrentUser().loc).then(function(response){
+        
+        // no station
+        if (response.data===""){
+            console.log("there is not any station for the teacher");
+            return;
+        }
         // make array of stations
         var stationArray = response.data.substring(0, response.data.length - 1).split(",");
         for (var i=0 ; i < stationArray.length; i++){
@@ -38,8 +44,12 @@ angular.module('REALM')
 
     // create the list of assignments
     RepoService.getCoursesForTeacher().then(function(response){
+        // no course
+        if (response.data===""){
+            console.log("there is not any course for the teacher");
+            return;
+        }
         var courseArray = response.data.substring(0,response.data.length-1).split(",");
-        
         if (courseArray.length===0){
             $rootScope.toggle('noCourseError','on');
         }
