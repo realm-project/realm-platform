@@ -1292,3 +1292,8 @@ a.breadCrumb-element{
 .app-content{
     overflow-y: auto;
 }
+
+/* obstacles-component */
+.obstacles-component__message{
+    color:red;
+}
