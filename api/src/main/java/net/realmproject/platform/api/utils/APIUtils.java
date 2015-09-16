@@ -44,6 +44,7 @@ import net.realmproject.platform.util.model.Tokens;
 public class APIUtils {
 
     static final long ONE_MINUTE_IN_MILLIS = 60000; // Milliseconds
+    static final long ONE_DAY = 24 * 60 * 60 * 1000; // Milliseconds
     private Log log = LogFactory.getLog(getClass());
 
     public static String getLabel(String kindLabel) {
@@ -214,6 +215,10 @@ public class APIUtils {
                 long durationInMilli = request.time.bulk.duration * ONE_MINUTE_IN_MILLIS;
                 long currnetTime = startTimeInMilli;
 
+                // If start time is smaller than the end time, end time should be assumed for the next day
+                if (startTimeInMilli > endTimeInMilli) 
+                	endTimeInMilli += ONE_DAY;
+                
                 while (currnetTime + durationInMilli <= endTimeInMilli) {
                     createSingleSession(tx, assignment, new Date(currnetTime), request.time.bulk.duration, station);
                     numberOfCreatedSessions ++;
