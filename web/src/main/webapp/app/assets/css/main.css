@@ -1215,10 +1215,13 @@ hr
 .gridStyle {
     width: 500px;
     height: 500px;
+}
+
+.review-session-gridContainer{
+    float:left;
     margin: 20px;
     margin-left: 50px;
     margin-top: 80px;
-    float: left;
 }
 
 .gridStyle.deviceIOgrid{
@@ -1291,4 +1294,9 @@ a.breadCrumb-element{
 
 .app-content{
     overflow-y: auto;
+}
+
+/* obstacles-component */
+.obstacles-component__message{
+    color:red;
 }

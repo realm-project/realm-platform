@@ -23,6 +23,12 @@ angular.module('REALM')
 
     // create the list of stations
     RepoService.getStationsForTeacher(AuthService.getCurrentUser().loc).then(function(response){
+        
+        // no station
+        if (response.data===""){
+            console.log("there is not any station for the teacher");
+            return;
+        }
         // make array of stations
         var stationArray = response.data.substring(0, response.data.length - 1).split(",");
         for (var i=0 ; i < stationArray.length; i++){
@@ -38,8 +44,12 @@ angular.module('REALM')
 
     // create the list of assignments
     RepoService.getCoursesForTeacher().then(function(response){
+        // no course
+        if (response.data===""){
+            console.log("there is not any course for the teacher");
+            return;
+        }
         var courseArray = response.data.substring(0,response.data.length-1).split(",");
-        
         if (courseArray.length===0){
             $rootScope.toggle('noCourseError','on');
         }
@@ -310,10 +320,13 @@ $scope.initialize=function(assignmentNames)
 
             var localStartDate = new Date(startDateYear,startDateMonth,startDateDate,startTimeHours,startTimeMinutes,0,0);
             var localEndDate = new Date(endDateYear,endDateMonth,endDateDate,endTimeHours,endTimeMinutes,0,0);
-            startTime = localStartDate.getUTCHours() + ":" + localStartDate.getUTCMinutes();
-            endTime = localEndDate.getUTCHours() + ":" + localEndDate.getUTCMinutes();
+            var localEndDateWithStartTime = new Date(endDateYear,endDateMonth,endDateDate,startTimeHours,startTimeMinutes,0,0);
+
+            startTime = ("0" + localStartDate.getUTCHours()).slice(-2) + ":" + ("0" + localStartDate.getUTCMinutes()).slice(-2);
+
+            endTime = ("0" + localEndDate.getUTCHours()).slice(-2) + ":" + ("0" + localEndDate.getUTCMinutes()).slice(-2);
             startDate = localStartDate.getUTCFullYear() + "-" + localStartDate.getUTCMonth() + "-" + localStartDate.getUTCDate();
-            endDate = localEndDate.getUTCFullYear() + "-" + localEndDate.getUTCMonth() + "-" + localEndDate.getUTCDate();
+            endDate = localEndDateWithStartTime.getUTCFullYear() + "-" + localEndDateWithStartTime.getUTCMonth() + "-" + localEndDateWithStartTime.getUTCDate();
 
             //Single Session Creation
             if($scope.vm.sessionTimesType==='Single')
@@ -339,19 +352,15 @@ $scope.initialize=function(assignmentNames)
                 postData.date.range.end= endDate;
 
                 var days=[];
-
-                if($scope.vm.sessionTimesType==='Single'){
-                    // ignore week days and send an empty array on single sessions
-                }else if($scope.vm.sessionTimesType==='Bulk'){
-                    // create week days list for Bulk sessions
-                    for(var day in $scope.vm.days)
+                // create week days list for Bulk sessions
+                for(var day in $scope.vm.days)
+                {
+                    if($scope.vm.days[day])
                     {
-                        if($scope.vm.days[day])
-                        {
-                            days.push(day);
-                        }
+                        days.push(day);
                     }
                 }
+                
 
                 postData.date.range.days=days;
             }

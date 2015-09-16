@@ -2,26 +2,28 @@
 
 <div class="date-range date-range-review">
     <div class="date-range__start-date row tab-content__top-row review-start">
-        <label>Start Date: </label>
+        <label>Start Date between: </label>
             <div class="calendar-container calender-container-review">
                 <datepicker ng-model="UIStartDate" show-weeks="true"
                             class="well well-sm"></datepicker>
             </div>
     </div>
     <div class="date-range__end-date row review-end">
-        <label>End Date: </label>
+        <label>And: </label>
             <div class="calendar-container calender-container-review">
                 <datepicker ng-model="UIEndDate" min-date="UIStartDate" show-weeks="true" class="well well-sm"></datepicker>
             </div>
     </div>
 </div>
 
-<div>
+<div class="review-session-gridContainer" >
+    <h4>Sessions in the date range:</h4>
     <div class="gridStyle" ui-grid="gridOptions" ui-grid-selection>
         <button ng-click="showDeviceCommands()" class="btn btn-primary" style="margin-top:6px;">Show Device Commands</button>
     </div>
 </div>
-<div>
+<div class="review-session-gridContainer" >
+    <h4>All Session:</h4>
     <div class="gridStyle" ui-grid="gridOptionsAll" ></div>
 </div>
 
