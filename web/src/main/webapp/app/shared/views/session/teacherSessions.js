@@ -320,10 +320,13 @@ $scope.initialize=function(assignmentNames)
 
             var localStartDate = new Date(startDateYear,startDateMonth,startDateDate,startTimeHours,startTimeMinutes,0,0);
             var localEndDate = new Date(endDateYear,endDateMonth,endDateDate,endTimeHours,endTimeMinutes,0,0);
-            startTime = localStartDate.getUTCHours() + ":" + localStartDate.getUTCMinutes();
-            endTime = localEndDate.getUTCHours() + ":" + localEndDate.getUTCMinutes();
+            var localEndDateWithStartTime = new Date(endDateYear,endDateMonth,endDateDate,startTimeHours,startTimeMinutes,0,0);
+
+            startTime = ("0" + localStartDate.getUTCHours()).slice(-2) + ":" + ("0" + localStartDate.getUTCMinutes()).slice(-2);
+
+            endTime = ("0" + localEndDate.getUTCHours()).slice(-2) + ":" + ("0" + localEndDate.getUTCMinutes()).slice(-2);
             startDate = localStartDate.getUTCFullYear() + "-" + localStartDate.getUTCMonth() + "-" + localStartDate.getUTCDate();
-            endDate = localEndDate.getUTCFullYear() + "-" + localEndDate.getUTCMonth() + "-" + localEndDate.getUTCDate();
+            endDate = localEndDateWithStartTime.getUTCFullYear() + "-" + localEndDateWithStartTime.getUTCMonth() + "-" + localEndDateWithStartTime.getUTCDate();
 
             //Single Session Creation
             if($scope.vm.sessionTimesType==='Single')
@@ -349,19 +352,15 @@ $scope.initialize=function(assignmentNames)
                 postData.date.range.end= endDate;
 
                 var days=[];
-
-                if($scope.vm.sessionTimesType==='Single'){
-                    // ignore week days and send an empty array on single sessions
-                }else if($scope.vm.sessionTimesType==='Bulk'){
-                    // create week days list for Bulk sessions
-                    for(var day in $scope.vm.days)
+                // create week days list for Bulk sessions
+                for(var day in $scope.vm.days)
+                {
+                    if($scope.vm.days[day])
                     {
-                        if($scope.vm.days[day])
-                        {
-                            days.push(day);
-                        }
+                        days.push(day);
                     }
                 }
+                
 
                 postData.date.range.days=days;
             }
