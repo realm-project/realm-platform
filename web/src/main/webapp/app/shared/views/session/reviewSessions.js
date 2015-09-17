@@ -26,10 +26,12 @@ angular.module('REALM').controller('ReviewSessionsController', function ($scope,
         data: 'filteredSessions',
         multiSelect: false,
         gridMenuShowHideColumns:false,
+        enableColumnResizing: true,
         columnDefs: [
             {field:'token', displayName:'Token', enableHiding:false},
             {field:'localStartTime', displayName:'Start date', enableHiding:false},
-            {field:'duration', displayName:'Duration', enableHiding:false}
+            {field:'duration', displayName:'Duration', enableHiding:false},
+            {field:'station', displayName:'Station', enableHiding:false}
         ]
     };
     $scope.gridOptions.onRegisterApi = function(gridApi) {
@@ -39,10 +41,12 @@ angular.module('REALM').controller('ReviewSessionsController', function ($scope,
     $scope.gridOptionsAll = {
         data: 'sessions',
         gridMenuShowHideColumns:false,
+        enableColumnResizing: true,
         columnDefs: [
             {field:'token', displayName:'Token', enableHiding:false},
             {field:'localStartTime', displayName:'Start date', enableHiding:false},
-            {field:'duration', displayName:'Duration', enableHiding:false}
+            {field:'duration', displayName:'Duration', enableHiding:false},
+            {field:'station', displayName:'Station', enableHiding:false}
         ]
     };
 
@@ -126,6 +130,7 @@ angular.module('REALM').controller('ReviewSessionsController', function ($scope,
                                         var session={};
                                         session.kindLabel=response.data[i].loc;
                                         session.token=response.data[i].value.sessionToken;
+                                        session.station = response.data[i].value.station.loc;
                                         session.startTime=response.data[i].value.startTime;
                                         // convert to localTime
                                         var tempDate = moment(response.data[i].value.startTime);
