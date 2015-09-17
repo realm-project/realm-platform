@@ -71,7 +71,7 @@ angular.module('REALM').controller('ReviewSessionsController', function ($scope,
         //console.log("filtering...")
         for (var i=0;i<$scope.sessions.length;i++)
         {
-            if(moment(new Date(startDate).toISOString()).isBefore($scope.sessions[i].startTime) && moment(new Date(endDate).toISOString()).isAfter($scope.sessions[i].startTime))
+            if(moment(startDate.toISOString()).isBefore($scope.sessions[i].startTime) && moment(endDate.toISOString()).isAfter($scope.sessions[i].startTime))
             {
                 $scope.filteredSessions.push($scope.sessions[i])
             }
@@ -97,7 +97,7 @@ angular.module('REALM').controller('ReviewSessionsController', function ($scope,
                         tempDeviceCommand.properties = jsonCommand.properties;
                         
                         var tempDate = moment(response.data[i].value.unixtime);
-                        tempDeviceCommand.localDate = tempDate.year()+'/'+ tempDate.month() + '/' + tempDate.date() + ' - ' + tempDate.hour()+ ':' + tempDate.minute();
+                        tempDeviceCommand.localDate = tempDate.year()+'/'+ tempDate.format("M") + '/' + tempDate.date() + ' - ' + tempDate.hour()+ ':' + tempDate.minute();
                         $scope.deviceCommands.push(tempDeviceCommand);
                     }
 
@@ -129,7 +129,7 @@ angular.module('REALM').controller('ReviewSessionsController', function ($scope,
                                         session.startTime=response.data[i].value.startTime;
                                         // convert to localTime
                                         var tempDate = moment(response.data[i].value.startTime);
-                                        session.localStartTime = tempDate.year()+'/'+ tempDate.month() + '/' + tempDate.date() + ' - ' + tempDate.hour()+ ':' + tempDate.minute();
+                                        session.localStartTime = tempDate.year()+'/'+ tempDate.format("M") + '/' + tempDate.date() + ' - ' + tempDate.hour()+ ':' + tempDate.minute();
                                         session.duration=response.data[i].value.duration.toString();
                                         $scope.sessions.push(session);
                                     }
