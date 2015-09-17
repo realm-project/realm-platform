@@ -88,9 +88,9 @@ angular.module('REALM')
 
                                             // convert to local time
                                             var tempDate = moment(session.startDateTime);
-                                            session.localStartDate = tempDate.year()+'/'+ tempDate.format("M") + '/' + tempDate.date() + ' -' + tempDate.hour()+ ':' + tempDate.minute();
+                                            session.localStartDate = tempDate.year()+'/'+ tempDate.format("M") + '/' + tempDate.date() + ' -' + tempDate.hour()+ ':' + tempDate.format("mm");
                                             tempDate = moment(session.endDateTime);
-                                            session.localEndDate = tempDate.year()+'/'+ tempDate.format("M") + '/' + tempDate.date() + ' -' + tempDate.hour()+ ':' + tempDate.minute();
+                                            session.localEndDate = tempDate.year()+'/'+ tempDate.format("M") + '/' + tempDate.date() + ' -' + tempDate.hour()+ ':' + tempDate.format("mm");
 
                                             session.fromNow = null;
                                             session.isActive = null;

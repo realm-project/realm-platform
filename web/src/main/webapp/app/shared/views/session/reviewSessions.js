@@ -101,7 +101,7 @@ angular.module('REALM').controller('ReviewSessionsController', function ($scope,
                         tempDeviceCommand.properties = jsonCommand.properties;
                         
                         var tempDate = moment(response.data[i].value.unixtime);
-                        tempDeviceCommand.localDate = tempDate.year()+'/'+ tempDate.format("M") + '/' + tempDate.date() + ' - ' + tempDate.hour()+ ':' + tempDate.minute();
+                        tempDeviceCommand.localDate = tempDate.year()+'/'+ tempDate.format("M") + '/' + tempDate.date() + ' - ' + tempDate.hour()+ ':' + tempDate.format("mm");
                         $scope.deviceCommands.push(tempDeviceCommand);
                     }
 
@@ -134,7 +134,7 @@ angular.module('REALM').controller('ReviewSessionsController', function ($scope,
                                         session.startTime=response.data[i].value.startTime;
                                         // convert to localTime
                                         var tempDate = moment(response.data[i].value.startTime);
-                                        session.localStartTime = tempDate.year()+'/'+ tempDate.format("M") + '/' + tempDate.date() + ' - ' + tempDate.hour()+ ':' + tempDate.minute();
+                                        session.localStartTime = tempDate.year()+'/'+ tempDate.format("M") + '/' + tempDate.date() + ' - ' + tempDate.hour()+ ':' + tempDate.format("mm");
                                         session.duration=response.data[i].value.duration.toString();
                                         $scope.sessions.push(session);
                                     }
