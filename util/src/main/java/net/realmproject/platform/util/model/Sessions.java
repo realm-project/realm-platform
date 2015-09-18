@@ -5,6 +5,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 import net.objectof.model.Transaction;
+import net.objectof.model.impl.IMoment;
 import net.objectof.model.query.IQuery;
 import net.objectof.model.query.Relation;
 import net.realmproject.platform.schema.Person;
@@ -34,9 +35,9 @@ public class Sessions {
 
     public static boolean isLive(Session s) {
 
-        Date start = s.getStartTime();
-        Date end = endTime(s);
-        Date now = new Date();
+        Date start = s.getStartTime(); // should be in UTC
+        Date end = endTime(s); // should be relative to start, which is in UTC
+        IMoment now = new IMoment(); // Moment converts to UTC
 
         if (start.after(now)) { return false; } // if it hasn't started
         if (end.before(now)) { return false; } // if it's already ended

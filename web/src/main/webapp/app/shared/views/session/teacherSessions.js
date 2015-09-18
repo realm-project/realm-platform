@@ -318,15 +318,15 @@ $scope.initialize=function(assignmentNames)
 
             // convert date and time to UTC
 
-            var localStartDate = new Date(startDateYear,startDateMonth,startDateDate,startTimeHours,startTimeMinutes,0,0);
-            var localEndDate = new Date(endDateYear,endDateMonth,endDateDate,endTimeHours,endTimeMinutes,0,0);
-            var localEndDateWithStartTime = new Date(endDateYear,endDateMonth,endDateDate,startTimeHours,startTimeMinutes,0,0);
+            var localStartDate = new Date(startDateYear,(parseInt(startDateMonth)-1),startDateDate,startTimeHours,startTimeMinutes,0,0);
+            var localEndDate = new Date(endDateYear,(parseInt(endDateMonth)-1),endDateDate,endTimeHours,endTimeMinutes,0,0);
+            var localEndDateWithStartTime = new Date(endDateYear,(parseInt(endDateMonth)-1),endDateDate,startTimeHours,startTimeMinutes,0,0);
 
             startTime = ("0" + localStartDate.getUTCHours()).slice(-2) + ":" + ("0" + localStartDate.getUTCMinutes()).slice(-2);
 
             endTime = ("0" + localEndDate.getUTCHours()).slice(-2) + ":" + ("0" + localEndDate.getUTCMinutes()).slice(-2);
-            startDate = localStartDate.getUTCFullYear() + "-" + localStartDate.getUTCMonth() + "-" + localStartDate.getUTCDate();
-            endDate = localEndDateWithStartTime.getUTCFullYear() + "-" + localEndDateWithStartTime.getUTCMonth() + "-" + localEndDateWithStartTime.getUTCDate();
+            startDate = localStartDate.getUTCFullYear() + "-" + (parseInt(localStartDate.getUTCMonth())+1) + "-" + localStartDate.getUTCDate();
+            endDate = localEndDateWithStartTime.getUTCFullYear() + "-" + (parseInt(localEndDateWithStartTime.getUTCMonth())+1) + "-" + localEndDateWithStartTime.getUTCDate();
 
             //Single Session Creation
             if($scope.vm.sessionTimesType==='Single')
@@ -376,7 +376,7 @@ $scope.initialize=function(assignmentNames)
                     var date;
 
                     year = $scope.vm.dateList[i].getFullYear();
-                    month = $scope.vm.dateList[i].getMonth();
+                    month = parseInt($scope.vm.dateList[i].getMonth())+1;
                     date = $scope.vm.dateList[i].getDate();
 
                     var dateString = year + "-" + month + "-" + date;

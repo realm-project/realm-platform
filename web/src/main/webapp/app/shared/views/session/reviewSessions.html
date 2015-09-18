@@ -18,13 +18,13 @@
 
 <div class="review-session-gridContainer" >
     <h4>Sessions in the date range:</h4>
-    <div class="gridStyle" ui-grid="gridOptions" ui-grid-selection>
+    <div class="gridStyle" ui-grid="gridOptions" ui-grid-selection ui-grid-resize-columns>
         <button ng-click="showDeviceCommands()" class="btn btn-primary" style="margin-top:6px;">Show Device Commands</button>
     </div>
 </div>
 <div class="review-session-gridContainer" >
     <h4>All Session:</h4>
-    <div class="gridStyle" ui-grid="gridOptionsAll" ></div>
+    <div class="gridStyle" ui-grid="gridOptionsAll" ui-grid-resize-columns></div>
 </div>
 
 <div overlay="noSessionSelected">

@@ -26,10 +26,12 @@ angular.module('REALM').controller('ReviewSessionsController', function ($scope,
         data: 'filteredSessions',
         multiSelect: false,
         gridMenuShowHideColumns:false,
+        enableColumnResizing: true,
         columnDefs: [
             {field:'token', displayName:'Token', enableHiding:false},
             {field:'localStartTime', displayName:'Start date', enableHiding:false},
-            {field:'duration', displayName:'Duration', enableHiding:false}
+            {field:'duration', displayName:'Duration', enableHiding:false},
+            {field:'station', displayName:'Station', enableHiding:false}
         ]
     };
     $scope.gridOptions.onRegisterApi = function(gridApi) {
@@ -39,10 +41,12 @@ angular.module('REALM').controller('ReviewSessionsController', function ($scope,
     $scope.gridOptionsAll = {
         data: 'sessions',
         gridMenuShowHideColumns:false,
+        enableColumnResizing: true,
         columnDefs: [
             {field:'token', displayName:'Token', enableHiding:false},
             {field:'localStartTime', displayName:'Start date', enableHiding:false},
-            {field:'duration', displayName:'Duration', enableHiding:false}
+            {field:'duration', displayName:'Duration', enableHiding:false},
+            {field:'station', displayName:'Station', enableHiding:false}
         ]
     };
 
@@ -71,7 +75,7 @@ angular.module('REALM').controller('ReviewSessionsController', function ($scope,
         //console.log("filtering...")
         for (var i=0;i<$scope.sessions.length;i++)
         {
-            if(moment(new Date(startDate).toISOString()).isBefore($scope.sessions[i].startTime) && moment(new Date(endDate).toISOString()).isAfter($scope.sessions[i].startTime))
+            if(moment(startDate.toISOString()).isBefore($scope.sessions[i].startTime) && moment(endDate.toISOString()).isAfter($scope.sessions[i].startTime))
             {
                 $scope.filteredSessions.push($scope.sessions[i])
             }
@@ -97,7 +101,7 @@ angular.module('REALM').controller('ReviewSessionsController', function ($scope,
                         tempDeviceCommand.properties = jsonCommand.properties;
                         
                         var tempDate = moment(response.data[i].value.unixtime);
-                        tempDeviceCommand.localDate = tempDate.year()+'/'+ tempDate.month() + '/' + tempDate.date() + ' - ' + tempDate.hour()+ ':' + tempDate.minute();
+                        tempDeviceCommand.localDate = tempDate.year()+'/'+ tempDate.format("M") + '/' + tempDate.date() + ' - ' + tempDate.hour()+ ':' + tempDate.format("mm");
                         $scope.deviceCommands.push(tempDeviceCommand);
                     }
 
@@ -126,10 +130,11 @@ angular.module('REALM').controller('ReviewSessionsController', function ($scope,
                                         var session={};
                                         session.kindLabel=response.data[i].loc;
                                         session.token=response.data[i].value.sessionToken;
+                                        session.station = response.data[i].value.station.loc;
                                         session.startTime=response.data[i].value.startTime;
                                         // convert to localTime
                                         var tempDate = moment(response.data[i].value.startTime);
-                                        session.localStartTime = tempDate.year()+'/'+ tempDate.month() + '/' + tempDate.date() + ' - ' + tempDate.hour()+ ':' + tempDate.minute();
+                                        session.localStartTime = tempDate.year()+'/'+ tempDate.format("M") + '/' + tempDate.date() + ' - ' + tempDate.hour()+ ':' + tempDate.format("mm");
                                         session.duration=response.data[i].value.duration.toString();
                                         $scope.sessions.push(session);
                                     }
