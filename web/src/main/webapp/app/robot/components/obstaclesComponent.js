@@ -7,19 +7,19 @@ app.directive('obstaclesComponent', ['$timeout', 'RobotService', function($timeo
         replace: false,
         scope: true,
         template:   '<div class="obstacles-component__container">' +
-                        '<h3 ng-show="data.showMessage" class="obstacles-component__message">{{message}}</h3>' +
+                        '<h4 ng-show="data.showMessage" class="obstacles-component__message">{{data.message}}</h4>' +
                         '<div ng-show="!data.showMessage">' +
-                            '<h3>Please select your obstacle set</h3>' +
+                            '<h4>Please select your obstacle set</h4>' +
                             '<div class="btn-group" dropdown is-open="status.isopen">' +
                               '<button id="single-button" type="button" class="btn btn-primary" dropdown-toggle ng-disabled="disabled">' +
-                                'Obstacle Sets<span class="caret"></span>' +
+                                '{{data.selectButtonMessage}}<span class="caret"></span>' +
                               '</button>' +
                               '<ul class="dropdown-menu" role="menu" aria-labelledby="single-button">' +
-                                '<li role="menuitem"><a href="#">Action</a></li>' +
-                                '<li role="menuitem"><a href="#">Another action</a></li>' +
-                                '<li role="menuitem"><a href="#">Something else here</a></li>' +
+                                '<li role="menuitem">Action</li>' +
+                                '<li role="menuitem">Another action</li>' +
+                                '<li role="menuitem">Something else here</li>' +
                                 '<li class="divider"></li>' +
-                                '<li role="menuitem"><a href="#">Separated link</a></li>' +
+                                '<li role="menuitem">Separated link</li>' +
                               '</ul>' +
                             '</div>' +
                         '</div>'+
@@ -30,15 +30,22 @@ app.directive('obstaclesComponent', ['$timeout', 'RobotService', function($timeo
             $scope.data.showMessage = false;
             $scope.data.message="";
 
-
+            $scope.data.selectedSet=null;
+            $scope.data.selectButtonMessage ="No Obstacle";
 
 
             // get the robot current possition
-            if (scope.component.componentOptions.url === undefined){
+            if ($scope.component.componentOptions.url === undefined){
                 $scope.data.message = "Error: Cannot find robot URL in component options";
                 $scope.data.showMessage = true;
                 return;
             }
+            if ($scope.component.componentOptions.obstacleSets=== undefined || $scope.component.componentOptions.obstacleSets.length == 0){
+                $scope.data.message = "Error: There is not any obstacle set in component options";
+                $scope.data.showMessage = true;
+                return;
+            }
+
             var robotPath = $scope.component.componentOptions.url;
             var poseStateTimeout;
             var getPoseState = function(){
@@ -46,8 +53,8 @@ app.directive('obstaclesComponent', ['$timeout', 'RobotService', function($timeo
                     $scope.data.position = poseState.position;
                     //$scope.data.orientation = poseState.orientation;
                     poseStateTimeout = setTimeout(getPoseState,200);
-                }, function(response){
-                    console.log(response);
+                }, function(errorResponse){
+                    console.log(errorResponse);
                     poseStateTimeout = setTimeout(getPoseState,200);
                 });
             };

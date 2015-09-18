@@ -1,8 +1,9 @@
 'use strict';
 
 angular.module('REALM')
-	.service('RepoService', function ($http, $q, AuthService, AUTH_EVENTS) {
+	.service('RepoService', function ($http, $q, AuthService, AUTH_EVENTS, $state, $rootScope) {
 
+	var handleError = true;
 
 	//give a user returns an array of sessions
 	this.getSessionsFromUser = function () {
@@ -22,15 +23,15 @@ angular.module('REALM')
 		$http.get(dataPath).then(function (response) {
 			var info = response;
 			data.resolve(info);
-		}, function (response) {
-			console.log('Failed to get ' + type + ' info, error code: ');
-			if(typeof(response.status) !=="undefined"){
-				console.log(response.status);
+		}, function (errorResponse) {
+			console.log('Failed to get ' + type + ' info');
+			console.log(errorResponse);
+
+			if (handleError){
+				resolveError(errorResponse);
 			}else{
-				console.log(response.message);
+				data.reject(errorResponse);
 			}
-			data.reject(response);
-			
 		});
 		return data.promise;
 	};
@@ -48,9 +49,14 @@ angular.module('REALM')
 				console.log("Added user to session");
 				join.resolve(response);
 
-			}, function (response) {
-				console.log('Failed to add user to session, error code: ' + response.status);
-				join.reject(response);
+			}, function (errorResponse) {
+				console.log('Failed to add user to session');
+				console.log(errorResponse);
+				if (handleError){
+					resolveError(errorResponse);
+				}else{
+					join.reject(errorResponse);
+				}
 			});
 		return join.promise;
 	};
@@ -76,9 +82,13 @@ angular.module('REALM')
 				console.log(response);
 				sessions.resolve(response);
 
-			}, function (response) {
-				console.log('Failed to get sessions per owner per device, error code: ' + response.status);
-				sessions.reject();
+			}, function (errorResponse) {
+				console.log('Failed to get sessions per owner per device');
+				if (handleError){
+					resolveError(errorResponse);
+				}else{
+					sessions.reject(errorResponse);
+				}
 			});
 		return sessions.promise;
 	};
@@ -92,9 +102,14 @@ angular.module('REALM')
 		$http.post(apiPath, postData).then(
 			function (response) {
 				courses.resolve(response);
-			}, function (response) {
-				console.log('Failed to get courses for teacher, error code: ' + response.status);
-				courses.reject();
+			}, function (errorResponse) {
+				console.log('Failed to get courses for teacher');
+				console.log(errorResponse);
+				if (handleError){
+					resolveError(errorResponse);
+				}else{
+					courses.reject(errorResponse);
+				}
 			});
 		return courses.promise;
 	};
@@ -113,7 +128,11 @@ angular.module('REALM')
 			}, function (errorResponse) {
 				console.log('Failed to get assignments for course');
 				console.log(errorResponse);
-				assignments.reject();
+				if (handleError){
+					resolveError(errorResponse);
+				}else{
+					assignments.reject(errorResponse);
+				}
 			});
 		return assignments.promise;
 	};
@@ -128,9 +147,14 @@ angular.module('REALM')
 				console.log("created sessions");
 				defer.resolve(response);
 
-			}, function (response) {
-				console.log('Failed to create sessions: ' + response.status);
-				defer.reject();
+			}, function (errorResponse) {
+				console.log('Failed to create sessions');
+				console.log(errorResponse);
+				if (handleError){
+					resolveError(errorResponse);
+				}else{
+					defer.reject(errorResponse);
+				}
 			});
 		return defer.promise;
 	};
@@ -148,7 +172,11 @@ angular.module('REALM')
 			}, function (errorResponse) {
 				console.log('Failed to get sessions for course');
 				console.log(errorResponse);
-				defer.reject();
+				if (handleError){
+					resolveError(errorResponse);
+				}else{
+					defer.reject(errorResponse);
+				}
 			});
 		return defer.promise;
 	};
@@ -166,7 +194,11 @@ angular.module('REALM')
 			}, function (errorResponse) {
 				console.log('Failed to get stations for teacher');
 				console.log(errorResponse);
-				defer.reject();
+				if (handleError){
+					resolveError(errorResponse);
+				}else{
+					defer.reject(errorResponse);
+				}
 			});
 		return defer.promise;
 	};
@@ -185,7 +217,11 @@ angular.module('REALM')
 			}, function (errorResponse) {
 				console.log('Failed to get list of device commands for session');
 				console.log(errorResponse);
-				defer.reject();
+				if (handleError){
+					resolveError(errorResponse);
+				}else{
+					defer.reject(errorResponse);
+				}
 			});
 		return defer.promise;
 	}
@@ -203,7 +239,11 @@ angular.module('REALM')
 			}, function (errorResponse) {
 				console.log('Failed to get device command objects for session');
 				console.log(errorResponse);
-				defer.reject();
+				if (handleError){
+					resolveError(errorResponse);
+				}else{
+					defer.reject(errorResponse);
+				}
 			});
 		return defer.promise;
 	}
@@ -221,7 +261,12 @@ angular.module('REALM')
 			}, function (errorResponse) {
 				console.log('Failed to get deviceIO objects for session');
 				console.log(errorResponse);
-				defer.reject();
+				console.log(errorResponse);
+				if (handleError){
+					resolveError(errorResponse);
+				}else{
+					defer.reject(errorResponse);
+				}
 			});
 		return defer.promise;
 	}
@@ -240,10 +285,27 @@ angular.module('REALM')
 			}, function (errorResponse) {
 				console.log('Failed to get session objects for assignment');
 				console.log(errorResponse);
-				defer.reject();
+				console.log(errorResponse);
+				if (handleError){
+					resolveError(errorResponse);
+				}else{
+					defer.reject(errorResponse);
+				}
 			});
 		return defer.promise;
 	}
 
+	// in case of handleError == true, we do not resolve the promise and call resolveError function
+	function resolveError(errorResponse){
+		if (errorResponse.status !== undefined && errorResponse.status == 401){
+			// timeout error
+			$state.go('login');
+			$rootScope.toggle('generalTimeoutError','on');
+		}else{
+			// other errors
+			$state.go('login');
+			$rootScope.toggle('generalError','on');
+		}
+	}
 });
 

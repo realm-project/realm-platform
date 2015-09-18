@@ -90,8 +90,28 @@
 
     <!--BOTTOM NAVBAR-->
     <div class="navbar navbar-app navbar-absolute-bottom" yield-to="bottom-navbar" ng-class="{'hideBottom':bottomNavbarCollapse}" >
-
     </div>
+
+    <div overlay="generalTimeoutError">
+        <h4 class="overlay-title">Timeout Error</h4>    
+        <p>
+            Please login to the system again.
+        </p>
+        <p toggle="off" bubble target="generalTimeoutError">
+            <span class="btn btn-primary">Ok</span>
+        </p>  
+    </div>
+
+    <div overlay="generalError">
+        <h4 class="overlay-title">Something is not right!</h4>    
+        <p>
+            We cannot receive the appropriate data from the server. Please reload the page and try again. Please report this error to the system administrator.
+        </p>
+        <p toggle="off" bubble target="generalError">
+            <span class="btn btn-primary">Ok</span>
+        </p>  
+    </div>
+
 </div>
     <!--JAVASCRIPT LIBRARIES-->
     <!--ANGULARJS-->

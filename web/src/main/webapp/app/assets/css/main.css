@@ -1299,4 +1299,11 @@ a.breadCrumb-element{
 /* obstacles-component */
 .obstacles-component__message{
     color:red;
+    padding: 5px;
+    text-align: center;
+}
+
+.obstacles-component__container{
+    padding:  20px 35px 10px 35px;
+    
 }
