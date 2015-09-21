@@ -10,7 +10,7 @@ app.directive('poseStateComponent', ['$timeout', '$http', '$q', 'RobotService', 
                         '<h3 class="pose-state-component__header">Position</h3>' +
                         '<div class="pose-state-component__item clearfix" ng-repeat="(key, value) in data.position">' +
                             '<h4 class="pose-state-component__item__key">{{key | uppercase}}: </>' +
-                            '<h4 class="pose-state-component__item__value"> {{value.toFixed(4)}}</>' +
+                            '<h4 class="pose-state-component__item__value"> {{value.toFixed(3)}}</>' +
                         '</div>' +
                         '<h3 class="pose-state-component__header">Orientation</h3>' +
                         /*'<div class="pose-state-component__item clearfix" ng-repeat="(key, value) in data.orientation">' +
@@ -19,15 +19,15 @@ app.directive('poseStateComponent', ['$timeout', '$http', '$q', 'RobotService', 
                         '</div>' +*/
                          '<div class="pose-state-component__item clearfix">' +
                             '<h4 class="pose-state-component__item__key">R: </>' +
-                            '<h4 class="pose-state-component__item__value">{{data.orientation.x.toFixed(4)}}</>' +
+                            '<h4 class="pose-state-component__item__value">{{data.orientation.x.toFixed(3)}}</>' +
                        '</div>'+
                        '<div class="pose-state-component__item clearfix">' +
                             '<h4 class="pose-state-component__item__key">P: </>' +
-                            '<h4 class="pose-state-component__item__value"> {{data.orientation.y.toFixed(4)}}</>' +
+                            '<h4 class="pose-state-component__item__value"> {{data.orientation.y.toFixed(3)}}</>' +
                         '</div>'+
                         '<div class="pose-state-component__item clearfix">' +
                             '<h4 class="pose-state-component__item__key">Y: </>' +
-                            '<h4 class="pose-state-component__item__value"> {{data.orientation.z.toFixed(4)}}</>' +
+                            '<h4 class="pose-state-component__item__value"> {{data.orientation.z.toFixed(3)}}</>' +
                         '</div>'+
                     '</div>',
         controller: function ControllerFunction($scope, $element, $attrs, $rootScope)

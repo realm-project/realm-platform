@@ -1304,6 +1304,26 @@ a.breadCrumb-element{
 }
 
 .obstacles-component__container{
-    padding:  20px 35px 10px 35px;
-    
+    padding:  20px 25px 10px 25px;
+}
+
+.obstacles-component__dropDown-ul{
+
+}
+
+.obstacles-component__dropDown-ul > li{
+    text-align: center;
+    cursor: pointer;
+}
+
+.obstacles-component__dropDown-ul > li:hover{
+    background-color: #e5e5e5;
+}
+
+.obstacles-component__green{
+    background-color: lightGreen;
+}
+
+.obstacles-component__red{
+    background-color: LightSalmon;
 }
