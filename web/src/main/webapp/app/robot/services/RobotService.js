@@ -259,7 +259,6 @@ angular.module('REALM').service('RobotService',function($http, $q, $state, $root
         },function(errorResponse){
             // resend the zero command in any condition
             if( axis0===0 && axis1 ===0 && axis2 ===0 && axis3 ===0 && button0===false && button1===false && button2===false && button3 === false){
-
                 if (errorResponse.status !== undefined && errorResponse.status == 429){
                     // "that" is a reference to current service
                     console.log("resend the zero command")
@@ -275,7 +274,7 @@ angular.module('REALM').service('RobotService',function($http, $q, $state, $root
             }else{
                 console.log("Robot 'move' action failed");
                 console.log(errorResponse);
-                if (handleError){
+                if (handleError && !(errorResponse.status !== undefined && errorResponse.status == 429)){
                     resolveError(errorResponse, null);
                 }
             }
