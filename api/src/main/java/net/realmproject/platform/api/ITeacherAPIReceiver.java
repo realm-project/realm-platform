@@ -457,12 +457,25 @@ public class ITeacherAPIReceiver extends IFn {
         Session session = (Session) APIUtils.getObjectFromRequest("Session", tx, request);
 
         if (session == null) {
-            request.getHttpResponse().setStatus(400);
+        	try {
+				RealmResponse.send(request, 400, "Session connot be null!");
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
             return;
         }
 
-        if (!session.getAssignment().getCourse().getTeachers().contains(teacher)) {
-            request.getHttpResponse().setStatus(403);
+//        if (!session.getAssignment().getCourse().getTeachers().contains(teacher)) {
+//            request.getHttpResponse().setStatus(403);
+//            return;
+//        }
+        
+        if (!APIUtils.hasWriteAccessToSession(teacher, session)) {
+        	try {
+				RealmResponse.send(request, 403, "Person has no write access to this session!");
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
             return;
         }
 
