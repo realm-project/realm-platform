@@ -701,20 +701,24 @@ camera-feed-component {
 .glyphicon
 {
     opacity: 0.8;
-}
-.glyphicon-info-sign:hover
-{
-    color: #007aff;
-}
-.glyphicon-info-sign
-{
-    opacity: 0.3;
     cursor: pointer;
 }
+
 .glyphicon:hover
 {
+    color: #007aff;    
+}
+
+.glyphicon-info-sign
+{
+    opacity: 1;
     color: #007aff;
-    cursor: pointer;
+    font-size: 18px;
+}
+
+.glyphicon-info-sign:hover
+{
+    opacity: 0.7;
 }
 
 

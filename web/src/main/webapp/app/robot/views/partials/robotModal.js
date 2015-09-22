@@ -1,13 +1,24 @@
 angular.module('REALM', ['ui.bootstrap']);
 
-var robotModalCtrl = function ($scope, $modal, $log) {
+var robotModalCtrl = function ($scope, $modal) {
 
     $scope.open = function (name) {
 
         var modalInstance = $modal.open({
-            templateUrl: '/robotModal.html',
+            template:
+            '<div class="modal-header">' + 
+                '<h3 class="modal-title">{{name}} joint</h3>'+
+            '</div>'+
+            '<div class="modal-body">'+
+                '<span>Valid input range: -2π to +2π (radian)</span>'+
+                '<div class="metadata-image-container">'+
+                    '<img width="10%" height="10%" ng-src={{url}}>'+
+                '</div>'+
+            '</div>'+
+            '<div class="modal-footer">'+
+                '<button class="btn btn-primary" ng-click="ok()">OK</button>'+
+            '</div>',
             controller: robotModalInstanceCtrl,
-          //  size: 'sm',
             resolve: {
                 name: function () {
                     return name;
@@ -15,10 +26,7 @@ var robotModalCtrl = function ($scope, $modal, $log) {
             }
         });
 
-        modalInstance.result.then(
-            function () {
-                $log.info('Modal dismissed at: ' + new Date());
-            });
+        modalInstance.result.then(function(){});
     };
 };
 
@@ -26,7 +34,7 @@ var robotModalCtrl = function ($scope, $modal, $log) {
 var robotModalInstanceCtrl = function ($scope, $modalInstance,name) {
 
     $scope.name=name.replace(" ","").toLowerCase();
-    $scope.url='assets/img/'+$scope.name+'.png'
+    $scope.url='assets/img/robot/'+$scope.name+'.png'
     $scope.ok = function () {
         $modalInstance.close();
     };
