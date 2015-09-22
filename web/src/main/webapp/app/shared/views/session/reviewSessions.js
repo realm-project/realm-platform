@@ -72,7 +72,10 @@ angular.module('REALM').controller('ReviewSessionsController', function ($scope,
 
     $scope.filterSessions=function(startDate, endDate)
     {
-        //console.log("filtering...")
+        // filter between begining of the startDate to end of endDate
+        startDate.setHours(0,0,0,0);
+        endDate.setHours(23,59,59,999);
+
         for (var i=0;i<$scope.sessions.length;i++)
         {
             if(moment(startDate.toISOString()).isBefore($scope.sessions[i].startTime) && moment(endDate.toISOString()).isAfter($scope.sessions[i].startTime))
