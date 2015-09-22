@@ -6,13 +6,13 @@
 			<div class="assignment-selection row">
 				<label class="col-xs-12 col-sm-4">Choose Assignment: </label>
 				<div class="assignment-selection__dropdown dropdown noselect col-sm-6" style="position: relative;">
-					<button class="dropdown-toggle btn btn-primary " ng-disabled="disabled" > {{vm.chosenAssignmentType}}
+					<button class="dropdown-toggle btn btn-primary"> {{vm.chosenAssignmentType}}
 					    <span class="caret caret--up"></span>
-					    <span class="caret caret--down" style=""></span>
+					    <span class="caret caret--down"></span>
 					</button>
 					<ul class="dropdown-menu">
 						<li ng-repeat="assignment in vm.assignmentTypes">
-							<a href ng-click="assignmentChanged(assignment)">{{assignment}}</a>
+							<a dropdown-toggle href ng-click="assignmentChanged(assignment)">{{assignment}}</a>
 						</li>
 					</ul>
 				</div>
