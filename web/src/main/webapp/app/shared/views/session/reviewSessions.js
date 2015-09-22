@@ -67,9 +67,6 @@ angular.module('REALM').controller('ReviewSessionsController', function ($scope,
         });
     };
 
-
-
-
     $scope.filterSessions=function(startDate, endDate)
     {
         // filter between begining of the startDate to end of endDate
