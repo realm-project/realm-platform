@@ -1,7 +1,6 @@
 package net.realmproject.platform.model;
 
 
-import java.io.File;
 import java.io.InputStream;
 import java.io.StringReader;
 import java.util.List;
@@ -15,6 +14,7 @@ import net.objectof.connector.ConnectorException;
 import net.objectof.connector.Parameter;
 import net.objectof.connector.sql.AbstractSQLConnector;
 import net.objectof.connector.sql.IH2Connector;
+import net.objectof.connector.sql.ISQLiteConnector;
 import net.objectof.model.Package;
 import net.objectof.model.Transaction;
 
@@ -26,15 +26,17 @@ public class AutoConnector implements Connector {
     private String contentsFile = "/platform-db.json";
     private String dbName = null;
 
+    public AutoConnector(String appname, Connector backer) {
+        this.backer = backer;
+    }
+
     public AutoConnector(String appname) {
-        // backer = new ISQLiteConnector();
-        backer = new IH2Connector();
+        backer = new ISQLiteConnector();
 
         String dbdir = System.getProperty("user.home") + "/.realm/applications/" + appname + "/";
         String dbfile = dbdir + appname + ".db";
-        new File(dbdir).mkdirs();
 
-        backer.getParameter(IH2Connector.KEY_DIRECTORY).setValue(dbfile);
+        backer.getParameter(ISQLiteConnector.KEY_FILENAME).setValue(dbfile);
         backer.getParameter(IH2Connector.KEY_REPOSITORY).setValue("realmproject.net:1502/realm");
     }
 
