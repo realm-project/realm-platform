@@ -59,6 +59,10 @@ public class AutoConnector implements Connector {
         scanner = scanner.useDelimiter("\n");
         while (scanner.hasNext()) {
             String str = scanner.next();
+            // skip blank lines including the one at the end of the file
+            if (str.trim().length() == 0) {
+                continue;
+            }
             StringReader reader = new StringReader(str);
             loaderTx.receive("application/json", reader);
         }
