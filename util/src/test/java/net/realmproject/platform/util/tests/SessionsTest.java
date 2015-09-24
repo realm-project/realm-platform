@@ -4,16 +4,17 @@ package net.realmproject.platform.util.tests;
 import java.util.Calendar;
 import java.util.Date;
 
+import org.junit.Test;
+
 import junit.framework.Assert;
 import net.objectof.connector.TempSQLiteRepo;
 import net.objectof.model.Package;
 import net.objectof.model.Transaction;
+import net.objectof.model.impl.IMoment;
 import net.realmproject.platform.model.RealmSchema;
 import net.realmproject.platform.schema.Person;
 import net.realmproject.platform.schema.Session;
 import net.realmproject.platform.util.model.Sessions;
-
-import org.junit.Test;
 
 
 public class SessionsTest {
@@ -32,7 +33,7 @@ public class SessionsTest {
         Transaction tx;
         Person p;
         Session s;
-        Date aDate = new Date();
+        Date aDate = new IMoment();
 
         Calendar cal = Calendar.getInstance();
         cal.set(2013, 11, 9);
