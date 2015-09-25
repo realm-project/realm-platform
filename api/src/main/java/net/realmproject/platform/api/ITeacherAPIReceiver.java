@@ -8,6 +8,7 @@ import java.io.Writer;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -31,6 +32,7 @@ import net.objectof.model.impl.IPackage;
 import net.objectof.rt.impl.IFn;
 import net.realmproject.dcm.util.DCMSerialize;
 import net.realmproject.platform.api.datatypes.CreateSession;
+import net.realmproject.platform.api.datatypes.EditSession;
 import net.realmproject.platform.api.utils.APIUtils;
 import net.realmproject.platform.schema.Assignment;
 import net.realmproject.platform.schema.Course;
@@ -464,11 +466,6 @@ public class ITeacherAPIReceiver extends IFn {
 			}
             return;
         }
-
-//        if (!session.getAssignment().getCourse().getTeachers().contains(teacher)) {
-//            request.getHttpResponse().setStatus(403);
-//            return;
-//        }
         
         if (!APIUtils.hasWriteAccessToSession(teacher, session)) {
         	try {
@@ -491,6 +488,83 @@ public class ITeacherAPIReceiver extends IFn {
 
         tx.post();
         tx.close();
+    }
+    
+    /**
+     * Is called by a teacher user to edit a session
+     * 
+     * @param teacher
+     *            The Person object containing the teacher info
+     * @param request
+     *            The http request containing the session info
+     */
+    
+    @Selector
+    public void editSession(Person teacher, HttpRequest request) {
+    	
+    	Transaction tx = teacher.tx().getPackage().connect(teacher);
+    	
+        try {
+        	// Create a EditSession object using the JSON body of the request
+			EditSession editSessionRequest = RealmCorc.getJsonAsData(request.getReader(), EditSession.class);
+			
+			// Retrieve session. Session can not be null
+	        Session session = (Session) APIUtils.getObjectFromRequest("Session", tx, request);
+	        
+	        if (session == null) {
+	        	RealmResponse.send(request, 400, "Session connot be null!");
+	        	return;
+	        }
+
+	        // Check if teacher has write access to session or not
+	        if (!APIUtils.hasWriteAccessToSession(teacher, session)) {
+	        	RealmResponse.send(request, 403, "Person has no write access to this session!");
+	        	return;
+	        }
+	        
+	        // Retrieve assignment
+	        Assignment asn = null;
+	        
+	        if (editSessionRequest.assignment == null) {
+//	        	session.setAssignment(null);
+	        } else {
+	        	asn = (Assignment) APIUtils.getObjectFromRequest("Assignment", tx, request);
+
+	        	if (asn != null)
+	        		session.setAssignment(asn);
+	        	else {
+	        		RealmResponse.send(request, 400, "Assignment is null!");
+	        	}
+	        }
+
+	        // Retrieve station
+	        Station station = null;
+
+	        if (editSessionRequest.station == null) {
+//	        	session.setStation(null);
+	        } else {
+	        	station = (Station) APIUtils.getObjectFromRequest("Station", tx, request);
+
+	        	if (station != null)
+	        		session.setStation(station);
+	        	else {
+	        		RealmResponse.send(request, 400, "Station is null!");
+	        	}
+	        }
+	        
+	        if (editSessionRequest.duration != 0)
+	        	session.setDuration(editSessionRequest.duration);
+        	
+	        if (editSessionRequest.startTime != null) {
+	        	 session.setStartTime(new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssXXX").parse(editSessionRequest.startTime ));
+	        }
+	        
+	        tx.post();
+	        tx.close(); 
+			
+		} catch (IOException | ServletException | ParseException e) {
+			e.printStackTrace();
+		}
     }
 
     /**
@@ -515,19 +589,19 @@ public class ITeacherAPIReceiver extends IFn {
             String createSessionType = null;
 
             // Create a CreateSession object using the JSON body of the request
-            CreateSession sessionRequest = RealmCorc.getJsonAsData(request.getReader(), CreateSession.class);
+            CreateSession createSessionRequest = RealmCorc.getJsonAsData(request.getReader(), CreateSession.class);
 
             // The request should contain either time.single, or time.bulk
             // The request should contain either date.range, or date.list
-            if ((sessionRequest.time.single != null && sessionRequest.time.bulk != null)
-                    || (sessionRequest.date.range != null && sessionRequest.date.list != null)) {
+            if ((createSessionRequest.time.single != null && createSessionRequest.time.bulk != null)
+                    || (createSessionRequest.date.range != null && createSessionRequest.date.list != null)) {
                 RealmResponse.send(request, 400, "Request should contain either time.single or time.bulk");
                 return;
             }
 
             // Retrieve assignment
             Assignment asn = null;
-            String asnLabel = APIUtils.getLabel(sessionRequest.assignment);
+            String asnLabel = APIUtils.getLabel(createSessionRequest.assignment);
 
             if (asnLabel == null) {
                 RealmResponse.send(request, 400, "Assignment label cannot be null");
@@ -540,7 +614,7 @@ public class ITeacherAPIReceiver extends IFn {
             }
 
             // Retrieve station
-            String stationLabel = APIUtils.getLabel(sessionRequest.station);
+            String stationLabel = APIUtils.getLabel(createSessionRequest.station);
             if (stationLabel == null) {
                 RealmResponse.send(request, 400, "Assignment label cannot be null");
                 return;
@@ -551,11 +625,11 @@ public class ITeacherAPIReceiver extends IFn {
                 return;
             }
 
-            if (sessionRequest.date.range != null) {
-                List<Date> dates = APIUtils.createDateList(sessionRequest.date.range.start,
-                        sessionRequest.date.range.end);
+            if (createSessionRequest.date.range != null) {
+                List<Date> dates = APIUtils.createDateList(createSessionRequest.date.range.start,
+                        createSessionRequest.date.range.end);
                 
-                if (sessionRequest.time.single != null) 
+                if (createSessionRequest.time.single != null) 
                 	createSessionType = "single";
                 else // sessionRequest.time.bulk != null
                 	createSessionType = "bulk";
@@ -564,20 +638,20 @@ public class ITeacherAPIReceiver extends IFn {
 //                	int daysLen = sessionRequest.date.range.days.length;
                 	
                 	// If "days" list is empty, or the day of "date" is included in the "days" list, create session for the "date"
-                    if (sessionRequest.date.range.days.length == 0 || APIUtils.dateIsInDays(date, sessionRequest.date.range.days)) {
-                    	numberOfCreatedSessions += APIUtils.createSession(tx, asn, date, station, sessionRequest, createSessionType);
+                    if (createSessionRequest.date.range.days.length == 0 || APIUtils.dateIsInDays(date, createSessionRequest.date.range.days)) {
+                    	numberOfCreatedSessions += APIUtils.createSession(tx, asn, date, station, createSessionRequest, createSessionType);
                     }
                 }
             } else {// sessionRequest.date.list != null
-                for (String strDate : sessionRequest.date.list) {
+                for (String strDate : createSessionRequest.date.list) {
 
                     Date date = new SimpleDateFormat("yyyy-MM-dd").parse(strDate);
 
-                    if (sessionRequest.time.single != null) createSessionType = "single";
+                    if (createSessionRequest.time.single != null) createSessionType = "single";
                     else // sessionRequest.time.bulk != null
                     createSessionType = "bulk";
 
-                    numberOfCreatedSessions += APIUtils.createSession(tx, asn, date, station, sessionRequest, createSessionType);
+                    numberOfCreatedSessions += APIUtils.createSession(tx, asn, date, station, createSessionRequest, createSessionType);
                 }
             }
 

@@ -43,7 +43,7 @@ import net.realmproject.platform.util.model.Tokens;
 
 public class APIUtils {
 
-    static final long ONE_MINUTE_IN_MILLIS = 60000; // Milliseconds
+    public static final long ONE_MINUTE_IN_MILLIS = 60000; // Milliseconds
     static final long ONE_DAY = 24 * 60 * 60 * 1000; // Milliseconds
     private Log log = LogFactory.getLog(getClass());
 
