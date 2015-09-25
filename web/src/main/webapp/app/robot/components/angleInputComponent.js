@@ -60,7 +60,7 @@ app.directive('angleInputComponent', ['$timeout', '$http', '$q', 'RobotService',
 
                             '</div>'+
                             '<div class="numeric-input-container">'+
-                                '<numeric-input min="-6.28" max="6.28" step="0.0001" value=angle.value></numeric-input>' +
+                                '<numeric-input min="-6.28" max="6.28" step="0.001" value=angle.value></numeric-input>' +
                             '</div>'+
                         '</div>' +
                         //Input boxes end
@@ -116,12 +116,12 @@ app.directive('angleInputComponent', ['$timeout', '$http', '$q', 'RobotService',
 
             //get the current angle joints
             RobotService.getJoints($scope.component.componentOptions.url).then(function(angleState){
-               $scope.angleSet.angles[0].value = parseFloat(angleState.radians[0].toFixed(4));
-               $scope.angleSet.angles[1].value = parseFloat(angleState.radians[1].toFixed(4));
-               $scope.angleSet.angles[2].value = parseFloat(angleState.radians[2].toFixed(4));
-               $scope.angleSet.angles[3].value = parseFloat(angleState.radians[3].toFixed(4));
-               $scope.angleSet.angles[4].value = parseFloat(angleState.radians[4].toFixed(4));
-               $scope.angleSet.angles[5].value = parseFloat(angleState.radians[5].toFixed(4));
+               $scope.angleSet.angles[0].value = parseFloat(angleState.radians[0].toFixed(3));
+               $scope.angleSet.angles[1].value = parseFloat(angleState.radians[1].toFixed(3));
+               $scope.angleSet.angles[2].value = parseFloat(angleState.radians[2].toFixed(3));
+               $scope.angleSet.angles[3].value = parseFloat(angleState.radians[3].toFixed(3));
+               $scope.angleSet.angles[4].value = parseFloat(angleState.radians[4].toFixed(3));
+               $scope.angleSet.angles[5].value = parseFloat(angleState.radians[5].toFixed(3));
             },
                 function(response){
                 console.log(response);
@@ -188,9 +188,6 @@ app.directive('angleInputComponent', ['$timeout', '$http', '$q', 'RobotService',
                 for (var i = 0; i < angleSet.angles.length; i++) {
                     angleArray.push(parseFloat(angleSet.angles[i].value));
                 }
-                console.log('Sent the following angles to arm:');
-                console.log(angleArray);
-
                 RobotService.setJoints(robotPath, angleArray);
             };
 
