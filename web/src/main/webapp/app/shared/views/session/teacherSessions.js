@@ -27,6 +27,7 @@ angular.module('REALM')
         // no station
         if (response.data===""){
             console.log("there is not any station for the teacher");
+            $rootScope.toggle('loadStationsError','on');
             return;
         }
         // make array of stations
@@ -38,47 +39,44 @@ angular.module('REALM')
                 $rootScope.toggle('loadStationsError','on');
             });
         }
+        // create the list of assignments
+        RepoService.getCoursesForTeacher().then(
+            function(response){
+                // no course
+                if (response.data===""){
+                    console.log("there is not any course for the teacher");
+                    $rootScope.toggle('noCourseError','on');
+                    return;
+                }
+                var courseArray = response.data.substring(0,response.data.length-1).split(",");
+                // to understand the asyncLoop look at: http://stackoverflow.com/questions/4288759/asynchronous-for-cycle-in-javascript
+                asyncLoop(courseArray.length, function(loop){
+                    RepoService.getAsnsForCourse(courseArray[loop.iteration()]).then(function(response){
+                        // add new assignments to the asssignmentArray
+                        $scope.assignmentArray = $scope.assignmentArray.concat(response.data.split(','));
+                        loop.next();
+                    },function(errorResponse){
+                        $rootScope.toggle('loadAssignmentsError','on');
+                        loop.next();
+                    });
+
+                },function(){
+                    if ($scope.assignmentArray.length===0){
+                        $rootScope.toggle('noAssignmentError','on');
+                        return;
+                    }else{
+                        // start the run function to load assignments.
+                        $scope.run($scope.assignmentArray.length-1);
+                    }
+                });        
+      
+            },function(errorResponse){
+                $rootScope.toggle('loadAssignmentsError','on');
+            }
+        );
     },function(errorResponse){
         $rootScope.toggle('loadStationsError','on');
     });
-
-    // create the list of assignments
-    RepoService.getCoursesForTeacher().then(function(response){
-        // no course
-        if (response.data===""){
-            console.log("there is not any course for the teacher");
-            return;
-        }
-        var courseArray = response.data.substring(0,response.data.length-1).split(",");
-        if (courseArray.length===0){
-            $rootScope.toggle('noCourseError','on');
-        }
-
-        // to understand the asyncLoop look at: http://stackoverflow.com/questions/4288759/asynchronous-for-cycle-in-javascript
-        asyncLoop(courseArray.length, function(loop){
-            RepoService.getAsnsForCourse(courseArray[loop.iteration()]).then(function(response){
-                // add new assignments to the asssignmentArray
-                $scope.assignmentArray = $scope.assignmentArray.concat(response.data.split(','));
-                loop.next();
-            },function(errorResponse){
-                $rootScope.toggle('loadAssignmentsError','on');
-                loop.next();
-            });
-
-        },function(){
-            if ($scope.assignmentArray.length===0){
-                $rootScope.toggle('noAssignmentError','on');
-            }else{
-                // start the run function to load assignments.
-                $scope.run($scope.assignmentArray.length-1);
-            }
-        });        
-  
-    },function(errorResponse){
-        $rootScope.toggle('loadAssignmentsError','on');
-    });
-
-
 
     function asyncLoop(iterations, func, callback) {
         var index = 0;
@@ -147,258 +145,253 @@ angular.module('REALM')
         });
     }
 
+    $scope.initialize=function(assignmentNames)
+    {
+        var assignmentNames=[];
+        for (var i=0;i<$scope.assignments.length;i++)
+            assignmentNames.push($scope.assignments[i].name)
 
+        $scope.vm = {
+            assignmentTypes: assignmentNames,
+            chosenAssignmentType:$scope.assignments[0].name,
+            stationTypesRadioModel: $scope.stations,
+            selectedStation: $scope.stations[0].loc,
+            chosenStationType: $scope.stations[0],
 
-
-$scope.initialize=function(assignmentNames)
-{
-    var assignmentNames=[];
-    for (var i=0;i<$scope.assignments.length;i++)
-        assignmentNames.push($scope.assignments[i].name)
-
-    $scope.vm = {
-        assignmentTypes: assignmentNames,
-        chosenAssignmentType:$scope.assignments[0].name,
-        stationTypesRadioModel: $scope.stations,
-        selectedStation: $scope.stations[0].loc,
-        chosenStationType: $scope.stations[0],
-
-        sessionTimesType:'Single',
-        sessionStartTime:new Date(),
-        sessionEndTime:new Date(),
-        duration:60,
-        sessionDatesType:'Range',
-        now:new Date(),
-        sessionStartDate:new Date(),
-        sessionEndDate:new Date(),
-        dateList:[new Date()],
-        dateToAdd: new Date(),
-        days: {"Monday":false, "Tuesday":false, "Wednesday":false, "Thursday":false, "Friday":false},
-        isPopupCalendarOpen:false
+            sessionTimesType:'Single',
+            sessionStartTime:new Date(),
+            sessionEndTime:new Date(),
+            duration:60,
+            sessionDatesType:'Range',
+            now:new Date(),
+            sessionStartDate:new Date(),
+            sessionEndDate:new Date(),
+            dateList:[new Date()],
+            dateToAdd: new Date(),
+            days: {"Monday":false, "Tuesday":false, "Wednesday":false, "Thursday":false, "Friday":false},
+            isPopupCalendarOpen:false
+        }
+        $scope.isOpened = false;
     }
-    $scope.isOpened = false;
 
-}//end of initialize
+    $scope.assignmentChanged = function(assignment) {
+        $scope.vm.chosenAssignmentType = assignment;
+    }
 
+    $scope.stationChanged = function(station) {
+        $scope.vm.chosenStationType = station;
+    }
 
-        $scope.assignmentChanged = function(assignment) {
-            $scope.vm.chosenAssignmentType = assignment;
-        }
+    $scope.startTimeChanged = function() {
 
-        $scope.stationChanged = function(station) {
-            $scope.vm.chosenStationType = station;
-        }
+    }
 
-        $scope.startTimeChanged = function() {
+    $scope.singleSessionTabSelected = function()
+    {
+        $scope.vm.sessionTimesType = 'Single';
+        $scope.childModel.rangeTabIsActive = true;
+    }
 
-        }
+    $scope.bulkSessionTabSelected = function()
+    {
+        $scope.vm.sessionTimesType = 'Bulk';
+    }
 
-        $scope.singleSessionTabSelected = function()
+    $scope.dateRangeTabSelected = function()
+    {
+        $scope.vm.sessionDatesType = 'Range';
+    }
+
+    $scope.dateListTabSelected = function()
+    {
+        $scope.vm.sessionDatesType = 'List';
+    }
+
+    $scope.open = function()
+    {
+        $scope.isOpened = true;
+    }
+
+    $scope.appendDateList = function()
+    {
+        var decisionBool = true;
+        for(var index=0; index<$scope.vm.dateList.length; ++index)
         {
-            $scope.vm.sessionTimesType = 'Single';
-            $scope.childModel.rangeTabIsActive = true;
+            if($scope.vm.dateList[index].toDateString() === $scope.vm.dateToAdd.toDateString())
+                decisionBool = false;
+        }
+        if(decisionBool)
+        {
+            $scope.vm.dateList.push($scope.vm.dateToAdd);
+        }
+        else
+        {
+            console.log('duplicate date caught');
+        }
+    }
+
+    $scope.toggleCal = function()
+    {
+        $scope.isOpened = !$scope.isOpened;
+    }
+
+
+    // main function to create new sessions
+    $scope.createSessions = function()
+    {
+       
+        var postData = {
+            "assignment":"",
+            "station":"",
+            "time":{},
+            "date":{}
+        };
+
+        // station
+        postData.station = $scope.vm.chosenStationType.loc;
+
+        //Assignment
+        for (var i=0;i<$scope.assignments.length;i++)
+        {
+            if($scope.assignments[i].name==$scope.vm.chosenAssignmentType)
+               postData.assignment=$scope.assignments[i].kindLabel;
         }
 
-        $scope.bulkSessionTabSelected = function()
+
+        //Sanitizing start time
+        var startTime = $scope.vm.sessionStartTime;
+        var startTimeHours = startTime.getHours().toString();
+        if(startTimeHours.length < 2)
+            startTimeHours = "0" + startTimeHours;
+        var startTimeMinutes = startTime.getMinutes().toString();
+        if(startTimeMinutes.length < 2)
+            startTimeMinutes = "0"+ startTimeMinutes;
+
+        //startTime = startTimeHours + ":" + startTimeMinutes;
+
+        //Sanitizing end time
+        var endTime = $scope.vm.sessionEndTime;
+        var endTimeHours = endTime.getHours().toString();
+        if(endTimeHours.length < 2)
+            endTimeHours = "0" + endTimeHours;
+        var endTimeMinutes = endTime.getMinutes().toString();
+        if(endTimeMinutes.length < 2)
+            endTimeMinutes = "0"+ endTimeMinutes;
+
+        //endTime = endTimeHours + ":" + endTimeMinutes;
+        
+        
+        //Sanitizing start date
+        var startDate = $scope.vm.sessionStartDate;
+        var startDateYear = startDate.getFullYear();
+        var startDateMonth = startDate.getMonth().toString();
+        var startDateMonthInt=parseInt(startDateMonth)+1;
+        startDateMonth=startDateMonthInt.toString();
+        if(startDateMonth.length < 2)
+            startDateMonth = "0" + startDateMonth;
+        var startDateDate = startDate.getDate().toString();
+        if(startDateDate.length < 2)
+            startDateDate = "0" + startDateDate;
+
+        //startDate = startDateYear + "-" + startDateMonth + "-" + startDateDate;
+
+        //Sanitizing end date
+        var endDate = $scope.vm.sessionEndDate;
+        var endDateYear = endDate.getFullYear();
+        var endDateMonth = endDate.getMonth().toString();
+        var endDateMonthInt=parseInt(endDateMonth)+1;
+        endDateMonth=endDateMonthInt.toString();
+        if(endDateMonth.length < 2)
+            endDateMonth = "0" + endDateMonth;
+        var endDateDate = endDate.getDate().toString();
+        if(endDateDate.length < 2)
+            endDateDate = "0" + endDateDate;
+
+        //endDate = endDateYear + "-" + endDateMonth + "-" + endDateDate;
+
+        // convert date and time to UTC
+
+        var localStartDate = new Date(startDateYear,(parseInt(startDateMonth)-1),startDateDate,startTimeHours,startTimeMinutes,0,0);
+        var localEndDate = new Date(endDateYear,(parseInt(endDateMonth)-1),endDateDate,endTimeHours,endTimeMinutes,0,0);
+        var localEndDateWithStartTime = new Date(endDateYear,(parseInt(endDateMonth)-1),endDateDate,startTimeHours,startTimeMinutes,0,0);
+
+        startTime = ("0" + localStartDate.getUTCHours()).slice(-2) + ":" + ("0" + localStartDate.getUTCMinutes()).slice(-2);
+
+        endTime = ("0" + localEndDate.getUTCHours()).slice(-2) + ":" + ("0" + localEndDate.getUTCMinutes()).slice(-2);
+        startDate = localStartDate.getUTCFullYear() + "-" + (parseInt(localStartDate.getUTCMonth())+1) + "-" + localStartDate.getUTCDate();
+        endDate = localEndDateWithStartTime.getUTCFullYear() + "-" + (parseInt(localEndDateWithStartTime.getUTCMonth())+1) + "-" + localEndDateWithStartTime.getUTCDate();
+
+        //Single Session Creation
+        if($scope.vm.sessionTimesType==='Single')
         {
-            $scope.vm.sessionTimesType = 'Bulk';
+            postData.time.single={};
+            postData.time.single.start=startTime;
+            postData.time.single.duration=$scope.vm.duration;
+        }
+        //Bulk Session Creation
+        else if($scope.vm.sessionTimesType==='Bulk')
+        {
+            postData.time.bulk={};
+            postData.time.bulk.start=startTime;
+            postData.time.bulk.end=endTime;
+            postData.time.bulk.duration=$scope.vm.duration;
         }
 
-        $scope.dateRangeTabSelected = function()
+        //Date Range
+        if($scope.vm.sessionDatesType==='Range')
         {
-            $scope.vm.sessionDatesType = 'Range';
-        }
+            postData.date.range={};
+            postData.date.range.start= startDate;
+            postData.date.range.end= endDate;
 
-        $scope.dateListTabSelected = function()
-        {
-            $scope.vm.sessionDatesType = 'List';
-        }
-
-        $scope.open = function()
-        {
-            $scope.isOpened = true;
-        }
-
-        $scope.appendDateList = function()
-        {
-            var decisionBool = true;
-            for(var index=0; index<$scope.vm.dateList.length; ++index)
+            var days=[];
+            // create week days list for Bulk sessions
+            for(var day in $scope.vm.days)
             {
-                if($scope.vm.dateList[index].toDateString() === $scope.vm.dateToAdd.toDateString())
-                    decisionBool = false;
-            }
-            if(decisionBool)
-            {
-                $scope.vm.dateList.push($scope.vm.dateToAdd);
-            }
-            else
-            {
-                console.log('duplicate date caught');
-            }
-        }
-
-        $scope.toggleCal = function()
-        {
-            $scope.isOpened = !$scope.isOpened;
-        }
-
-
-        // main function to create new sessions
-        $scope.createSessions = function()
-        {
-           
-            var postData = {
-                "assignment":"",
-                "station":"",
-                "time":{},
-                "date":{}
-            };
-
-            // station
-            postData.station = $scope.vm.chosenStationType.loc;
-
-            //Assignment
-            for (var i=0;i<$scope.assignments.length;i++)
-            {
-                if($scope.assignments[i].name==$scope.vm.chosenAssignmentType)
-                   postData.assignment=$scope.assignments[i].kindLabel;
-            }
-
-
-            //Sanitizing start time
-            var startTime = $scope.vm.sessionStartTime;
-            var startTimeHours = startTime.getHours().toString();
-            if(startTimeHours.length < 2)
-                startTimeHours = "0" + startTimeHours;
-            var startTimeMinutes = startTime.getMinutes().toString();
-            if(startTimeMinutes.length < 2)
-                startTimeMinutes = "0"+ startTimeMinutes;
-
-            //startTime = startTimeHours + ":" + startTimeMinutes;
-
-            //Sanitizing end time
-            var endTime = $scope.vm.sessionEndTime;
-            var endTimeHours = endTime.getHours().toString();
-            if(endTimeHours.length < 2)
-                endTimeHours = "0" + endTimeHours;
-            var endTimeMinutes = endTime.getMinutes().toString();
-            if(endTimeMinutes.length < 2)
-                endTimeMinutes = "0"+ endTimeMinutes;
-
-            //endTime = endTimeHours + ":" + endTimeMinutes;
-            
-            
-            //Sanitizing start date
-            var startDate = $scope.vm.sessionStartDate;
-            var startDateYear = startDate.getFullYear();
-            var startDateMonth = startDate.getMonth().toString();
-            var startDateMonthInt=parseInt(startDateMonth)+1;
-            startDateMonth=startDateMonthInt.toString();
-            if(startDateMonth.length < 2)
-                startDateMonth = "0" + startDateMonth;
-            var startDateDate = startDate.getDate().toString();
-            if(startDateDate.length < 2)
-                startDateDate = "0" + startDateDate;
-
-            //startDate = startDateYear + "-" + startDateMonth + "-" + startDateDate;
-
-            //Sanitizing end date
-            var endDate = $scope.vm.sessionEndDate;
-            var endDateYear = endDate.getFullYear();
-            var endDateMonth = endDate.getMonth().toString();
-            var endDateMonthInt=parseInt(endDateMonth)+1;
-            endDateMonth=endDateMonthInt.toString();
-            if(endDateMonth.length < 2)
-                endDateMonth = "0" + endDateMonth;
-            var endDateDate = endDate.getDate().toString();
-            if(endDateDate.length < 2)
-                endDateDate = "0" + endDateDate;
-
-            //endDate = endDateYear + "-" + endDateMonth + "-" + endDateDate;
-
-            // convert date and time to UTC
-
-            var localStartDate = new Date(startDateYear,(parseInt(startDateMonth)-1),startDateDate,startTimeHours,startTimeMinutes,0,0);
-            var localEndDate = new Date(endDateYear,(parseInt(endDateMonth)-1),endDateDate,endTimeHours,endTimeMinutes,0,0);
-            var localEndDateWithStartTime = new Date(endDateYear,(parseInt(endDateMonth)-1),endDateDate,startTimeHours,startTimeMinutes,0,0);
-
-            startTime = ("0" + localStartDate.getUTCHours()).slice(-2) + ":" + ("0" + localStartDate.getUTCMinutes()).slice(-2);
-
-            endTime = ("0" + localEndDate.getUTCHours()).slice(-2) + ":" + ("0" + localEndDate.getUTCMinutes()).slice(-2);
-            startDate = localStartDate.getUTCFullYear() + "-" + (parseInt(localStartDate.getUTCMonth())+1) + "-" + localStartDate.getUTCDate();
-            endDate = localEndDateWithStartTime.getUTCFullYear() + "-" + (parseInt(localEndDateWithStartTime.getUTCMonth())+1) + "-" + localEndDateWithStartTime.getUTCDate();
-
-            //Single Session Creation
-            if($scope.vm.sessionTimesType==='Single')
-            {
-                postData.time.single={};
-                postData.time.single.start=startTime;
-                postData.time.single.duration=$scope.vm.duration;
-            }
-            //Bulk Session Creation
-            else if($scope.vm.sessionTimesType==='Bulk')
-            {
-                postData.time.bulk={};
-                postData.time.bulk.start=startTime;
-                postData.time.bulk.end=endTime;
-                postData.time.bulk.duration=$scope.vm.duration;
-            }
-
-            //Date Range
-            if($scope.vm.sessionDatesType==='Range')
-            {
-                postData.date.range={};
-                postData.date.range.start= startDate;
-                postData.date.range.end= endDate;
-
-                var days=[];
-                // create week days list for Bulk sessions
-                for(var day in $scope.vm.days)
+                if($scope.vm.days[day])
                 {
-                    if($scope.vm.days[day])
-                    {
-                        days.push(day);
-                    }
+                    days.push(day);
                 }
-                
-
-                postData.date.range.days=days;
             }
-            //Date List
-            else if($scope.vm.sessionDatesType==='List')
+            
+
+            postData.date.range.days=days;
+        }
+        //Date List
+        else if($scope.vm.sessionDatesType==='List')
+        {
+            postData.date.list = [];
+
+            for(var i=0; i<$scope.vm.dateList.length; i++)
             {
-                postData.date.list = [];
+                var year;
+                var month;
+                var date;
 
-                for(var i=0; i<$scope.vm.dateList.length; i++)
-                {
-                    var year;
-                    var month;
-                    var date;
+                year = $scope.vm.dateList[i].getFullYear();
+                month = parseInt($scope.vm.dateList[i].getMonth())+1;
+                date = $scope.vm.dateList[i].getDate();
 
-                    year = $scope.vm.dateList[i].getFullYear();
-                    month = parseInt($scope.vm.dateList[i].getMonth())+1;
-                    date = $scope.vm.dateList[i].getDate();
+                var dateString = year + "-" + month + "-" + date;
 
-                    var dateString = year + "-" + month + "-" + date;
-
-                    postData.date.list.push(dateString);
-                }
+                postData.date.list.push(dateString);
             }
-            //Final Shipment
-           
-            RepoService.createSessions(postData).then(function(response){
-                if (response.data==='0'){
-                    $rootScope.toggle('createSessionZero','on');
-                }else{
-                    $rootScope.toggle('createSessionSuccess','on');
-                }
-            },function(error){
-                console.log("failed to create sessions");
-                console.log(error);
-                $rootScope.toggle('createSessionError','on');
-            })
+        }
+        //Final Shipment
+       
+        RepoService.createSessions(postData).then(function(response){
+            if (response.data==='0'){
+                $rootScope.toggle('createSessionZero','on');
+            }else{
+                $rootScope.toggle('createSessionSuccess','on');
+            }
+        },function(error){
+            console.log("failed to create sessions");
+            console.log(error);
+            $rootScope.toggle('createSessionError','on');
+        })
 
-        }//end of createSessions
+    }//end of createSessions
 //---------------------------------------------------------------------------------
 
 });
