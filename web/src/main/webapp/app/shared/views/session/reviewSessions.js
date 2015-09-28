@@ -1,12 +1,13 @@
 'use strict';
 
-angular.module('REALM').controller('ReviewSessionsController', function ($scope, $rootScope, AuthService, AUTH_EVENTS, $state, $http, $q,RepoService) {
+angular.module('REALM').controller('ReviewSessionsController', function ($scope, $rootScope, RepoService) {
 
 
     $scope.sessions=[];
     $scope.filteredSessions=[];
     $scope.deviceCommands = [];
-    $scope.selectedDeviceIO = "Please select a command to see details here";    
+    $scope.selectedDeviceIODetail = "Please select a command to see details here";
+    $scope.selectedSession = "";
 
     $scope.UIEndDate=new Date();
     $scope.UIStartDate=new Date();
@@ -35,7 +36,9 @@ angular.module('REALM').controller('ReviewSessionsController', function ($scope,
         ]
     };
     $scope.gridOptions.onRegisterApi = function(gridApi) {
-        $scope.gridOptionsGridApi = gridApi;
+        gridApi.selection.on.rowSelectionChanged($scope,function() {
+            $scope.selectedSession = gridApi.selection.getSelectedRows();
+        });
     };
 
     $scope.gridOptionsAll = {
@@ -62,8 +65,14 @@ angular.module('REALM').controller('ReviewSessionsController', function ($scope,
     
     $scope.deviceCommandGrid.onRegisterApi = function(gridApi) {
         //$scope.deviceCommandGridApi = gridApi;
-        gridApi.selection.on.rowSelectionChanged($scope,function(row) {
-            $scope.selectedDeviceIO = JSON.stringify(row.entity.properties, null, 4);
+        gridApi.selection.on.rowSelectionChanged($scope,function() {
+           
+            var tempSelectedDeviceIODetail = gridApi.selection.getSelectedRows();
+            if(tempSelectedDeviceIODetail == ""){
+                $scope.selectedDeviceIODetail = "Please select a command to see details here";
+            }else{
+                $scope.selectedDeviceIODetail = JSON.stringify(tempSelectedDeviceIODetail[0].properties, null, 4);
+            }
         });
     };
 
@@ -84,14 +93,13 @@ angular.module('REALM').controller('ReviewSessionsController', function ($scope,
     };
 
     $scope.showDeviceCommands = function(){
-        var selectedSession = $scope.gridOptionsGridApi.selection.getSelectedRows();
 
-        if ( selectedSession== ""){
+        if ( $scope.selectedSession== ""){
             //Nothing selected
             $rootScope.toggle('noSessionSelected','on');
         }else{
             // read commands and show them
-            RepoService.getDeviceIOObjectsForSession(selectedSession[0].kindLabel).then(
+            RepoService.getDeviceIOObjectsForSession($scope.selectedSession[0].kindLabel).then(
                 function(response){
                     $scope.deviceCommands = []
                     for (var i=0; i < response.data.length; i++){
@@ -105,7 +113,7 @@ angular.module('REALM').controller('ReviewSessionsController', function ($scope,
                         $scope.deviceCommands.push(tempDeviceCommand);
                     }
 
-                    $scope.selectedDeviceIO = "Please select a command to see details here";   
+                    $scope.selectedDeviceIODetail = "Please select a command to see details here";   
                     $rootScope.toggle('deviceCommandsModal','on');
                 }
                 ,function(errorResponse){
@@ -114,6 +122,49 @@ angular.module('REALM').controller('ReviewSessionsController', function ($scope,
             );
         }
     };
+
+    $scope.deleteSession = function(){
+
+        if ($scope.selectedSession== ""){
+            //Nothing selected
+            $rootScope.toggle('noSessionSelected','on');
+        }else{
+            // Are you sure? message
+            $rootScope.toggle('DeleteForSure','on');
+        }
+    };
+    
+    $scope.confirmedDeleteSession = function(){
+        RepoService.removeSessions($scope.selectedSession[0].kindLabel).then(
+            function(response){
+                // remove selected session
+                $scope.sessions = $scope.sessions.filter(function(session){
+                    return session.kindLabel !== $scope.selectedSession[0].kindLabel;
+                });
+                 // empty $scope.selectedSession
+                $scope.selectedSession = "";
+                // refilter sessions
+                $scope.filteredSessions=[];
+                $scope.filterSessions($scope.UIStartDate,$scope.UIEndDate);
+                // show message to the user
+                $rootScope.toggle('successDelete','on');
+
+            },function(errorResponse){
+                $rootScope.toggle('errorDeleteSession','on');
+            }
+        );
+    }
+
+    $scope.editSession = function(){
+
+        if ($scope.selectedSession== ""){
+            //Nothing selected
+            $rootScope.toggle('noSessionSelected','on');
+        }else{
+
+        }
+    };
+
 
     // read list of sessions :
     RepoService.getCoursesForTeacher().then(

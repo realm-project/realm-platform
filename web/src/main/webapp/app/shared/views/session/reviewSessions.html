@@ -19,7 +19,12 @@
 <div class="review-session-gridContainer" >
     <h4>Sessions in the date range:</h4>
     <div class="gridStyle" ui-grid="gridOptions" ui-grid-selection ui-grid-resize-columns>
-        <button ng-click="showDeviceCommands()" class="btn btn-primary" style="margin-top:6px;">Show Device Commands</button>
+        <div>
+            <button ng-click="showDeviceCommands()" class="btn btn-primary review-session-gridButton" style="margin-top:6px;">Show Device Commands</button>
+            <button ng-click="editSession()" class="btn btn-primary review-session-gridButton" style="margin-top:6px;">Edit Selected Session</button>
+            <button ng-click="deleteSession()" class="btn btn-primary review-session-gridButton" style="margin-top:6px;">Delete Selected Session</button>
+            <div style="clear:both;"></div>
+        </div>
     </div>
 </div>
 <div class="review-session-gridContainer" >
@@ -30,7 +35,7 @@
 <div overlay="noSessionSelected">
     <h4 class="overlay-title">You have not selected any session</h4>    
     <p>
-        Please select a session in the Filtered list to see the list of device commands.
+        Please select a session in the Filtered list.
     </p>
     <p toggle="off" bubble target="noSessionSelected">
         <span class="btn btn-primary">Ok</span>
@@ -47,6 +52,54 @@
     </p>  
 </div>
 
+<div overlay="DeleteForSure">
+    <h4 class="overlay-title">Delete Session</h4>    
+    <p>
+        Are you sure you want to delete this session?
+    </p>
+    <table class="review-session-deleteSessionTable">
+        <tr>
+            <td>Session Token:</td>
+            <td>{{selectedSession[0].token}}</td>
+        </tr>
+        <tr>
+            <td>Session Date:</td>
+            <td>{{selectedSession[0].localStartTime}}</td>
+        </tr>
+        <tr>
+            <td>Session Duration:</td>
+            <td>{{selectedSession[0].duration}}</td>
+        </tr>
+    </table>
+    <br>
+    <div toggle="off" bubble target="DeleteForSure" style="display:inline;">
+        <span class="btn btn-primary">Cancel</span>
+    </div>
+    <div toggle="off" bubble target="DeleteForSure" ng-click="confirmedDeleteSession()" style="display:inline;">
+        <span class="btn btn-danger">Delete</span>
+    </div>
+</div>
+
+<div overlay="errorDeleteSession">
+    <h4 class="overlay-title">Cannot delete the selected session</h4>    
+    <p>
+        We cannot delete your selected session. Please make sure you have the access to delete this session.
+    </p>
+    <p toggle="off" bubble target="errorDeleteSession">
+        <span class="btn btn-primary">Ok</span>
+    </p>  
+</div>
+
+successDelete
+<div overlay="successDelete">
+    <h4 class="overlay-title">Deleted!</h4>    
+    <p>
+        You deleted the selected session successfully.
+    </p>
+    <p toggle="off" bubble target="successDelete">
+        <span class="btn btn-primary">Ok</span>
+    </p>  
+</div>
 
 <div overlay="deviceCommandsModal">
     <h4 class="overlay-title">List of device commands for the selected session</h4>    
@@ -58,7 +111,7 @@
         <div style="display:table-cell; padding-left:40px;">
             <br>
             <h5>Properties of selected device command</h5>
-            <textarea readonly style="width:100%;" rows="6">{{selectedDeviceIO}}</textarea>
+            <textarea readonly style="width:100%;" rows="6">{{selectedDeviceIODetail}}</textarea>
         </div>
     </div>
     <br>

@@ -1228,6 +1228,20 @@ hr
     margin-top: 80px;
 }
 
+.review-session-gridButton{
+    float:left;
+    margin-left: 10px;
+}
+
+.review-session-deleteSessionTable{
+    margin: auto;
+    text-align: left;
+}
+
+.review-session-deleteSessionTable td{
+    padding:5px;
+}
+
 .gridStyle.deviceIOgrid{
     margin: auto;
     float:none;
