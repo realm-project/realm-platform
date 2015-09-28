@@ -80,23 +80,32 @@
     </div>
 </div>
 
-<div overlay="errorDeleteSession">
-    <h4 class="overlay-title">Cannot delete the selected session</h4>    
+<div overlay="errorDeleteEditSession">
+    <h4 class="overlay-title">Cannot edit/delete the selected session</h4>    
     <p>
-        We cannot delete your selected session. Please make sure you have the access to delete this session.
+        We cannot edit/delete your selected session. Please make sure you have the access to edit/delete this session.
     </p>
-    <p toggle="off" bubble target="errorDeleteSession">
+    <p toggle="off" bubble target="errorDeleteEditSession">
         <span class="btn btn-primary">Ok</span>
     </p>  
 </div>
 
-successDelete
 <div overlay="successDelete">
     <h4 class="overlay-title">Deleted!</h4>    
     <p>
         You deleted the selected session successfully.
     </p>
     <p toggle="off" bubble target="successDelete">
+        <span class="btn btn-primary">Ok</span>
+    </p>  
+</div>
+
+<div overlay="successEdit">
+    <h4 class="overlay-title">Session Edited</h4>    
+    <p>
+        You edited the selected session successfully.
+    </p>
+    <p toggle="off" bubble target="successEdit">
         <span class="btn btn-primary">Ok</span>
     </p>  
 </div>
@@ -120,3 +129,23 @@ successDelete
     </p>  
 </div>
 
+<div overlay="editSessionModal">
+    <h4 class="overlay-title">Edit Session</h4>    
+    <p>
+        Please enter a new date, time, and duration for this session.
+    </p>
+    <p>Session Token: {{selectedSession.token}}</p>
+    <timepicker ng-model="editSessionData.sessionTime" hour-step="1" minute-step="1" show-meridian="false" style="margin:auto;"></timepicker>
+    <div class="calendar-container">
+        <datepicker ng-model="editSessionData.sessionDate" show-weeks="true" class="well well-sm"></datepicker>
+    </div>
+    <label>Duration (Min):</label>
+    <input type="number" min="0" ng-required="true" ng-model="editSessionData.sessionDuration" style="width:auto; text-align:center;"></input>
+    <br>
+    <div toggle="off" bubble target="editSessionModal" style="display:inline;">
+        <span class="btn btn-primary">Cancel</span>
+    </div>
+    <div toggle="off" bubble target="editSessionModal" ng-click="confirmedEditSession()" style="display:inline;">
+        <span class="btn btn-primary">Edit</span>
+    </div>
+</div>

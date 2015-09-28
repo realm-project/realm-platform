@@ -23,6 +23,12 @@ angular.module('REALM').controller('ReviewSessionsController', function ($scope,
         $scope.filterSessions($scope.UIStartDate,$scope.UIEndDate)
     });
 
+    $scope.editSessionData= {
+        sessionTime : new Date(),
+        sessionDate : new Date(),
+        sessionDuration : 0
+    };
+
     $scope.gridOptions = {
         data: 'filteredSessions',
         multiSelect: false,
@@ -150,7 +156,7 @@ angular.module('REALM').controller('ReviewSessionsController', function ($scope,
                 $rootScope.toggle('successDelete','on');
 
             },function(errorResponse){
-                $rootScope.toggle('errorDeleteSession','on');
+                $rootScope.toggle('errorDeleteEditSession','on');
             }
         );
     }
@@ -161,10 +167,45 @@ angular.module('REALM').controller('ReviewSessionsController', function ($scope,
             //Nothing selected
             $rootScope.toggle('noSessionSelected','on');
         }else{
-
+            $scope.editSessionData.sessionTime = new Date($scope.selectedSession[0].startTime);
+            $scope.editSessionData.sessionDate = new Date($scope.selectedSession[0].startTime);
+            $scope.editSessionData.sessionDuration = parseInt($scope.selectedSession[0].duration);
+            $rootScope.toggle('editSessionModal','on');
         }
     };
 
+    $scope.confirmedEditSession = function(){
+        var newTime = moment($scope.editSessionData.sessionDate);
+        newTime.hours($scope.editSessionData.sessionTime.getHours()) ;
+        newTime.minutes($scope.editSessionData.sessionTime.getMinutes()) ;
+
+        RepoService.editSessions($scope.selectedSession[0].kindLabel,newTime.toISOString(),$scope.editSessionData.sessionDuration).then(
+                function(response){
+                    //edit the selected session
+                    $scope.selectedSession[0].startTime= newTime.toISOString();
+                    // convert to localTime
+                    var tempDate = moment(newTime.toISOString());
+                    $scope.selectedSession[0].localStartTime = tempDate.year()+'/'+ tempDate.format("M") + '/' + tempDate.date() + ' - ' + tempDate.hour()+ ':' + tempDate.format("mm");
+                    $scope.selectedSession[0].duration= $scope.editSessionData.sessionDuration;
+
+                    // edit in all Session table
+                    for (var i=0; i < $scope.sessions.length; i++){
+                        if ($scope.sessions[i].kindLabel === $scope.selectedSession[0].kindLabel){
+                            $scope.sessions[i].startTime = $scope.selectedSession[0].startTime;
+                            $scope.sessions[i].localStartTime =$scope.selectedSession[0].localStartTime;
+                            $scope.sessions[i].duration = $scope.selectedSession[0].duration;
+                            break;
+                        }
+                    }
+
+                    // show message to the user
+                    $rootScope.toggle('successEdit','on');
+                },
+                function(errorResponse){
+                    $rootScope.toggle('errorDeleteEditSession','on');
+                }
+            );
+    }
 
     // read list of sessions :
     RepoService.getCoursesForTeacher().then(

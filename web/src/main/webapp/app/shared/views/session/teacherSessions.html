@@ -34,11 +34,11 @@
 								<div class="single-session__start-time row tab-content__top-row">
 									<label class="timepicker-label col-xs-6">Start Time: </label>
 									<div class="col-xs-6">
-									<timepicker class="" ng-model="vm.sessionStartTime" ng-change="startTimeChanged()" hour-step="1" minute-step="1" show-meridian="false"></timepicker>
+									<timepicker ng-model="vm.sessionStartTime" ng-change="startTimeChanged()" hour-step="1" minute-step="1" show-meridian="false"></timepicker>
 									</div>
 								</div>
 								<div class="single-session__duration row">
-									<label class=" col-xs-6">Duration (Min): </label>
+									<label class="col-xs-6">Duration (Min): </label>
 									<div class="col-xs-4">
 									<input type="number" min="0" ng-required="true" ng-model="vm.duration"></input>
 									</div>
@@ -50,7 +50,7 @@
 								<div class="bulk-session__start-time row tab-content__top-row">
 									<label class="timepicker-label col-xs-6">Start Time: </label>
 									<div class="col-xs-6">
-									<timepicker class="" ng-model="vm.sessionStartTime" ng-change="startTimeChanged()" hour-step="1" minute-step="1" show-meridian="false"></timepicker>
+									<timepicker ng-model="vm.sessionStartTime" ng-change="startTimeChanged()" hour-step="1" minute-step="1" show-meridian="false"></timepicker>
 									</div>
 								</div>
 								<div class="bulk-session__start-time row">
@@ -60,7 +60,7 @@
 									</div>
 								</div>
 								<div class="single-session__duration row">
-									<label class=" col-xs-6">Duration (Min): </label>
+									<label class="col-xs-6">Duration (Min): </label>
 									<div class="col-xs-4">
 									<input type="number" ng-model="vm.duration"></input>
 									</div>
