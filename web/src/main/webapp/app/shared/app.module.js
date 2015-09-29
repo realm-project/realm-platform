@@ -4,7 +4,6 @@ var dependencies = [
     'ngTouch',
     'mobile-angular-ui',
     'ui.date',
-    'cfp.hotkeys',
     'ui.bootstrap',
     'ui.grid',
     'ui.grid.selection',
