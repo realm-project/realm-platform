@@ -259,7 +259,7 @@ public class IAdminAPIReceiver extends IFn {
      */
 
     @Selector
-    public void getSessionsForAsn(Person admin, HttpRequest request) throws IOException {
+    public void getSessionsForAsn(Person admin, HttpRequest request) throws IOException  {
 
         // The assignment's label is included in the request and the assignment
         // should be retrieved using the label.

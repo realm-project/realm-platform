@@ -288,24 +288,25 @@ public class ITeacherAPIReceiver extends IFn {
      *            The Person object containing the teacher info
      * @param request
      *            The http request containing the session info
+     * @throws IOException 
      */
 
     @Selector
-    public void getSessionsForAsn(Person teacher, HttpRequest request) {
+    public void getSessionsForAsn(Person teacher, HttpRequest request) throws IOException {
 
         // The assignments's label is included in the request and the
         // assignments should be retrieved using the label.
         Assignment a = (Assignment) APIUtils.getObjectFromRequest("Assignment", teacher.tx(), request);
 
         if (a == null) {
-            request.getHttpResponse().setStatus(400);
+            RealmResponse.send(request, 400, "Assignment cannot be null");
             return;
         }
 
         // Ensure that teacher is the teacher of the course that the assignment
         // belongs to
         if (!a.getCourse().getTeachers().contains(teacher)) {
-            request.getHttpResponse().setStatus(403);
+            RealmResponse.send(request, 403, "Teacher is not authorized to access this assignment.");
             return;
         }
 
@@ -318,36 +319,25 @@ public class ITeacherAPIReceiver extends IFn {
     }
     
     @Selector
-    public void getSessionObjectsForAssignment(Person teacher, HttpRequest request) throws JsonGenerationException, JsonMappingException, IOException {
+    public void getSessionObjectsForAssignment(Person teacher, HttpRequest request) throws IOException {
     	// The assignments's label is included in the request and the
         // assignments should be retrieved using the label.
         Assignment a = (Assignment) APIUtils.getObjectFromRequest("Assignment", teacher.tx(), request);
 
         if (a == null) {
-            request.getHttpResponse().setStatus(400);
+            RealmResponse.send(request, 400, "Assignment cannot be null");
             return;
         }
 
         // Ensure that teacher is the teacher of the course that the assignment
         // belongs to
         if (!a.getCourse().getTeachers().contains(teacher)) {
-            request.getHttpResponse().setStatus(403);
+            RealmResponse.send(request, 403, "Teacher is not authorized to access this assignment.");
             return;
         }
 
         // Retrieve sessions of assignment
         Iterable<Session> sessions = Assignments.getSessions(teacher.tx(), a);
-        
-//        StringBuilder sb = new StringBuilder("[");
-//    
-//        for (Session s : sessions) {
-//            IKind<Composite> kind = (IKind<Composite>) s.id().kind();
-//       		kind.datatype().toJson(s.value(), (IPackage) teacher.tx().getPackage(), sb);
-//       		sb.append(',');
-//        }
-//        sb.deleteCharAt(sb.length() - 1).append(']');
-//        
-//        APIUtils.addStringResultToResponse(sb.toString(), request);
         
         APIUtils.addObjectQueryResultToResponse(teacher.tx(), sessions, request);
     }
@@ -362,62 +352,54 @@ public class ITeacherAPIReceiver extends IFn {
      *            The Person object containing the teacher info
      * @param request
      *            The http request containing the device info
+     * @throws IOException 
      */
 
     @Selector
-    public void getSessionsForDeviceOwner(Person teacher, HttpRequest request) {
+    public void getSessionsForDeviceOwner(Person teacher, HttpRequest request) throws IOException {
 
         Transaction tx = teacher.tx().getPackage().connect(teacher);
 
-        try {
+        // The device's label is included in the request and the
+        // device should be retrieved using the label.
+        Device device = (Device) APIUtils.getObjectFromRequest("Device", teacher.tx(), request);
 
-            // The device's label is included in the request and the
-            // device should be retrieved using the label.
-            Device device = (Device) APIUtils.getObjectFromRequest("Device", teacher.tx(), request);
+        // Retrieve devices owned by this owner
+        Iterable<Device> devices = Persons.getOwnedDevices(teacher.tx(), teacher);
 
-            // Retrieve devices owned by this owner
-            Iterable<Device> devices = Persons.getOwnedDevices(teacher.tx(), teacher);
+        if (device != null) { // If device is not null, check if the device
+        	// is owned by the teacher or not
+        	boolean contains = false;
+        	for (Device d : devices)
+        		if (d.equals(device)) {
+        			contains = true;
+        			break;
+        		}
 
-            if (device != null) { // If device is not null, check if the device
-                                  // is owned by the teacher or not
-                boolean contains = false;
-                for (Device d : devices)
-                    if (d.equals(device)) {
-                        contains = true;
-                        break;
-                    }
+        	if (!contains) {
+        		RealmResponse.send(request, 403, "User is not authorized to access this device");
+        		return;
+        	}
 
-                if (!contains) {
-                    RealmResponse.send(request, 403, "User is not authorized to access this device");
-                    return;
-                }
+        	// Retrieve the sessions for this device and add them to
+        	// response
+        	Iterable<Session> sessions = Devices.getSessions(tx, device);
 
-                // Retrieve the sessions for this device and add them to
-                // response
-                Iterable<Session> sessions = Devices.getSessions(tx, device);
+        	APIUtils.addQueryResultToResponse(sessions, request);
 
-                APIUtils.addQueryResultToResponse(sessions, request);
+        } else { // Retrieve sessions for all devices owned by this owner
+        	// and add them to response
+        	ArrayList<Session> sessions = new ArrayList<Session>();
 
-            } else { // Retrieve sessions for all devices owned by this owner
-                     // and add them to response
-                ArrayList<Session> sessions = new ArrayList<Session>();
+        	for (Device d : devices) {
+        		Iterable<Session> deviceSessions = Devices.getSessions(tx, d);
+        		for (Session s : deviceSessions) {
+        			if (!sessions.contains(s)) sessions.add(s);
+        		}
+        	}
 
-                for (Device d : devices) {
-                    Iterable<Session> deviceSessions = Devices.getSessions(tx, d);
-                    for (Session s : deviceSessions) {
-                        if (!sessions.contains(s)) sessions.add(s);
-                    }
-                }
-
-                // Add sessions to response
-                APIUtils.addQueryResultToResponse(sessions, request);
-            }
-        }
-        catch (IOException e) {
-            e.printStackTrace();
-        }
-        finally {
-            tx.close();
+        	// Add sessions to response
+        	APIUtils.addQueryResultToResponse(sessions, request);
         }
     }
 
@@ -447,10 +429,11 @@ public class ITeacherAPIReceiver extends IFn {
      *            The Person object containing the teacher info
      * @param request
      *            The http request containing the session info
+     * @throws IOException 
      */
 
     @Selector
-    public void removeSession(Person teacher, HttpRequest request) {
+    public void removeSession(Person teacher, HttpRequest request) throws IOException {
 
         Transaction tx = teacher.tx().getPackage().connect(teacher);
 
@@ -459,20 +442,12 @@ public class ITeacherAPIReceiver extends IFn {
         Session session = (Session) APIUtils.getObjectFromRequest("Session", tx, request);
 
         if (session == null) {
-        	try {
-				RealmResponse.send(request, 400, "Session connot be null!");
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+			RealmResponse.send(request, 400, "Session connot be null!");
             return;
         }
         
         if (!APIUtils.hasWriteAccessToSession(teacher, session)) {
-        	try {
-				RealmResponse.send(request, 403, "Person has no write access to this session!");
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+			RealmResponse.send(request, 403, "Person has no write access to this session!");
             return;
         }
 
@@ -497,10 +472,11 @@ public class ITeacherAPIReceiver extends IFn {
      *            The Person object containing the teacher info
      * @param request
      *            The http request containing the session info
+     * @throws IOException 
      */
     
     @Selector
-    public void editSession(Person teacher, HttpRequest request) {
+    public void editSession(Person teacher, HttpRequest request) throws IOException {
     	
     	Transaction tx = teacher.tx().getPackage().connect(teacher);
     	
@@ -562,8 +538,9 @@ public class ITeacherAPIReceiver extends IFn {
 	        tx.post();
 	        tx.close(); 
 			
-		} catch (IOException | ServletException | ParseException e) {
+		} catch (ServletException | ParseException e) {
 			e.printStackTrace();
+			RealmResponse.sendError(request, e.getMessage());
 		}
     }
 
@@ -575,10 +552,11 @@ public class ITeacherAPIReceiver extends IFn {
      * @param request
      *            The http request containing the information about time and
      *            date of sessions to be created
+     * @throws IOException 
      */
 
     @Selector
-    public void createSession(Person teacher, HttpRequest request) {
+    public void createSession(Person teacher, HttpRequest request) throws IOException {
     	
     	int numberOfCreatedSessions = 0;
 
@@ -656,55 +634,47 @@ public class ITeacherAPIReceiver extends IFn {
             }
 
             tx.post();
+            tx.close();
             
             APIUtils.addStringResultToResponse(Integer.toString(numberOfCreatedSessions), request);            
         }
-        catch (IllegalArgumentException | ParseException | IOException | ServletException e) {
+        catch (ParseException | ServletException e) {
             e.printStackTrace();
-        }
-        finally {
-            tx.close();
+            RealmResponse.sendError(request, e.getMessage());
         }
     }
     
     @Selector
-    public void getSessionsForCourse(Person teacher, HttpRequest request) {
+    public void getSessionsForCourse(Person teacher, HttpRequest request) throws IOException {
     	ArrayList<Session> sessions = new ArrayList<Session>();
     	
     	Course course = (Course) APIUtils.getObjectFromRequest("Course", teacher.tx(), request);
-    	try {
-    		if (course == null) {
-    			RealmResponse.send(request, 400, "Course cannot be null!");
-    			return;
-    		}
-
-    		// Ensure that the teacher is a teacher of the course
-    		if (!course.getTeachers().contains(teacher)) {
-    			RealmResponse.send(request, 403, "Teacher is not authorized to access this course!");
-    			return;
-    		}
-
-    		// Retrieve the list of assignments of the course
-    		Iterable<Assignment> assignments = Courses.getAssignments(teacher.tx(), course);
-
-    		// Retrieve sessions of assignments
-    		for (Assignment assignment : assignments) {
-    			
-    			Iterable<Session> asnSessions = Assignments.getSessions(teacher.tx(), assignment);
-    			
-//    			sessions.addAll((Collection<Session>) Assignments.getSessions(teacher.tx(), assignment));
-    			
-    			for (Session session : asnSessions)
-    				sessions.add(session);
-    				
-    		}
-    		
-    		// Add sessions to response
-            APIUtils.addQueryResultToResponse(sessions, request);
-
-    	} catch (IOException e) {
-    		e.printStackTrace();
+    	if (course == null) {
+    		RealmResponse.send(request, 400, "Course cannot be null!");
+    		return;
     	}
+
+    	// Ensure that the teacher is a teacher of the course
+    	if (!course.getTeachers().contains(teacher)) {
+    		RealmResponse.send(request, 403, "Teacher is not authorized to access this course!");
+    		return;
+    	}
+
+    	// Retrieve the list of assignments of the course
+    	Iterable<Assignment> assignments = Courses.getAssignments(teacher.tx(), course);
+
+    	// Retrieve sessions of assignments
+    	for (Assignment assignment : assignments) {
+
+    		Iterable<Session> asnSessions = Assignments.getSessions(teacher.tx(), assignment);
+
+    		for (Session session : asnSessions)
+    			sessions.add(session);
+
+    	}
+
+    	// Add sessions to response
+    	APIUtils.addQueryResultToResponse(sessions, request);
     }
     
     @Selector
