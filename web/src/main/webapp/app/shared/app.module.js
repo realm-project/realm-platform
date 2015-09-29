@@ -2,7 +2,6 @@
 var dependencies = [
     'ui.router',
     'ngTouch',
-    'ngCookies',
     'mobile-angular-ui',
     'ui.date',
     'cfp.hotkeys',

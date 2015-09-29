@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('REALM').service('AuthService',function($http, $q, $cookies, $timeout, $rootScope, AUTH_EVENTS, StorageService){
+angular.module('REALM').service('AuthService',function($http, $q, $rootScope, StorageService){
  
     //urls
     var loginPath = 'rest/login';

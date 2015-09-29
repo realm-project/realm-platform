@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('REALM')
-    .controller('TeacherMySessionsController', function ($scope, $rootScope, AuthService, AUTH_EVENTS, $state, $http, $q, RepoService) {
+    .controller('TeacherMySessionsController', function ($scope, $rootScope, AuthService, $state, $http, $q, RepoService) {
 
 
         $rootScope.mainScope.bottomNavbarCollapse = false;
@@ -24,7 +24,7 @@ angular.module('REALM')
         //dynamic sessions include the session information ready to be presented
         $scope.dynamicSessions = [];
         //$scope.firstName=AuthService.getCurrentUser().value.firstName;
-        var sessions = RepoService.getSessionsFromUser();
+        var sessions = AuthService.getCurrentUser().value.sessions;
         readSessions(sessions);
 //-----------------------------------------------------------------------------------------------
         function readSessions(sessions) {
@@ -57,7 +57,7 @@ angular.module('REALM')
          * @param {object} returnedSession The session object pulled out from the server
          */
         $scope.createSession = function (returnedSession) {
-            var assignmentLocation = RepoService.getAssignmentFromSession(returnedSession);
+            var assignmentLocation = returnedSession.value.assignment.loc;
             var returnedAssignment = RepoService.getObject("Assignment", assignmentLocation);
             returnedAssignment.then(
                 function (assignmentResponse) {

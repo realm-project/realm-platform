@@ -202,7 +202,7 @@ angular.module('REALM').service('RobotService',function($http, $q, $state, $root
             };
 
             $http.post(localStorage.basePath + devicePath,postData).then(function(response){
-                console.log('Sent robot to home position successfully');
+                //console.log('Sent robot to home position successfully');
             },function(response){
                 console.log('Failed to send robot to home position');
                 console.log(errorResponse);
@@ -254,7 +254,7 @@ angular.module('REALM').service('RobotService',function($http, $q, $state, $root
         };
         
         $http.post(localStorage.basePath + devicePath, postData).then(function(response){
-            // we sent move-command successfully
+            // we sent move command successfully
             // do nothing now :)
         },function(errorResponse){
             // resend the zero command in any condition

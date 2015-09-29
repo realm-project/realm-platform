@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('REALM')
-.controller('TeacherSessionsController', function ($scope, $rootScope, AuthService, AUTH_EVENTS, $state, $http, $q,RepoService) {
+.controller('TeacherSessionsController', function ($scope, $rootScope, AuthService, $state, $http, $q,RepoService) {
 
 
     // show the bottom Navbar on mobile devices

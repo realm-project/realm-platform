@@ -3,20 +3,8 @@
 angular.module('REALM')
 	.service('RepoService', function ($http, $q, AuthService, AUTH_EVENTS, $state, $rootScope) {
 
-
 	// disabling the handleError will unstable the client side UI, it is strongly recommended to set it to true.
 	var handleError = true;
-
-	//give a user returns an array of sessions
-	this.getSessionsFromUser = function () {
-		return AuthService.getCurrentUser().value.sessions;
-	};
-
-
-	this.getAssignmentFromSession = function (session) {
-		return session.value.assignment.loc;
-	};
-
 
 	//given a session location, return the session json
 	this.getObject = function (type, location) {
