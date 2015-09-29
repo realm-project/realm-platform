@@ -13,7 +13,11 @@ public interface Authorizer {
     String uuid();
 
     default boolean cacheable() {
-        return true;
+        return false;
+    }
+
+    default String cacheString(Action action, HttpRequest request) {
+        return "";
     }
 
 }

@@ -59,7 +59,7 @@ public class IAuthorizationHandler extends ISessionHandler {
         if (auth.cacheable()) {
             // If this has been authorized any time in the last 15 seconds for
             // this user, don't bother re-authorizing
-            Long lastAuthorization = (Long) httpSession.getAttribute(authKey(username));
+            Long lastAuthorization = (Long) httpSession.getAttribute(authKey(username, action, request));
             if (lastAuthorization != null
                     && lastAuthorization > System.currentTimeMillis() - CACHE_TIME) { return true; }
         }
@@ -73,15 +73,16 @@ public class IAuthorizationHandler extends ISessionHandler {
 
         // set the current time as the auth key for auth caching
         if (isAuthed) {
-            httpSession.setAttribute(authKey(username), (Long) System.currentTimeMillis());
+            httpSession.setAttribute(authKey(username, action, request), (Long) System.currentTimeMillis());
         }
 
         return isAuthed;
 
     }
 
-    private String authKey(String username) {
-        return IAuthorizationHandler.class.getCanonicalName() + ":" + auth.uuid() + ":" + username;
+    private String authKey(String username, Action action, HttpRequest request) {
+        return IAuthorizationHandler.class.getCanonicalName() + ":" + auth.uuid() + ":"
+                + auth.cacheString(action, request) + ":" + username;
     }
 
 }
