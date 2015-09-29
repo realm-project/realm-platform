@@ -55,7 +55,12 @@ angular.module('REALM')
 				console.log('Failed to add user to session');
 				console.log(errorResponse);
 				if (handleError){
-					resolveError(errorResponse);
+					// send known errors to the client side
+					if (errorResponse.data !== undefined && errorResponse.data.message !== undefined && (errorResponse.data.message==="Invalid session ID" || errorResponse.data.message==="Session is already added")){
+						join.reject(errorResponse);
+					}else{
+						resolveError(errorResponse);
+					}
 				}else{
 					join.reject(errorResponse);
 				}
