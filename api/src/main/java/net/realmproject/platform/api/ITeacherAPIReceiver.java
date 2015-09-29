@@ -556,7 +556,7 @@ public class ITeacherAPIReceiver extends IFn {
 	        	session.setDuration(editSessionRequest.duration);
         	
 	        if (editSessionRequest.startTime != null) {
-	        	 session.setStartTime(new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssXXX").parse(editSessionRequest.startTime ));
+	        	 session.setStartTime(new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX").parse(editSessionRequest.startTime ));
 	        }
 	        
 	        tx.post();
