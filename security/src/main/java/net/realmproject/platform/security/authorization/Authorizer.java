@@ -8,6 +8,9 @@ import net.realmproject.platform.schema.Person;
 
 public interface Authorizer {
 
+    // TODO: Change this function to return null on auth fail, and a string
+    // which uniquely identifies the authorization request (within the context
+    // of the concrete authorizer) for authorization cacheing
     boolean authorize(Action action, HttpRequest request, Person person);
 
     String uuid();

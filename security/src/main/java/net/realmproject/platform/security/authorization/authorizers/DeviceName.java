@@ -1,8 +1,6 @@
 package net.realmproject.platform.security.authorization.authorizers;
 
 
-import java.util.UUID;
-
 import net.objectof.corc.Action;
 import net.objectof.corc.web.v2.HttpRequest;
 import net.realmproject.platform.schema.Device;
@@ -39,37 +37,18 @@ public class DeviceName extends AbstractAuthorizer {
 
         String deviceName = RealmCorc.getNextPathElement(action.getName(), request.getHttpRequest());
 
-        String authId = UUID.randomUUID().toString();
-        System.out.println("Authorizing " + deviceName + "(" + authId + ")");
-
         for (Session session : Persons.getActiveSessions(person)) {
 
-            System.out.println("Checking session " + session.getSessionToken() + " for " + authId);
-
             if (!Sessions.isLive(session)) {
-                System.out.println("Skipping session, it is not alive");
                 continue;
             }
 
-            System.out.println("Session is alive!");
-
             Station station = session.getStation();
-            System.out.println("Station for session is " + station.getName() + " for " + authId);
-
-            // System.out.println("A");
             for (Device device : station.getDevices()) {
-
-                // System.out.println("B");
-                System.out.println("Checking device " + device.getName() + " in station for " + authId);
-
-                if (device.getName().equals(deviceName)) {
-                    System.out.println("authorized!");
-                    return true;
-                }
+                if (device.getName().equals(deviceName)) { return true; }
             }
         }
 
-        System.out.println("unauthorized");
         return false;
 
     }
