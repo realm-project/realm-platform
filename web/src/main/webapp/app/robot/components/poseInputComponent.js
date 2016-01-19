@@ -67,6 +67,7 @@ app.directive('poseInputComponent', ['$timeout', '$http', '$q', 'RobotService', 
                             '<div class="pose-input-component__buttons" >'+
                             '<button class="pose-input-component__submitBtn btn btn-primary" ng-click="submitPose()">Submit Pose</button>' +
                             '<button class="btn btn-primary" ng-click="goHome()" ng-show="component.componentOptions.showHomeButton">Go Home</button>' +
+                            "&nbsp;<button class='btn' ng-click='reset()' ng-show='component.componentOptions.showResetButton'>Reset Arm</button>" +
                             '</div>'+
                         '</form>'+
                     ' </div>',
@@ -147,6 +148,10 @@ app.directive('poseInputComponent', ['$timeout', '$http', '$q', 'RobotService', 
             $scope.goHome=function()
             {
                 RobotService.goHome(robotPath);
+            }
+            $scope.reset=function()
+            {
+                RobotService.restart(robotPath);
             }
 
 

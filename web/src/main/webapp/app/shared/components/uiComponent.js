@@ -10,6 +10,7 @@ angular.module('REALM').directive('uiComponent', function($compile,$timeout)
         "angleState": "<angle-state-component></angle-state-component>",
         "poseState": "<pose-state-component></pose-state-component>",
         "joystickInput": "<joystick-input-component></joystick-input-component>",
+        "reset": "<reset-component></reset-component>",
         "trajectorySaveComponent": "<trajectory-save-component></trajectory-save-component>",
         "trajectorySaveReplayComponent": "<trajectory-save-replay-component></trajectory-save-replay-component>",
         "playBack": "<play-back-component></play-back-component>",

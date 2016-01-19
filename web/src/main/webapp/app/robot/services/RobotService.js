@@ -212,6 +212,24 @@ angular.module('REALM').service('RobotService',function($http, $q, $state, $root
                 }
             });
         }
+//---------------------------------------------------------------------------------------------------------------
+    this.restart = function(devicePath){
+            var postData = {
+                "action": "restart"
+            };
+
+            $http.post(localStorage.basePath + devicePath,postData).then(function(response){
+                //console.log('Sent robot to home position successfully');
+            },function(response){
+                console.log('Failed to initiate restart');
+                console.log(errorResponse);
+            
+                if (handleError){
+                    resolveError(errorResponse, null);
+                }
+            });
+        }
+    
 //--------------------------------------------------------------------------------------------------------------
     this.grip = function(devicePath, fingers){
         var postData = {

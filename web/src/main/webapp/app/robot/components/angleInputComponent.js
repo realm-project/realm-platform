@@ -69,6 +69,7 @@ app.directive('angleInputComponent', ['$timeout', '$http', '$q', 'RobotService',
                  '<div class="angle-input-component__buttons">'+
                     '<button class="angle-input-component__submitBtn btn btn-primary" ng-click="submitAngleSet(angleSet)">Submit Angles</button>' +
                     '<button class="btn btn-primary" ng-click="goHome()" ng-show="component.componentOptions.showHomeButton">Go Home</button>' +
+                    "&nbsp;<button class='btn' ng-click='reset()' ng-show='component.componentOptions.showResetButton'>Reset Arm</button>" +
                 '</div>'+
                 '</form>' +
             '</div>',
@@ -180,6 +181,10 @@ app.directive('angleInputComponent', ['$timeout', '$http', '$q', 'RobotService',
             $scope.goHome=function()
             {
                 RobotService.goHome(robotPath);
+            }
+            $scope.reset=function()
+            {
+                RobotService.restart(robotPath);
             }
 
             //submits the current set

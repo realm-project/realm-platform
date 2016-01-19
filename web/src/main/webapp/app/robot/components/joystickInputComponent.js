@@ -20,6 +20,7 @@ app.directive('joystickInputComponent', ['RobotService', function(RobotService) 
         "</div>"+
             "<div class='joystick-input-component__buttons'>"+
                  "<button class='btn btn-primary' ng-click='goHome()' ng-show='component.componentOptions.showHomeButton'>Go Home</button>" +
+                 "&nbsp;<button class='btn' ng-click='reset()' ng-show='component.componentOptions.showResetButton'>Reset Arm</button>" +
             "</div>",
 
     compile: function CompilingFunction(tElement, tAttrs)
@@ -90,6 +91,10 @@ app.directive('joystickInputComponent', ['RobotService', function(RobotService) 
       $scope.goHome=function()
       {
           RobotService.goHome(robotPath);
+      }
+      $scope.reset=function()
+      {
+          RobotService.restart(robotPath);
       }
     }    
   }
