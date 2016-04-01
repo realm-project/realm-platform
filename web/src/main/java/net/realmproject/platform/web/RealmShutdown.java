@@ -9,7 +9,7 @@ import net.realmproject.dcm.util.DCMThreadPool;
 
 
 @WebListener
-public class Shutdown implements ServletContextListener {
+public class RealmShutdown implements ServletContextListener {
 
     @Override
     public void contextInitialized(ServletContextEvent sce) {}

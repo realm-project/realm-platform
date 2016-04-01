@@ -3,6 +3,9 @@ package net.realmproject.platform.security.authorization;
 
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import net.objectof.connector.Connector;
 import net.objectof.connector.ConnectorException;
 import net.objectof.corc.Action;
@@ -26,6 +29,7 @@ public class IAuthorizationHandler extends ISessionHandler {
 
     private Authorizer auth;
     private static final long CACHE_TIME = 15 * 1000;
+    private Log log = LogFactory.getLog(getClass());
 
     public IAuthorizationHandler(Handler<?> aDefault, Connector connector, Authorizer auth) throws ConnectorException {
         super(aDefault, connector);
@@ -38,7 +42,8 @@ public class IAuthorizationHandler extends ISessionHandler {
         if (tryAuthorize(action, request, username)) {
             chain(action, request);
         } else {
-            RealmResponse.send(request, 405, "Unauthorized");
+            log.debug("Authorization Failed: 401 Unauthorized");
+            RealmResponse.send(request, 401, "Unauthorized");
         }
 
     }
