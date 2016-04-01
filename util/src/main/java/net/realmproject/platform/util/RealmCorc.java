@@ -14,6 +14,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 import net.objectof.corc.web.v2.HttpRequest;
 import net.objectof.model.Transaction;
@@ -23,6 +25,8 @@ import net.realmproject.platform.util.model.Persons;
 
 
 public class RealmCorc {
+
+    private static Log log = LogFactory.getLog(RealmCorc.class);
 
     public static List<String> getPath(HttpServletRequest http) {
         String fullUrl = http.getRequestURI().trim();
@@ -120,7 +124,10 @@ public class RealmCorc {
     public static String getUsername(HttpRequest request) {
 
         HttpSession session = request.getHttpRequest().getSession(false);
-        if (session == null) { return null; }
+        if (session == null) {
+            log.trace("session was null");
+            return null;
+        }
         return session.getAttribute("person").toString();
 
     }

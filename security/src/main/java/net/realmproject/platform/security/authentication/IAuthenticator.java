@@ -52,8 +52,10 @@ public class IAuthenticator extends AbstractAuthenticator<LoginInfo> {
                 person.send("application/json", request.getWriter());
 
             } else {
+                log.debug("401 Unauthorized");
                 // 401 Unauthorized:
-                // "specifically for use when authentication is required and has failed or has not yet been provided"
+                // "specifically for use when authentication is required and has
+                // failed or has not yet been provided"
                 request.getHttpResponse().getWriter().print(new RealmResponse("Login Failed", true));
                 request.getHttpResponse().setStatus(401);
             }
